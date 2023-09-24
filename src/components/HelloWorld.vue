@@ -1,6 +1,13 @@
 <template>
   <div class="hello">
+    <div class="flex">
+      <div class="mr-2">aksnxjaks</div>
+      <div>xaskljnxjknsa</div>
+    </div>
     <h1>{{ msg }}</h1>
+
+    {{ count }} --- {{ sqrt }} ====
+    <button @click="increment">+1</button>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,11 +38,39 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapGetters } from 'vuex';
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  // computed: {
+  //   count() {
+  //     return  this.$store.state.count;
+  //   }
+  // },
+  computed: {
+    ...mapState(['count']),
+    ...mapGetters(['sqrt'])
+    // sqrt() {
+    //   return this.$store.getters.sqrt;
+    // }
+  },
+
+  // data() {
+  //   return {
+  //     count:0,
+  //   }
+  //   ;
+  // },
+  methods: {
+    ...mapMutations(['increment']),
+    test() {
+      // this.count++ 
+      // this.$store.commit('increment')
+    }
   }
+  
 }
 </script>
 
