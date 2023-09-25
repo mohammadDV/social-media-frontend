@@ -5,8 +5,9 @@ import MainLayout from '@/layouts/MainLayout.vue';
 import ProfileLayout from '@/layouts/ProfileLayout.vue';
 
 // Import views
-import HomeComponent from '@/views/Home.vue';
-import ProfileComponent from '@/views/Profile.vue';
+import Home from '@/views/Home.vue';
+import Profile from '@/views/Profile.vue';
+import Login from '@/views/Login.vue';
 
 const routes = [
   {
@@ -15,7 +16,11 @@ const routes = [
     children: [
       {
         path: '',
-        component: HomeComponent,
+        component: Home,
+      },
+      {
+        path: '/login',
+        component: Login,
       },
     ],
   },
@@ -25,7 +30,7 @@ const routes = [
     children: [
       {
         path: '',
-        component: ProfileComponent,
+        component: Profile,
       },
     ],
   },
