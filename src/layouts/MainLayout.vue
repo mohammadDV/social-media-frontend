@@ -77,7 +77,7 @@
                                     <div class="card-header">
                                         <div class="card-header-inner">
                                             <span class="material-icons text-primary"> movie </span>
-                                            <!-- <span class="card-header-title">{{ __('site.Non-football') }}</span> -->
+                                            <span class="card-header-title">{{ $t("site.Non-football") }}</span>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -101,7 +101,7 @@
                                     <div class="card-header">
                                         <div class="card-header-inner">
                                             <span class="material-icons text-primary"> movie </span>
-                                            <!-- <span class="card-header-title">{{ __('site.Foreign news') }}</span> -->
+                                            <span class="card-header-title">{{ $t('site.Foreign news') }}</span>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -127,7 +127,7 @@
                                     <div class="card-header">
                                         <div class="card-header-inner">
                                             <span class="material-icons text-primary"> create </span>
-                                            <!-- <span class="card-header-title">{{ __('site.Column of writers') }}</span> -->
+                                            <span class="card-header-title">{{ $t('site.Column of writers') }}</span>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -151,7 +151,7 @@
                                     <div class="card-header">
                                         <div class="card-header-inner">
                                             <span class="material-icons text-primary"> create </span>
-                                            <!-- <span class="card-header-title">{{ __('site.Iran news') }}</span> -->
+                                            <span class="card-header-title">{{ $t('site.Iran news') }}</span>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -212,17 +212,17 @@
                                 <ul class="nav" id="hotties" role="tablist">
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link active" id="latest-tab" data-bs-toggle="tab" data-bs-target="#latest" type="button" role="tab" aria-controls="latest" aria-selected="true" >
-                                            <!-- {{ __('site.Latest news') }} -->
+                                            {{ $t('site.Latest news') }}
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" id="conv-tab" data-bs-toggle="tab" data-bs-target="#conv" type="button" role="tab" aria-controls="conv" aria-selected="false">
-                                          <!-- {{ __('site.Challenged') }} -->
+                                          {{ $t('site.Challenged') }}
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a      class="nav-link"      id="hot-tab"      data-bs-toggle="tab"      data-bs-target="#hot"      type="button"      role="tab"      aria-controls="hot"      aria-selected="false"  >
-                                            <!-- {{ __('site.Popular') }} -->
+                                            {{ $t('site.Popular') }}
                                         </a>
                                     </li>
                                 </ul>
@@ -325,28 +325,28 @@
                             @endforeach
                         </div>
                     @endif -->
-                    <!-- {{-- <div class="col-12 col-lg-2 ads-column item-column">
+                    <!-- <div class="col-12 col-lg-2 ads-column item-column">
                         <div class="col-ads">
-                            <img class="col-ad" src="./assets/site/images/ads/cols/00911970.gif" alt="site ad"/>
+                            <img class="col-ad" src="/assets/site/images/ads/cols/00911970.gif" alt="site ad"/>
                         </div>
                         <div class="col-ads">
-                            <img class="col-ad" src="./assets/site/images/ads/cols/00911861.gif" alt="site ad"/>
+                            <img class="col-ad" src="/assets/site/images/ads/cols/00911861.gif" alt="site ad"/>
                         </div>
                         <div class="col-ads">
-                            <img class="col-ad" src="./assets/site/images/ads/cols/00911969.gif" alt="site ad"/>
+                            <img class="col-ad" src="/assets/site/images/ads/cols/00911969.gif" alt="site ad"/>
                         </div>
-                    </div> --}} -->
+                    </div> -->
                 </div>
             </main>
         </div>
 
         <div class="mid-site-ad-wrapper" style="
-            /* background-image: linear-gradient(
+            background-image: linear-gradient(
                 to right,
                 rgba(21, 26, 48, 0.85),
                 rgba(21, 26, 48, 0.85)
               ),
-              url(./assets/site/images/53970387-B72B-43A2-9FE0-C0EB33F35404.jpeg); */
+              url(/assets/site/images/53970387-B72B-43A2-9FE0-C0EB33F35404.jpeg);
           ">
             <div class="container-xxl py-5">
                 <div class="row justify-content-center">
@@ -358,16 +358,16 @@
                         <p class="h1 mb-4">
                             ثبت و تحلیل رخدادهای ورزشی های ورزشی، شبکه اجتماعی ورزشی
                         </p>
-                        <!-- <a href="{{ route('register') }}" href="{{ __('site.Register') }}">
-                            <div class="btn vt-btv-primary px-4">{{ __('site.Please register') }}</div>
-                        </a> -->
+                        <a href="register">
+                            <div class="btn vt-btv-primary px-4">{{ $t('site.Please register') }}</div>
+                        </a> 
                     </div>
                     <div class="col-12 col-lg-2">
-                        <!-- <img
-                            src="./assets/site/images/sport-mid.png"
+                        <img
+                            src="/assets/site/images/sport-mid.png"
                             alt="sport"
                             class="img-fluid"
-                        /> -->
+                        />
                     </div>
                 </div>
             </div>
@@ -378,7 +378,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="card vt-news-card height-md">
                         <div class="card-header header-alt">
-                            <!-- <p class="h4 text-primary">{{ __('site.The latest football analysis') }}</p> -->
+                            <p class="h4 text-primary">{{ $t('site.The latest football analysis') }}</p>
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
@@ -413,7 +413,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="card vt-news-card height-md">
                         <div class="card-header header-alt">
-                            <!-- <p class="h4 text-primary">{{ __('site.The latest non-football analysis') }}</p> -->
+                            <p class="h4 text-primary">{{ $t('site.The latest non-football analysis') }}</p>
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
