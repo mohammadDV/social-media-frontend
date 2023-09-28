@@ -12,6 +12,7 @@ import Login from '@/views/Login.vue';
 const routes = [
   {
     path: '/',
+    meta: { layout: 'mainLayout' },
     component: MainLayout,
     children: [
       {
@@ -26,6 +27,7 @@ const routes = [
   },
   {
     path: '/profile',
+    meta: { layout: 'profileLayout' },
     component: ProfileLayout,
     children: [
       {
@@ -39,6 +41,20 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.afterEach((to) => {
+  const layout = to.meta.layout;
+  console.log(to.meta);
+  console.log("Xasxasxsax");
+  if (layout === 'mainLayout') {
+    require('@/assets/site/fonts/vazir-ui/vazir.css');
+    require('@/assets/site/fonts/material-icons/material-icons.css');
+    require('@/assets/site/css/splide.min.css');
+    require('@/assets/site/css/styles.css');
+  } else if (layout === 'profileLayout') {
+    require('@/assets/site/fonts/vazir-ui/vazir.css');
+  }
 });
 
 export default router;

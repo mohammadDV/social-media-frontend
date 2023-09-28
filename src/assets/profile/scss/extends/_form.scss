@@ -1,0 +1,112 @@
+.form-control.is-vt {
+  background-color: var(--color-basic-200);
+  border: 1px solid var(--color-basic-500);
+
+  &::-webkit-input-placeholder {
+    color: var(--color-basic-600);
+  }
+  &:-moz-placeholder {
+    color: var(--color-basic-600);
+    opacity: 1;
+  }
+  &::-moz-placeholder {
+    color: var(--color-basic-600);
+    opacity: 1;
+  }
+  &:-ms-input-placeholder {
+    color: var(--color-basic-600);
+  }
+  &::-ms-input-placeholder {
+    color: var(--color-basic-600);
+  }
+  &::placeholder {
+    color: var(--color-basic-600);
+  }
+
+  &:focus {
+    background-color: var(--color-basic-100);
+  }
+}
+
+.form-check {
+  display: block;
+  min-height: 1.5rem;
+  padding-left: 0em;
+  padding-right: 1.5em;
+  margin-bottom: 0.125rem;
+
+  .form-check-input {
+    float: right;
+    margin-right: -1.5em;
+  }
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+  margin-left: 15px;
+  margin-right: 0 !important;
+}
+
+.ql-editor {
+  font-family: var(--bs-font-sans-serif);
+  text-align: right !important;
+}
+
+.ql-editor ol,
+.ql-editor ul {
+  padding-left: 0em !important;
+  padding-right: 1.5em;
+}
+
+.ql-editor ol li:not(.ql-direction-rtl),
+.ql-editor ul li:not(.ql-direction-rtl) {
+  padding-left: 0em !important;
+  padding-right: 1.5em;
+}
+
+.ql-editor li:not(.ql-direction-rtl)::before {
+  margin-right: -1.5em !important;
+  margin-left: 0.3em !important;
+  text-align: right;
+}
+
+.is-fieldset {
+  padding: 1rem;
+  padding-top: 0;
+  background-color: var(--color-basic-200);
+  border: 1px solid var(--color-basic-500);
+  border-radius: 0.25rem;
+
+  legend {
+    float: none;
+    width: auto;
+    padding: 0.5rem;
+    margin-right: 0rem;
+    margin-bottom: 0;
+    font-size: 1.15rem;
+    line-height: inherit;
+  }
+
+  .preview-container {
+    height: 150px;
+    width: 150px;
+    background-color: var(--color-basic-100);
+    border: 1px solid var(--color-basic-500);
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .profile-preview {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .fix-hidden {
+      opacity: 0;
+    }
+  }
+}
+
+.ql-container {
+  min-height: 6rem;
+}

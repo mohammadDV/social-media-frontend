@@ -1,6 +1,5 @@
 <template>
     <div>
-      <header>Main Header</header>
         <main>
             <div class="container-xxl">
             <main class="mb-4">

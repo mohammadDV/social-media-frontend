@@ -1,0 +1,31 @@
+.btn-outline-primary {
+  &:hover {
+    color: white;
+  }
+}
+
+.btn-light {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-basic-600);
+  &:hover {
+    background-color: var(--color-basic-300);
+  }
+}
+
+.btn {
+  .svg-inline--fa {
+    height: 1.5rem;
+    margin-inline-end: 0.5rem;
+  }
+
+  &.is-active {
+    color: var(--color-primary-500);
+  }
+}
+
+.btn-xs {
+  padding: 0.1rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}

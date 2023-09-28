@@ -1,0 +1,123 @@
+.btn {
+  border-radius: 0.5rem;
+
+  > span:not(:first-child) {
+    margin-inline-start: 0.5em;
+  }
+
+  &.vt-btn-transparent {
+    color: var(--text-body);
+    background-color: transparent;
+    border-color: transparent;
+
+    &:hover {
+      color: var(--text-accent);
+      background-color: var(--color-dark-transparent-50);
+      border-color: var(--color-dark-transparent-50);
+    }
+  }
+
+  &.vt-btn-transparent-invert {
+    color: var(--text-body-invert);
+    background-color: transparent;
+    border-color: transparent;
+
+    &:hover {
+      color: var(--text-primary);
+      background-color: var(--color-dark-transparent-50);
+      border-color: var(--color-dark-transparent-50);
+    }
+
+    &:active {
+      color: var(--text-primary);
+      background-color: var(--color-dark-transparent-50);
+      border-color: var(--color-dark-transparent-50);
+    }
+    &.active {
+      color: var(--text-primary);
+      background-color: var(--color-dark-transparent-50);
+      border-color: var(--color-dark-transparent-50);
+    }
+  }
+
+  // transparent-invert-tinted
+  &.vt-btn-tit {
+    color: var(--text-body-invert);
+    background-color: var(--color-dark-transparent-50);
+    border-color: var(--color-dark-transparent-50);
+
+    &:hover {
+      background-color: var(--color-dark-transparent-100);
+      border-color: var(--color-dark-transparent-100);
+    }
+  }
+
+  &.vt-btn-tit-light {
+    color: var(--text-body);
+    background-color: var(--color-basic-400);
+    border-color: var(--color-basic-500);
+
+    &:hover {
+      background-color: var(--color-dark-transparent-75);
+      border-color: var(--color-dark-transparent-75);
+    }
+  }
+
+  &.vt-btn-white {
+    color: var(--text-body);
+    background-color: var(--color-basic-100);
+    border-color: var(--color-basic-400);
+
+    &:hover {
+      color: var(--text-primary);
+      background-color: var(--color-primary-transparent-100);
+      border-color: var(--color-primary-transparent-400);
+    }
+
+    &.is-success {
+      &:hover {
+        color: var(--text-success);
+        background-color: var(--color-success-transparent-100);
+        border-color: var(--color-success-transparent-400);
+      }
+    }
+    &.is-danger {
+      &:hover {
+        color: var(--text-danger);
+        background-color: var(--color-danger-transparent-100);
+        border-color: var(--color-danger-transparent-400);
+      }
+    }
+  }
+
+  &.vt-btv-primary {
+    color: var(--text-body-invert);
+    background-color: var(--text-primary);
+    border-color: var(--text-primary);
+
+    &:hover {
+      color: var(--text-primary);
+      background-color: var(--text-primary-tinted);
+      border-color: var(--text-primary-tinted);
+    }
+  }
+
+  &.vt-menu-btn {
+    color: var(--text-body);
+    background-color: var(--color-basic-300);
+    border-color: var(--color-basic-400);
+    width: 100%;
+
+    &.active {
+      color: var(--text-primary);
+      background-color: var(--color-basic-300);
+      border-color: var(--text-primary);
+    }
+
+    &:hover {
+      color: var(--text-primary);
+      background-color: var(--color-basic-300);
+      border-color: var(--text-primary);
+    }
+  }
+}

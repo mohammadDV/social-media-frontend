@@ -1,0 +1,32 @@
+.breadcrumb-item + .breadcrumb-item::before {
+  float: left;
+  padding-right: 0.5rem;
+  color: #343642;
+  content: "";
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  padding-left: 0;
+}
+
+.breadcrumb-item:not(:last-child)::before {
+  float: left;
+  padding-right: 0.5rem;
+  color: #343642;
+  content: var(--bs-breadcrumb-divider, "/")
+    /* rtl: var(--bs-breadcrumb-divider, "/") */;
+}
+
+.breadcrumb-item:not(:last-child) {
+  padding-left: 0.5rem;
+}
+
+.card.vt-news-card.breadcrumb-card {
+  .card-body {
+    padding: 1rem;
+
+    .breadcrumb {
+      margin: 0;
+    }
+  }
+}

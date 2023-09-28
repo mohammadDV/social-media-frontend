@@ -1,0 +1,24 @@
+.item-column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  > * {
+    max-width: 100%;
+    width: 100%;
+
+    &:not(:last-child) {
+      margin-bottom: 0.75rem;
+    }
+  }
+}
+
+.mb-75 {
+  margin-bottom: 0.75rem;
+}
+
+.ads-column {
+  width: calc(130px + var(--bs-gutter-x));
+}
