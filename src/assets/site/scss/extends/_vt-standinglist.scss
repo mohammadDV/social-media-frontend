@@ -1,0 +1,251 @@
+.standing-list {
+  .standing-section {
+    .standing-section-header {
+      background-color: var(--color-basic-400);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      padding: 0.4em;
+
+      .standing-section-title {
+        width: 15%;
+        margin-inline-end: 55%;
+        background-color: var(--color-warning-500);
+        padding: 0.25em 0.5em;
+        border-radius: 0.4em;
+      }
+      .standing-section-match {
+        width: 15%;
+      }
+      .standing-section-point {
+        width: 15%;
+      }
+    }
+
+    .row {
+      flex-direction: row;
+      text-align: center;
+      margin: 0;
+      padding: 0.4em 0;
+      width: 100%;
+      border-bottom: 1px solid var(--color-basic-400);
+
+      > * {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .rank {
+        width: 10%;
+      }
+      .logo {
+        width: 15%;
+      }
+      .name {
+        width: 45%;
+        justify-content: flex-start;
+
+        a {
+          color: var(--color-basic-900);
+          text-decoration: none;
+          display: block;
+          width: 100%;
+          text-align: start;
+          transition: all 0.2s ease-out;
+
+          &:hover {
+            color: var(--color-primary-500);
+          }
+        }
+      }
+      .match {
+        width: 15%;
+      }
+      .point {
+        width: 15%;
+      }
+    }
+  }
+}
+.match-days,
+.league-wrapper {
+  background-color: var(--color-basic-500);
+  padding: 0.5em 1em 0.5em 0.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+
+  & > * {
+    flex-grow: 1;
+    white-space: nowrap;
+  }
+
+  .form-label {
+    margin-inline-end: 1rem;
+    margin-bottom: 0;
+  }
+
+  .form-select {
+    padding: 0.375rem 0.75rem 0.375rem 2.25rem;
+    -moz-padding-end: calc(0.75rem - 3px);
+    color: #1f2028;
+    background-color: #fff;
+    background-position: left 0.75rem center;
+  }
+}
+
+.match-days {
+  background-color: var(--color-basic-400);
+}
+
+.scheduling {
+  a {
+    color: var(--color-basic-900);
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      color: var(--color-primary-500);
+    }
+  }
+
+  .row {
+    flex-direction: row;
+    text-align: center;
+    margin: 0;
+    padding: 0.4em 0;
+    width: 100%;
+    border-bottom: 1px solid var(--color-basic-400);
+
+    > * {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .team-home {
+      width: 40%;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+
+      a {
+        text-align: end;
+      }
+
+      img {
+        margin-inline-start: 0.5em;
+      }
+    }
+    .team-away {
+      width: 40%;
+      justify-content: flex-start;
+
+      a {
+        text-align: start;
+      }
+
+      img {
+        margin-inline-end: 0.5em;
+      }
+    }
+    .result {
+      width: 20%;
+      padding: 0.25em;
+      font-weight: bold;
+      border-radius: 0.4em;
+      background-color: var(--color-basic-400);
+
+      .dot {
+        padding: 0 0.5em;
+      }
+    }
+
+    .status {
+      font-size: 0.875em;
+      width: 100%;
+      padding: 0.25em;
+      margin-top: 0.75em;
+      border-radius: 0.4em;
+      background-color: var(--color-basic-400);
+      color: var(--color-basic-700);
+    }
+  }
+}
+
+.card-table {
+  .header,
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0.4em 0;
+    width: 100%;
+    border-bottom: 1px solid var(--color-basic-400);
+
+    > * {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+
+    .player {
+      width: 70%;
+      justify-content: flex-start;
+    }
+    .logo,
+    .wins,
+    .losses,
+    .rank,
+    .goal {
+      width: 15%;
+    }
+
+    .team {
+      width: 40%;
+      justify-content: flex-start;
+
+      a {
+        color: var(--color-basic-900);
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        text-align: start;
+        transition: all 0.2s ease-out;
+
+        &:hover {
+          color: var(--color-primary-500);
+        }
+      }
+    }
+  }
+
+  .header {
+    background-color: var(--color-basic-400);
+  }
+
+  .row {
+    .avatar {
+      width: 15%;
+    }
+    .player {
+      width: 55%;
+      justify-content: flex-start;
+    }
+  }
+}

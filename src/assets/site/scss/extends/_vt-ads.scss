@@ -1,0 +1,33 @@
+.col-ads {
+  width: 100%;
+  box-shadow: var(--box-shadow-sm);
+  border-radius: 0.5em;
+  overflow: hidden;
+
+  .col-ad {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.row-ads {
+  width: 100%;
+  box-shadow: var(--box-shadow-sm);
+  border-radius: 0.5em;
+  overflow: hidden;
+
+  .row-ad {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.mid-site-ad-wrapper {
+  width: 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+  background-position: center, center;
+
+  margin-bottom: 1rem;
+  color: #fff;
+}

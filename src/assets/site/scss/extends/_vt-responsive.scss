@@ -1,0 +1,135 @@
+@include media-breakpoint-down(lg) {
+  // .col-12 {
+  //   margin-bottom: 0.5em;
+  // }
+
+  .ads-column.item-column {
+    flex-direction: row;
+    width: calc(100% + 0.5em);
+    padding: 0;
+
+    .col-ads {
+      margin: 0 0.25em 0.5em 0.25em;
+    }
+  }
+
+  .footer-site .sign-col {
+    align-items: center;
+  }
+
+  .tag-list-wrap .tag-list-body {
+    justify-content: center;
+    margin-bottom: 1em;
+  }
+
+  .tag-list-header {
+    margin-inline-start: 5%;
+
+    .vt-divider {
+      width: 95%;
+    }
+  }
+
+  .footer-main .info-col {
+    align-items: center;
+    padding: 0;
+    margin: 0 4%;
+    width: 90%;
+    margin-bottom: 1em;
+  }
+
+  .item-column {
+    margin-bottom: 0.75em;
+  }
+
+  .mid-site-ad-wrapper {
+    text-align: center;
+
+    .col-lg-2 {
+      order: 1;
+      margin-bottom: 2em;
+    }
+
+    .col-lg-9 {
+      order: 2;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.5em;
+    }
+  }
+
+  .row.mb-75 {
+    margin-bottom: 0;
+
+    .row-ads {
+      margin-bottom: 0.75em;
+    }
+  }
+
+  header.mb-4 {
+    margin-bottom: 1em;
+  }
+
+  .news-slider-item .image-area {
+    order: 1;
+  }
+  .news-slider-item .text-area {
+    order: 2;
+  }
+
+  section.header {
+    .header-main {
+      flex-wrap: wrap;
+
+      .search-container {
+        width: 100%;
+        order: 3;
+        margin: 0;
+      }
+      .header-main-actions {
+        width: 54%;
+        order: 1;
+        margin-bottom: 1em;
+      }
+      .logo-wrap {
+        width: 40%;
+        order: 2;
+        margin-bottom: 1em;
+        padding: 0;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .preheader-navbar {
+    .material-icons {
+      font-size: 1.25em;
+    }
+    .btn {
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .navbar-nav.me-auto {
+      overflow-x: auto;
+      padding: 0;
+    }
+  }
+
+  .subheader-navbar {
+    overflow-x: auto;
+
+    .navbar-nav {
+      padding-bottom: 0.5em;
+      .nav-item {
+        .btn {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
