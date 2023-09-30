@@ -1,7 +1,12 @@
+<script setup>
+  
+  import HeaderComponent from "@/components/site/include/HeaderComponent"
+
+</script>
 <template>
     <div>
-        <main>
-            <div class="container-xxl">
+        <HeaderComponent/>
+        <div class="container-xxl">
             <main class="mb-4">
                 <div class="row mb-75">
                     <!-- @foreach ($Advertises[1] ?? [] as $advertise)
@@ -217,7 +222,7 @@
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" id="conv-tab" data-bs-toggle="tab" data-bs-target="#conv" type="button" role="tab" aria-controls="conv" aria-selected="false">
-                                          {{ $t('site.Challenged') }}
+                                        {{ $t('site.Challenged') }}
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
@@ -327,13 +332,13 @@
                     @endif -->
                     <!-- <div class="col-12 col-lg-2 ads-column item-column">
                         <div class="col-ads">
-                            <img class="col-ad" src="/assets/site/images/ads/cols/00911970.gif" alt="site ad"/>
+                            <img class="col-ad" src="/site/images/ads/cols/00911970.gif" alt="site ad"/>
                         </div>
                         <div class="col-ads">
-                            <img class="col-ad" src="/assets/site/images/ads/cols/00911861.gif" alt="site ad"/>
+                            <img class="col-ad" src="/site/images/ads/cols/00911861.gif" alt="site ad"/>
                         </div>
                         <div class="col-ads">
-                            <img class="col-ad" src="/assets/site/images/ads/cols/00911969.gif" alt="site ad"/>
+                            <img class="col-ad" src="/site/images/ads/cols/00911969.gif" alt="site ad"/>
                         </div>
                     </div> -->
                 </div>
@@ -346,7 +351,7 @@
                 rgba(21, 26, 48, 0.85),
                 rgba(21, 26, 48, 0.85)
               ),
-              url(/assets/site/images/53970387-B72B-43A2-9FE0-C0EB33F35404.jpeg);
+              url(/site/images/53970387-B72B-43A2-9FE0-C0EB33F35404.jpeg);
           ">
             <div class="container-xxl py-5">
                 <div class="row justify-content-center">
@@ -364,7 +369,7 @@
                     </div>
                     <div class="col-12 col-lg-2">
                         <img
-                            src="/assets/site/images/sport-mid.png"
+                            src="/site/images/sport-mid.png"
                             alt="sport"
                             class="img-fluid"
                         />
@@ -466,6 +471,8 @@
             </div>
         </div>
         <router-view></router-view>
-      </main>
     </div>
-  </template>
+</template>
+
+
+
