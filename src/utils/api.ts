@@ -77,10 +77,13 @@ export function useApi() {
     }
 
     const get = async (url, queryParams = {}) => {
-        await api.get(url, { params: queryParams })
-        .catch((err) => {
-            errorHandler(err)
-        });
+        return await api.get(url, { params: queryParams });
+        // .then((response) => {
+        //     return response;
+        // }) 
+        // .catch((err) => {
+        //     errorHandler(err)
+        // });
     }
 
     const post = async (url, queryParams = {}) => {

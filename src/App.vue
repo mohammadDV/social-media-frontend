@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <button v-if="!isAuthenticated" @click="login">Login</button>
-    <button v-if="isAuthenticated" @click="logout">Logout</button>
+    <!-- <button v-if="!isAuthenticated" @click="login">Login</button>
+    <button v-if="isAuthenticated" @click="logout">Logout</button> -->
     <router-view></router-view>
   </div>
 </template>
