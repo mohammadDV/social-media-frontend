@@ -52,6 +52,14 @@ router.afterEach((to) => {
     require('@/assets/site/fonts/material-icons/material-icons.css');
     require('@/assets/site/css/splide.min.css');
     require('@/assets/site/css/styles.css');
+    // require('@/assets/site/js/jquery.min.js');
+    // require('@/assets/site/js/bootstrap.bundle.min.js');
+    // require('@/assets/site/js/splide.min.js');
+    // require('@/assets/site/js/script.js');
+    // require('@/assets/site/js/modal.js');
+    // require('@/assets/site/js/lazyload.js');
+    // require('@/assets/site/js/func.js');
+
   } else if (layout === 'profileLayout') {
     require('@/assets/site/fonts/vazir-ui/vazir.css');
   }
