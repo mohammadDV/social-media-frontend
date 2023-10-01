@@ -13,59 +13,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-7 flex-grow-1">
                         <div class="row mx-0 mb-75">
-                            <div id="newsSpilde" class="splide">
-                                <div class="splide__track">
-                                    <ul class="splide__list">
-                                    <!-- @foreach($specialPosts as $key => $post)
-
-                                        @if(!isset($post['image']['indexArray']['medium']))
-                                            @php
-                                                continue;
-                                            @endphp
-                                        @endif -->
-
-                                        <div class="splide__slide">
-                                            <div class="news-slider-item">
-                                                <!-- <a title="{{ $post['title'] }}" href="{{ url('news/' . $post->id .'/' .$post->slug) }}" class="stretched-link"></a> -->
-                                                <div class="row">
-                                                    <!-- Image Area -->
-                                                    <div class="col-12 col-lg-6 image-area">
-                                                        <div class="news-slider--image-container">
-                                                            <div class="news-slider--image-area">
-                                                                <!-- <img
-                                                                    width="246"
-                                                                    height="150"
-                                                                    src="{{ url($post['image']['indexArray']['medium']) }}"
-                                                                    alt="طرح&zwnj;های زیبایی که قرار نبود دیده شود ! (عکس)"
-                                                                /> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Text Area -->
-                                                    <div class="col-12 col-lg-6 text-area">
-                                                        <div class="news-slider--text-container">
-                                                            <div class="news-slider--rutitle">
-                                                                <!-- {{ $post['pre_title'] }} -->
-                                                            </div>
-                                                            <h3 class="news-slider--title">
-                                                                <!-- {{ $post['title'] }} -->
-                                                            </h3>
-                                                            <p class="news-slider--subtitle">
-                                                                <!-- {{ $post['summary'] }} -->
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <!-- @endforeach -->
-                                    </ul>
-                                </div>
-
-                                <div class="splide__progress">
-                                    <div class="splide__progress__bar"></div>
-                                </div>
-                            </div>
+                          <slider-component :slides="specialPosts"></slider-component>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6 item-column">
@@ -163,37 +111,9 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-3 flex-grow-1 item-column">
-                        <div class="splide splide-auto">
-                            <div class="splide__track">
-                                <ul class="splide__list">
-                                    <!-- @foreach($posts[7] ?? [] as $key => $post)
-                                        @if(!isset($post['image']['indexArray']['medium']))
-                                            @php
-                                                continue;
-                                            @endphp
-                                        @endif
-
-                                        <li class="splide__slide">
-                                            <div class="slider-item">
-                                                <div class="slider--media ratio-3-4">
-                                                    <img width="200" height="144" title="{{ $post->title }}" alt="{{ $post->title }}" src="{{ $post['image']['indexArray']['medium'] }}"/>
-                                                </div>
-                                                <div class="slider--caption">
-                                                    <span class="slider--caption-title">{{ $post->title }}</span>
-                                                    <span class="slider--caption-date">{{ $currentDate }}</span>
-                                                </div>
-                                                <a href="{{ url('news/' . $post->id .'/' .$post->slug) }}" t title="{{ $post->title }}" class="stretched-link"></a>
-                                            </div>
-                                        </li>
-
-                                    @endforeach -->
-                                </ul>
-                            </div>
-
-                            <div class="splide__progress">
-                                <div class="splide__progress__bar"></div>
-                            </div>
-                        </div>
+                        <full-slider-componenet :slides="specialPosts"></full-slider-componenet>
+                        <!-- <newspaper-slider-componenet :slides="posts[7]"></newspaper-slider-componenet> -->
+                                    
 
                         
 
@@ -448,7 +368,8 @@
   import { onMounted, ref } from 'vue';
   import TabsComponent from '@/components/plugins/tabs/TabsComponent.vue';
   import TabComponent from '@/components/plugins/tabs/TabComponent.vue';
-
+  import SliderComponent from '@/components/plugins/slider/SliderComponenet.vue';
+  import FullSliderComponenet from '@/components/plugins/slider/FullSliderComponenet.vue';
 
 
   const advertises = ref([]);
@@ -456,6 +377,13 @@
   const latest = ref([]);
   const challenged = ref([]);
   const popular = ref([]);
+  const specialPosts = ref([]);
+  // const slides = ref([
+  //       { content: 'Slide 1' },
+  //       { content: 'Slide 2' },
+  //       { content: 'Slide 3' }
+  //     ]);
+
   const tabItem = ref('latest');
 
   onMounted(() => {
@@ -479,6 +407,7 @@
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;
             popular.value = response?.data?.popular;
+            specialPosts.value = response?.data?.specialPosts;
         });
   }
 
