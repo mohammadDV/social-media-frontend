@@ -113,10 +113,6 @@
                     <div class="col-12 col-lg-3 flex-grow-1 item-column">
                         <full-slider-componenet :slides="specialPosts"></full-slider-componenet>
                         <!-- <newspaper-slider-componenet :slides="posts[7]"></newspaper-slider-componenet> -->
-                                    
-
-                        
-
                         <div class="card vt-news-card height-fluid">
                             <div class="card-header">
                                 <tabs-component class="nav">
@@ -178,45 +174,11 @@
                             </div>
                         </div>
 
-                        <div class="splide splide-auto">
-                            <div class="splide__track">
-                                <ul class="splide__list">
-
-                                    <!-- @foreach($specialVideos as $key => $post)
-                                        @if(!isset($post['image']['indexArray']['medium']))
-                                            @php
-                                                continue;
-                                            @endphp
-                                        @endif -->
-                                        <li class="splide__slide">
-                                            <div class="slider-item horizontal">
-                                                <div class="slider--media ratio-9-16">
-                                                    <div class="video-datetime">
-                                                        <span class="material-icons text-body-invert size-font size-font-p1"> schedule </span>
-                                                        <!-- <span> {{ $post->created_at->diffforhumans() }}</span> -->
-                                                    </div>
-                                                    <span class="material-icons text-primary play-icon"> play_circle </span>
-                                                    <!-- <img width="240" height="160" src="{{ $post['image']['indexArray']['medium'] }}" alt="{{ $post->title }}" -->
-                                                    <!-- /> -->
-                                                </div>
-                                                <div class="slider--caption">
-                                                    <!-- <span>{{ $post->title }}</span> -->
-                                                </div>
-                                                <!-- <a title="{{ $post->title }}" href="{{ url('news/' . $post->id .'/' .$post->slug) }}" class="stretched-link"></a> -->
-                                            </div>
-                                        </li>
-
-                                    <!-- @endforeach -->
-                                </ul>
-                            </div>
-
-                            <div class="splide__progress">
-                                <div class="splide__progress__bar"></div>
-                            </div>
-                        </div>
+                        <!-- specialVideos -->
+                        <full-slider-componenet :slides="specialVideos"></full-slider-componenet>
                     </div>
                     <div v-if="advertises[2]?.length > 0" class="col-12 col-lg-2 ads-column item-column">
-                        <div class="col-ads" v-for="(advertise, index) in advertises[2] ?? []" :key="index">
+                        <div class="col-ads" v-for="(advertise, index) in advertises[2]" :key="index">
                           <router-link :to="advertise.link" :title="advertise.title">
                             <img class="col-ad" :src="advertise.image" :alt="advertise.title"/>
                           </router-link>
@@ -280,28 +242,20 @@
                         </div>
                         <div class="card-body">
                             <div class="card-body-inner">
-                                <div class="row gy-3 news-item-row">
-                                    <!-- @foreach($posts[5] ?? [] as $key => $post)
-                                        @if(!isset($post['image']['indexArray']['small']))
-                                            @php
-                                                continue;
-                                            @endphp
-                                        @endif
-
-                                        <div class="col-12 col-lg-6">
-                                            <div class="news-row-item">
-                                                <div class="row gx-2">
-                                                    <div class="col-4">
-                                                        <div class="news-row-item-thumb ratio ratio-1x1" style="background-image: url({{ str_replace('\\','/',$post['image']['indexArray']['small']) }});"></div>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p class="news-row-item-title">{{ $post->title }}</p>
-                                                        <a class="news-row-item-link" href="{{ url('news/' . $post->id .'/' .$post->slug) }}">{{ $post->pre_title }}</a>
-                                                    </div>
+                                <div v-if="posts[5]?.length > 0" class="row gy-3 news-item-row">
+                                    <div class="col-12 col-lg-6" v-for="(post, index) in posts[5]" :key="index">
+                                        <div class="news-row-item">
+                                            <div class="row gx-2">
+                                                <div class="col-4">
+                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']['indexArray']['small']})`"></div>
+                                                </div>
+                                                <div class="col-8">
+                                                    <p class="news-row-item-title">{{ post.title }}</p>
+                                                    <router-link :to="`'news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -315,28 +269,20 @@
                         </div>
                         <div class="card-body">
                             <div class="card-body-inner">
-                                <div class="row gy-3 news-item-row">
-                                    <!-- @foreach($posts[6] ?? [] as $key => $post)
-                                        @if(!isset($post['image']['indexArray']['small']))
-                                            @php
-                                                continue;
-                                            @endphp
-                                        @endif
-
-                                        <div class="col-12 col-lg-6">
-                                            <div class="news-row-item">
-                                                <div class="row gx-2">
-                                                    <div class="col-4">
-                                                        <div class="news-row-item-thumb ratio ratio-1x1" style="background-image: url({{ str_replace('\\','/',$post['image']['indexArray']['small']) }});"></div>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p class="news-row-item-title">{{ $post->title }}</p>
-                                                        <a class="news-row-item-link" href="{{ url('news/' . $post->id .'/' .$post->slug) }}">{{ $post->pre_title }}</a>
-                                                    </div>
+                                <div v-if="posts[6]?.length > 0" class="row gy-3 news-item-row">
+                                    <div class="col-12 col-lg-6" v-for="(post, index) in posts[5]" :key="index">
+                                        <div class="news-row-item">
+                                            <div class="row gx-2">
+                                                <div class="col-4">
+                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']['indexArray']['small']})`"></div>
+                                                </div>
+                                                <div class="col-8">
+                                                    <p class="news-row-item-title">{{ post.title }}</p>
+                                                    <router-link :to="`'news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -378,11 +324,7 @@
   const challenged = ref([]);
   const popular = ref([]);
   const specialPosts = ref([]);
-  // const slides = ref([
-  //       { content: 'Slide 1' },
-  //       { content: 'Slide 2' },
-  //       { content: 'Slide 3' }
-  //     ]);
+  const specialVideos = ref([]);
 
   const tabItem = ref('latest');
 
@@ -408,6 +350,7 @@
             challenged.value = response?.data?.challenged;
             popular.value = response?.data?.popular;
             specialPosts.value = response?.data?.specialPosts;
+            specialVideos.value = response?.data?.specialVideos;
         });
   }
 
