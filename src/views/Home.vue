@@ -111,8 +111,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-3 flex-grow-1 item-column">
-                        <full-slider-componenet :slides="specialPosts"></full-slider-componenet>
-                        <!-- <newspaper-slider-componenet :slides="posts[7]"></newspaper-slider-componenet> -->
+                        <full-slider-component :slides="specialPosts"></full-slider-component>
+                        <!-- <newspaper-slider-component :slides="posts[7]"></newspaper-slider-component> -->
                         <div class="card vt-news-card height-fluid">
                             <div class="card-header">
                                 <tabs-component class="nav">
@@ -175,7 +175,7 @@
                         </div>
 
                         <!-- specialVideos -->
-                        <full-slider-componenet :slides="specialVideos"></full-slider-componenet>
+                        <full-slider-component :slides="specialVideos"></full-slider-component>
                     </div>
                     <div v-if="advertises[2]?.length > 0" class="col-12 col-lg-2 ads-column item-column">
                         <div class="col-ads" v-for="(advertise, index) in advertises[2]" :key="index">
@@ -296,10 +296,10 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
-                    <!-- <x-lives  :lives="$lives" /> -->
+                    <live-component />
                 </div>
                 <div class="col-12 col-lg-4">
-                    <!-- <x-match-table  :sports="$sports" :id="1" /> -->
+                    <match-component />
                 </div>
                 <div class="col-12 col-lg-4">
                     <!-- <x-match-table  :sports="$sports" :id="2" /> -->
@@ -312,10 +312,12 @@
 
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref } from 'vue';
-  import TabsComponent from '@/components/plugins/tabs/TabsComponent.vue';
-  import TabComponent from '@/components/plugins/tabs/TabComponent.vue';
-  import SliderComponent from '@/components/plugins/slider/SliderComponenet.vue';
-  import FullSliderComponenet from '@/components/plugins/slider/FullSliderComponenet.vue';
+  import TabsComponent from '@/components/plugins/tabs/TabsComponent';
+  import TabComponent from '@/components/plugins/tabs/TabComponent';
+  import SliderComponent from '@/components/plugins/slider/SliderComponent';
+  import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
+  import LiveComponent from '@/components/site/LiveComponent';
+  import MatchComponent from '@/components/site/MatchComponent';
 
 
   const advertises = ref([]);
@@ -344,7 +346,6 @@
   const getPosts = () => {
     useApi().get('api/posts')
         .then((response) => {
-            console.log(response.data);
             posts.value = response?.data?.posts;
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;
