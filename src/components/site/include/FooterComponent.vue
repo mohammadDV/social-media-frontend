@@ -8,8 +8,6 @@
   onMounted(() => {
     useApi().get('api/tags-random')
         .then((response) => {
-            console.log("xasxasx123");
-            console.log(response);
             tags.value = response.data;
         })
   });
