@@ -45,8 +45,6 @@ const router = createRouter({
 
 router.afterEach((to) => {
   const layout = to.meta.layout;
-  console.log(to.meta);
-  console.log("Xasxasxsax");
   if (layout === 'mainLayout') {
     require('@/assets/site/fonts/vazir-ui/vazir.css');
     require('@/assets/site/fonts/material-icons/material-icons.css');

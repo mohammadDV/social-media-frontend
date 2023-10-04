@@ -52,7 +52,7 @@ const props = defineProps({
     optionsValueKey: String,
     label: String,
     name: String,
-    modelValue: [String, Number, Boolean, Array, Date],
+    modelValue: [String, Number, Boolean, Array, Date, Object],
 })
 
 
