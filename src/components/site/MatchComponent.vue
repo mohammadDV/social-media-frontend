@@ -8,9 +8,10 @@
 
   const title = ref('');
   const tabItem = ref('timing');
-  const league = ref('');
+  const leagueId = ref(0);
   const leagues = ref([]);
   const steps = ref([]);
+  const stepId = ref(0);
   const matches = ref([]);
   const clubs = ref([]);
 
@@ -18,18 +19,33 @@
     useApi().get('api/leagues')
         .then((response) => {
             title.value = response.data[1].title;
-            steps.value = response.data[1].steps;
+            steps.value = response.data[1].steps.steps;
+            stepId.value = response.data[1].steps?.current?.id;
             leagues.value = response.data[1].leagues;
+            leagueId.value = response.data[1].leagues[0].id;
             matches.value = response.data[1].matches;
             clubs.value = response.data[1].clubs;
+            console.log(matches.value);
         })
   });
 
-  const changeLeague = (value) => {
+  const changeLeague = () => {
 
-    console.log(league.value);
-    console.log(value);
-    console.log("ok");
+    useApi().get(`api/leagues/${leagueId.value}`)
+        .then((response) => {
+            matches.value = response.data.matches;
+            clubs.value = response.data.clubs;
+            steps.value = response.data.steps.steps;
+            stepId.value = response.data.steps?.current?.id;
+        })
+  }
+
+  const changeStep = () => {
+    useApi().get(`api/step/${stepId.value}`)
+        .then((response) => {
+            matches.value = response.data.matches;
+            clubs.value = response.data.clubs;
+        })
   }
 
   const changeTab = (tab) => {
@@ -40,6 +56,26 @@
 
 <template>
    <div class="card vt-news-card height-md with-select">
+    <div class="league-wrapper">
+                <VTSelect 
+                    v-model="leagueId" 
+                    :options="leagues" 
+                    optionsValueKey="id"
+                    optionsDisplayValueKey="title"
+                    name="league"
+                    :label="title"
+                    @change="changeLeague"/>
+            </div>
+            <div class="match-days">
+                <VTSelect 
+                    v-model="stepId" 
+                    :options="steps" 
+                    optionsValueKey="id"
+                    optionsDisplayValueKey="title"
+                    name="step"
+                    label="دور"
+                    @change="changeStep"/>
+            </div>
         <div class="card-header">
             <tabs-component class="nav">
                 <tab-component class="nav-item cursor-pointer" :is-active="tabItem == 'timing'"
@@ -57,34 +93,11 @@
             </tabs-component>
         </div>
         <div class="card-body" id="table-match-{{ $id }}">
-            <div class="league-wrapper">
-                <VTSelect 
-                    v-model="league" 
-                    :options="leagues" 
-                    optionsValueKey="id"
-                    optionsDisplayValueKey="title"
-                    name="league"
-                    :label="title"
-                    @change="changeLeague"/>
-            </div>
-            <div class="match-days">
-                <VTSelect 
-                    v-model="step" 
-                    :options="steps" 
-                    optionsValueKey="id"
-                    optionsDisplayValueKey="title"
-                    name="step"
-                    label="دور"
-                    @change="changeStep"/>
-                    <!-- @foreach ($steps['steps'] ?? [] as $step)
-                        <option value="{{ $step["id"] }}" @if($steps["current"]["id"] == $step["id"]) selected @endif>{{ $step["title"] }}</option>
-                    @endforeach -->
-            </div>
+            
             <div class="card-body-inner">
                 <div class="tab-content" id="hottiesContent">
-                    <div class="tab-pane fade show active" id="timeTable" role="tabpanel" aria-labelledby="timeTable-tab">
+                    <div v-if="tabItem == 'timing'" class="tab-pane fade show active" id="timeTable" role="tabpanel" aria-labelledby="timeTable-tab">
                         <div class="scheduling">
-
                             <div id="match-list-id" class="match-list rows">
                                 <div class="row" v-for="(match, index) in matches" :key="index">
                                     <div class="team-home">
@@ -107,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div  class="tab-pane fade"  id="standing"  role="tabpanel"  aria-labelledby="standing-tab">
+                    <div v-if="tabItem == 'ranking'" class="tab-pane fade show active" >
                         <div class="standing-list">
                             <div class="standing-section">
                                 <div class="standing-section-header">
@@ -131,7 +144,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="goals" role="tabpanel" aria-labelledby="goals-tab">
+                    <div v-if="tabItem == 'goals'" class="tab-pane fade show active" id="goals" role="tabpanel" aria-labelledby="goals-tab">
                         <div class="scorer-table">
                             <div class="card-table">
                                 <div class="rows">

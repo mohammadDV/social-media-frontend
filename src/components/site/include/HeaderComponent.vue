@@ -10,7 +10,6 @@
   onMounted(() => {
     useApi().get('api/active-categories')
         .then((response) => {
-            console.log(response.data);
             categories.value = response.data;
         })
   });

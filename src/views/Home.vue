@@ -338,7 +338,6 @@
   const getAdvertises = () => {
     useApi().get('api/advertise')
         .then((response) => {
-            console.log(response.data);
             advertises.value = response.data;
         });
   }
