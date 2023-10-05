@@ -6,7 +6,7 @@
   const tags = ref([]);
 
   onMounted(() => {
-    useApi().get('api/tags-random')
+    useApi().get('/api/tags-random')
         .then((response) => {
             tags.value = response.data;
         })
