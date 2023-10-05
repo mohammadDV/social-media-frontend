@@ -8,7 +8,7 @@
   const categories = ref([]);
 
   onMounted(() => {
-    useApi().get('api/active-categories')
+    useApi().get('/api/active-categories')
         .then((response) => {
             categories.value = response.data;
         })

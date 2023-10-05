@@ -1,15 +1,7 @@
 <template>
     <div class="container-xxl">
             <main class="mb-4">
-                <div v-if="advertises[1]?.length > 0" class="row mb-75">
-                    <div class="col-12 col-lg-6" v-for="(advertise, index) in advertises[1]" :key="index">
-                        <div class="row-ads mb-2">
-                            <a :href="advertise.link" :title="advertise.title">
-                                <img :src="advertise.image" :alt="advertise.title" class="img-fluid row-ad"/>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <horizontal-advertise-component :advertises="advertises[1]"/>
                 <div class="row">
                     <div class="col-12 col-lg-7 flex-grow-1">
                         <div class="row mx-0 mb-75">
@@ -178,11 +170,7 @@
                         <full-slider-component :slides="specialVideos"></full-slider-component>
                     </div>
                     <div v-if="advertises[2]?.length > 0" class="col-12 col-lg-2 ads-column item-column">
-                        <div class="col-ads" v-for="(advertise, index) in advertises[2]" :key="index">
-                          <router-link :to="advertise.link" :title="advertise.title">
-                            <img class="col-ad" :src="advertise.image" :alt="advertise.title"/>
-                          </router-link>
-                        </div>
+                        <vertical-advertise-component :advertises="advertises[1]"/>
                     </div>
                     <div class="col-12 col-lg-2 ads-column item-column">
                         <div class="col-ads">
@@ -302,7 +290,7 @@
                     <match-component />
                 </div>
                 <div class="col-12 col-lg-4">
-                    <!-- <x-match-table  :sports="$sports" :id="2" /> -->
+                    <match-component />
                 </div>
             </div>
         </div>
@@ -318,6 +306,8 @@
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
   import LiveComponent from '@/components/site/LiveComponent';
   import MatchComponent from '@/components/site/MatchComponent';
+  import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
+  import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
 
 
   const advertises = ref([]);
