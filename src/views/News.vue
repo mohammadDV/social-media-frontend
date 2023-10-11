@@ -90,120 +90,8 @@
                         </div>
                     </div>
 
-                    <!-- <div class="comment-section">
-                        <div class="comment-section--header">
-                            <div class="comment-section--title-wrap">
-                                <span class="comment-section--title">{{ $t('site.Comments') }}</span>
-                                <span class="comment-section--number">{{ $post->comments()->count() }} {{ $t('site.Comment') }}</span>
-                            </div>
-                            <div class="comment-section--divider"></div>
-                        </div>
-                        <div class="comment-form">
-                            <div id="replay-close" class="replay-close hidden">
-                                {{ $t('site.Reply') }}
-                                <button class="btn btn-sm btn-warning"><span class="material-icons size-font text-primary"> close </span></button>
-                            </div>
-                            @include('errors.error')
-                            @auth
-                            <x-form-creator :form="$form" />
-                            @else
-                                <a id="comment-text" href="{{ route('login') }}"><button class="btn btn-primary w-100">{{ $t("site.Login please") }}</button></a>
-                            @endauth
-
-                        </div>
-                        @foreach($comments as $comment)
-                        <div class="comment-wrap">
-                            <div class="comment">
-                                <div class="comment--body">
-                                    <div class="commenter-avatar-wrap">
-                                        <div class="commenter-avatar">
-                                            @if(!empty($comment->user()->profile_photo_path))
-                                                <img src="{{ asset(auth()->user()->profile_photo_path) }}" alt="{{ $comment->user->first_name }}" />
-                                            @else
-                                                <img src="{{ asset('assets/site/images/user-icon.png') }}" alt="{{ $comment->user->first_name }}" />
-                                            @endif
-                                            <a href="#" class="stretched-link"></a>
-                                        </div>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p class="comment-text-pragraph">
-                                            <a class="comment-user-text-link" href="#">
-                                                <span class="user-name"> {{ $comment->user->first_name }} </span>
-                                            </a>
-                                            <br>
-                                            <span class="comment-text-span">{{ $comment->text }}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="comment--footer">
-                                    <div class="comment--date">{{ $comment->created_at->diffforhumans() }}</div>
-                                    <div class="comment--reactions">
-                                        <button data-id="{{ $comment->id }}" class="reply-btn btn vt-btn-white">
-                                            <span class="material-icons size-font"> reply </span>
-                                            <span>{{ $t('site.Reply') }}</span>
-                                        </button>
-        {{--                                        <button class="btn vt-btn-white">--}}
-        {{--                                            <span class="material-icons size-font">--}}
-        {{--                                              thumb_up_alt--}}
-        {{--                                            </span>--}}
-        {{--                                            <span>10</span>--}}
-        {{--                                        </button>--}}
-        {{--                                        <button class="btn vt-btn-white is-danger">--}}
-        {{--                                            <span class="material-icons size-font">--}}
-        {{--                                              thumb_down_alt--}}
-        {{--                                            </span>--}}
-        {{--                                            <span>2</span>--}}
-        {{--                                        </button>--}}
-                                    </div>
-                                </div>
-                            </div>
-                            @if(!empty($comment->parents))
-                                @foreach($comment->parents as $parent)
-                                    <div class="comment">
-                                        <div class="comment--body">
-                                            <div class="commenter-avatar-wrap">
-                                                <div class="commenter-avatar">
-                                                    @if(!empty($parent->user()->profile_photo_path))
-                                                        <img src="{{ asset($parent->user()->profile_photo_path) }}" alt="user avatar" />
-                                                    @else
-                                                        <img src="{{ asset('assets/site/images/user-icon.png') }}" alt="user avatar" />
-                                                    @endif
-                                                    <a href="#" class="stretched-link"></a>
-                                                </div>
-                                            </div>
-                                            <div class="comment-text">
-                                                <p class="comment-text-pragraph">
-                                                    <a class="comment-user-text-link" href="#">
-                                                        <span class="user-name"> {{ $parent->user->first_name }} </span>
-                                                    </a>
-                                                    <br>
-                                                    <span class="comment-text-span">{{ $parent->text }}</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="comment--footer">
-                                            <div class="comment--date">{{ $parent->created_at->diffforhumans() }}</div>
-                                            <div class="comment--reactions">
-        {{--                                                <button class="btn vt-btn-white">--}}
-        {{--                                                    <span class="material-icons size-font">--}}
-        {{--                                                      thumb_up_alt--}}
-        {{--                                                    </span>--}}
-        {{--                                                    <span>10</span>--}}
-        {{--                                                </button>--}}
-        {{--                                                <button class="btn vt-btn-white is-danger">--}}
-        {{--                                                    <span class="material-icons size-font">--}}
-        {{--                                                      thumb_down_alt--}}
-        {{--                                                    </span>--}}
-        {{--                                                    <span>2</span>--}}
-        {{--                                                </button>--}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
-                        @endforeach
-                    </div> -->
+                    <comment-form-component @updateComments="updateComments"/>
+                    <comment-component :comments="post?.comments" @updateComments="updateComments"/>
                 </div>
                 <div class="col-12 col-lg-3 flex-grow-1 item-column">
                     
@@ -286,14 +174,11 @@
   import TabsComponent from '@/components/plugins/tabs/TabsComponent';
   import TabComponent from '@/components/plugins/tabs/TabComponent';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
-//   import LiveComponent from '@/components/site/LiveComponent';
-//   import MatchComponent from '@/components/site/MatchComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
-
-
-
-
+  import CommentComponent from '@/components/site/components/comments/CommentComponent';
+  import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
+ 
   const advertises = ref([]);
   const posts = ref([]);
   const latest = ref([]);
@@ -317,11 +202,15 @@
 })
 
   onMounted(() => {
-
     getPost()
     getAdvertises();
     getPosts();
   });
+
+
+  const updateComments = () => {
+    getPost()
+  }
 
   const getAdvertises = () => {
     useApi().get('/api/advertise')
