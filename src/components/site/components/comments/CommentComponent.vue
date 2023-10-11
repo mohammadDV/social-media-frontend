@@ -1,14 +1,22 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, defineProps } from 'vue';
+  import { onMounted, defineProps, defineEmits } from 'vue';
+  import CommentFormComponent from './CommentFormComponent';
 
-  defineProps({
+  const props = defineProps({
     comments: {
         type: Array,
         required: true
     }
   });
+
+  const emit = defineEmits(['updateComments'])
+
+
+  const updateComments = () => {
+    emit('updateComments')
+  }
 
   onMounted(() => {
     useApi().get('/api/active-categories')
@@ -16,6 +24,13 @@
             response.data;
         })
   });
+
+  const setReply = (commentId) => {
+    console.log(props.comments);
+    let comment = props.comments.find(item => item.id == commentId);
+    comment.reply = !comment?.reply;
+  }
+
 </script>
 <template>
 
@@ -63,7 +78,7 @@
                 <div class="comment--footer">
                     <div class="comment--date">{{ comment.created_at }}</div>
                     <div class="comment--reactions">
-                        <button :data-id="comment.id" class="reply-btn btn vt-btn-white">
+                        <button @click="setReply(comment.id)" class="reply-btn btn vt-btn-white">
                             <span class="material-icons size-font"> reply </span>
                             <span>{{ $t('site.Reply') }}</span>
                         </button>
@@ -82,6 +97,7 @@
                     </div>
                 </div>
             </div>
+            <CommentFormComponent v-if="comment.reply" :parentId="comment.id" @updateComments="updateComments"/>
             <template v-if="comment?.parents?.length > 0">
                 <div v-for="(parent, index) in comment.parents" :key="index" class="comment">
                     <div class="comment--body">

@@ -2,7 +2,7 @@ import axios from "axios";
 
 import router from '@/router';
 
-import {useAuthStore} from "../stores/auth.ts";
+import { useAuthStore } from "@/stores/auth.ts";
 
 // export interface ApiUrl {
 //     name: string,
@@ -87,10 +87,8 @@ export function useApi() {
     }
 
     const post = async (url, queryParams = {}) => {
-        await api.post(url, { params: queryParams })
-        .catch((err) => {
-            errorHandler(err)
-        });
+        console.log(queryParams);
+        return await api.post(url, queryParams);
     }
 
     const deleteRequest = async (url, queryParams = {}) => {

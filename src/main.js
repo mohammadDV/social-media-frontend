@@ -3,6 +3,10 @@ import App from './App.vue'
 import './assets/index.css';
 import router from './router';
 
+// Toast
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
 // Locales
 import i18n from './i18n';
 
@@ -23,6 +27,7 @@ pinia.use(createPersistedState({
 
 createApp(App)
     // .use(store)
+    .use(VueToast)
     .use(i18n)
     .use(pinia)
     .use(router)

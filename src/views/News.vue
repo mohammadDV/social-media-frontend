@@ -90,26 +90,8 @@
                         </div>
                     </div>
 
-
-                    <div class="comment-section--header">
-                        <div class="comment-section--title-wrap">
-                            <span class="font-medium m-2">{{ $t('site.Submit comment') }}</span>
-                        </div>
-                        <div class="comment-section--divider"></div>
-                    </div>
-                    <VTTextArea
-                        name="comment"
-                        rows="4"
-                        v-model="comment"
-                        :disabled="false"
-                        :placeholder="$t('site.Add your comment')"/>
-
-                    <VT‌Button class="mt-3 w-100" color="primary" size="medium"
-                                @click="sendComment">
-                        {{ $t('site.Submit') }}
-                    </VT‌Button>
-
-                    <comment-component :comments="post?.comments" />
+                    <comment-form-component @updateComments="updateComments"/>
+                    <comment-component :comments="post?.comments" @updateComments="updateComments"/>
                 </div>
                 <div class="col-12 col-lg-3 flex-grow-1 item-column">
                     
@@ -192,15 +174,11 @@
   import TabsComponent from '@/components/plugins/tabs/TabsComponent';
   import TabComponent from '@/components/plugins/tabs/TabComponent';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
-//   import LiveComponent from '@/components/site/LiveComponent';
-//   import MatchComponent from '@/components/site/MatchComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import CommentComponent from '@/components/site/components/comments/CommentComponent';
-  import VTTextArea from '@/elements/VTTextArea';
-  import VT‌Button from '@/elements/VT‌Button';
-
-
+  import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
+ 
   const advertises = ref([]);
   const posts = ref([]);
   const latest = ref([]);
@@ -211,11 +189,6 @@
 
   const tabItem = ref('latest');
   const post = ref({});
-  const comment = ref('');
-
-  const sendComment = () => {
-    console.log("send-comment");
-  };
 
   const route = useRoute();
 
@@ -229,11 +202,15 @@
 })
 
   onMounted(() => {
-
     getPost()
     getAdvertises();
     getPosts();
   });
+
+
+  const updateComments = () => {
+    getPost()
+  }
 
   const getAdvertises = () => {
     useApi().get('/api/advertise')
