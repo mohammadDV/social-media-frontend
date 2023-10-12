@@ -126,11 +126,11 @@ const changeEvent = function (event) {
 }
 
 const hasBeforeSlot = computed(() => {
-            return !!slots.before && props.showSlot
+            return !!slots?.before && props.showSlot
         })
 
 const hasDefaultSlot = computed(() => {
-    return !!slots.default && props.showSlot
+    return !!slots?.default && props.showSlot
 })
 
 const styles = computed(() => {

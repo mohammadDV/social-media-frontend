@@ -1,29 +1,41 @@
 <template>
-    <div>
-        token : {{ token }}
-        <div class="flex">
+    <div class="container">
+        <div class="flex items-center">
+            <div class="flex-1">
+                <span class="material-icons text-9xl"> login </span>
+            </div>
+            <div class="flex-1">
+                <VTInput
+                    name="username"
+                    rows="4"
+                    v-model="username"
+                    :placeholder="$t('site.Email')"/>
+                <VTInput
+                    name="password"
+                    rows="4"
+                    v-model="password"
+                    :placeholder="$t('site.Password')"/>
 
-        <input class="border mr-5" placeholder="username..." type="text" name="username" v-model="username">
-        <input class="border" placeholder="password..." type="text" name="password" v-model="password">
-        
+                <VTButton class="mt-3 w-100" color="primary" size="medium"
+                            @click="submitLogin()">
+                    {{ $t('site.Login') }}
+                </VTButton>
+            </div>
         </div>
-        <button class="p-2 border rounded m-2 bg-gray" @click="submitLogin">
-            send
-        </button>
-        <button class="p-2 border rounded m-2 bg-gray" @click="tttttt">
-            tttttt
-        </button>
     </div>
 </template>
   
 <script setup>
-  import { computed, ref } from 'vue';
+  import { ref } from 'vue';
+//   import { computed, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
-  import {useApi} from '@/utils/api.ts';
+  import VTButton from '@/elements/VTButton'; 
+  import VTInput from '@/elements/VTInput'; 
+//   import {useApi} from '@/utils/api.ts';
   
   const authStore = useAuthStore();
 
-    const token = computed(() => authStore.token)
+    // const token = computed(() => authStore.token)
 
 
 
@@ -32,14 +44,6 @@
 
     const submitLogin = function() {
         authStore.login(username.value, password.value)
-        .then((response) => {
-            console.log(response);
-        })
-    }
-
-    const tttttt = function() {
-        // api/profile/pages
-        useApi().get('api/profile/pages', { page: 1})
         .then((response) => {
             console.log(response);
         })
