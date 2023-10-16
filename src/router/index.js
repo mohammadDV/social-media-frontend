@@ -1,6 +1,8 @@
+
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Import layouts
+
 import MainLayout from '@/layouts/MainLayout.vue';
 import ProfileLayout from '@/layouts/ProfileLayout.vue';
 
@@ -9,14 +11,20 @@ import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
 import Profile from '@/views/Profile.vue';
 import Login from '@/views/Login.vue';
+import { useAuthStore } from '@/stores/auth.ts';
+
 
 const routes = [
   {
     path: '/',
-    meta: { layout: 'mainLayout' },
+    meta: { 
+      layout: 'mainLayout',
+      requiresAuth: false,
+     },
     component: MainLayout,
     children: [
       {
+        name:'home',
         path: '',
         component: Home,
       },
@@ -25,6 +33,20 @@ const routes = [
         path: '/login',
         component: Login,
       },
+      // {
+      //   path: '/news/:id/:slug',
+      //   component: News,
+      // },
+    ],
+  },
+  {
+    path: '/',
+    meta: { 
+      layout: 'mainLayout',
+      requiresAuth: true,
+     },
+    component: MainLayout,
+    children: [
       {
         path: '/news/:id/:slug',
         component: News,
@@ -33,7 +55,10 @@ const routes = [
   },
   {
     path: '/profile',
-    meta: { layout: 'profileLayout' },
+    meta: { 
+      layout: 'profileLayout',
+      requiresAuth: true,
+    },
     component: ProfileLayout,
     children: [
       {
@@ -47,6 +72,19 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+
+  const authStore = useAuthStore();
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    // If the route requires authentication and the user is not authenticated, redirect to the login page
+    next('/login');
+  } else {
+    // Otherwise, allow access to the route
+    next();
+  }
 });
 
 router.afterEach((to) => {

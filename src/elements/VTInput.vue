@@ -56,7 +56,7 @@
 
 <script setup>
 
-import { defineProps, computed, defineEmits, slots, ref } from 'vue';
+import { defineProps, computed, defineEmits, ref } from 'vue';
 
 const emit = defineEmits(['update:modelValue', 'change', 'clickBefore', 'clickAfter', 'input'])
 
@@ -125,24 +125,24 @@ const changeEvent = function (event) {
     emit('change', event);
 }
 
-const hasBeforeSlot = computed(() => {
-            return !!slots?.before && props.showSlot
-        })
+// const hasBeforeSlot = computed(() => {
+//             return !!slots?.before && props.showSlot
+//         })
 
-const hasDefaultSlot = computed(() => {
-    return !!slots?.default && props.showSlot
-})
+// const hasDefaultSlot = computed(() => {
+//     return !!slots?.default && props.showSlot
+// })
 
 const styles = computed(() => {
     return {
-        'block w-full focus:outline-none sm:text-sm py-3.5': true,
+        'block w-full focus:outline-none sm:text-sm py-3.5 p-3': true,
         'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500 pr-10': hasError.value,
         'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200': !hasError.value,
         'pl-7': props.currencySymbol,
         'cursor-not-allowed bg-gray-50': props.disabled && props.inputType !== 'increase',
-        'rounded-md': !hasBeforeSlot.value &&  !hasDefaultSlot.value,
-        'rounded-r-md': hasBeforeSlot.value && !hasDefaultSlot.value,
-        'rounded-l-md': !hasBeforeSlot.value && hasDefaultSlot.value,
+        // 'rounded-md': !hasBeforeSlot.value &&  !hasDefaultSlot.value,
+        // 'rounded-r-md': hasBeforeSlot.value && !hasDefaultSlot.value,
+        // 'rounded-l-md': !hasBeforeSlot.value && hasDefaultSlot.value,
         'text-center': props.center,
     };
 })
