@@ -14,60 +14,6 @@
         })
   });
 
-
-  
-// import SegmentationPickerComponent from "./SegmentationPickerComponent.vue";
-// import SelectedSegmentationComponent from "./SelectedSegmentationComponent.vue";
-// import {computed, ref} from "vue";
-
-// const selection = ref([
-//     {
-//         cint_platform_key: 2,
-//         options: [2, 3],
-//     }
-// ]);
-
-// const selectedSegmentation = ref([]);
-
-// // define the emits
-// const emits = defineEmits(['setSegmentation', 'resetSegmentation', 'canCheckout']);
-
-// const props = defineProps({
-//     completes: {
-//         type: Number,
-//         default: 0,
-//     },
-//     segmentation: {
-//         type: Object,
-//         default: () => {
-//             return {};
-//         }
-//     }
-// })
-
-// const reset = ref(false);
-
-// const setSegmentation = (value) => {
-//     selectedSegmentation.value = value;
-//     // emit the selected value to the parent component
-//     emits('setSegmentation', value);
-// }
-
-// const resetSegmentation = (value) => {
-//     // emit the selected value to the parent component
-//     emits('resetSegmentation', value);
-
-//     // if the value is an empty array we need to set the reset value to true
-//     if (value.length === 0) {
-//         reset.value = true;
-//     } else {
-//         reset.value = false;
-//         // set the selected segmentation to the value
-//     }
-// }
-
-// const canCheckout = (value) => emits('canCheckout', value)
-
 </script>
 
 <template>
@@ -127,13 +73,12 @@
                         <!-- @else -->
                             <ul class="navbar-nav button-type">
                                 <li class="nav-item">
-                                    <!-- <a href="{{ route('login') }}"> -->
-                                    <a href="/">
+                                    <router-link to="/login" title="$t('site.Login')">
                                         <button class="btn vt-btn-tit">
                                             <span class="material-icons text-accent"> person </span>
                                             <span>{{ $t('site.Login') }}</span>
                                         </button>
-                                    </a>
+                                    </router-link>
                                 </li>
                                 <li class="nav-item">
                                     <!-- <a href="{{ route('register') }}"> -->

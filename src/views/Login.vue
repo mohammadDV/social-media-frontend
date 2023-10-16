@@ -1,47 +1,63 @@
 <template>
-    <div>
-        token : {{ token }}
-        <div class="flex">
+    <div class="container">
+        <div class="flex items-center">
+            <div class="flex-1 text-center">
+                <div class="p-[100px]">
+                    <VTInput
+                        class="my-3"
+                        name="username"
+                        rows="4"
+                        v-model="username"
+                        :placeholder="$t('site.Email')"/>
+                    <VTInput
+                        class="my-3"
+                        name="password"
+                        rows="4"
+                        v-model="password"
+                        :placeholder="$t('site.Password')"/>
 
-        <input class="border mr-5" placeholder="username..." type="text" name="username" v-model="username">
-        <input class="border" placeholder="password..." type="text" name="password" v-model="password">
-        
+                    <VTButton class="mt-3 w-100" color="primary" size="medium"
+                                @click="submitLogin()">
+                        {{ $t('site.Login') }}
+                    </VTButton>
+                </div>
+            </div>
+            <div class="flex-1 text-center">
+                <div class="w-100 p-[20px]">
+                    <img src="../assets/site/images/login.png" alt="login">
+                </div>
+            </div>
         </div>
-        <button class="p-2 border rounded m-2 bg-gray" @click="submitLogin">
-            send
-        </button>
-        <button class="p-2 border rounded m-2 bg-gray" @click="tttttt">
-            tttttt
-        </button>
     </div>
 </template>
   
 <script setup>
-  import { computed, ref } from 'vue';
+  import { ref } from 'vue';
+  import { computed } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
-  import {useApi} from '@/utils/api.ts';
+  import VTButton from '@/elements/VTButton'; 
+  import VTInput from '@/elements/VTInput'; 
+  import { useRouter } from 'vue-router';
+//   import {useApi} from '@/utils/api.ts';
   
   const authStore = useAuthStore();
+
+  const router = useRouter();
 
     const token = computed(() => authStore.token)
 
 
+    console.log(token.value);
 
     const username = ref('');
     const password = ref('');
 
     const submitLogin = function() {
         authStore.login(username.value, password.value)
-        .then((response) => {
-            console.log(response);
-        })
-    }
-
-    const tttttt = function() {
-        // api/profile/pages
-        useApi().get('api/profile/pages', { page: 1})
-        .then((response) => {
-            console.log(response);
+        .then(() => {
+            router.push({
+                name: 'home'
+            })
         })
     }
 
