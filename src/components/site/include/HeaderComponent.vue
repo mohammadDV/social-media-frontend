@@ -3,9 +3,21 @@
     
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref } from 'vue';
+  import { useAuthStore } from '@/stores/auth.ts';
 
 
+  const authStore = useAuthStore();
   const categories = ref([]);
+  const dropdown = ref(false);
+
+
+  const toggleDropdown = () => {
+    dropdown.value = !dropdown.value
+  }
+
+  const logout = () => {
+    authStore.logout();
+  };
 
   onMounted(() => {
     useApi().get('/api/active-categories')
@@ -23,23 +35,25 @@
                 <div class="row preheader-navbar-row">
                     <div class="col-9 col-lg-6 preheader-navbar-col">
                         <!-- @auth() -->
-                        <!-- <ul class="navbar-nav button-type">
+                        <ul v-if="authStore.isAuthenticated" class="navbar-nav button-type">
                             <li class="nav-item">
                                 <div class="dropdown">
-                                    <button class="btn vt-btn-tit dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn vt-btn-tit dropdown-toggle" type="button" @click="toggleDropdown">
                                     <span class="user-avatar">
-                                        @if(!empty(auth()->user()->profile_photo_path))
+                                        User
+                                        <!-- @if(!empty(auth()->user()->profile_photo_path))
                                             <img src="{{ asset(auth()->user()->profile_photo_path) }}" alt="{{ auth()->user()->fullname }}" />
                                         @else
                                             <img src="{{ asset('assets/site/images/user-icon.png') }}" alt="{{ auth()->user()->fullname }}" />
-                                        @endif
+                                        @endif -->
                                     </span>
-                                        <span>{{ auth()->user()->fullname }}</span>
+                                        <!-- <span>{{ auth()->user()->fullname }}</span> -->
                                     </button>
 
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                    <ul v-show="dropdown" class="dropdown-menu dropdown-menu-end d-block">
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('profile') }}">
+                                            <!-- <a class="dropdown-item" href="{{ route('profile') }}"> -->
+                                            <a class="dropdown-item" href="#">
                                                 <span class="material-icons"> person </span>
                                                 <span> {{ $t('site.Profile') }} </span>
                                             </a>
@@ -51,46 +65,41 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('profile.status.create') }}">
+                                            <!-- <a class="dropdown-item" href="{{ route('profile.status.create') }}"> -->
+                                            <a class="dropdown-item" href="">
                                                 <span class="material-icons"> post_add </span>
                                                 <span>{{ $t('site.Create new status') }}</span>
                                             </a>
                                         </li>
                                         <li><hr class="dropdown-divider" /></li>
                                         <li>
-                                            <form id="logout-form" method="POST" action="{{ route('logout') }}">
-                                                @csrf
-                                                <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"  class="dropdown-item" href="{{ route('logout') }}">
-                                                    <span class="material-icons"> exit_to_app </span>
-                                                    <span>{{ $t('site.Logout') }}</span>
-                                                </a>
-                                            </form>
+                                            <a @click="logout"  class="dropdown-item">
+                                                <span class="material-icons"> exit_to_app </span>
+                                                <span>{{ $t('site.Logout') }}</span>
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                        </ul> -->
-                        <!-- @else -->
-                            <ul class="navbar-nav button-type">
-                                <li class="nav-item">
-                                    <router-link to="/login" title="$t('site.Login')">
-                                        <button class="btn vt-btn-tit">
-                                            <span class="material-icons text-accent"> person </span>
-                                            <span>{{ $t('site.Login') }}</span>
-                                        </button>
-                                    </router-link>
-                                </li>
-                                <li class="nav-item">
-                                    <!-- <a href="{{ route('register') }}"> -->
-                                    <a href="">
-                                        <button class="btn vt-btn-tit">
-                                            <span class="material-icons text-accent"> group_add </span>
-                                            <span>{{ $t('site.Register to site') }}</span>
-                                        </button>
-                                    </a>
-                                </li>
-                            </ul>
-                        <!-- @endauth -->
+                        </ul> 
+                        <ul v-else class="navbar-nav button-type">
+                            <li class="nav-item">
+                                <router-link to="/login" title="$t('site.Login')">
+                                    <button class="btn vt-btn-tit">
+                                        <span class="material-icons text-accent"> person </span>
+                                        <span>{{ $t('site.Login') }}</span>
+                                    </button>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/register">
+                                    <button class="btn vt-btn-tit">
+                                        <span class="material-icons text-accent"> group_add </span>
+                                        <span>{{ $t('site.Register to site') }}</span>
+                                    </button>
+                                </router-link>
+                            </li>
+                        </ul>
                     </div>
                     <div class="col-3 preheader-navbar-col d-block d-lg-none">
                         <ul class="navbar-nav button-type justify-content-end">
@@ -151,11 +160,11 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="">
-                                    <button class="btn vt-btn-transparent-invert active">
+                                <router-link to="/" title="$t('site.Main page')">
+                                    <button class="btn vt-btn-transparent-invert active" title="$t('site.Main page')">
                                         {{ $t('site.Main page') }}
                                     </button>
-                                </a>
+                                </router-link>
                             </li>
                             <li class="nav-item" v-for="(category,index) in categories" :key="index">
                                 <!-- <a href="{{ url('archive/' . $category->id . '/' . slug($category->title) ) }}" :title="category.title"> -->

@@ -3,7 +3,7 @@
   import {useApi} from '@/utils/api.ts';
   import { defineProps, computed, ref, defineEmits } from 'vue';
   import VTTextArea from '@/elements/VTTextArea';
-  import VTButton from '@/elements/VTButton.vue'; 
+  import VTButton from '@/elements/VTButton'; 
   import { useAuthStore } from '@/stores/auth.ts';
   import { useRoute, useRouter } from 'vue-router';
   import { useToast } from "vue-toast-notification";
@@ -21,7 +21,7 @@
     }
   })
 
-  const token = computed(() => authStore.token);
+  const isAuthenticated = computed(() => authStore.isAuthenticated);
   const parent = computed(() => props.parentId);
 
   const comment = ref('');
@@ -51,19 +51,13 @@
 
 <template>
 
-    <template v-if="token?.length > 0">
+    <template v-if="isAuthenticated">
         <VTTextArea
         name="comment"
         rows="4"
         v-model="comment"
         :disabled="false"
         :placeholder="$t('site.Add your comment')"/>
-        <VTInput
-            name="parent_id"
-            rows="4"
-            v-model="parent"
-            :disabled="false"
-            :placeholder="$t('site.Add your comment')"/>
 
             <VTButton class="mt-3 w-100" color="primary" size="medium"
                         @click="sendComment()">
@@ -71,10 +65,10 @@
             </VTButton>
     </template>
     <template v-else>
-        <VT‌Button class="mt-3 w-100" color="primary" size="medium"
+        <VTButton class="mt-3 w-100" color="primary" size="medium"
                     @click="goToRoute('login')">
-            {{ $t('site.Submit') }}
-        </VT‌Button>
+            {{ $t('site.Login') }}
+        </VTButton>
     </template>
         
 </template>
