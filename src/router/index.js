@@ -11,6 +11,7 @@ import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
 import Profile from '@/views/Profile.vue';
 import Login from '@/views/Login.vue';
+import Register from '@/views/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
 
 
@@ -33,20 +34,11 @@ const routes = [
         path: '/login',
         component: Login,
       },
-      // {
-      //   path: '/news/:id/:slug',
-      //   component: News,
-      // },
-    ],
-  },
-  {
-    path: '/',
-    meta: { 
-      layout: 'mainLayout',
-      requiresAuth: true,
-     },
-    component: MainLayout,
-    children: [
+      {
+        name: 'register',
+        path: '/register',
+        component: Register,
+      },
       {
         path: '/news/:id/:slug',
         component: News,
@@ -82,8 +74,12 @@ router.beforeEach((to, from, next) => {
     // If the route requires authentication and the user is not authenticated, redirect to the login page
     next('/login');
   } else {
-    // Otherwise, allow access to the route
-    next();
+    if (authStore.isAuthenticated && ['login', 'register'].includes(to.name)) {
+      next('/profile');
+    } else {
+      // Otherwise, allow access to the route
+      next();
+    }
   }
 });
 
