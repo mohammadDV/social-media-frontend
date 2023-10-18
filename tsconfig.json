@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+, "src/router/index.js", "src/main.ts", "src/assets/site/js/splide.min.js", "src/assets/site/js/script.js", "src/assets/site/js/modal.js", "src/assets/site/js/lazyload.js", "src/assets/site/js/jquery.min.js", "src/assets/site/js/bootstrap.bundle.min.js", "src/assets/profile/js/script.js", "src/assets/profile/js/offcanvas.js", "src/assets/profile/js/jquery.min.js", "src/assets/profile/js/bootstrap.bundle.min.js", "src/stores/index.js", "src/stores/auth.ts", "src/utils/api.ts"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

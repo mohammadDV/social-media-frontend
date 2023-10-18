@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import router from '@/router';
+// import router from '@/router';
 
-import { useAuthStore } from "@/stores/auth.ts";
+import { useAuthStore } from "@/stores/auth";
 
 // export interface ApiUrl {
 //     name: string,
@@ -31,7 +31,7 @@ export function useApi() {
     });
 
 
-    const errorHandler = (error) => {
+    const errorHandler = (error: any) => {
         let message = null;
         if (!error.response) {
             message = "اتصال شما به اینترنت قطع شده است";
@@ -76,7 +76,7 @@ export function useApi() {
         // router.push('/profile');
     }
 
-    const get = async (url, queryParams = {}) => {
+    const get = async (url: any, queryParams = {}) => {
         return await api.get(url, { params: queryParams });
         // .then((response) => {
         //     return response;
@@ -86,19 +86,19 @@ export function useApi() {
         // });
     }
 
-    const post = async (url, queryParams = {}) => {
+    const post = async (url: any, queryParams = {}) => {
         console.log(queryParams);
         return await api.post(url, queryParams);
     }
 
-    const deleteRequest = async (url, queryParams = {}) => {
+    const deleteRequest = async (url: any, queryParams = {}) => {
         await api.delete(url, { params: queryParams })
         .catch((err) => {
             errorHandler(err)
         });
     }
 
-    const patch = async (url, queryParams = {}) => {
+    const patch = async (url: any, queryParams = {}) => {
         await api.patch(url, { params: queryParams })
         .catch((err) => {
             errorHandler(err)
