@@ -38,18 +38,13 @@
                         <ul v-if="authStore.isAuthenticated" class="navbar-nav button-type">
                             <li class="nav-item">
                                 <div class="dropdown">
-                                    <button class="btn vt-btn-tit dropdown-toggle" type="button" @click="toggleDropdown">
-                                    <span class="user-avatar">
-                                        User
-                                        <!-- @if(!empty(auth()->user()->profile_photo_path))
-                                            <img src="{{ asset(auth()->user()->profile_photo_path) }}" alt="{{ auth()->user()->fullname }}" />
-                                        @else
-                                            <img src="{{ asset('assets/site/images/user-icon.png') }}" alt="{{ auth()->user()->fullname }}" />
-                                        @endif -->
-                                    </span>
-                                        <!-- <span>{{ auth()->user()->fullname }}</span> -->
+                                    <button class="flex btn vt-btn-tit dropdown-toggle  justify-around items-center" type="button" @click="toggleDropdown">
+                                        <span class="user-avatar">
+                                                <img class="inline" v-if="authStore?.user?.bg_photo_path?.length > 0" :src="authStore?.user?.bg_photo_path" :alt="authStore?.user?.fullname" />
+                                                <img class="inline" v-else src="/assets/site/images/user-icon.png" :alt="authStore?.user?.fullname" />
+                                        </span>
+                                        <span>{{ authStore?.user?.fullname }}</span>
                                     </button>
-
                                     <ul v-show="dropdown" class="dropdown-menu dropdown-menu-end d-block">
                                         <li>
                                             <!-- <a class="dropdown-item" href="{{ route('profile') }}"> -->
