@@ -15,13 +15,8 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="" :title="$t('site.Main page')">{{ $t('site.Main page') }}</a></li>
                                     <li class="breadcrumb-item">
-                                        <router-link :to="`/category/${post?.category?.id}/${post?.category?.title}`" :title="post?.category?.title">
-                                            {{ post?.category?.title }}
-                                        </router-link>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <router-link :to="`/news/${post.id}/${post.slug}`" :title="post?.title">
-                                            {{ post?.title }}
+                                        <router-link :to="`/category/${category?.id}/${category?.title}`" :title="category?.title">
+                                            {{ category?.title }}
                                         </router-link>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
@@ -31,72 +26,41 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="card vt-news-card mb-3">
+                    <div class="card vt-news-card archive-card">
+                        <div class="card-header header-alt">
+                            <p class="h4 text-primary">{{ category?.title }}</p>
+                            <div class="vt-divider"><span></span></div>
+                        </div>
                         <div class="card-body">
-                            <div class="post">
-                                <div class="post--header">
-                                      <!--  -->
-
-                                    <div class="post--cover ratio ratio-16x9"
-                                    :style="`background-image: url('${post?.image?.indexArray['large']}')`">
-                                        <div class="post--header--overly"></div>
-                                        <div class="post--head-info">
-                                            <div class="extend-info">
-                                                <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
-                                                <span>
-                                                    <span class="post-date">{{ $t('site.Time') }}: {{ formattedDate }}</span>
-                                                    <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
-                                                </span>
+                            <div class="card-body-inner">
+                            <div id="main-list" class="row gy-3 news-item-row">
+                                <div v-for="(post, index) in posts" :key="index" class="col-12 col-lg-6">
+                                    <div class="news-row-item">
+                                        <div class="row gx-2">
+                                            <div class="col-4">
+                                                <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(${post?.image?.indexArray?.small})`"></div>
                                             </div>
-                                            <div class="main-info">
-                                                <span class="fs-6 post--subtitle">{{ post.pre_title }}</span>
+                                            <div class="col-8">
+                                                <p class="news-row-item-title">{{ post.title }}</p>
+                                                <router-link class="news-row-item-link stretched-link" :to="`/news/${post.id}/${post.slug}`">
+                                                    {{ post.pre_title }}
+                                                </router-link>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="post--body">
-                                    <div class="post--lead">
-                                        <span>{{ post.title }}</span>
-                                    </div>
-                                    <div>
-                                        {{ post.summary }}
-                                    </div>
-                                    <div v-html="post.content"></div>
-                                </div>
                             </div>
-                            <div v-if="post?.tags?.length > 0" class="post-tag-list">
-                                <div v-for="(tag, index) in post.tags" :key="index" class="tag-list-item">
-                                    <span class="material-icons text-primary size-font">
-                                    tag
-                                    </span>
-                                    <span>{{ tag.title }}</span>
-                                    <router-link :to="`/tag/${tag.id}/${tag.title}`" :title="tag.title" class="stretched-link"></router-link>
+                            <div v-if="more" class="col-12 lazyload-body">
+                                <button type="button" @click="addMore" class="lazyload-button btn vt-btn-white">
+                                    {{ $t('site.More post')}}
+                                </button>
+                                <div class="lazyload-loader">
+                                    <span class="material-icons text-primary"> autorenew </span>
                                 </div>
-                            </div>
-                            <div class="relative-posts">
-                                <div class="relative-posts--header">
-                                    <span class="relative-posts--title">اخبار مرتبط</span>
-                                </div>
-                                <div class="relative-posts--body">
-                                    <ul class="news-list" v-if="latest?.length > 0">
-                                        <template  v-for="(post, index) in latest" :key="index">
-                                            <li v-if="index < 5" class="news-item">
-                                                <router-link target="_blank" :to="`/news/${post.id}/${post.slug}`" :title="post.title" class="news">
-                                                    <span class="material-icons size-font text-primary">
-                                                    double_arrow
-                                                    </span>
-                                                    {{ post.title}}
-                                                </router-link>
-                                            </li>
-                                        </template>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <comment-form-component @updateComments="updateComments"/>
-                    <comment-component :comments="post?.comments" @updateComments="updateComments"/>
                 </div>
                 <div class="col-12 col-lg-3 flex-grow-1 item-column">
                     
@@ -173,7 +137,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, computed } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
 
   import { useRoute } from 'vue-router';
   import TabsComponent from '@/components/plugins/tabs/TabsComponent';
@@ -181,41 +145,38 @@
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
-  import CommentComponent from '@/components/site/components/comments/CommentComponent';
-  import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
  
   const advertises = ref([]);
   const posts = ref([]);
+  const category = ref({});
   const latest = ref([]);
   const challenged = ref([]);
   const popular = ref([]);
   const specialPosts = ref([]);
   const specialVideos = ref([]);
-
   const tabItem = ref('latest');
-  const post = ref({});
-
   const route = useRoute();
-
-  const formattedDate = computed(() => {
-        const date = new Date(post.value.created_at);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}/${month}/${day}`;
-})
+  const more = ref(true);
+  const page = ref(1);
 
   onMounted(() => {
-    getPost()
+    getArchive();
     getAdvertises();
     getPosts();
   });
 
-
-  const updateComments = () => {
-    getPost()
+  const addMore = () => {
+    getArchive();
   }
+
+  watch(() => route.params.id, () => {
+    if (route.params.id) {
+        page.value = 1;
+        more.value = true;
+        posts.value = {};
+        getArchive();
+    } 
+  });
 
   const getAdvertises = () => {
     useApi().get('/api/advertise')
@@ -224,17 +185,22 @@
         });
   }
 
-  const getPost = () => {
-    useApi().get(`/api/post/${route.params.id}`)
+  const getArchive = () => {
+    useApi().get(`/api/archive/${route.params.id}?page=${page.value}`)
         .then((response) => {
-            post.value = response.data;
+            if (response.data.data?.length > 0) {
+                posts.value.push(...response.data.data);
+            } else {
+                more.value = false;
+            }
+            page.value++;
+            category.value = response.data.category;
         });
   }
 
   const getPosts = () => {
     useApi().get('/api/posts')
         .then((response) => {
-            posts.value = response?.data?.posts;
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;
             popular.value = response?.data?.popular;

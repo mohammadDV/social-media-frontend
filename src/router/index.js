@@ -9,6 +9,7 @@ import ProfileLayout from '@/layouts/ProfileLayout.vue';
 // Import views
 import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
+import Category from '@/views/Category.vue';
 import Profile from '@/views/Profile.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
@@ -42,6 +43,10 @@ const routes = [
       {
         path: '/news/:id/:slug',
         component: News,
+      },
+      {
+        path: '/category/:id/:title',
+        component: Category,
       },
     ],
   },
