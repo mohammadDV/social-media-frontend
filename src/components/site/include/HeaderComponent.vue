@@ -42,7 +42,7 @@
                                         <span class="user-avatar">
                                             <userImage addclass="inline" :item="authStore?.user" />
                                         </span>
-                                        <span>{{ authStore?.user?.fullname }}</span>
+                                        <span>{{ authStore?.user?.nickname }}</span>
                                     </button>
                                     <ul v-show="dropdown" class="dropdown-menu dropdown-menu-end d-block">
                                         <li>

@@ -68,7 +68,7 @@
                     <div class="comment-text">
                         <p class="comment-text-pragraph">
                             <a class="comment-user-text-link" href="#">
-                                <span class="user-name"> {{ comment?.user?.first_name }} </span>
+                                <span class="user-name"> {{ comment?.user?.nickname }} </span>
                             </a>
                             <br>
                             <span class="comment-text-span">{{ comment?.message }}</span>
@@ -110,7 +110,7 @@
                         <div class="comment-text">
                             <p class="comment-text-pragraph">
                                 <a class="comment-user-text-link" href="#">
-                                    <span class="user-name"> {{ parent.user.first_name }} </span>
+                                    <span class="user-name"> {{ parent.user.nickname }} </span>
                                 </a>
                                 <br>
                                 <span class="comment-text-span">{{ parent.message }}</span>
