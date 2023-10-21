@@ -32,7 +32,7 @@
                 <div class="user-avatar">
                     <userImage :item="authStore?.user" />
                 </div>
-                <div class="user-name">{{ authStore?.user?.fullname }}</div>
+                <div class="user-name">{{ authStore?.user?.nickname }}</div>
                 <div class="user-description">
                     {{ authStore?.user?.biography }}
                 </div>

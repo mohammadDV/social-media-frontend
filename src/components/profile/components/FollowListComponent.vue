@@ -34,7 +34,7 @@
                     </div>
                 </a>
                 <div class="user-info">
-                    <div class="user-name">{{ item.fullname }}</div>
+                    <div class="user-name">{{ item.nickname }}</div>
                     <div class="user-likes">
                         <span v-for="(club, key) in item.clubs" :key="key" class="badge bg-secondary like-item m-1">{{ club.title }}</span>
                     </div>

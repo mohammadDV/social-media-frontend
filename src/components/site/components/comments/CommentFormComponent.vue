@@ -33,8 +33,6 @@
   }
 
   const sendComment = () => {
-    console.log("send-comment");
-    console.log(route.params.id);
     useApi().post(`/api/comment/post/${route.params.id}`, {
         comment: comment.value, 
         parent_id: parent.value

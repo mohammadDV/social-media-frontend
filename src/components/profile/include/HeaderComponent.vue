@@ -3,6 +3,7 @@
     
 //   import {useApi} from '@/utils/api.ts';
   import { onMounted } from 'vue';
+  import userImage from '@/components/plugins/UserImage.vue'
   import { useAuthStore } from '@/stores/auth.ts';
 
 
@@ -239,8 +240,8 @@
                                         <div class="notification">
                                             <a href="#" class="stretched-link"></a>
                                             <div class="notification-avatar-container">
-                                                <img class="inline" v-if="authStore?.user?.profile_photo_path?.length > 0" :src="authStore?.user?.profile_photo_path" :alt="authStore?.user?.fullname" />
-                                                <img class="inline" v-else src="/assets/site/images/user-icon.png" :alt="authStore?.user?.fullname" />
+                                                <img class="inline" v-if="authStore?.user?.profile_photo_path?.length > 0" :src="authStore?.user?.profile_photo_path" :alt="authStore?.user?.nickname" />
+                                                <img class="inline" v-else src="/assets/site/images/user-icon.png" :alt="authStore?.user?.nickname" />
                                             </div>
                                             <div class="notification-info-container">
                                                 <div class="notification-actor">مهرداد کردی</div>
@@ -318,10 +319,9 @@
                                     aria-expanded="false"
                                 >
                                     <div class="profile-avatar">
-                                        <img class="inline" v-if="authStore?.user?.profile_photo_path?.length > 0" :src="authStore?.user?.profile_photo_path" :alt="authStore?.user?.fullname" />
-                                        <img class="inline" v-else src="/assets/site/images/user-icon.png" :alt="authStore?.user?.fullname" />
+                                        <userImage add-class="inline" :item="authStore?.user" />
                                     </div>
-                                    <span class="user-name">{{ authStore?.user?.fullname }}</span>
+                                    <span class="user-name">{{ authStore?.user?.nickname }}</span>
                                 </button>
                                 <div
                                     class="dropdown-menu is-left"

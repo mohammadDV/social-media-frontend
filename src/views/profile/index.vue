@@ -4,7 +4,7 @@
 //   import {useApi} from '@/utils/api.ts';
   import { onMounted } from 'vue';
   import LeftSideComponent from "@/components/profile/include/LeftSideComponent.vue"
-  import StatusWallComponents from "@/components/profile/components/StatusWallComponents.vue"
+  import StatusWallComponents from "@/components/profile/components/status/StatusWallComponents.vue"
   
 //   import { useAuthStore } from '@/stores/auth.ts';
 
