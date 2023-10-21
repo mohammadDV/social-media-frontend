@@ -4,7 +4,7 @@
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
-
+  import userImage from '@/components/plugins/UserImage.vue';
 
   const authStore = useAuthStore();
   const categories = ref([]);
@@ -40,14 +40,13 @@
                                 <div class="dropdown">
                                     <button class="flex btn vt-btn-tit dropdown-toggle  justify-around items-center" type="button" @click="toggleDropdown">
                                         <span class="user-avatar">
-                                            <img class="inline" v-if="authStore?.user?.bg_photo_path?.length > 0" :src="authStore?.user?.bg_photo_path" :alt="authStore?.user?.fullname" />
-                                            <img class="inline" v-else src="/assets/site/images/user-icon.png" :alt="authStore?.user?.fullname" />
+                                            <userImage addclass="inline" :item="authStore?.user" />
                                         </span>
                                         <span>{{ authStore?.user?.fullname }}</span>
                                     </button>
                                     <ul v-show="dropdown" class="dropdown-menu dropdown-menu-end d-block">
                                         <li>
-                                            <router-link class="dropdown-item" to="/profile">
+                                            <router-link class="dropdown-item" target="_blank" to="/profile">
                                                 <span class="material-icons"> person </span>
                                                 <span> {{ $t('site.Profile') }} </span>
                                             </router-link>

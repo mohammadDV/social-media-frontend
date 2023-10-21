@@ -3,6 +3,7 @@
   import {useApi} from '@/utils/api.ts';
   import { onMounted, defineProps, defineEmits } from 'vue';
   import CommentFormComponent from './CommentFormComponent';
+  import userImage from '@/components/plugins/UserImage.vue';
 
   const props = defineProps({
     comments: {
@@ -60,8 +61,7 @@
                 <div class="comment--body">
                     <div class="commenter-avatar-wrap">
                         <div class="commenter-avatar">
-                            <img v-if="comment?.user?.profile_photo_path?.length > 0" :src="parent.user.profile_photo_path" :alt="comment.user.first_name" />
-                            <img v-else src="/assets/site/images/user-icon.png" :alt="comment.user.first_name" />
+                            <userImage :item="comment?.user" />
                             <a href="#" class="stretched-link"></a>
                         </div>
                     </div>
@@ -103,8 +103,7 @@
                     <div class="comment--body">
                         <div class="commenter-avatar-wrap">
                             <div class="commenter-avatar">
-                                <img v-if="parent?.user?.profile_photo_path?.length > 0" :src="parent.user.profile_photo_path" :alt="parent.user.first_name" />
-                                <img v-else src="/assets/site/images/user-icon.png" :alt="parent.user.first_name" />
+                                <userImage :item="parent?.user" />
                                 <a href="#" class="stretched-link"></a>
                             </div>
                         </div>
