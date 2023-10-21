@@ -12,6 +12,7 @@ interface User {
   email: String,
   role_id: Number,
   point: Number,
+  clubs: null
 }
 
 interface State {
@@ -34,6 +35,7 @@ export const useAuthStore = defineStore('auth',{
         bg_photo_path: '',
         email: '',
         role_id: 1,
+        clubs: null,
         point: 0,
       }
     }),
@@ -54,6 +56,7 @@ export const useAuthStore = defineStore('auth',{
           const response = await axios.get('/api/profile/users/info');
 
           if (response.data) {
+            console.log(response.data);
             this.user = response.data as User;
             this.user.fullname = response.data?.nickname?.length > 0 ? response.data.nickname : response.data.first_name + (response?.data?.last_name?.length > 0 ? ' ' + response?.data?.last_name : '');
             this.user.nickName = response.data?.nickname;
@@ -63,6 +66,9 @@ export const useAuthStore = defineStore('auth',{
             this.user.email = response.data?.email;
             this.user.role_id = response.data?.role_id;
             this.user.point = response.data?.point;
+            this.user.clubs = response.data?.clubs;
+
+            console.log(this.user);
 
             console.log(this.user);
           }

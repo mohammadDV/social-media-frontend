@@ -9,7 +9,8 @@ import ProfileLayout from '@/layouts/ProfileLayout.vue';
 // Import views
 import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
-import Profile from '@/views/Profile.vue';
+import Category from '@/views/Category.vue';
+import Profile from '@/views/profile/index.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
@@ -19,7 +20,7 @@ const routes = [
   {
     path: '/',
     meta: { 
-      layout: 'mainLayout',
+      layout: 'main',
       requiresAuth: false,
      },
     component: MainLayout,
@@ -40,20 +41,27 @@ const routes = [
         component: Register,
       },
       {
+        name: 'news',
         path: '/news/:id/:slug',
         component: News,
+      },
+      {
+        name: 'category',
+        path: '/category/:id/:title',
+        component: Category,
       },
     ],
   },
   {
     path: '/profile',
     meta: { 
-      layout: 'profileLayout',
+      layout: 'profile',
       requiresAuth: true,
     },
     component: ProfileLayout,
     children: [
       {
+        name: 'profile',
         path: '',
         component: Profile,
       },
@@ -85,14 +93,17 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to) => {
   const layout = to.meta.layout;
-  if (layout === 'mainLayout') {
+  if (layout === 'main') {
     require('@/assets/site/fonts/vazir-ui/vazir.css');
     require('@/assets/site/fonts/material-icons/material-icons.css');
     require('@/assets/site/css/splide.min.css');
     require('@/assets/site/css/styles.css');
 
-  } else if (layout === 'profileLayout') {
-    require('@/assets/site/fonts/vazir-ui/vazir.css');
+  } else if (layout === 'profile') {
+    require('@/assets/profile/fonts/vazir-ui/vazir.css');
+    require('@/assets/profile/fonts/material-icons/material-icons.css');
+    require('@/assets/profile/css/custom.css');
+    require('@/assets/profile/css/styles.css');
   }
 });
 

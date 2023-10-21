@@ -4,7 +4,7 @@
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
-
+  import userImage from '@/components/plugins/UserImage.vue';
 
   const authStore = useAuthStore();
   const categories = ref([]);
@@ -40,18 +40,16 @@
                                 <div class="dropdown">
                                     <button class="flex btn vt-btn-tit dropdown-toggle  justify-around items-center" type="button" @click="toggleDropdown">
                                         <span class="user-avatar">
-                                                <img class="inline" v-if="authStore?.user?.bg_photo_path?.length > 0" :src="authStore?.user?.bg_photo_path" :alt="authStore?.user?.fullname" />
-                                                <img class="inline" v-else src="/assets/site/images/user-icon.png" :alt="authStore?.user?.fullname" />
+                                            <userImage addclass="inline" :item="authStore?.user" />
                                         </span>
                                         <span>{{ authStore?.user?.fullname }}</span>
                                     </button>
                                     <ul v-show="dropdown" class="dropdown-menu dropdown-menu-end d-block">
                                         <li>
-                                            <!-- <a class="dropdown-item" href="{{ route('profile') }}"> -->
-                                            <a class="dropdown-item" href="#">
+                                            <router-link class="dropdown-item" target="_blank" to="/profile">
                                                 <span class="material-icons"> person </span>
                                                 <span> {{ $t('site.Profile') }} </span>
-                                            </a>
+                                            </router-link>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#">
@@ -162,8 +160,7 @@
                                 </router-link>
                             </li>
                             <li class="nav-item" v-for="(category,index) in categories" :key="index">
-                                <!-- <a href="{{ url('archive/' . $category->id . '/' . slug($category->title) ) }}" :title="category.title"> -->
-                                <router-link to="/profile" :title="category.title">
+                                <router-link :to="`/category/${category.id}/${category.title}`" :title="category.title">
                                     <button class="btn vt-btn-transparent-invert">
                                         {{ category.title }}
                                     </button>
