@@ -3,13 +3,11 @@
     
 //   import {useApi} from '@/utils/api.ts';
   import { onMounted } from 'vue';
-  import LeftSideComponent from "@/components/profile/include/LeftSideComponent.vue"
-  import StatusWallComponents from "@/components/profile/components/status/StatusWallComponents.vue"
-  
+  import LeftSideComponent from "@/components/profile/include/LeftSideComponent.vue";
+  import StatusWallComponents from "@/components/profile/components/status/StatusWallComponent.vue";
+  import StatusWallFormComponent from "@/components/profile/components/status/StatusWallFormComponent.vue";
 //   import { useAuthStore } from '@/stores/auth.ts';
 
-
-//   const authStore = useAuthStore();
 //   const categories = ref([]);
 //   const dropdown = ref(false);
 
@@ -33,7 +31,8 @@
 
 <template>
     <div class="col-12 col-lg-8 col-xl-6">
-        <ul class="nav nav-pills feedType" id="feedType" role="tablist">
+        <StatusWallFormComponent />
+        <!-- <ul class="nav nav-pills feedType" id="feedType" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="tweet-tab" data-bs-toggle="pill" data-bs-target="#tweet-pane" type="button" role="tab" aria-controls="tweet-pane" aria-selected="true">
                     {{ $t('site.Users comments') }}
@@ -44,7 +43,7 @@
                     {{ $t('site.News of users') }}
                 </button>
             </li>
-        </ul>
+        </ul> -->
         <div class="tab-content" id="feedTypeContent">
             <div class="tab-pane fade show active" id="tweet-pane" role="tabpanel" aria-labelledby="tweet-tab">
                 <StatusWallComponents/>
