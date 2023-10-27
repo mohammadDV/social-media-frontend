@@ -32,16 +32,24 @@
   const comment = ref('');
 
   const sendComment = () => {
+
+    const $toast = useToast();
     useApi().post(`/api/comment/${props.modelType}/${props.modelId}`, {
         comment: comment.value, 
         parent_id: props.parentId
     })
-    .then(() => {
-        const $toast = useToast();
-        $toast.success('You did it!');
-        comment.value = '';
-        emit('updateComments');
+    .then((response) => {
+        if (response.data.status) {
+            $toast.success(response.data.message);
+            comment.value = '';
+            emit('updateComments');
+        }
     })
+    .catch(error => {
+        if (error.response.data.status == 0) {
+            $toast.error(error.response.data.message);
+        }
+    });
   };
 
 </script>

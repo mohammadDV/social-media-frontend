@@ -3,7 +3,7 @@
         <label :for="identifier" class="block text-sm font-medium mb-3" v-if="label">
             {{ label }}<slot name="label"/>
         </label>
-        <div class="relative rounded-md ltr:ml-3">
+        <div class="relative rounded-md" style="direction: ltr;">
             <div class="flex">
                 <div class="inline-flex items-center flex-grow">
                     <div class="relative block w-full">
@@ -88,7 +88,6 @@ export default {
         },
         changeEvent: function(event) {
 
-            console.log("xasxasx");
             // set filename
             this.filename = event.target.files.length > 0 ? event.target.files[0].name : '';
 
@@ -112,7 +111,9 @@ export default {
             this.uploadFile()
                 .then((result) => {
                     // mark the upload as done
-                    this.uploadDone(event, result.data[this.name]);
+                    if (result.data.status) {
+                        this.uploadDone(event, result.data.url);
+                    }
                 }).catch(() => {
                 // mark the upload as done
                 this.uploadDone(event);
@@ -137,10 +138,6 @@ export default {
                         'Content-Type': 'multipart/form-data' 
                     },
                     onUploadProgress: function(progressEvent) {
-                        console.log("shashorrrrr");
-                        console.log(progressEvent);
-                        console.log(progressEvent.loaded);
-                        console.log(progressEvent.total);
                         this.progress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100));
                     }.bind(this)
                 }
@@ -161,7 +158,7 @@ export default {
         uploadDone(event, url) {
             console.log("Done!");
             // emit the upload end event
-            this.$emit('on-upload-end', url);
+            this.$emit('getFileLink', url);
 
             // set the uploading value to false
             this.isUploading = false;

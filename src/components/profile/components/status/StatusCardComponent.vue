@@ -55,8 +55,6 @@
     }
 
     const updateComments = (id) => {
-        console.log("oooooook");
-        console.log(id);
         useApi().get(`/api/comment/status/${id}`)
                 .then((response) => {
                     comments.value = response.data;

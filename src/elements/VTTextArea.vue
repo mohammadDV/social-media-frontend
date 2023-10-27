@@ -5,7 +5,7 @@
             <div class="flex">
                 <div class="inline-flex items-center flex-grow">
                     <div class="relative block w-full">
-            <textarea class="p-3" ref="inputElement"  :disabled="disabled" :id="identifier"
+            <textarea class="p-3 max-h-80" ref="inputElement"  :disabled="disabled" :id="identifier"
                       :name="name"
                       :rows="rows"
                       :value="modelValue" v-on:input="emit('input', $event.target.value)" @change="changeEvent($event)"
@@ -25,12 +25,13 @@
             </div>
         </div>
         <p class="mt-2 mb-0 text-sm text-gray-500" v-if="!errorMessage && helpText">{{ helpText }}</p>
-        <IVError :message="errorMessage"></IVError>
+        <p class="mt-2 mb-0 text-sm text-red-600" v-if="hasError">{{ errorMessage }}</p>
     </div>
 </template>
 
 <script setup>
 
+import {useApi} from '@/utils/api.ts';
 import { defineProps, computed, defineEmits, ref } from 'vue';
 
 const emit = defineEmits(['update:modelValue', 'change', 'clickBefore', 'clickAfter', 'input'])
@@ -39,6 +40,10 @@ const props = defineProps({
     identifier: {
       type: String,
       default: 'identifier'
+    },
+    requestName: {
+      type: String,
+      default: ''
     },
     rows: {
         type: Number,
@@ -69,10 +74,39 @@ const props = defineProps({
 const errorMessage = ref('');
 const hasError = ref(false);
 
+const validate = (value) => {
+            // if the request name is not set, return out
+        if (!props.requestName) {
+            return;
+        }
+
+        let data = {};
+        data['field'] = props.name;
+        data[props.name] = value;
+
+        // validate the field
+        useApi().post(`/api/validation/${props.requestName}`, data)
+            .then(response => {
+                if (response.data.status) {
+                    hasError.value = true;
+                    errorMessage.value = response.data.message;
+                } else {
+                    hasError.value = false;
+                    errorMessage.value = '';
+                }
+            }).catch(() => {
+                hasError.value = false;
+                errorMessage.value = '';
+            });
+    }
 
 const changeEvent = function (event) {
-    emit('update:modelValue', event.target.value);
-    emit('change', event);
+    
+    validate(event.target.value);
+    if (errorMessage.value == '') {
+        emit('update:modelValue', event.target.value);
+        emit('change', event);
+    }
 }
 
 const styles = computed(() => {
@@ -84,6 +118,6 @@ const styles = computed(() => {
         'rounded-md': true,
         'text-center': props.center,
     };
-})
+});
 
 </script>

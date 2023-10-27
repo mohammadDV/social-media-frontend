@@ -1,6 +1,6 @@
 <script setup>
 
-//   import {useApi} from '@/utils/api.ts';
+  import {useApi} from '@/utils/api.ts';
   import { ref } from 'vue';
 
   import userImage from '@/components/plugins/UserImage.vue';
@@ -8,37 +8,51 @@
   import VTFile from '@/elements/VTFile.vue'
   import VTTextArea from '@/elements/VTTextArea';
   import VTButton from '@/elements/VTButton'; 
-//   import VTTextArea from '@/elements/VTTextArea';
-//   import VTButton from '@/elements/VTButton'; 
   import { useAuthStore } from '@/stores/auth.ts';
-//   import { useToast } from "vue-toast-notification";
+  import { useToast } from "vue-toast-notification";
 
-//   const emit = defineEmits(['updateComments'])
   const authStore = useAuthStore();
 
   const isModalVisible = ref(false);
+  const file = ref('');
+  const content = ref('');
 
   const showModal = () => {
     isModalVisible.value = true;
   }
+  const resetForm = () => {
+    file.value = '';
+    content.value = '';
+  }
 
   const closeModal = () => {
+    resetForm()
     isModalVisible.value = false;
+  };
+  const getFileLink = (item) => {
+    file.value = item;
   };
 
 
-//   const sendComment = () => {
-//     useApi().post(`/api/comment/${props.modelType}/${props.modelId}`, {
-//         comment: comment.value, 
-//         parent_id: props.parentId
-//     })
-//     .then(() => {
-//         const $toast = useToast();
-//         $toast.success('You did it!');
-//         comment.value = '';
-//         emit('updateComments');
-//     })
-//   };
+  const sendStatus = () => {
+    const $toast = useToast();
+    useApi().post(`/api/profile/status/`, {
+        content: content.value, 
+        file: file.value,
+        status: 1
+    })
+    .then((response) => {
+      if (response.data.status) {
+        $toast.success(response.data.message);
+        closeModal()
+      }
+    })
+    .catch(error => {
+        if (error.response.data.status == 0) {
+            $toast.error(error.response.data.message);
+        }
+    });
+  };
 
 </script>
 
@@ -60,25 +74,28 @@
         <div class="w-[300px] sm:w-[600px]">
             <div class="mb-3">
                 <VTTextArea
-                    name="comment"
+                    name="content"
                     rows="4"
-                    v-model="comment"
+                    v-model="content"
                     :disabled="false"
-                    :placeholder="$t('site.Add your comment')"/>
+                    request-name="StatusRequest"
+                    :placeholder="$t('site.Please share your post')"/>
             </div>
             <VTFile
+                class="mb-5"
                 label="Upload image"
-                name="video"
-                :multiple="true"
-                @change="changedPicture"
+                name="image"
+                @getFileLink="getFileLink"
             ></VTFile>
+
             <VTButton 
                 class="btn btn-outline-secondary btn-sm" 
                 size="medium"
                 color="primary"  
-                @click="sendComment()">
+                @click="sendStatus()">
                 {{ $t('site.Submit post') }}
-            </VTButton>    
+            </VTButton>  
+            
         </div>
     </VTModal>
 </template>
