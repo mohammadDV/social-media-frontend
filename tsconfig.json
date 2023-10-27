@@ -35,7 +35,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-, "src/router/index.js", "src/main.ts", "src/assets/site/js/splide.min.js", "src/assets/site/js/script.js", "src/assets/site/js/modal.js", "src/assets/site/js/lazyload.js", "src/assets/site/js/jquery.min.js", "src/assets/site/js/bootstrap.bundle.min.js", "src/assets/profile/js/script.js", "src/assets/profile/js/offcanvas.js", "src/assets/profile/js/jquery.min.js", "src/assets/profile/js/bootstrap.bundle.min.js", "src/stores/index.js", "src/stores/auth.ts", "src/utils/api.ts"  ],
+, "src/router/index.js", "src/main.ts", "src/stores/index.js", "src/stores/auth.ts", "src/utils/api.ts"  ],
   "exclude": [
     "node_modules"
   ]
