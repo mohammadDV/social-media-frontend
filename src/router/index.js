@@ -11,6 +11,7 @@ import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
 import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
+import PostList from '@/views/post/index.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
@@ -64,6 +65,11 @@ const routes = [
         name: 'profile',
         path: '',
         component: Profile,
+      },
+      {
+        name: 'profile',
+        path: '/profile/posts',
+        component: PostList,
       },
     ],
   },

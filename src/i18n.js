@@ -5,6 +5,7 @@ import { createI18n } from 'vue-i18n';
 import fa from './locales/fa.json';
 
 const i18n = createI18n({
+  legacy: false,
   locale: 'fa',
   fallbackLocale: 'en',
   messages: {
