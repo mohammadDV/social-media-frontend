@@ -3,6 +3,10 @@ import App from './App.vue'
 import './assets/index.css';
 import router from './router';
 
+// Data table
+import Vue3EasyDataTable from 'vue3-easy-data-table';
+import 'vue3-easy-data-table/dist/style.css';
+
 // Toast
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
@@ -31,4 +35,5 @@ createApp(App)
     .use(i18n)
     .use(pinia)
     .use(router)
+    .component('EasyDataTable', Vue3EasyDataTable)
     .mount('#app')
