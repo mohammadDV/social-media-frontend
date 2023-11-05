@@ -57,7 +57,7 @@
   const serverItemsLength = ref(0);
   const serverOptions = ref<ServerOptions>({
     page: 1,
-    rowsPerPage: 10,
+    rowsPerPage: 25,
     sortBy: 'id',
     sortType: 'desc',
   });
@@ -132,6 +132,8 @@
                 :header-item-class-name="headerItemClassNameFunction"
                 :body-item-class-name="bodyItemClassNameFunction"
                 hide-footer
+                border-cell
+                alternating
                 >
 
                 <template #item-status="item">
@@ -150,11 +152,6 @@
                     <div class="flex">
                         <a class="p-1 rounded btn-success m-1" :href="'/profile/posts/edit/' + item.id" ><span class="material-icons size-font-ahalf"> edit </span></a>
                         <a class="p-1 rounded btn-danger m-1" :href="'/profile/posts/edit/' + item.id" ><span class="material-icons size-font-ahalf"> delete </span></a>
-                    </div>
-                </template>
-                <template #header-title="header">
-                    <div class="customize-header">
-                        {{ header.text }}
                     </div>
                 </template>
                 <template #item-image="item">
