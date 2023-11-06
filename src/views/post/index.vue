@@ -2,7 +2,7 @@
  
   import {useApi} from '../../utils/api';
   import { ref, watch } from "vue";
-  import type { Header, Item, ServerOptions, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
+  import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
 
@@ -55,11 +55,12 @@
   
   const loading = ref(false);
   const serverItemsLength = ref(0);
-  const serverOptions = ref<ServerOptions>({
+  const serverOptions = ref({
     page: 1,
     rowsPerPage: 25,
     sortBy: 'id',
     sortType: 'desc',
+    query: '',
   });
 
   const headerItemClassNameFunction: HeaderItemClassNameFunction = (): string => {
@@ -72,7 +73,7 @@
   
   const loadFromServer = async () => {
     loading.value = true;
-    await useApi().get('/api/profile/posts' ,serverOptions.value)
+    await useApi().get('/api/profile/posts', serverOptions.value)
     .then((response: any) => {
         items.value = response.data.data;
         serverItemsLength.value = response.data.total;
@@ -93,29 +94,28 @@
             <div class="card-body">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">{{ $t('site.Profile') }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">
+                        <li class="breadcrumb-item">
+                            <router-link to="/profile" :title="$t('site.Profile')">
+                                {{ $t('site.Profile') }}
+                            </router-link>
+                        </li>
+                        <li class="breadcrumb-item">
                             {{ $t('site.Post management') }}
                         </li>
                     </ol>
                 </nav>
                 <div class="place-button">
-                    <a href="/"><button class="btn btn-primary">{{ $t('site.Create new post') }}</button></a>
+                    <router-link to="/profile/posts/create" :title="$t('site.Create new post')">
+                        <button class="btn btn-primary">{{ $t('site.Create new post') }}</button>
+                    </router-link>
                 </div>
             </div>
         </div>
         <div class="card p-3">
             <div class="flex gap-3 mb-3">
-                <div class="w-1/2 md:w-1/4">
-                    <label for="">{{ $t('site.Choose type of search') }}</label>
-                    <select name="serach_type" class="form-control-select" v-model="searchField">
-                        <option value="id">{{ $t('site.Id') }}</option>
-                        <option value="title">{{ $t('site.Title') }}</option>
-                    </select>
-                </div>
-                <div class="w-1/2 md:w-1/4">
+                <div class="w-full md:w-1/4">
                     <label for="search">{{ $t('site.Search') }}</label>
-                    <input name="serach" class="form-control is-vt" type="text" v-model="searchValue">
+                    <input name="serach" class="form-control is-vt" type="text" v-model.lazy="serverOptions.query">
                 </div>
             </div>
 
