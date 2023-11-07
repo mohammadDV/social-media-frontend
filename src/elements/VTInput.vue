@@ -81,6 +81,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    isVt: {
+        type: Boolean,
+        default: false
+    },
     currencySymbol: {
         type: String,
         default: null,
@@ -135,7 +139,8 @@ const changeEvent = function (event) {
 
 const styles = computed(() => {
     return {
-        'block w-full focus:outline-none sm:text-sm py-3.5 p-3': true,
+        'form-control is-vt': props.isVt,
+        'block w-full focus:outline-none sm:text-sm py-3.5 p-2': true,
         'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500 pr-10': hasError.value,
         'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200': !hasError.value,
         'pl-7': props.currencySymbol,

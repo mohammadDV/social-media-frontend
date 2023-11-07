@@ -12,6 +12,7 @@ import News from '@/views/News.vue';
 import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
 import PostList from '@/views/post/index.vue';
+import PostCreate from '@/views/post/create.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
@@ -67,9 +68,14 @@ const routes = [
         component: Profile,
       },
       {
-        name: 'profile',
+        name: 'post.index',
         path: '/profile/posts',
         component: PostList,
+      },
+      {
+        name: 'post.create',
+        path: '/profile/posts/create',
+        component: PostCreate,
       },
     ],
   },

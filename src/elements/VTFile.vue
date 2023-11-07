@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label :for="identifier" class="block text-sm font-medium mb-3" v-if="label">
+        <label :for="identifier" class="p-1 block text-sm font-medium mb-1" v-if="label?.length > 0">
             {{ label }}<slot name="label"/>
         </label>
         <div class="relative rounded-md" style="direction: ltr;">
@@ -38,15 +38,11 @@
 </template>
 
 <script>
-// import IVBaseInput from "./IVBaseInput.vue";
-// import IVError from "./IVError.vue";
 
 import { useAuthStore } from '@/stores/auth.ts';
 import axios from "axios";
 export default {
     name: "VTFile",
-//   components: {IVError},
-    // extends: IVBaseInput,
     computed: {
         styles() {
             return {
@@ -71,6 +67,9 @@ export default {
     },
     props: {
         name: {
+            type: String,
+        },
+        label: {
             type: String,
         },
         button: {
