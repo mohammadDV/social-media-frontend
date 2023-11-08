@@ -7,8 +7,52 @@
   import VTButton from '@/elements/VTButton'; 
   import VTInput from '@/elements/VTInput'; 
   import VTSelect from "@/elements/VTSelect.vue";
-//   import { useAuthStore } from '@/stores/auth.ts';
+  import { useAuthStore } from '@/stores/auth.ts';
   import { useToast } from "vue-toast-notification";
+
+
+  
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import ImageUploader from 'quill-image-uploader';
+import BlotFormatter from 'quill-blot-formatter'
+
+const modules = ref([
+    {
+        name: 'blotFormatter',  
+      module: BlotFormatter, 
+      options: {/* options */}
+    },
+    {
+        name: 'imageUploader',
+        module: ImageUploader,
+        options: {
+        upload: file => {
+            return new Promise((resolve, reject) => {
+                const formData = new FormData();
+                formData.append("image", file);
+
+                useApi().post('/api/upload-file', formData, {headers: { 
+                            Authorization: useAuthStore().token ? `Bearer ${useAuthStore().token}` : undefined,
+                            'Content-Type': 'multipart/form-data' 
+                        }
+                    })
+                .then(res => {
+                    console.log(res)
+                    resolve(res.data.url);
+                })
+                .catch(err => {
+                    reject("Upload failed");
+                    console.error("Error:", err)
+                })
+                })
+            }
+        }
+    }
+])
+          
+
+
 
 //   const authStore = useAuthStore();
 
@@ -166,6 +210,12 @@ import { useI18n } from "vue-i18n";
                 :disabled="false"
                 request-name="StatusRequest"
                 :placeholder="$t('site.Summary')"/>
+
+            <div class="mt-3">
+                <label class="text-sm font-medium mb-2">{{ $t('site.Content') }}</label>
+                <QuillEditor theme="snow" toolbar="full" :modules="modules" />
+            </div>
+    
 
             <VTFile
                 class="mt-3"
