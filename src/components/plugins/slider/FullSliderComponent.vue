@@ -4,8 +4,8 @@
 
         <div class="slider-item">
             <div class="slider--media ratio-3-4 mb-0">
-                <!-- <img width="200" height="144" :title="slide.title" :alt="slide.title" :src="slide['image']['indexArray']['medium']"/> -->
-                <img width="200" height="144" :title="slide.title" :alt="slide.title" src="/site/images/news/149606.jpg"/>
+                <img width="200" height="144" :title="slide.title" :alt="slide.title" :src="slide['image']"/>
+                <!-- <img width="200" height="144" :title="slide.title" :alt="slide.title" src="/site/images/news/149606.jpg"/> -->
             </div>
             <div class="slider--caption">
                 <span class="slider--caption-title">{{ slide.title }}</span>

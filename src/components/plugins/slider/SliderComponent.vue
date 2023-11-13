@@ -22,11 +22,10 @@
                     <div class="col-12 col-lg-6 image-area">
                         <div class="news-slider--image-container">
                             <div class="news-slider--image-area">
-                                <!-- src="/site/images/news/149606.jpg"-->
                                 <img
                                     width="246"
                                     height="150"
-                                    :src="slide['image']['indexArray']['medium']"
+                                    :src="slide['image']"
                                     :alt="slide.title"
                                 />
                             </div>
