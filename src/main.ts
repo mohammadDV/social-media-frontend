@@ -28,6 +28,12 @@ pinia.use(createPersistedState({
     auto: true,
 }));
 
+const globalOptions = {
+    readOnly: false,
+    theme: 'snow'
+  }
+  QuillEditor.props.globalOptions.default = () => globalOptions
+
 
 // import { createStore } from 'vuex'
 // import Store from './store'

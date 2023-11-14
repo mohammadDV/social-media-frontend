@@ -1,22 +1,25 @@
 <script setup>
  
  import {useApi} from '@/utils/api.ts';
-  import { ref, onMounted } from 'vue';
-  import VTFile from '@/elements/VTFile.vue'
-  import VTTextArea from '@/elements/VTTextArea';
-  import VTButton from '@/elements/VTButton'; 
-  import VTInput from '@/elements/VTInput'; 
-  import VTSelect from "@/elements/VTSelect.vue";
-  import { useAuthStore } from '@/stores/auth.ts';
-  import { useToast } from "vue-toast-notification";
-
-
   
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import ImageUploader from 'quill-image-uploader';
-import BlotFormatter from 'quill-blot-formatter'
+ import { ref, onMounted, reactive } from 'vue';
+ import VTFile from '@/elements/VTFile.vue'
+ import VTTextArea from '@/elements/VTTextArea';
+ import VTButton from '@/elements/VTButton'; 
+ import VTInput from '@/elements/VTInput'; 
+ import VTSelect from "@/elements/VTSelect.vue";
+ import VTTagsInput from "@/elements/VTTagsInput.vue";
+ import { useAuthStore } from '@/stores/auth.ts';
+ import { useToast } from "vue-toast-notification";
+ import { QuillEditor } from '@vueup/vue-quill'
+ import '@vueup/vue-quill/dist/vue-quill.snow.css'
+ import ImageUploader from 'quill-image-uploader';
+ import BlotFormatter from 'quill-blot-formatter'
+ import { useI18n } from "vue-i18n";
 
+ const { t } = useI18n();
+
+ // Editor configuration
 const modules = ref([
     {
         name: 'blotFormatter',  
@@ -32,7 +35,7 @@ const modules = ref([
                 const formData = new FormData();
                 formData.append("image", file);
 
-                useApi().post('/api/upload-file', formData, {headers: { 
+                useApi().post('/api/upload-image', formData, {headers: { 
                             Authorization: useAuthStore().token ? `Bearer ${useAuthStore().token}` : undefined,
                             'Content-Type': 'multipart/form-data' 
                         }
@@ -50,17 +53,27 @@ const modules = ref([
         }
     }
 ])
-          
 
 
+  const form = reactive({
+    title: '',
+    pre_title: '',
+    summary: '',
+    status: 0,
+    type: 0,
+    special: 0,
+    tags: [],
+    category_id: 1,
+    content: '',
+    image: '',
+    video: '',
+  });
 
-//   const authStore = useAuthStore();
-
-import { useI18n } from "vue-i18n";
-    const { t } = useI18n();
-
-  const isModalVisible = ref(false);
-  const status = ref(0);
+//   const tags = ref([]);
+//   const preTitle = ref('');
+//   const title = ref('');
+//   const summary = ref('');
+//   const status = ref(0);
   const statusList = ref([
     {
         id:0,
@@ -71,7 +84,7 @@ import { useI18n } from "vue-i18n";
         title: t('site.Active')
     }
   ]);
-  const type = ref(0);
+//   const type = ref(0);
   const typeList = ref([
     {
         id:0,
@@ -82,7 +95,7 @@ import { useI18n } from "vue-i18n";
         title: t('site.Video')
     }
   ]);
-  const special = ref(0);
+//   const special = ref(0);
   const specialList = ref([
     {
         id:0,
@@ -93,7 +106,7 @@ import { useI18n } from "vue-i18n";
         title: t('site.Special')
     }
   ]);
-  const category = ref(1);
+//   const category = ref(1);
   const categoryList = ref();
 
   const getCategories = () => {
@@ -108,40 +121,33 @@ import { useI18n } from "vue-i18n";
 });
 
 
-  const image = ref('');
-  const video = ref('');
-  const content = ref('');
+//   const image = ref('');
+//   const video = ref('');
+//   const content = ref('');
 
-  const resetForm = () => {
-    image.value = '';
-    video.value = '';
-    content.value = '';
-  }
+//   const resetForm = () => {
+//     image.value = '';
+//     video.value = '';
+//     content.value = '';
+//   }
 
-  const closeModal = () => {
-    resetForm()
-    isModalVisible.value = false;
-  };
   const getImageLink = (item) => {
-    image.value = item;
+    form.image = item;
   };
   const getVideoLink = (item) => {
-    video.value = item;
+    form.video = item;
   };
+//   const updateContent = ({ editor }) => {
+//     console.log(editor.getHTML());
+// };
 
 
-  const sendStatus = () => {
+  const sendPost = () => {
     const $toast = useToast();
-    useApi().post(`/api/profile/status/`, {
-        content: content.value, 
-        image: video.value,
-        video: video.value,
-        status: 1
-    })
+    useApi().post(`/api/profile/posts/`, form)
     .then((response) => {
       if (response.data.status) {
         $toast.success(response.data.message);
-        closeModal()
       }
     })
     .catch(error => {
@@ -182,7 +188,7 @@ import { useI18n } from "vue-i18n";
                 :is-vt="true"
                 name="title"
                 rows="4"
-                v-model="title"
+                v-model="form.title"
                 request-name="PostRequest"
                 :placeholder="$t('site.Title')"/>
             <VTInput
@@ -190,30 +196,37 @@ import { useI18n } from "vue-i18n";
                 class="mt-3"
                 name="pre_title"
                 rows="4"
-                v-model="preTitle"
+                v-model="form.pre_title"
                 request-name="PostRequest"
                 :placeholder="$t('site.Pre title')"/>
 
                 <VTSelect 
                     :label="$t('site.Category')"
-                    v-model="category" 
+                    v-model="form.category_id" 
                     :options="categoryList" 
                     optionsValueKey="id"
                     optionsDisplayValueKey="title"
-                    name="category"/>
+                    name="category_id"/>
             
             <VTTextArea
                 name="summary"
                 class="mt-3"
                 rows="4"
-                v-model="summary"
+                v-model="form.summary"
                 :disabled="false"
                 request-name="StatusRequest"
                 :placeholder="$t('site.Summary')"/>
 
             <div class="mt-3">
                 <label class="text-sm font-medium mb-2">{{ $t('site.Content') }}</label>
-                <QuillEditor theme="snow" toolbar="full" :modules="modules" />
+                <QuillEditor  v-model:content="form.content" contentType="html" theme="snow" toolbar="full" :modules="modules" />
+            </div>
+            <div class="mt-3">
+                <VTTagsInput
+                    :label="$t('site.Tags')"
+                    v-model="form.tags"
+                    :add-on-key="[13, ':', ';', ' ']"
+                    :placeholder="$t('site.Please insert your tags')" :multiple="true"/>
             </div>
     
 
@@ -223,14 +236,12 @@ import { useI18n } from "vue-i18n";
                 name="image"
                 @getFileLink="getImageLink"
             />
-
             
             <div class="flex gap-3 mt-3">
                 <div>
-
                     <VTSelect 
                         :label="$t('site.Status')"
-                        v-model="status" 
+                        v-model="form.status" 
                         :options="statusList" 
                         optionsValueKey="id"
                         optionsDisplayValueKey="title"
@@ -240,7 +251,7 @@ import { useI18n } from "vue-i18n";
                 <div>
                     <VTSelect 
                     :label="$t('site.Special')"
-                    v-model="special" 
+                    v-model="form.special" 
                     :options="specialList" 
                     optionsValueKey="id"
                     optionsDisplayValueKey="title"
@@ -250,7 +261,7 @@ import { useI18n } from "vue-i18n";
                 <div>
                     <VTSelect 
                     :label="$t('site.Type')"
-                    v-model="type" 
+                    v-model="form.type" 
                     :options="typeList" 
                     optionsValueKey="id"
                     optionsDisplayValueKey="title"
@@ -258,10 +269,10 @@ import { useI18n } from "vue-i18n";
                 </div>
             </div>
 
-            <div v-if="type == 1" class="w-100 mt-3">
+            <div v-if="form.type == 1" class="w-100 mt-3">
                     <VTFile
                         :label="$t('site.Choose video')"
-                        name="image"
+                        name="video"
                         @getFileLink="getVideoLink"
                     />
                </div>
@@ -270,7 +281,7 @@ import { useI18n } from "vue-i18n";
                 class="btn btn-outline-secondary btn-sm mt-3" 
                 size="medium"
                 color="primary"  
-                @click="sendStatus()">
+                @click="sendPost()">
                 {{ $t('site.Save') }}
             </VTButton> 
         </div>

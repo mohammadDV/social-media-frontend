@@ -129,14 +129,6 @@ const changeEvent = function (event) {
     emit('change', event);
 }
 
-// const hasBeforeSlot = computed(() => {
-//             return !!slots?.before && props.showSlot
-//         })
-
-// const hasDefaultSlot = computed(() => {
-//     return !!slots?.default && props.showSlot
-// })
-
 const styles = computed(() => {
     return {
         'form-control is-vt': props.isVt,
@@ -145,9 +137,6 @@ const styles = computed(() => {
         'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200': !hasError.value,
         'pl-7': props.currencySymbol,
         'cursor-not-allowed bg-gray-50': props.disabled && props.inputType !== 'increase',
-        // 'rounded-md': !hasBeforeSlot.value &&  !hasDefaultSlot.value,
-        // 'rounded-r-md': hasBeforeSlot.value && !hasDefaultSlot.value,
-        // 'rounded-l-md': !hasBeforeSlot.value && hasDefaultSlot.value,
         'text-center': props.center,
     };
 })

@@ -131,7 +131,7 @@ export default {
             formData.append(this.name, file);
 
             // upload the file and return the file upload
-            return axios.post('/api/upload-file', formData, {
+            return axios.post('/api/upload-' + this.name, formData, {
                     headers: { 
                         Authorization: useAuthStore().token ? `Bearer ${useAuthStore().token}` : undefined,
                         'Content-Type': 'multipart/form-data' 
