@@ -1,6 +1,7 @@
 <script setup>
  
- import {useApi} from '@/utils/api.ts';
+ import {useApi} from './../../utils/api.ts';
+ import {helper} from '@/utils/helper.ts';
   
  import { ref, onMounted, reactive } from 'vue';
  import VTFile from '@/elements/VTFile.vue'
@@ -17,9 +18,111 @@
  import BlotFormatter from 'quill-blot-formatter'
  import { useI18n } from "vue-i18n";
 
- const { t } = useI18n();
+const initialFormState = {
+      title: '',
+      pre_title: '',
+      summary: '',
+      status: 0,
+      type: 0,
+      special: 0,
+      tags: [],
+      category_id: 1,
+      content: '',
+      image: '',
+      video: '',
+    };
 
- // Editor configuration
+ const { t } = useI18n();
+ const canSubmit = ref(true);
+ const form = reactive({ ...initialFormState });
+
+  const statusList = ref([
+    {
+        id:0,
+        title: t('site.Inactive')
+    },
+    {
+        id:1,
+        title: t('site.Active')
+    }
+  ]);
+
+  const typeList = ref([
+    {
+        id:0,
+        title: t('site.Common')
+    },
+    {
+        id:1,
+        title: t('site.Video')
+    }
+  ]);
+
+  const specialList = ref([
+    {
+        id:0,
+        title: t('site.Common')
+    },
+    {
+        id:1,
+        title: t('site.Special')
+    }
+  ]);
+  
+  const categoryList = ref();
+
+  const getCategories = () => {
+    useApi().get(`/api/active-categories`)
+    .then((response) => {
+        categoryList.value = response.data;
+    })
+  }
+  const onUploadStart = () => {
+    canSubmit.value = false;
+  }
+
+  const getImageLink = (item) => {
+    form.image = item;
+    canSubmit.value = true;
+  };
+
+  const getVideoLink = (item) => {
+    form.video = item;
+    canSubmit.value = true;
+  };
+
+  const editor = ref()
+  const reset = ref(false)
+
+  const resetForm = () => {
+    reset.value = true;
+    Object.assign(form, { ...initialFormState });
+    helper().goToTop();
+    editor.value.setHTML('');
+  };
+
+  const sendPost = () => {
+
+    if (!canSubmit.value) {
+        return '';
+    }
+
+    const $toast = useToast();
+    useApi().post(`/api/profile/posts/`, form)
+    .then((response) => {
+      if (response.data.status) {
+        $toast.success(response.data.message);
+        resetForm()
+      }
+    })
+    .catch(error => {
+        if (error.response.data.status == 0) {
+            $toast.error(error.response.data.message);
+        }
+    });
+  };
+
+  // Editor configuration
 const modules = ref([
     {
         name: 'blotFormatter',  
@@ -54,108 +157,9 @@ const modules = ref([
     }
 ])
 
-
-  const form = reactive({
-    title: '',
-    pre_title: '',
-    summary: '',
-    status: 0,
-    type: 0,
-    special: 0,
-    tags: [],
-    category_id: 1,
-    content: '',
-    image: '',
-    video: '',
-  });
-
-//   const tags = ref([]);
-//   const preTitle = ref('');
-//   const title = ref('');
-//   const summary = ref('');
-//   const status = ref(0);
-  const statusList = ref([
-    {
-        id:0,
-        title: t('site.Inactive')
-    },
-    {
-        id:1,
-        title: t('site.Active')
-    }
-  ]);
-//   const type = ref(0);
-  const typeList = ref([
-    {
-        id:0,
-        title: t('site.Common')
-    },
-    {
-        id:1,
-        title: t('site.Video')
-    }
-  ]);
-//   const special = ref(0);
-  const specialList = ref([
-    {
-        id:0,
-        title: t('site.Common')
-    },
-    {
-        id:1,
-        title: t('site.Special')
-    }
-  ]);
-//   const category = ref(1);
-  const categoryList = ref();
-
-  const getCategories = () => {
-    useApi().get(`/api/active-categories`)
-    .then((response) => {
-        categoryList.value = response.data;
-    })
-  }
-
   onMounted(() => {
     getCategories();
-});
-
-
-//   const image = ref('');
-//   const video = ref('');
-//   const content = ref('');
-
-//   const resetForm = () => {
-//     image.value = '';
-//     video.value = '';
-//     content.value = '';
-//   }
-
-  const getImageLink = (item) => {
-    form.image = item;
-  };
-  const getVideoLink = (item) => {
-    form.video = item;
-  };
-//   const updateContent = ({ editor }) => {
-//     console.log(editor.getHTML());
-// };
-
-
-  const sendPost = () => {
-    const $toast = useToast();
-    useApi().post(`/api/profile/posts/`, form)
-    .then((response) => {
-      if (response.data.status) {
-        $toast.success(response.data.message);
-      }
-    })
-    .catch(error => {
-        if (error.response.data.status == 0) {
-            $toast.error(error.response.data.message);
-        }
-    });
-  };
+  });
 
 </script>
 
@@ -176,7 +180,7 @@ const modules = ref([
                     </ol>
                 </nav>
                 <div class="place-button">
-                    <router-link to="/profile/posts/create" :title="$t('site.Post management')">
+                    <router-link to="/profile/posts" :title="$t('site.Post management')">
                         <button class="btn btn-primary">{{ $t('site.Post management') }}</button>
                     </router-link>
                 </div>
@@ -214,27 +218,38 @@ const modules = ref([
                 rows="4"
                 v-model="form.summary"
                 :disabled="false"
-                request-name="StatusRequest"
+                request-name="PostRequest"
                 :placeholder="$t('site.Summary')"/>
 
             <div class="mt-3">
                 <label class="text-sm font-medium mb-2">{{ $t('site.Content') }}</label>
-                <QuillEditor  v-model:content="form.content" contentType="html" theme="snow" toolbar="full" :modules="modules" />
+                <QuillEditor 
+                    ref="editor" 
+                    v-model:content="form.content" 
+                    contentType="html" 
+                    theme="snow" 
+                    toolbar="full" 
+                    :modules="modules" />
             </div>
             <div class="mt-3">
                 <VTTagsInput
                     :label="$t('site.Tags')"
                     v-model="form.tags"
-                    :add-on-key="[13, ':', ';', ' ']"
+                    :add-on-key="[13, ':', ';']"
                     :placeholder="$t('site.Please insert your tags')" :multiple="true"/>
             </div>
-    
+
+
+            <div v-if="form.image?.length > 0">
+                <img class="thumbnail w-[100px] rounded m-2" :src="form.image" alt="image">
+            </div>
 
             <VTFile
                 class="mt-3"
                 :label="$t('site.Choose image')"
                 name="image"
                 @getFileLink="getImageLink"
+                @on-upload-start="onUploadStart"
             />
             
             <div class="flex gap-3 mt-3">
@@ -274,11 +289,14 @@ const modules = ref([
                         :label="$t('site.Choose video')"
                         name="video"
                         @getFileLink="getVideoLink"
+                        @on-upload-start="onUploadStart"
                     />
                </div>
 
             <VTButton 
-                class="btn btn-outline-secondary btn-sm mt-3" 
+                :loading="!canSubmit"
+                :disabled="!canSubmit"
+                class="justify-center btn-outline-secondary btn-sm mt-3" 
                 size="medium"
                 color="primary"  
                 @click="sendPost()">

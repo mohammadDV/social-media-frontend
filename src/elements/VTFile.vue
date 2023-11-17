@@ -95,13 +95,6 @@ export default {
 
             // make sure the progress is set to 0
             this.progress = 0;
-
-            // if there is no upload url, return out
-            // if (!this.uploadUrl || !this.file()) {
-                // done, return out
-            //     return;
-            // }
-
             // start the upload
             this.$emit('on-upload-start');
             this.isUploading = true;
@@ -122,11 +115,6 @@ export default {
             // get the file
             let file = this.file();
 
-            // get the request data
-            // let requestData = this.requestData || {};
-
-            // create the form data object
-            // let formData = this.objectToFormData(requestData);
             let formData = new FormData();
             formData.append(this.name, file);
 
@@ -155,7 +143,7 @@ export default {
             return fileInputField.files[0];
         },
         uploadDone(event, url) {
-            console.log("Done!");
+
             // emit the upload end event
             this.$emit('getFileLink', url);
 

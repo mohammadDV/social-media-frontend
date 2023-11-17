@@ -12,7 +12,7 @@
                 <span class="slider--caption-date">{{ currentDate }}</span>
             </div>
 
-            <router-link class="stretched-link" :to="`news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
+            <router-link class="stretched-link" :to="`/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
         </div>
       </div>
       <div @click="nextSlide" class="arrow-btn next">

@@ -56,6 +56,7 @@
 
 <script setup>
 
+import {useApi} from '@/utils/api.ts';
 import { defineProps, computed, defineEmits, ref } from 'vue';
 
 const emit = defineEmits(['update:modelValue', 'change', 'clickBefore', 'clickAfter', 'input'])
@@ -64,6 +65,10 @@ const props = defineProps({
     identifier: {
       type: String,
       default: 'identifier'
+    },
+    requestName: {
+      type: String,
+      default: ''
     },
     classNames: {
         type: String,
@@ -125,9 +130,37 @@ const hasError = ref(false);
 
 
 const changeEvent = function (event) {
+
+    validate(event.target.value);
     emit('update:modelValue', event.target.value);
     emit('change', event);
 }
+
+const validate = (value) => {
+            // if the request name is not set, return out
+        if (!props.requestName) {
+            return;
+        }
+
+        let data = {};
+        data['field'] = props.name;
+        data[props.name] = value;
+
+        // validate the field
+        useApi().post(`/api/validation/${props.requestName}`, data)
+            .then(response => {
+                if (response.data.status) {
+                    hasError.value = true;
+                    errorMessage.value = response.data.message;
+                } else {
+                    hasError.value = false;
+                    errorMessage.value = '';
+                }
+            }).catch(() => {
+                hasError.value = false;
+                errorMessage.value = '';
+            });
+    }
 
 const styles = computed(() => {
     return {
