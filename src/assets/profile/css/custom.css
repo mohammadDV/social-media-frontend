@@ -209,3 +209,7 @@
    background-color: var(--color-basic-700) !important;
 }
 
+.ql-container.ql-snow {
+    min-height: 400px !important;
+}
+

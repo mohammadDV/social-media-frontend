@@ -18,11 +18,21 @@ import i18n from './i18n';
 import {createPinia} from "pinia";
 import {createPersistedState} from 'pinia-plugin-persistedstate';
 
+// editor
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
 const pinia = createPinia();
 pinia.use(createPersistedState({
     storage: localStorage,
     auto: true,
 }));
+
+const globalOptions = {
+    readOnly: false,
+    theme: 'snow'
+  }
+  QuillEditor.props.globalOptions.default = () => globalOptions
 
 
 // import { createStore } from 'vuex'
@@ -34,6 +44,8 @@ createApp(App)
     .use(VueToast)
     .use(i18n)
     .use(pinia)
+    .use(pinia)
     .use(router)
+    .component('QuillEditor', QuillEditor)
     .component('EasyDataTable', Vue3EasyDataTable)
     .mount('#app')

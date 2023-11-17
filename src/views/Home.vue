@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-7 flex-grow-1">
                         <div class="row mx-0 mb-75">
-                          <slider-component :slides="specialPosts"></slider-component>
+                          <slider-component v-if="specialPosts?.length > 0" :slides="specialPosts"></slider-component>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6 item-column">
@@ -20,7 +20,7 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                                 <li v-for="(post, index) in posts[4]" :key="index" class="news-item">
-                                                  <router-link :to="`news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                  <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
@@ -42,7 +42,7 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[3]" :key="index" class="news-item">
-                                                  <router-link :to="`news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                  <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
@@ -66,7 +66,7 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[1]" :key="index" class="news-item">
-                                                  <router-link :to="`news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                  <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
@@ -88,12 +88,12 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[2]" :key="index" class="news-item">
-                                                  <router-link :to="`/news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
                                                         {{ post.title}}
-                                                    </router-link>
+                                                    </router-link> -->
                                                 </li>
                                             </ul>
                                         </div>
@@ -102,10 +102,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-3 flex-grow-1 item-column">
-                        <full-slider-component :slides="specialPosts"></full-slider-component>
-                        <!-- <newspaper-slider-component :slides="posts[7]"></newspaper-slider-component> -->
-                        <div class="card vt-news-card height-fluid">
+                    <div class="col-12 col-lg-3 flex-grow-1">
+                        <div class="mb-75">
+                            <full-slider-component  :slides="posts[7]"></full-slider-component>
+                        </div>
+                        <div class="card vt-news-card height-fluid mb-75">
                             <div class="card-header">
                                 <tabs-component class="nav">
                                   <tab-component class="nav-item cursor-pointer" :is-active="tabItem == 'latest'"
@@ -128,36 +129,36 @@
                                         <div v-if="tabItem == 'latest'" class="tab-pane fade show active"  id="latest"  role="tabpanel"  aria-labelledby="latest-tab">
                                             <ul v-if="latest?.length > 0" class="news-list">
                                               <li v-for="(post, index) in latest" :key="index" class="news-item">
-                                                  <router-link :to="`/news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
                                                       {{ post.title }}
-                                                  </router-link>
+                                                  </router-link> -->
                                                 </li>
                                             </ul>
                                         </div>
                                         <div v-if="tabItem == 'challenged'" class="tab-pane fade show active"  id="conv"  role="tabpanel"  aria-labelledby="conv-tab">
                                             <ul v-if="challenged?.length > 0" class="news-list">
                                               <li v-for="(post, index) in challenged" :key="index" class="news-item">
-                                                  <router-link :to="`/news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
                                                       {{ post.title }}
-                                                  </router-link>
+                                                  </router-link> -->
                                               </li>
                                             </ul>
                                         </div>
                                         <div v-if="tabItem == 'popular'" class="tab-pane fade  show active" id="hot" role="tabpanel" aria-labelledby="hot-tab">
                                             <ul v-if="popular?.length > 0" class="news-list">
                                               <li v-for="(post, index) in popular" :key="index" class="news-item">
-                                                  <router-link :to="`/news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
                                                       {{ post.title}}
-                                                  </router-link>
+                                                  </router-link> -->
                                               </li>
                                             </ul>
                                         </div>
@@ -235,7 +236,7 @@
                                         <div class="news-row-item">
                                             <div class="row gx-2">
                                                 <div class="col-4">
-                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']['indexArray']['small']})`"></div>
+                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']})`"></div>
                                                 </div>
                                                 <div class="col-8">
                                                     <p class="news-row-item-title">{{ post.title }}</p>
@@ -262,7 +263,7 @@
                                         <div class="news-row-item">
                                             <div class="row gx-2">
                                                 <div class="col-4">
-                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']['indexArray']['small']})`"></div>
+                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']})`"></div>
                                                 </div>
                                                 <div class="col-8">
                                                     <p class="news-row-item-title">{{ post.title }}</p>
