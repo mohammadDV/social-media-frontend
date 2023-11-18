@@ -3,7 +3,8 @@
  import {useApi} from './../../utils/api.ts';
  import {helper} from '@/utils/helper.ts';
   
- import { ref, onMounted, reactive } from 'vue';
+ import { ref, onMounted, reactive, watch } from 'vue';
+ import { useRoute, useRouter } from 'vue-router';
  import VTFile from '@/elements/VTFile.vue'
  import VTTextArea from '@/elements/VTTextArea';
  import VTButton from '@/elements/VTButton'; 
@@ -17,6 +18,10 @@
  import ImageUploader from 'quill-image-uploader';
  import BlotFormatter from 'quill-blot-formatter'
  import { useI18n } from "vue-i18n";
+
+
+const route = useRoute();
+const router = useRouter();
 
 const initialFormState = {
       title: '',
@@ -77,6 +82,27 @@ const initialFormState = {
         categoryList.value = response.data;
     })
   }
+
+  const getPost = () => {
+    
+    if (route.params.id != undefined) {
+        useApi().get(`/api/profile/posts/${route.params.id}`)
+            .then((response) => {
+                Object.assign(form, { ...response.data });
+                if (response?.data?.tags?.length > 0) {
+                    form.tags = response.data.tags.map((item) => item.title);
+                }
+            });
+    }
+  }
+
+
+  watch(() => route.params.id, () => {
+    if (route.params.id) {
+        getPost();
+    } 
+  });
+
   const onUploadStart = () => {
     canSubmit.value = false;
   }
@@ -104,22 +130,33 @@ const initialFormState = {
   const sendPost = () => {
 
     if (!canSubmit.value) {
-        return '';
+        return '/api/profile/posts/';
+    }
+
+    let url = '/api/profile/posts/';
+
+    if (route.params.id) {
+        url = `/api/profile/posts/${route.params.id}`;
     }
 
     const $toast = useToast();
-    useApi().post(`/api/profile/posts/`, form)
+    useApi().post(url, form)
     .then((response) => {
       if (response.data.status) {
         $toast.success(response.data.message);
         resetForm()
+        if (route.params.id) {
+            router.push({
+                name: 'post.index'
+            })
+        }
       }
     })
     .catch(error => {
         if (error.response.data.status == 0) {
             $toast.error(error.response.data.message);
         }
-    });
+    })
   };
 
   // Editor configuration
@@ -144,7 +181,6 @@ const modules = ref([
                         }
                     })
                 .then(res => {
-                    console.log(res)
                     resolve(res.data.url);
                 })
                 .catch(err => {
@@ -158,6 +194,11 @@ const modules = ref([
 ])
 
   onMounted(() => {
+
+    if (route.params.id) {
+        getPost();
+    }
+
     getCategories();
   });
 
@@ -241,7 +282,7 @@ const modules = ref([
 
 
             <div v-if="form.image?.length > 0">
-                <img class="thumbnail w-[100px] rounded m-2" :src="form.image" alt="image">
+                <img class="thumbnail w-[100px] rounded mt-2" :src="form.image" alt="image">
             </div>
 
             <VTFile
@@ -284,14 +325,20 @@ const modules = ref([
                 </div>
             </div>
 
+            <video class="mt-3" v-if="form.type == 1 && form.video" width="100" height="240" controls>
+                <source :src="form.video" type="video/mp4">
+                <source :src="form.video" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+
             <div v-if="form.type == 1" class="w-100 mt-3">
-                    <VTFile
-                        :label="$t('site.Choose video')"
-                        name="video"
-                        @getFileLink="getVideoLink"
-                        @on-upload-start="onUploadStart"
-                    />
-               </div>
+                <VTFile
+                    :label="$t('site.Choose video')"
+                    name="video"
+                    @getFileLink="getVideoLink"
+                    @on-upload-start="onUploadStart"
+                />
+            </div>
 
             <VTButton 
                 :loading="!canSubmit"

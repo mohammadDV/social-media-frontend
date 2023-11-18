@@ -52,18 +52,19 @@
                 </a>
             </div>
             <div class="user-links">
-                <a class="user-link" href="/profile.post.create">
+                <router-link class="user-link" to="/profile/posts/create">
                     <span class="user-link-icon">
                     <span class="material-icons"> post_add </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Create new post') }} </span>
-                </a>
-                <a class="user-link" href="profile.post.index">
+                </router-link>
+
+                <router-link class="user-link" to="/profile/posts">
                     <span class="user-link-icon">
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Post management') }} </span>
-                </a>
+                </router-link>
                 <a class="user-link" href="profile.status.create">
                     <span class="user-link-icon">
                     <span class="material-icons"> post_add </span>
