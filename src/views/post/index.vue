@@ -150,8 +150,12 @@
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <a class="p-1 rounded btn-success m-1" :href="'/profile/posts/edit/' + item.id" ><span class="material-icons size-font-ahalf"> edit </span></a>
-                        <a class="p-1 rounded btn-danger m-1" :href="'/profile/posts/edit/' + item.id" ><span class="material-icons size-font-ahalf"> delete </span></a>
+                        <router-link class="p-1 rounded btn-info m-1 text-white" :to="'/profile/posts/' + item.id">
+                            <span class="material-icons size-font-ahalf"> edit </span>
+                        </router-link>
+                        <router-link class="p-1 rounded btn-danger m-1" :to="'/profile/posts/delete/' + item.id">
+                            <span class="material-icons size-font-ahalf"> delete </span>
+                        </router-link>
                     </div>
                 </template>
                 <template #item-image="item">
@@ -204,11 +208,11 @@
                 <button :class="{
                     'prev-page m-2 bg-vt rounded p-2 text-white': true,
                     'cursor-pointer': !isFirstPage,
-                    }" @click="prevPage" :disabled="isFirstPage">{{ $t('site.Next page') }}</button>
+                    }" @click="prevPage" :disabled="isFirstPage">{{ $t('site.Previous page') }}</button>
                 <button :class="{
                     'prev-page m-2 bg-vt rounded p-2 text-white': true,
                     'cursor-pointer': !isLastPage,
-                    }" @click="nextPage" :disabled="isLastPage">{{ $t('site.Previous page') }}</button>
+                    }" @click="nextPage" :disabled="isLastPage">{{ $t('site.Next page') }}</button>
                 </div>
             </div>
         </div>

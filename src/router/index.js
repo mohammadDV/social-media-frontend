@@ -77,6 +77,11 @@ const routes = [
         path: '/profile/posts/create',
         component: PostCreate,
       },
+      {
+        name: 'post.edit',
+        path: '/profile/posts/:id',
+        component: PostCreate,
+      },
     ],
   },
 ];
