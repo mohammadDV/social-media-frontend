@@ -43,20 +43,21 @@ export const useAuthStore = defineStore('auth',{
       setToken(token: String) {
         this.isAuthenticated = true;
         this.token = token;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        this.setUser();
+        this.setUser(token);
       },
       clearToken() {
         this.isAuthenticated = false;
         this.token = '';
         delete axios.defaults.headers.common['Authorization'];
       },
-      async setUser() {
+      async setUser(token: String) {
         try {
+
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
           const response = await axios.get('/api/profile/users/info');
 
           if (response.data) {
-            console.log(response.data);
             this.user = response.data as User;
             this.user.fullname = response.data?.nickname?.length > 0 ? response.data.nickname : response.data.first_name + (response?.data?.last_name?.length > 0 ? ' ' + response?.data?.last_name : '');
             this.user.nickName = response.data?.nickname;
@@ -67,10 +68,6 @@ export const useAuthStore = defineStore('auth',{
             this.user.role_id = response.data?.role_id;
             this.user.point = response.data?.point;
             this.user.clubs = response.data?.clubs;
-
-            console.log(this.user);
-
-            console.log(this.user);
           }
 
         } catch (error) {

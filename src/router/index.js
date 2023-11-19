@@ -13,6 +13,8 @@ import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
+import UserCreate from '@/views/user/create.vue';
+import UserList from '@/views/user/index.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
@@ -81,6 +83,21 @@ const routes = [
         name: 'post.edit',
         path: '/profile/posts/:id',
         component: PostCreate,
+      },
+      {
+        name: 'account.edit',
+        path: '/profile/account',
+        component: UserCreate,
+      },
+      {
+        name: 'user.edit',
+        path: '/profile/users/edit/:id',
+        component: UserCreate,
+      },
+      {
+        name: 'user.index',
+        path: '/profile/users',
+        component: UserList,
       },
     ],
   },

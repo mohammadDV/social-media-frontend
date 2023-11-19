@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label :data-intercom-target="labelDataIntercomTarget" :for="identifier" class="block text-sm font-medium mb-3" v-if="label">
+        <label :data-intercom-target="labelDataIntercomTarget" :for="identifier" class="block text-sm font-medium mb-2" v-if="label">
             {{ label }}
             <slot name="label"/>
         </label>

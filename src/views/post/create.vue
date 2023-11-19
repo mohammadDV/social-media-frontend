@@ -130,7 +130,7 @@ const initialFormState = {
   const sendPost = () => {
 
     if (!canSubmit.value) {
-        return '/api/profile/posts/';
+        return '';
     }
 
     let url = '/api/profile/posts/';
@@ -215,7 +215,7 @@ const modules = ref([
                                 {{ $t('site.Profile') }}
                             </router-link>
                         </li>
-                        <li class="breadcrumb-item">
+                        <li class="breadcrumb-item active">
                             {{ $t('site.Create new post') }}
                         </li>
                     </ol>

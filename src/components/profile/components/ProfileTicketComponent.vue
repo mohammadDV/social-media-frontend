@@ -77,18 +77,19 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.Status management') }} </span>
                 </a>
-                <a class="user-link" href="profile.user.edit',['user' => auth()->user()->id])">
+
+                <router-link class="user-link" to="/profile/account">
                     <span class="user-link-icon">
                     <span class="material-icons"> manage_accounts </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Edit profile') }} </span>
-                </a>
-                <a class="user-link" href="profile.user.index">
+                </router-link>
+                <router-link class="user-link" to="/profile/users">
                     <span class="user-link-icon">
                     <span class="material-icons"> manage_accounts </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.User management') }} </span>
-                </a>
+                </router-link>
                 <a class="user-link" href="profile.user.password">
                     <span class="user-link-icon">
                     <span class="material-icons"> manage_accounts </span>
