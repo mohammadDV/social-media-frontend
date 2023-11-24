@@ -87,22 +87,15 @@ export function useApi() {
     }
 
     const post = async (url: any, queryParams = {}) => {
-        console.log(queryParams);
         return await api.post(url, queryParams);
     }
 
     const deleteRequest = async (url: any, queryParams = {}) => {
-        await api.delete(url, { params: queryParams })
-        .catch((err) => {
-            errorHandler(err)
-        });
+        return await api.delete(url, { params: queryParams });
     }
 
     const patch = async (url: any, queryParams = {}) => {
-        await api.patch(url, { params: queryParams })
-        .catch((err) => {
-            errorHandler(err)
-        });
+        return await api.patch(url, { params: queryParams });
     }
 
 

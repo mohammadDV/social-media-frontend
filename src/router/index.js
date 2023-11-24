@@ -13,6 +13,7 @@ import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
+import StatusList from '@/views/status/index.vue';
 import UserCreate from '@/views/user/create.vue';
 import UserList from '@/views/user/index.vue';
 import Login from '@/views/Login.vue';
@@ -82,6 +83,21 @@ const routes = [
       {
         name: 'post.edit',
         path: '/profile/posts/:id',
+        component: PostCreate,
+      },
+      {
+        name: 'status.index',
+        path: '/profile/status',
+        component: StatusList,
+      },
+      {
+        name: 'status.create',
+        path: '/profile/status/create',
+        component: PostCreate,
+      },
+      {
+        name: 'status.edit',
+        path: '/profile/status/:id',
         component: PostCreate,
       },
       {
