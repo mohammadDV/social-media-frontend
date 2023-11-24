@@ -5,7 +5,7 @@
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
-//   import { useToast } from "vue-toast-notification";
+  import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
 
     const { t } = useI18n();
@@ -35,15 +35,16 @@
     updateRowsPerPageActiveOption(Number((e.target as HTMLInputElement).value));
   };
 
+
   const searchField = ref("title");
   const searchValue = ref("");
   const headers: Header[] = [
     { text: t("site.Id"), value: "id", sortable: true},
-    { text: t('site.First name'), value: "first_name" },
-    { text: t('site.Last name'), value: "last_name" },
-    { text: t('site.Email'), value: "email" },
-    { text: t('site.Nickname'), value: "nickname", sortable: true },
+    { text: t('site.Content'), value: "text" },
+    // { text: t('site.User'), value: "user_id" },
+    { text: t('site.Image'), value: "file", sortable: true },
     { text: t('site.Status'), value: "status", sortable: true },
+    { text: t('site.Comments'), value: "comments_count" },
     { text: t('site.Date'), value: "created_at" },
     { text: t('site.Manage'), value: "actions" },
   ];
@@ -70,7 +71,7 @@
   
   const loadFromServer = async () => {
     loading.value = true;
-    await useApi().get('/api/profile/users', serverOptions.value)
+    await useApi().get('/api/profile/status', serverOptions.value)
     .then((response: any) => {
         items.value = response.data.data;
         serverItemsLength.value = response.data.total;
@@ -78,19 +79,19 @@
     loading.value = false;
   };
 
-//   const $toast = useToast();
-//   const deletItem = (id: Number) => {
-//     if(confirm('Are you sure you want to remove this item?')) {
-//         useApi().deleteRequest(`/api/profile/users/${id}`)
-//         .then((response: any) => {
-//             if (response.data.status) {
+  const $toast = useToast();
+  const deletItem = (id: Number) => {
+    if(confirm('Are you sure you want to remove this item?')) {
+        useApi().deleteRequest(`/api/profile/status/${id}`)
+        .then((response: any) => {
+            if (response.data.status) {
 
-//                 $toast.success(response.data.message);
-//                 loadFromServer();
-//             }
-//         })
-//     }
-//   };
+                $toast.success(response.data.message);
+                loadFromServer();
+            }
+        })
+    }
+  };
   
   // initial load
   loadFromServer();
@@ -153,11 +154,15 @@
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <router-link class="p-1 rounded btn-info m-1 text-white" :to="'/profile/users/edit/' + item.id">
+                        <router-link class="p-1 rounded btn-info m-1 text-white" :to="'/profile/status/' + item.id">
                             <span class="material-icons size-font-ahalf"> edit </span>
                         </router-link>
-                           <!-- <span @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span> -->
+                        <span @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
+                </template>
+                <template #item-file="item">
+                    <img v-if="item?.file?.length > 0" :src="item.file" alt="image" class="w-[50px]">
+                    <p v-else>-</p>
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>

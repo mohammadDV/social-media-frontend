@@ -5,8 +5,9 @@
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
-
+  import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
+
     const { t } = useI18n();
   
     const dataTable = ref();
@@ -79,6 +80,20 @@
         serverItemsLength.value = response.data.total;
     })
     loading.value = false;
+  };
+
+  const $toast = useToast();
+  const deletItem = (id: Number) => {
+    if(confirm('Are you sure you want to remove this item?')) {
+        useApi().deleteRequest(`/api/profile/posts/${id}`)
+        .then((response: any) => {
+            if (response.data.status) {
+
+                $toast.success(response.data.message);
+                loadFromServer();
+            }
+        })
+    }
   };
   
   // initial load
@@ -153,9 +168,7 @@
                         <router-link class="p-1 rounded btn-info m-1 text-white" :to="'/profile/posts/' + item.id">
                             <span class="material-icons size-font-ahalf"> edit </span>
                         </router-link>
-                        <router-link class="p-1 rounded btn-danger m-1" :to="'/profile/posts/delete/' + item.id">
-                            <span class="material-icons size-font-ahalf"> delete </span>
-                        </router-link>
+                        <span @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
                 </template>
                 <template #item-image="item">

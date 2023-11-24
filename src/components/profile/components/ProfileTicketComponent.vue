@@ -65,18 +65,18 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.Post management') }} </span>
                 </router-link>
-                <a class="user-link" href="profile.status.create">
+                <router-link class="user-link" to="/profile/status/create">
                     <span class="user-link-icon">
                     <span class="material-icons"> post_add </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Create new status') }} </span>
-                </a>
-                <a class="user-link" href="profile.status.index">
+                </router-link>
+                <router-link class="user-link" to="/profile/status">
                     <span class="user-link-icon">
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Status management') }} </span>
-                </a>
+                </router-link>
 
                 <router-link class="user-link" to="/profile/account">
                     <span class="user-link-icon">
