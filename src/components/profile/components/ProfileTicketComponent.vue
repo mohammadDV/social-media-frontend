@@ -90,6 +90,18 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.User management') }} </span>
                 </router-link>
+                <router-link class="user-link" to="/profile/clubs/create">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> post_add </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.Create new club') }} </span>
+                </router-link>
+                <router-link class="user-link" to="/profile/clubs">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> article </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.Club management') }} </span>
+                </router-link>
                 <a class="user-link" href="profile.user.password">
                     <span class="user-link-icon">
                     <span class="material-icons"> manage_accounts </span>
@@ -113,18 +125,6 @@
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.League management') }} </span>
-                </a>
-                <a class="user-link" href="profile.club.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new club') }} </span>
-                </a>
-                <a class="user-link" href="profile.club.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Club management') }} </span>
                 </a>
                 <a class="user-link" href="profile.live.create">
                     <span class="user-link-icon">
