@@ -13,6 +13,8 @@ import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
+import ClubList from '@/views/club/index.vue';
+import ClubCreate from '@/views/club/create.vue';
 import StatusList from '@/views/status/index.vue';
 import UserCreate from '@/views/user/create.vue';
 import UserList from '@/views/user/index.vue';
@@ -84,6 +86,21 @@ const routes = [
         name: 'post.edit',
         path: '/profile/posts/:id',
         component: PostCreate,
+      },
+      {
+        name: 'club.index',
+        path: '/profile/clubs',
+        component: ClubList,
+      },
+      {
+        name: 'club.create',
+        path: '/profile/clubs/create',
+        component: ClubCreate,
+      },
+      {
+        name: 'club.edit',
+        path: '/profile/clubs/:id',
+        component: ClubCreate,
       },
       {
         name: 'status.index',
