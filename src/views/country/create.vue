@@ -12,15 +12,12 @@
  import { useToast } from "vue-toast-notification";
  import { useI18n } from "vue-i18n";
 
-
 const route = useRoute();
 const router = useRouter();
 
 const initialFormState = {
       title: '',
       status: 0,
-      sport_id: 1,
-      country_id: 1,
       image: '',
     };
 
@@ -38,28 +35,11 @@ const initialFormState = {
         title: t('site.Active')
     }
   ]);
-  
-  const sportList = ref();
 
-  const getSports = () => {
-    useApi().get(`/api/profile/sports/index`)
-    .then((response) => {
-        sportList.value = response.data;
-    })
-  }
-  const countryList = ref();
-
-  const getCountries = () => {
-    useApi().get(`/api/profile/countries/index`)
-    .then((response) => {
-        countryList.value = response.data;
-    })
-  }
-
-  const getClub = () => {
+  const getItem = () => {
     
     if (route.params.id != undefined) {
-        useApi().get(`/api/profile/clubs/${route.params.id}`)
+        useApi().get(`/api/profile/countries/${route.params.id}`)
             .then((response) => {
                 Object.assign(form, { ...response.data });
                 if (response?.data?.tags?.length > 0) {
@@ -69,10 +49,9 @@ const initialFormState = {
     }
   }
 
-
   watch(() => route.params.id, () => {
     if (route.params.id) {
-        getClub();
+        getItem();
     } 
   });
 
@@ -97,10 +76,10 @@ const initialFormState = {
         return '';
     }
 
-    let url = '/api/profile/clubs/';
+    let url = '/api/profile/countries/';
 
     if (route.params.id) {
-        url = `/api/profile/clubs/${route.params.id}`;
+        url = `/api/profile/countries/${route.params.id}`;
     }
 
     const $toast = useToast();
@@ -111,7 +90,7 @@ const initialFormState = {
         resetForm()
         if (route.params.id) {
             router.push({
-                name: 'club.index'
+                name: 'country.index'
             })
         }
       }
@@ -127,11 +106,8 @@ const initialFormState = {
   onMounted(() => {
 
     if (route.params.id) {
-        getClub();
+        getItem();
     }
-
-    getCountries();
-    getSports();
   });
 
 </script>
@@ -148,13 +124,13 @@ const initialFormState = {
                             </router-link>
                         </li>
                         <li class="breadcrumb-item active">
-                            {{ $t('site.Create new club') }}
+                            {{ $t('site.Create new country') }}
                         </li>
                     </ol>
                 </nav>
                 <div class="place-button">
-                    <router-link to="/profile/clubs" :title="$t('site.Club management')">
-                        <button class="btn btn-primary">{{ $t('site.Club management') }}</button>
+                    <router-link to="/profile/countries" :title="$t('site.Country management')">
+                        <button class="btn btn-primary">{{ $t('site.Country management') }}</button>
                     </router-link>
                 </div>
             </div>
@@ -168,22 +144,6 @@ const initialFormState = {
                 v-model="form.title"
                 request-name="ClubRequest"
                 :label="$t('site.Title')"/>
-
-                <VTSelect 
-                    :label="$t('site.Sport')"
-                    v-model="form.sport_id" 
-                    :options="sportList" 
-                    optionsValueKey="id"
-                    optionsDisplayValueKey="title"
-                    name="sport_id"/>
-
-                <VTSelect 
-                    :label="$t('site.Country')"
-                    v-model="form.country_id" 
-                    :options="countryList" 
-                    optionsValueKey="id"
-                    optionsDisplayValueKey="title"
-                    name="country_id"/>
             
             <div v-if="form.image?.length > 0">
                 <img class="thumbnail w-[100px] rounded mt-2" :src="form.image" alt="image">
