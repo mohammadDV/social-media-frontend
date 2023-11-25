@@ -15,6 +15,10 @@ import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
 import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
+import SportList from '@/views/sport/index.vue';
+import SportCreate from '@/views/sport/create.vue';
+import CountryList from '@/views/country/index.vue';
+import CountryCreate from '@/views/country/create.vue';
 import StatusList from '@/views/status/index.vue';
 import UserCreate from '@/views/user/create.vue';
 import UserList from '@/views/user/index.vue';
@@ -101,6 +105,36 @@ const routes = [
         name: 'club.edit',
         path: '/profile/clubs/:id',
         component: ClubCreate,
+      },
+      {
+        name: 'sport.index',
+        path: '/profile/sports',
+        component: SportList,
+      },
+      {
+        name: 'sport.create',
+        path: '/profile/sports/create',
+        component: SportCreate,
+      },
+      {
+        name: 'sport.edit',
+        path: '/profile/sports/:id',
+        component: SportCreate,
+      },
+      {
+        name: 'country.index',
+        path: '/profile/countries',
+        component: CountryList,
+      },
+      {
+        name: 'country.create',
+        path: '/profile/countries/create',
+        component: CountryCreate,
+      },
+      {
+        name: 'country.edit',
+        path: '/profile/countries/:id',
+        component: CountryCreate,
       },
       {
         name: 'status.index',

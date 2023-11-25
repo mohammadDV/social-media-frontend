@@ -52,24 +52,11 @@
                 </a>
             </div>
             <div class="user-links">
-                <router-link class="user-link" to="/profile/posts/create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new post') }} </span>
-                </router-link>
-
                 <router-link class="user-link" to="/profile/posts">
                     <span class="user-link-icon">
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Post management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/status/create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new status') }} </span>
                 </router-link>
                 <router-link class="user-link" to="/profile/status">
                     <span class="user-link-icon">
@@ -90,17 +77,23 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.User management') }} </span>
                 </router-link>
-                <router-link class="user-link" to="/profile/clubs/create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new club') }} </span>
-                </router-link>
                 <router-link class="user-link" to="/profile/clubs">
                     <span class="user-link-icon">
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Club management') }} </span>
+                </router-link>
+                <router-link class="user-link" to="/profile/sports">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> article </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.Sport management') }} </span>
+                </router-link>
+                <router-link class="user-link" to="/profile/countries">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> article </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.Country management') }} </span>
                 </router-link>
                 <a class="user-link" href="profile.user.password">
                     <span class="user-link-icon">
