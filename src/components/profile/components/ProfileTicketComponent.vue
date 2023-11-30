@@ -95,6 +95,12 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.Country management') }} </span>
                 </router-link>
+                <router-link class="user-link" to="/profile/lives">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> article </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.Live management') }} </span>
+                </router-link>
                 <a class="user-link" href="profile.user.password">
                     <span class="user-link-icon">
                     <span class="material-icons"> manage_accounts </span>
@@ -118,12 +124,6 @@
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.League management') }} </span>
-                </a>
-                <a class="user-link" href="profile.live.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Live management') }} </span>
                 </a>
                 <a class="user-link" href="profile.page.create">
                     <span class="user-link-icon">
