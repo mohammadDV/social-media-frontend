@@ -101,6 +101,24 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.Live management') }} </span>
                 </router-link>
+                <router-link class="user-link" to="/profile/advertises">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> article </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.Advertise management') }} </span>
+                </router-link>
+                <router-link class="user-link" to="/profile/pages">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> article </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.Page management') }} </span>
+                </router-link>
+                <router-link class="user-link" to="/profile/leagues">
+                    <span class="user-link-icon">
+                    <span class="material-icons"> article </span>
+                    </span>
+                    <span class="user-link-title"> {{ $t('site.League management') }} </span>
+                </router-link>
                 <a class="user-link" href="profile.user.password">
                     <span class="user-link-icon">
                     <span class="material-icons"> manage_accounts </span>
@@ -112,42 +130,6 @@
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Choose your favorite club') }} </span>
-                </a>
-                <a class="user-link" href="profile.league.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new league') }} </span>
-                </a>
-                <a class="user-link" href="profile.league.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.League management') }} </span>
-                </a>
-                <a class="user-link" href="profile.page.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new page') }} </span>
-                </a>
-                <a class="user-link" href="profile.page.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Page management') }} </span>
-                </a>
-                <a class="user-link" href="profile.advertise.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new advertise') }} </span>
-                </a>
-                <a class="user-link" href="profile.advertise.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Advertise management') }} </span>
                 </a>
                 <a class="user-link" href="#">
                     <span class="user-link-icon">
