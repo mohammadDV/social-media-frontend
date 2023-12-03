@@ -13,8 +13,15 @@ import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
+import PageList from '@/views/page/index.vue';
+import PageCreate from '@/views/page/create.vue';
 import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
+import LeagueList from '@/views/league/index.vue';
+import LeagueCreate from '@/views/league/create.vue';
+import LeagueClubs from '@/views/league/clubs.vue';
+import AdvertiseList from '@/views/advertise/index.vue';
+import AdvertiseCreate from '@/views/advertise/create.vue';
 import LiveList from '@/views/live/index.vue';
 import LiveCreate from '@/views/live/create.vue';
 import SportList from '@/views/sport/index.vue';
@@ -94,6 +101,21 @@ const routes = [
         component: PostCreate,
       },
       {
+        name: 'page.index',
+        path: '/profile/pages',
+        component: PageList,
+      },
+      {
+        name: 'page.create',
+        path: '/profile/pages/create',
+        component: PageCreate,
+      },
+      {
+        name: 'page.edit',
+        path: '/profile/pages/:id',
+        component: PageCreate,
+      },
+      {
         name: 'club.index',
         path: '/profile/clubs',
         component: ClubList,
@@ -107,6 +129,41 @@ const routes = [
         name: 'club.edit',
         path: '/profile/clubs/:id',
         component: ClubCreate,
+      },
+      {
+        name: 'league.index',
+        path: '/profile/leagues',
+        component: LeagueList,
+      },
+      {
+        name: 'league.create',
+        path: '/profile/leagues/create',
+        component: LeagueCreate,
+      },
+      {
+        name: 'league.edit',
+        path: '/profile/leagues/:id',
+        component: LeagueCreate,
+      },
+      {
+        name: 'league.clubs',
+        path: '/profile/leagues/:id/clubs',
+        component: LeagueClubs,
+      },
+      {
+        name: 'advertise.index',
+        path: '/profile/advertises',
+        component: AdvertiseList,
+      },
+      {
+        name: 'advertise.create',
+        path: '/profile/advertises/create',
+        component: AdvertiseCreate,
+      },
+      {
+        name: 'advertise.edit',
+        path: '/profile/advertises/:id',
+        component: AdvertiseCreate,
       },
       {
         name: 'live.index',
