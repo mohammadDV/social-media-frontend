@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label :for="identifier" class="p-1 block text-sm font-medium mb-1" v-if="label?.length > 0">
+        <label :for="identifier" class="block text-sm font-medium mb-2" v-if="label?.length > 0">
             {{ label }}
             <slot name="label"/>
         </label>
