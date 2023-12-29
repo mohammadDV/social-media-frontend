@@ -239,7 +239,6 @@ const initialFormState = {
                         optionsDisplayValueKey="title"
                         name="status"/>
                 </div>
-
             </div>
 
             <VTButton 

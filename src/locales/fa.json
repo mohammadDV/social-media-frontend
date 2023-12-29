@@ -212,6 +212,9 @@
     "nothing here"          : "اطلاعات موجود نمی باشد.",
     "Choose type of search"          : "انتخاب ستون جستجو",
     "Next page"          : "صفحه بعد",
-    "Previous page"          : "صفحه قبل"
+    "Previous page"          : "صفحه قبل",
+    "Club"          : "باشگاه",
+    "Games count"          : "تعداد بازی",
+    "Points"          : "امتیاز"
     }
 }

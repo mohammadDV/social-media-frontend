@@ -165,13 +165,13 @@ const validate = (value) => {
 const styles = computed(() => {
     return {
         'form-control is-vt': props.isVt,
-        'block w-full focus:outline-none sm:text-sm py-3.5 p-2': true,
+        'block w-full focus:outline-none sm:text-sm py-3.5': true,
         'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500 pr-10': hasError.value,
         'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200': !hasError.value,
         'pl-7': props.currencySymbol,
         'cursor-not-allowed bg-gray-50': props.disabled && props.inputType !== 'increase',
         'text-center': props.center,
     };
-})
+});
 
 </script>
