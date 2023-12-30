@@ -167,8 +167,11 @@
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <router-link v-if="item?.type == 1" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/leagues/' + item.id + '/clubs'">
+                        <router-link v-if="item?.type == 1" class="p-1 rounded btn-warning m-1 text-white" :to="'/profile/leagues/' + item.id + '/clubs'">
                             <span class="material-icons size-font-ahalf"> add </span>
+                        </router-link>
+                        <router-link class="p-1 rounded btn-success m-1 text-white" :to="'/profile/leagues/' + item.id + '/steps'">
+                            <span class="material-icons size-font-ahalf"> list </span>
                         </router-link>
                         <router-link class="p-1 rounded btn-info m-1 text-white" :to="'/profile/leagues/' + item.id">
                             <span class="material-icons size-font-ahalf"> edit </span>

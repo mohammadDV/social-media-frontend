@@ -19,7 +19,9 @@ import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
 import LeagueList from '@/views/league/index.vue';
 import LeagueCreate from '@/views/league/create.vue';
+import stepClubs from '@/views/step/clubs.vue';
 import LeagueClubs from '@/views/league/clubs.vue';
+import LeagueSteps from '@/views/league/steps.vue';
 import AdvertiseList from '@/views/advertise/index.vue';
 import AdvertiseCreate from '@/views/advertise/create.vue';
 import LiveList from '@/views/live/index.vue';
@@ -149,6 +151,16 @@ const routes = [
         name: 'league.clubs',
         path: '/profile/leagues/:id/clubs',
         component: LeagueClubs,
+      },
+      {
+        name: 'step.clubs',
+        path: '/profile/steps/:id/clubs',
+        component: stepClubs,
+      },
+      {
+        name: 'league.steps',
+        path: '/profile/leagues/:id/steps',
+        component: LeagueSteps,
       },
       {
         name: 'advertise.index',
