@@ -20,6 +20,7 @@ import ClubCreate from '@/views/club/create.vue';
 import LeagueList from '@/views/league/index.vue';
 import LeagueCreate from '@/views/league/create.vue';
 import stepClubs from '@/views/step/clubs.vue';
+import stepMatches from '@/views/step/matches.vue';
 import LeagueClubs from '@/views/league/clubs.vue';
 import LeagueSteps from '@/views/league/steps.vue';
 import AdvertiseList from '@/views/advertise/index.vue';
@@ -156,6 +157,11 @@ const routes = [
         name: 'step.clubs',
         path: '/profile/steps/:id/clubs',
         component: stepClubs,
+      },
+      {
+        name: 'step.matches',
+        path: '/profile/steps/:id/matches',
+        component: stepMatches,
       },
       {
         name: 'league.steps',

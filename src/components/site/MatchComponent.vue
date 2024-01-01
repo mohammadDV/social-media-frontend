@@ -114,7 +114,7 @@
                                         <a target="_blank">{{ match.away }}</a>
                                     </div>
                                     <div class="status">
-                                        <i class="finished"></i>{{ match.status }}
+                                        <i class="finished"></i>{{ match.status_name }}
                                     </div>
                                 </div>
                             </div>
