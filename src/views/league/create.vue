@@ -211,6 +211,7 @@ const initialFormState = {
                 <VTInput
                     class="mt-2"
                     :is-vt="true"
+                    input-type="number"
                     name="priority"
                     v-model="form.priority"
                     request-name="LeagueRequest"

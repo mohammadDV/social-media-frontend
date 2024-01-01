@@ -16,7 +16,7 @@
     const clubId = ref(0);
     const dataTable = ref();
     const route = useRoute();
-    const league = ref([]);
+    const step = ref({});
     const sportId = ref(0);
     const countryId = ref(0);
 
@@ -40,19 +40,20 @@
         })
     }
 
-    const getLeague = () => {
+    const getStep = () => {
         if (route.params.id != undefined) {
-            useApi().get(`/api/profile/leagues/${route.params.id}`)
+            useApi().get(`/api/profile/steps/${route.params.id}`)
                 .then((response) => {
-                    league.value = response.data;
-                    sportId.value = response.data.sport_id;
-                    countryId.value = response.data.country_id;
+                    step.value = response.data;
+                    sportId.value = response.data?.league?.sport_id
+                    countryId.value = response.data?.league?.country_id
                 });
 
             setTimeout(() => { getClubs() }, 1000);
         }
     }
 
+    const canSubmit = ref(true);
     const countryList = ref();
 
     const getCountries = () => {
@@ -96,7 +97,7 @@
   
   const loadFromServer = async () => {
     loading.value = true;
-    await useApi().get(`/api/profile/leagues/${route.params.id}/clubs`, serverOptions.value)
+    await useApi().get(`/api/profile/steps/${route.params.id}/clubs`, serverOptions.value)
     .then((response: any) => {
 
         items.value = response.data.map(item => ({
@@ -114,6 +115,10 @@
   const $toast = useToast();
   const addItem = () => {
 
+    if(form?.club_id == 0) {
+        return;
+    }
+
     const indexToDelete = items.value.findIndex(item => item.club_id == form.club_id);
 
     if (indexToDelete !== -1) {
@@ -123,15 +128,14 @@
 
     const clubIndex = clubList.value.find((item) => item.id == form.club_id);
     form.title = clubIndex.title;
-    items.value.push(form);
-    // resetForm();
+    items.value.push({ ...form });
+    resetForm();
   };
   
   const deletItem = (clubId: Number) => {
     if(confirm('Are you sure you want to remove this item?')) {
         items.value = items.value.filter(item => item.club_id != clubId);
 
-        console.log(items.value.length);
         serverItemsLength.value = items.value.length;
         // $toast.success(response.data.message);
     }
@@ -144,7 +148,7 @@
 
   const send = () => {
 
-    if (!items.value.length) {
+    if (!items.value.length || !canSubmit.value) {
         return;
     }
 
@@ -158,7 +162,7 @@
         };
     });
 
-    let url = `/api/profile/leagues/${route.params.id}/clubs`;
+    let url = `/api/profile/steps/${route.params.id}/clubs`;
 
     const $toast = useToast();
     useApi().post(url, formattedData)
@@ -169,6 +173,9 @@
         loading.value = true;
         
         setTimeout(() => { loadFromServer(); loading.value = false; }, 1000);
+        setTimeout(() => { canSubmit.value = false; }, 1500);
+
+        
     }
     })
     .catch(error => {
@@ -184,7 +191,7 @@
   onMounted(() => {
 
     if (route.params.id) {
-        getLeague();
+        getStep();
         getCountries();
         loadFromServer();
     }
@@ -193,6 +200,7 @@
   
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
   watch(countryId, () => { getClubs(); }, { deep: true });
+  watch(items, () => { canSubmit.value = true }, { deep: true });
 
 </script>
 
@@ -208,7 +216,17 @@
                             </router-link>
                         </li>
                         <li class="breadcrumb-item">
-                            {{ $t('site.League management') }}
+                            <router-link to="/profile/leagues" :title="$t('site.League management')">
+                                {{ $t('site.League management') }}
+                            </router-link>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <router-link :to="`/profile/leagues/${step?.league?.id}/steps`" :title="$t('site.League management')">
+                                {{ step?.league?.title }}
+                            </router-link>
+                        </li>
+                        <li class="breadcrumb-item">
+                            {{ step?.title }}
                         </li>
                     </ol>
                 </nav>
@@ -266,6 +284,7 @@
                         class="justify-center btn-outline-secondary btn-sm mt-4" 
                         size="medium"
                         color="primary"
+                        :disabled="form?.club_id == 0"
                         @click="addItem"
                         >
                         {{ $t('site.Add') }}
@@ -289,31 +308,6 @@
                 border-cell
                 alternating
                 >
-
-                <!-- <template #item-title="item">
-                    <VTSelect 
-                        class=""
-                        :is-vt="true"
-                        v-model="item.club_id" 
-                        :options="clubList" 
-                        optionsValueKey="id"
-                        optionsDisplayValueKey="title"
-                        :name="'title-' + item.club_id"/>
-                </template> -->
-                <!-- <template #item-points="item">
-                    <VTInput
-                    class="w-20"
-                    :is-vt="true"
-                    :name="'points-' + item.club_id"
-                    v-model="item.points"/>
-                </template>
-                <template #item-games_count="item">
-                    <VTInput
-                    class="w-20"
-                    :is-vt="true"
-                    :name="'games-count-' + item.club_id"
-                    v-model="item.games_count"/>
-                </template> -->
                 <template #item-actions="item">
                     <div class="flex">
                         <span @click="deletItem(item.club_id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
@@ -332,6 +326,7 @@
                         size="medium"
                         color="primary"
                         @click="send"
+                        :disabled="!canSubmit"
                         >
                         {{ $t('site.Save') }}
                     </VTButton> 

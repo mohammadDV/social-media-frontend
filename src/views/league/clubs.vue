@@ -16,7 +16,7 @@
     const clubId = ref(0);
     const dataTable = ref();
     const route = useRoute();
-    const league = ref([]);
+    const league = ref({});
     const sportId = ref(0);
     const countryId = ref(0);
 
@@ -28,6 +28,8 @@
     };
 
     const clubList = ref([]);
+
+    const canSubmit = ref(true);
 
     const getClubs = () => {
 
@@ -114,6 +116,10 @@
   const $toast = useToast();
   const addItem = () => {
 
+    if(form?.club_id == 0) {
+        return;
+    }
+
     const indexToDelete = items.value.findIndex(item => item.club_id == form.club_id);
 
     if (indexToDelete !== -1) {
@@ -123,8 +129,8 @@
 
     const clubIndex = clubList.value.find((item) => item.id == form.club_id);
     form.title = clubIndex.title;
-    items.value.push(form);
-    // resetForm();
+    items.value.push({ ...form });
+    resetForm();
   };
   
   const deletItem = (clubId: Number) => {
@@ -144,7 +150,7 @@
 
   const send = () => {
 
-    if (!items.value.length) {
+    if (!items.value.length || !canSubmit.value) {
         return;
     }
 
@@ -169,6 +175,7 @@
         loading.value = true;
         
         setTimeout(() => { loadFromServer(); loading.value = false; }, 1000);
+        setTimeout(() => { canSubmit.value = false; }, 1500);
     }
     })
     .catch(error => {
@@ -208,7 +215,12 @@
                             </router-link>
                         </li>
                         <li class="breadcrumb-item">
-                            {{ $t('site.League management') }}
+                            <router-link to="/profile/leagues" :title="$t('site.League management')">
+                                {{ $t('site.League management') }}
+                            </router-link>
+                        </li>
+                        <li class="breadcrumb-item">
+                            {{ league?.title }}
                         </li>
                     </ol>
                 </nav>
@@ -266,6 +278,7 @@
                         class="justify-center btn-outline-secondary btn-sm mt-4" 
                         size="medium"
                         color="primary"
+                        :disabled="form?.club_id == 0"
                         @click="addItem"
                         >
                         {{ $t('site.Add') }}
@@ -290,30 +303,6 @@
                 alternating
                 >
 
-                <!-- <template #item-title="item">
-                    <VTSelect 
-                        class=""
-                        :is-vt="true"
-                        v-model="item.club_id" 
-                        :options="clubList" 
-                        optionsValueKey="id"
-                        optionsDisplayValueKey="title"
-                        :name="'title-' + item.club_id"/>
-                </template> -->
-                <!-- <template #item-points="item">
-                    <VTInput
-                    class="w-20"
-                    :is-vt="true"
-                    :name="'points-' + item.club_id"
-                    v-model="item.points"/>
-                </template>
-                <template #item-games_count="item">
-                    <VTInput
-                    class="w-20"
-                    :is-vt="true"
-                    :name="'games-count-' + item.club_id"
-                    v-model="item.games_count"/>
-                </template> -->
                 <template #item-actions="item">
                     <div class="flex">
                         <span @click="deletItem(item.club_id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
@@ -331,6 +320,7 @@
                         class="justify-center btn-outline-secondary btn-sm mt-4" 
                         size="medium"
                         color="primary"
+                        :disabled="!canSubmit"
                         @click="send"
                         >
                         {{ $t('site.Save') }}
