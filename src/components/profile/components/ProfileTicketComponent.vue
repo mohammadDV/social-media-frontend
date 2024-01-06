@@ -125,12 +125,12 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.Change password') }} </span>
                 </router-link>
-                <a class="user-link" href="clubs.favorite">
+                <router-link class="user-link" to="/profile/clubs/favorite">
                     <span class="user-link-icon">
                     <span class="material-icons"> article </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Choose your favorite club') }} </span>
-                </a>
+                </router-link>
                 <a class="user-link" href="#">
                     <span class="user-link-icon">
                     <span class="material-icons"> block </span>

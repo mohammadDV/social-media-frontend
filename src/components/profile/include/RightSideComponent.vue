@@ -4,7 +4,7 @@
 //   import {useApi} from '@/utils/api.ts';
   import userImage from '@/components/plugins/UserImage.vue';
 import { onMounted, defineProps } from 'vue';
-  import { useAuthStore } from '@/stores/auth.ts';
+//   import { useAuthStore } from '@/stores/auth.ts';
 
 defineProps({
     followersCount: {
@@ -23,8 +23,11 @@ defineProps({
         type: Array,
         default: null
     },
+    myClubs: {
+        type: Array,
+    },
 });
-  const authStore = useAuthStore();
+//   const authStore = useAuthStore();
 //   const followersCount = ref(0);
 //   const followers = ref([]);
 
@@ -105,22 +108,22 @@ defineProps({
             <div class="card-header-title">
                 <span>{{ $t('site.Favorite clubs') }}</span>
             </div>
-            <!-- <a href="{{ route('myClubs') }}"> -->
+            <router-link class="user-link" to="/profile/clubs/favorite">
                 <button type="button" class="btn btn-primary">
-                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ authStore?.user?.clubs.length }}</span>
+                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ myClubs.length }}</span>
                 </button>
-            <!-- </a> -->
+            </router-link>
         </div>
         <div class="card-body">
             <div class="card-itemlist is-horizon">
-                <div v-for="(item, index) in authStore?.user?.clubs" :key="index" class="item">
+                <div v-for="(item, index) in myClubs" :key="index" class="item">
                     <div class="item-avatar">
-                        <a href="#">
+                        <router-link class="user-link" to="/profile/clubs/favorite" :title="item.title">
                             <img
                                 :src="item.image"
                                 :alt="item.title"
                             />
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>

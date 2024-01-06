@@ -10,6 +10,7 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
   const followingsCount = ref(0);
   const followers = ref([]);
   const followings = ref([]);
+  const myCLubs = ref([]);
 
   onMounted(() => {
     useApi().get('/api/follow-info')
@@ -19,7 +20,18 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
             followers.value = response.data.followers;
             followings.value = response.data.followings;
         })
+
+        getMyClubs();
   });
+
+  const getMyClubs = () => {
+    
+    useApi().get(`/api/favorite/clubs`)
+        .then((response) => {
+            myCLubs.value = response.data;
+        });
+  };
+
 
 </script>
 
@@ -35,9 +47,12 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
                   :followers="followers"
                   :followingsCount="followingsCount"
                   :followings="followings"
+                  :my-clubs="myCLubs"
                 />
               </div>
-              <router-view></router-view>
+              <router-view @getMyClubs="getMyClubs" 
+                :my-clubs="myCLubs"
+              ></router-view>
           </div>
       </div>
       <footer-component />

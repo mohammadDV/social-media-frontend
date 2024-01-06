@@ -137,9 +137,7 @@
     if(confirm('Are you sure you want to remove this item?')) {
         items.value = items.value.filter(item => item.club_id != clubId);
 
-        console.log(items.value.length);
         serverItemsLength.value = items.value.length;
-        // $toast.success(response.data.message);
     }
   };
 
