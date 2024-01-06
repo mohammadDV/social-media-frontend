@@ -137,7 +137,6 @@
         items.value = items.value.filter(item => item.club_id != clubId);
 
         serverItemsLength.value = items.value.length;
-        // $toast.success(response.data.message);
     }
   };
 

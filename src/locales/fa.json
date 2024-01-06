@@ -217,6 +217,7 @@
     "Previous page"          : "صفحه قبل",
     "Club"          : "باشگاه",
     "Games count"          : "تعداد بازی",
-    "Points"          : "امتیاز"
+    "Points"          : "امتیاز",
+    "You have already selected your favorite clubs. Please remove previous selections to replace it." : "شما در حال حاضر باشگاه های موردعلاقه خود را انتخاب کرده اید. لطفا برای جایگزین کردن آن انتخاب های قبلی را حذف کنید."
     }
 }
