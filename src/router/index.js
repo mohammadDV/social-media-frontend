@@ -33,6 +33,7 @@ import CountryList from '@/views/country/index.vue';
 import CountryCreate from '@/views/country/create.vue';
 import StatusList from '@/views/status/index.vue';
 import UserCreate from '@/views/user/create.vue';
+import ChangePassword from '@/views/user/password.vue';
 import UserList from '@/views/user/index.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
@@ -247,6 +248,11 @@ const routes = [
         name: 'account.edit',
         path: '/profile/account',
         component: UserCreate,
+      },
+      {
+        name: 'user.password',
+        path: '/profile/users/change-password',
+        component: ChangePassword,
       },
       {
         name: 'user.edit',

@@ -95,7 +95,7 @@ export function useApi() {
     }
 
     const patch = async (url: any, queryParams = {}) => {
-        return await api.patch(url, { params: queryParams });
+        return await api.patch(url, queryParams);
     }
 
 

@@ -119,12 +119,12 @@
                     </span>
                     <span class="user-link-title"> {{ $t('site.League management') }} </span>
                 </router-link>
-                <a class="user-link" href="profile.user.password">
+                <router-link class="user-link" to="/profile/users/change-password">
                     <span class="user-link-icon">
                     <span class="material-icons"> manage_accounts </span>
                     </span>
                     <span class="user-link-title"> {{ $t('site.Change password') }} </span>
-                </a>
+                </router-link>
                 <a class="user-link" href="clubs.favorite">
                     <span class="user-link-icon">
                     <span class="material-icons"> article </span>
