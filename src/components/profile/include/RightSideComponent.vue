@@ -1,43 +1,35 @@
 <script setup>
 
-    
-//   import {useApi} from '@/utils/api.ts';
   import userImage from '@/components/plugins/UserImage.vue';
-import { onMounted, defineProps } from 'vue';
-//   import { useAuthStore } from '@/stores/auth.ts';
+  import { onMounted, defineProps } from 'vue';
 
-defineProps({
-    followersCount: {
-        type: Number,
-        default: 0
-    },
-    followingCount: {
-        type: Number,
-        default: 0
-    },
-    followingsCount: {
-        type: Array,
-        default: null
-    },
-    followings: {
-        type: Array,
-        default: null
-    },
-    myClubs: {
-        type: Array,
-    },
-});
-//   const authStore = useAuthStore();
-//   const followersCount = ref(0);
-//   const followers = ref([]);
 
-  onMounted(() => {
-//     useApi().get('/api/follow-info')
-//         .then((response) => {
-//             followersCount.value = response.data.followersCount;
-//             followers.value = response.data.followers;
-//         })
-  });
+  defineProps({
+        followersCount: {
+            type: Number,
+            default: 0
+        },
+        followingsCount: {
+            type: Number,
+            default: 0
+        },
+        followers: {
+            type: Array,
+            default: null
+        },
+        followings: {
+            type: Array,
+            default: null
+        },
+        myClubs: {
+            type: Array,
+        },
+    });
+
+  
+    onMounted(() => {
+
+    });
 
 </script>
 
@@ -47,17 +39,11 @@ defineProps({
             <div class="card-header-title">
                 <span>{{ $t('site.Following') }}</span>
             </div>
-            <!-- <a
-            @isset($user)
-                href="{{ route('profile.followings',['user' => $user->id]) }}"
-                @else
-                href="{{ route('profile.followings') }}"
-            @endisset
-            title="{{ $t('site.Following') }}"> -->
+            <router-link class="user-link" to="/profile/followings">
                 <button type="button" class="btn btn-primary">
                     {{ $t('site.All') }} <span class="badge bg-secondary">{{ followingsCount }}</span>
                 </button>
-            <!-- </a> -->
+            </router-link>
         </div>
         <div class="card-body">
             <div class="card-itemlist is-horizon">
@@ -75,19 +61,11 @@ defineProps({
             <div class="card-header-title">
                 <span>{{ $t('site.Followers') }}</span>
             </div>
-
-            <!-- <a
-            @isset($user)
-                href="{{ route('profile.followers',['user' => $user->id]) }}"
-                @else
-                href="{{ route('profile.followers') }}"
-            @endisset
-
-             title="{{ $t('site.Followers') }}"> -->
+            <router-link class="user-link" to="/profile/followers">
                 <button type="button" class="btn btn-primary">
-                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ followerCount }}</span>
+                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ followersCount }}</span>
                 </button>
-            <!--  </a> -->
+            </router-link>
         </div>
         <div class="card-body">
             <div class="card-itemlist is-horizon">

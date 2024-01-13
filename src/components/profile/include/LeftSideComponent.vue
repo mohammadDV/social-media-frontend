@@ -1,11 +1,14 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, defineEmits } from 'vue';
   import FollowListComponent from '../components/FollowListComponent.vue';
 
   const newMembers = ref([]);
   const congenialMembers = ref([]);
+
+
+ const emit = defineEmits(['updateFollowings']); 
   
   // Get the new members
   const getNewMembers = () => {
@@ -17,7 +20,8 @@
 
   // Update the new members
   const updateNewMembers = () => {
-    getNewMembers()
+    getNewMembers();
+    emit('updateFollowings');
   };
 
   // Get the congenial members
@@ -30,7 +34,8 @@
 
   // Update the congenial members
   const updateCongenialMembers = () => {
-    getCongenialMembers()
+    getCongenialMembers();
+    emit('updateFollowings');
   };
 
   onMounted(() => {

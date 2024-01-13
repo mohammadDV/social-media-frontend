@@ -12,18 +12,6 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
   const followings = ref([]);
   const myCLubs = ref([]);
 
-  onMounted(() => {
-    useApi().get('/api/follow-info')
-        .then((response) => {
-            followersCount.value = response.data.followersCount;
-            followingsCount.value = response.data.followingsCount;
-            followers.value = response.data.followers;
-            followings.value = response.data.followings;
-        })
-
-        getMyClubs();
-  });
-
   const getMyClubs = () => {
     
     useApi().get(`/api/favorite/clubs`)
@@ -32,6 +20,26 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
         });
   };
 
+  const updateFollowings = () => {
+    useApi().get('/api/follow-info')
+        .then((response) => {
+            followersCount.value = response.data.followersCount;
+            followingsCount.value = response.data.followingsCount;
+            followers.value = response.data.followers;
+            followings.value = response.data.followings;
+
+        });
+  };
+
+  const setFollowings = (items, followersCount) => {
+    followingsCount.value = followersCount;
+    followings.value = items;
+  };
+
+  onMounted(() => {
+      updateFollowings()
+      getMyClubs();
+  });
 
 </script>
 
@@ -50,7 +58,10 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
                   :my-clubs="myCLubs"
                 />
               </div>
-              <router-view @getMyClubs="getMyClubs" 
+              <router-view 
+                @getMyClubs="getMyClubs" 
+                @setFollowings="setFollowings"
+                @updateFollowings="updateFollowings"
                 :my-clubs="myCLubs"
               ></router-view>
           </div>
