@@ -18,6 +18,8 @@ import PageCreate from '@/views/page/create.vue';
 import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
 import ClubFavorite from '@/views/club/favorite.vue';
+import Followings from '@/views/follow/fallowings.vue';
+import Followers from '@/views/follow/followers.vue';
 import LeagueList from '@/views/league/index.vue';
 import LeagueCreate from '@/views/league/create.vue';
 import stepClubs from '@/views/step/clubs.vue';
@@ -121,14 +123,24 @@ const routes = [
         component: PageCreate,
       },
       {
-        name: 'club.index',
-        path: '/profile/clubs',
-        component: ClubList,
+        name: 'follow.followings',
+        path: '/profile/followings',
+        component: Followings,
+      },
+      {
+        name: 'follow.followers',
+        path: '/profile/followers',
+        component: Followers,
       },
       {
         name: 'club.favorite',
         path: '/profile/clubs/favorite',
         component: ClubFavorite,
+      },
+      {
+        name: 'club.index',
+        path: '/profile/clubs',
+        component: ClubList,
       },
       {
         name: 'club.create',
