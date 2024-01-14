@@ -1,33 +1,35 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useApi } from '@/utils/api'
+import { useRoute } from 'vue-router';
+import MemberHeaderComponent from '@/components/profile/include/MemberHeaderComponent'
 import HeaderComponent from '@/components/profile/include/HeaderComponent'
 import FooterComponent from '@/components/profile/include/FooterComponent'
-import ProfileTicketComponent from "@/components/profile/components/ProfileTicketComponent.vue"
-import RightSideComponent from "@/components/profile/include/RightSideComponent.vue"
+import MemberTicketComponent from "@/components/profile/components/MemberTicketComponent"
+import RightSideComponent from "@/components/profile/include/RightSideComponent"
 
   const followersCount = ref(0);
   const followingsCount = ref(0);
   const followers = ref([]);
   const followings = ref([]);
   const myCLubs = ref([]);
+  const route = useRoute();
 
   const getMyClubs = () => {
     
-    useApi().get(`/api/favorite/clubs`)
+    useApi().get(`/api/favorite/clubs/${route.params.id}`)
         .then((response) => {
             myCLubs.value = response.data;
         });
   };
 
   const updateFollowings = () => {
-    useApi().get('/api/follow-info')
+    useApi().get(`/api/follow-info/${route.params.id}`)
         .then((response) => {
             followersCount.value = response.data.followersCount;
             followingsCount.value = response.data.followingsCount;
             followers.value = response.data.followers;
             followings.value = response.data.followings;
-
         });
   };
 
@@ -35,6 +37,13 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
     followingsCount.value = followersCount;
     followings.value = items;
   };
+
+  watch(() => route.params.id, () => {
+    if (route.params.id) {
+      updateFollowings()
+      getMyClubs();
+    } 
+  });
 
   onMounted(() => {
       updateFollowings()
@@ -46,28 +55,32 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
 <template>
   <div>
       <header-component/>
-      <div class="container-xxl py-3">
+      <member-header-component/>
+      <div class="container py-3">
           <div class="row">
-              <div class="col-4 col-xl-3 d-none d-lg-block">
-                <ProfileTicketComponent 
+            <div class="col-4 col-xl-4 d-none d-lg-block">
+                <MemberTicketComponent 
                   :followersCount="followersCount"
                   :followingsCount="followingsCount"
+                  :memeberId="route.params.id"
                   />
                 <RightSideComponent 
+                  :memeberId="route.params.id"
                   :followersCount="followersCount"
                   :followers="followers"
                   :followingsCount="followingsCount"
                   :followings="followings"
                   :my-clubs="myCLubs"
                 />
-              </div>
+            </div>
               <router-view 
                 @getMyClubs="getMyClubs" 
                 @setFollowings="setFollowings"
                 @updateFollowings="updateFollowings"
                 :my-clubs="myCLubs"
               ></router-view>
-          </div>
+        </div>
+
       </div>
       <footer-component />
   </div>

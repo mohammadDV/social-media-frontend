@@ -42,6 +42,9 @@
 .ratio-21x9 {
     --bs-aspect-ratio: calc(16 / 70 * 100%);
 }
+.ratio-21x3 {
+    --bs-aspect-ratio: calc(3 / 21 * 100%);
+  }
 .card.vt-news-card.archive-card .card-body .card-body-inner {
     max-height: 100%;
     padding: 0;

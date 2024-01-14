@@ -1,7 +1,7 @@
 <script setup>
  
  import {useApi} from './../../utils/api.ts';
-  
+ import { useRoute, useRouter } from 'vue-router';
  import { ref, onMounted, reactive, defineEmits } from 'vue';
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
@@ -18,8 +18,17 @@ const initialFormState = {
  const more = ref(false);
  const page = ref(1); 
  const $toast = useToast();
+ const route = useRoute();
+ const router = useRouter();
  const emit = defineEmits(['setFollowings']);  
+ 
  const follow = (userId) => {
+
+    if (route?.params?.id?.length > 0) {
+        router.push({ name: 'member', params: { id: userId } });
+        return;
+    }
+
     useApi().post(`/api/follow/${userId}`)
         .then((response) => {
             if (response.data.status == 1) {
@@ -41,7 +50,12 @@ const initialFormState = {
         items.value = [];
     }
 
-    useApi().get(`/api/followings?page=${page.value}`, form)
+    let url = `/api/followings?page=${page.value}`;
+    if (route?.params?.id?.length > 0) {
+        url = `/api/followings/${route?.params?.id}?page=${page.value}`;
+    }
+
+    useApi().get(url, form)
         .then((response) => {
             if (response.data) {
 
@@ -73,7 +87,11 @@ const initialFormState = {
 </script>
 
 <template>
-    <div class="col-12 col-md-7 col-lg-9 order-1 order-md-2 mb-4 mb-md-0">
+    <div :class="{
+        'col-12 col-md-7  order-1 order-md-2 mb-4 mb-md-0' : true,
+        'col-lg-8' : route?.params?.id?.length > 0,
+        'col-lg-9' : !route?.params?.id?.length,
+    }"  >
         <div class="card vt-news-card breadcrumb-card mb-3">
             <div class="card-body">
                 <nav aria-label="breadcrumb">
@@ -84,7 +102,7 @@ const initialFormState = {
                             </router-link>
                         </li>
                         <li class="breadcrumb-item active">
-                            {{ $t('site.Choose favorite clubs') }}
+                            {{ $t('site.Following') }}
                         </li>
                     </ol>
                 </nav>
@@ -115,23 +133,32 @@ const initialFormState = {
         </div>
 
         <div>
-            <div class='grid grid-cols-4 gap-4 my-3'>
+            <div :class="{
+                'grid gap-4 grid-cols-4 my-3' : true,
+                'grid-cols-3' : route?.params?.id?.length > 0,
+            }">
                 <div v-for="(user, index) in items" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
                     <userImage :item="user" />
                     <span class='item-title'>{{ user.nickname }}</span>
-                        <a @click="follow(user.id)" class='w-100 btn btn-danger text-white'  >{{ $t('site.Unfollow') }}</a>
+                        <a @click="follow(user.id)" :class="{
+                            'w-100 btn text-white' : true,
+                            'btn-info' : route?.params?.id?.length > 0,
+                            'btn-danger' : route?.params?.id?.length == 0,
+                        }"  >
+                            {{ route?.params?.id?.length > 0 ? $t('site.View') : $t('site.Unfollow') }}
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="card p-3" v-if="more">
+        <div class="w-full pt-2" v-if="more">
             <VTButton 
                 :loading="!canSubmit"
                 :disabled="!canSubmit"
-                class="justify-center btn-outline-secondary btn-sm mt-3" 
+                class="w-full justify-center btn-outline-secondary btn-sm" 
                 size="medium"
                 color="primary"  
                 @click="getFollowings(true)">

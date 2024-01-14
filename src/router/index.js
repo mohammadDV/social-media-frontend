@@ -5,10 +5,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import MainLayout from '@/layouts/MainLayout.vue';
 import ProfileLayout from '@/layouts/ProfileLayout.vue';
+import MemberLayout from '@/layouts/MemberLayout.vue';
 
 // Import views
 import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
+import Member from '@/views/member/index.vue';
 import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
 import PostList from '@/views/post/index.vue';
@@ -76,6 +78,31 @@ const routes = [
         name: 'category',
         path: '/category/:id/:title',
         component: Category,
+      },
+    ],
+  },
+  {
+    path: '/member',
+    meta: { 
+      layout: 'member',
+      requiresAuth: false,
+     },
+    component: MemberLayout,
+    children: [
+      {
+        name: 'member',
+        path: '/member/:id',
+        component: Member,
+      },
+      {
+        name: 'member.followings',
+        path: '/member/:id/followings',
+        component: Followings,
+      },
+      {
+        name: 'member.followers',
+        path: '/member/:id/followers',
+        component: Followers,
       },
     ],
   },
@@ -316,7 +343,7 @@ router.afterEach((to) => {
     require('@/assets/site/css/splide.min.css');
     require('@/assets/site/css/styles.css');
 
-  } else if (layout === 'profile') {
+  } else {
     require('@/assets/profile/fonts/vazir-ui/vazir.css');
     require('@/assets/profile/fonts/material-icons/material-icons.css');
     require('@/assets/profile/css/custom.css');

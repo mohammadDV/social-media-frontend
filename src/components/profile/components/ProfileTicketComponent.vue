@@ -10,6 +10,10 @@
     followersCount: {
         type: Number,
         default: 0
+    },
+    followingsCount: {
+        type: Number,
+        default: 0
     }
   });
 
@@ -41,6 +45,10 @@
                 <a class="user-stat" href="#">
                     <div class="user-stat-title">دنبال کنندگان</div>
                     <div class="user-stat-amount">{{ followersCount }}</div>
+                </a>
+                <a class="user-stat" href="#">
+                    <div class="user-stat-title">دنبال شوندگان</div>
+                    <div class="user-stat-amount">{{ followingsCount }}</div>
                 </a>
                 <a class="user-stat" href="#">
                     <div class="user-stat-title">بازدید از صفحه ی شما</div>

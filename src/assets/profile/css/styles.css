@@ -7607,6 +7607,9 @@ a {
 .ratio-21x9 {
   --bs-aspect-ratio: calc(9 / 21 * 100%);
 }
+.ratio-21x3 {
+  --bs-aspect-ratio: calc(3 / 21 * 100%);
+}
 
 .fixed-top {
   position: fixed;
