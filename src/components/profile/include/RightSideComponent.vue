@@ -21,6 +21,10 @@
             type: Array,
             default: null
         },
+        memeberId: {
+            type: Number,
+            default: 0
+        },
         myClubs: {
             type: Array,
         },
@@ -39,7 +43,7 @@
             <div class="card-header-title">
                 <span>{{ $t('site.Following') }}</span>
             </div>
-            <router-link class="user-link" to="/profile/followings">
+            <router-link class="user-link" :to="memeberId.length > 0 ? `/member/${memeberId}/followings` : '/profile/followings'">
                 <button type="button" class="btn btn-primary">
                     {{ $t('site.All') }} <span class="badge bg-secondary">{{ followingsCount }}</span>
                 </button>
@@ -48,9 +52,11 @@
         <div class="card-body">
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in followings" :key="index" class="item">
-                    <div class="item-avatar">
-                        <userImage :item="item" />
-                    </div>
+                    <router-link :to="`/member/${item.id}`" :title="item.nickname">
+                        <div class="item-avatar">
+                            <userImage :item="item" />
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -61,7 +67,7 @@
             <div class="card-header-title">
                 <span>{{ $t('site.Followers') }}</span>
             </div>
-            <router-link class="user-link" to="/profile/followers">
+            <router-link class="user-link" :to="memeberId.length > 0 ? `/member/${memeberId}/followers` : '/profile/followers'">
                 <button type="button" class="btn btn-primary">
                     {{ $t('site.All') }} <span class="badge bg-secondary">{{ followersCount }}</span>
                 </button>
@@ -70,11 +76,11 @@
         <div class="card-body">
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in followers" :key="index" class="item">
-                    <div class="item-avatar">
-                        <!-- <a href="{{ route('profile.member',['user' => $user["id"]]) }}"> -->
+                    <router-link :to="`/member/${item.id}`" :title="item.nickname">
+                        <div class="item-avatar">
                             <userImage :item="item" />
-                        <!-- </a> -->
-                    </div>
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -86,7 +92,7 @@
             <div class="card-header-title">
                 <span>{{ $t('site.Favorite clubs') }}</span>
             </div>
-            <router-link class="user-link" to="/profile/clubs/favorite">
+            <router-link v-if="memeberId.length == 0" class="user-link" to="/profile/clubs/favorite">
                 <button type="button" class="btn btn-primary">
                     {{ $t('site.All') }} <span class="badge bg-secondary">{{ myClubs.length }}</span>
                 </button>
