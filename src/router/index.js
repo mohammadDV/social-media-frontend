@@ -13,6 +13,7 @@ import News from '@/views/News.vue';
 import Member from '@/views/member/index.vue';
 import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
+import Status from '@/views/profile/status.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
 import PageList from '@/views/page/index.vue';
@@ -118,6 +119,11 @@ const routes = [
         name: 'profile',
         path: '',
         component: Profile,
+      },
+      {
+        name: 'status.show',
+        path: '/profile/:id',
+        component: Status,
       },
       {
         name: 'post.index',
