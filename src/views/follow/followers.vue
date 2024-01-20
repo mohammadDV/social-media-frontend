@@ -2,6 +2,7 @@
  
  import {useApi} from './../../utils/api.ts';
   
+ import {helper} from '@/utils/helper.ts';
  import { ref, onMounted, reactive } from 'vue';
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
@@ -61,6 +62,8 @@ const initialFormState = {
     };
 
   onMounted(() => {
+
+    helper().goToTop();
     getFollowings();
   });
 
@@ -117,11 +120,11 @@ const initialFormState = {
             <div :class="{
                 'grid gap-4 grid-cols-4 my-3' : true,
                 'grid-cols-3' : route?.params?.id?.length > 0,
-                '' : route?.params?.id?.length < 1,
+                '' : !route?.params?.id?.length,
             }">
                 <div v-for="(user, index) in items" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
-                    <userImage :item="user" />
+                    <userImage :item="user" addclass="rounded-full w-[120px] h-[120px]"/>
                     <span class='item-title'>{{ user.nickname }}</span>
                         <a @click="follow(user.id)" class='w-100 btn btn-info text-white'  >{{ $t('site.View') }}</a>
                     </div>

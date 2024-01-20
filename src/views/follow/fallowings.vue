@@ -7,6 +7,7 @@
  import VTInput from '@/elements/VTInput'; 
  import { useToast } from "vue-toast-notification";
  import userImage from '@/components/plugins/UserImage.vue';
+ import {helper} from '@/utils/helper.ts';
 
 const initialFormState = {
       search: '',
@@ -81,6 +82,7 @@ const initialFormState = {
     };
 
   onMounted(() => {
+    helper().goToTop();
     getFollowings();
   });
 
@@ -139,12 +141,12 @@ const initialFormState = {
             }">
                 <div v-for="(user, index) in items" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
-                    <userImage :item="user" />
+                    <userImage :item="user" addclass="rounded-full w-[120px] h-[120px]"/>
                     <span class='item-title'>{{ user.nickname }}</span>
                         <a @click="follow(user.id)" :class="{
                             'w-100 btn text-white' : true,
                             'btn-info' : route?.params?.id?.length > 0,
-                            'btn-danger' : route?.params?.id?.length == 0,
+                            'btn-danger' : !route?.params?.id?.length,
                         }"  >
                             {{ route?.params?.id?.length > 0 ? $t('site.View') : $t('site.Unfollow') }}
                         </a>

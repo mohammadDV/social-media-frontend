@@ -27,7 +27,6 @@
   });
 
   const setReply = (commentId) => {
-    console.log(props.comments);
     let comment = props.comments.find(item => item.id == commentId);
     comment.reply = !comment?.reply;
   }
