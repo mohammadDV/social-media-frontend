@@ -1,7 +1,7 @@
 <script setup>
  
- import {useApi} from './../../utils/api.ts';
-  
+ import {useApi} from './../../utils/api.ts';  
+ import {helper} from '@/utils/helper.ts';
  import { ref, onMounted, reactive, watch, defineEmits, defineProps } from 'vue';
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
@@ -122,7 +122,8 @@ const $toast = useToast();
 
 
   onMounted(() => {
-
+    helper().goToTop();
+    send();
     getClubs();
     getCountries();
     getSports();
@@ -152,9 +153,9 @@ const $toast = useToast();
             <div class='grid grid-cols-4 gap-4 my-3'>
                 <div v-for="(myClub, index) in myClubs" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
-                    <img class='rounded-full w-[150px]' :src='myClub.image'/>
+                    <img class='rounded-full w-[150px] h-[150px]' :src='myClub.image'/>
                     <span class='item-date'>{{ myClub.sport.title }}</span>
-                    <span class='item-title'>{{ myClub.title +  ' ' + myClub.sport.title }}</span>
+                    <span class='item-title'>{{ myClub.title +  ' ' + myClub.country.title }}</span>
                         <a @click="follow(myClub.id)" class='w-100 btn btn-danger text-white'  >{{ $t('site.Unfollow') }}</a>
                     </div>
                 </div>
@@ -213,7 +214,7 @@ const $toast = useToast();
                     <div class='card-body is-listItem items-center'>
                     <img class='rounded-full w-[150px]' :src='club.image'/>
                     <span class='item-date'>{{ club.sport.title }}</span>
-                    <span class='item-title'>{{ club.title +  ' ' + club.sport.title }}</span>
+                    <span class='item-title'>{{ club.title +  ' ' + club.country.title }}</span>
                         <a @click="follow(club.id)" class='w-100 btn btn-info text-white'  >{{ $t('site.Follow') }}</a>
                     </div>
                 </div>

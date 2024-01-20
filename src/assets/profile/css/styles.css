@@ -6281,11 +6281,16 @@ a {
 }
 
 .navbar-search-group {
-  width: 20rem;
+  width: 25rem;
   transition: all 1s cubic-bezier(0.42, 0.42, 0, 1);
 }
 .navbar-search-group:focus-within {
-  flex-grow: 1;
+  /* flex-grow: 1; */
+}
+.navbar-search-group:focus {
+  /* flex-grow: 1; */
+  border: 0;
+  outline: 0;
 }
 
 .navbar-search {
