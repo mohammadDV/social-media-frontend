@@ -14,6 +14,7 @@ import Member from '@/views/member/index.vue';
 import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
 import Status from '@/views/profile/status.vue';
+import Notification from '@/views/notification/index.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
 import PageList from '@/views/page/index.vue';
@@ -119,6 +120,11 @@ const routes = [
         name: 'profile',
         path: '',
         component: Profile,
+      },
+      {
+        name: 'notification',
+        path: '/profile/notifications',
+        component: Notification,
       },
       {
         name: 'status.show',

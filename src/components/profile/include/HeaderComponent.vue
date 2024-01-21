@@ -2,7 +2,7 @@
 
     
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, watch, reactive } from 'vue';
+  import { onMounted, onUnmounted, watch, reactive, ref } from 'vue';
   import userImage from '@/components/plugins/UserImage.vue'
   import { useAuthStore } from '@/stores/auth.ts';
   import { useI18n } from "vue-i18n";
@@ -14,6 +14,8 @@
     users: [
     ],
 });
+
+const notifCount = ref(0);
 
 const resetSearch = () => {
     state.search = '';
@@ -47,12 +49,27 @@ watch(() => state.search, () => {
     }
 });
 
+const getRpc = () => {
+    useApi().get('/api/profile/rpc')
+            .then((response) => {
+                notifCount.value = response.data.notification_count;
+            })
+}
+
+const autoInterval = ref([]);
+
 onMounted(() => {
-// useApi().get('/api/active-categories')
-//     .then((response) => {
-//         categories.value = response.data;
-//     })
+    getRpc();
+    autoInterval.value = setInterval(function() {
+        getRpc();
+    }, 30000);
 });
+
+onUnmounted(() => {
+    clearInterval(autoInterval.value);
+});
+
+
 
 </script>
 
@@ -192,27 +209,6 @@ onMounted(() => {
                                                 <input class="form-control navbar-search" type="search" placeholder="جستجو" aria-label="Search" id="dropdownSearch" data-bs-toggle="dropdown" aria-expanded="false"/>
                                             </form>
                                         </div>
-                                        <!-- <div class="search-list card-itemlist vt-dropdown-search-results"> -->
-                                            <!-- {{-- <a class="result-item">
-                                                <span>پرسپولیس</span>
-                                            </a>
-                                            <a class="result-item">
-                                                <span>پاری سن ژرمن</span>
-                                            </a>
-                                            <a class="result-item">
-                                                <span>پرز</span>
-                                            </a>
-                                            <a class="result-item">
-                                                <span>پخش زنده</span>
-                                            </a>
-                                            <a class="result-item">
-                                                <span>داریوش تاج پرست</span>
-                                            </a> --}}
-                                        </div>
-                                        {{-- <div class="section-title">
-                                            <span class="material-icons"> schedule </span>
-                                            <span>تاریخچه جستجو</span>
-                                        </div> -->
                                         <div class="vt-dropdown-search-history flex-wrap">
                                             <a class="btn btn-primary search-tag" href="#">
                                                 <span class="material-icons tag-icon">
@@ -265,17 +261,22 @@ onMounted(() => {
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <button
-                                    class="btn btn-light"
-                                    type="button"
-                                    id="dropdownNotifications"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    <span class="material-icons size-font-ahalf">
-                                    notifications
-                                    </span>
-                                </button>
+                                <router-link class="text-decoration-none" to="/profile/notifications">
+                                    <button
+                                        class="btn btn-light"
+                                        type="button"
+                                        id="dropdownNotifications"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        <span class="material-icons size-font-ahalf">
+                                        notifications
+                                        </span>
+                                        <span v-if="notifCount" class="absolute -right-[5px] top-0 text-white rounded-full text-xs bg-danger px-2 py-1">
+                                            {{ notifCount }}
+                                        </span>
+                                    </button>
+                                </router-link>
                                 <div
                                     class="dropdown-menu is-left"
                                     aria-labelledby="dropdownNotifications"

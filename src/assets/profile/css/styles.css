@@ -6763,7 +6763,7 @@ a {
 }
 .tweet-card .comment-input-container .user-avatar {
   width: 4rem;
-  margin: 0 0 0 1rem;
+  /* margin: 0 0 0 1rem; */
 }
 .tweet-card .comment-input-container .user-avatar img {
   height: 3rem;
