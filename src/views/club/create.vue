@@ -42,7 +42,7 @@ const initialFormState = {
   const sportList = ref();
 
   const getSports = () => {
-    useApi().get(`/api/profile/sports/index`)
+    useApi().get(`/api/sport/index`)
     .then((response) => {
         sportList.value = response.data;
     })
@@ -50,7 +50,7 @@ const initialFormState = {
   const countryList = ref();
 
   const getCountries = () => {
-    useApi().get(`/api/profile/countries/index`)
+    useApi().get(`/api/country/index`)
     .then((response) => {
         countryList.value = response.data;
     })

@@ -10,6 +10,11 @@
   import VTSelect from '../../elements/VTSelect.vue'; 
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
+  import { useAuthStore } from '../../stores/auth';
+
+  const authStore = useAuthStore();
+  const hasStorePermission = ref(authStore.permissions.includes('step_store'));
+  const hasDeletePermission = ref(authStore.permissions.includes('step_delete'));
 
     const { t } = useI18n();
   
@@ -57,7 +62,7 @@
     const countryList = ref();
 
     const getCountries = () => {
-        useApi().get(`/api/profile/countries/index`)
+        useApi().get(`/api/country/index`)
         .then((response) => {
             countryList.value = response.data;
         })
@@ -230,7 +235,7 @@
                     </ol>
                 </nav>
                 <div class="place-button">
-                    <router-link to="/profile/leagues" :title="$t('site.Create new league')">
+                    <router-link to="/profile/leagues" :title="$t('site.League managemen')">
                         <button class="btn btn-primary">{{ $t('site.League management') }}</button>
                     </router-link>
                 </div>
@@ -309,7 +314,7 @@
                 >
                 <template #item-actions="item">
                     <div class="flex">
-                        <span @click="deletItem(item.club_id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
+                        <span v-if="hasDeletePermission" @click="deletItem(item.club_id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
                 </template>
                 <template #empty-message>
@@ -320,7 +325,7 @@
 
 
             <div class="w-full md:w-1/4">
-                    <VTButton 
+                    <VTButton v-if="hasStorePermission"
                         class="justify-center btn-outline-secondary btn-sm mt-4" 
                         size="medium"
                         color="primary"

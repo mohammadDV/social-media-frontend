@@ -133,31 +133,39 @@ const routes = [
       },
       {
         name: 'post.index',
+        permission: 'post_show',
         path: '/profile/posts',
         component: PostList,
       },
       {
         name: 'post.create',
+        meta: { 
+          permission: 'post_store',
+        },
         path: '/profile/posts/create',
         component: PostCreate,
       },
       {
         name: 'post.edit',
+        permission: 'post_update',
         path: '/profile/posts/:id',
         component: PostCreate,
       },
       {
         name: 'page.index',
+        permission: 'page_show',
         path: '/profile/pages',
         component: PageList,
       },
       {
         name: 'page.create',
+        permission: 'page_store',
         path: '/profile/pages/create',
         component: PageCreate,
       },
       {
         name: 'page.edit',
+        permission: 'page_update',
         path: '/profile/pages/:id',
         component: PageCreate,
       },
@@ -178,131 +186,157 @@ const routes = [
       },
       {
         name: 'club.index',
+        permission: 'club_show',
         path: '/profile/clubs',
         component: ClubList,
       },
       {
         name: 'club.create',
+        permission: 'club_show',
         path: '/profile/clubs/create',
         component: ClubCreate,
       },
       {
         name: 'club.edit',
+        permission: 'club_update',
         path: '/profile/clubs/:id',
         component: ClubCreate,
       },
       {
         name: 'league.index',
+        permission: 'league_show',
         path: '/profile/leagues',
         component: LeagueList,
       },
       {
         name: 'league.create',
+        permission: 'league_store',
         path: '/profile/leagues/create',
         component: LeagueCreate,
       },
       {
         name: 'league.edit',
+        permission: 'league_update',
         path: '/profile/leagues/:id',
         component: LeagueCreate,
       },
       {
         name: 'league.clubs',
+        permission: 'league_show',
         path: '/profile/leagues/:id/clubs',
         component: LeagueClubs,
       },
       {
         name: 'step.clubs',
+        permission: 'step_show',
         path: '/profile/steps/:id/clubs',
         component: stepClubs,
       },
       {
         name: 'step.matches',
+        permission: 'matche_show',
         path: '/profile/steps/:id/matches',
         component: stepMatches,
       },
       {
         name: 'league.steps',
+        permission: 'league_show',
         path: '/profile/leagues/:id/steps',
         component: LeagueSteps,
       },
       {
         name: 'advertise.index',
+        permission: 'advertise_show',
         path: '/profile/advertises',
         component: AdvertiseList,
       },
       {
         name: 'advertise.create',
+        permission: 'advertise_store',
         path: '/profile/advertises/create',
         component: AdvertiseCreate,
       },
       {
         name: 'advertise.edit',
+        permission: 'advertise_update',
         path: '/profile/advertises/:id',
         component: AdvertiseCreate,
       },
       {
         name: 'live.index',
+        permission: 'live_show',
         path: '/profile/lives',
         component: LiveList,
       },
       {
         name: 'live.create',
+        permission: 'live_store',
         path: '/profile/lives/create',
         component: LiveCreate,
       },
       {
         name: 'live.edit',
+        permission: 'live_update',
         path: '/profile/lives/:id',
         component: LiveCreate,
       },
       {
         name: 'sport.index',
+        permission: 'sport_show',
         path: '/profile/sports',
         component: SportList,
       },
       {
         name: 'sport.create',
+        permission: 'sport_store',
         path: '/profile/sports/create',
         component: SportCreate,
       },
       {
         name: 'sport.edit',
+        permission: 'sport_update',
         path: '/profile/sports/:id',
         component: SportCreate,
       },
       {
         name: 'country.index',
+        permission: 'country_show',
         path: '/profile/countries',
         component: CountryList,
       },
       {
         name: 'country.create',
+        permission: 'country_store',
         path: '/profile/countries/create',
         component: CountryCreate,
       },
       {
         name: 'country.edit',
+        permission: 'country_update',
         path: '/profile/countries/:id',
         component: CountryCreate,
       },
       {
         name: 'status.index',
+        permission: 'status_show',
         path: '/profile/status',
         component: StatusList,
       },
       {
         name: 'status.create',
+        permission: 'status_store',
         path: '/profile/status/create',
         component: PostCreate,
       },
       {
         name: 'status.edit',
+        permission: 'status_update',
         path: '/profile/status/:id',
         component: PostCreate,
       },
       {
         name: 'account.edit',
+        permission: 'account_update',
         path: '/profile/account',
         component: UserCreate,
       },
@@ -313,11 +347,13 @@ const routes = [
       },
       {
         name: 'user.edit',
+        permission: 'user_update',
         path: '/profile/users/edit/:id',
         component: UserCreate,
       },
       {
         name: 'user.index',
+        permission: 'user_show',
         path: '/profile/users',
         component: UserList,
       },
@@ -339,10 +375,15 @@ router.beforeEach((to, from, next) => {
     next('/login');
   } else {
     if (authStore.isAuthenticated && ['login', 'register'].includes(to.name)) {
-      next('/profile');
+        next('/profile');
     } else {
+      console.log(authStore.permissions.includes(to?.meta?.permission));
       // Otherwise, allow access to the route
-      next();
+      if (!to?.meta?.permission?.length || authStore.permissions.includes(to?.meta?.permission)) {
+        next();
+      } else {
+        next('/profile');
+      }
     }
   }
 });

@@ -13,7 +13,7 @@ const route = useRoute();
 const active = ref(false);
 
 const getUser = () => {
-    useApi().get(`/api/profile/users/info/${route.params.id}`)
+    useApi().get(`/api/user/info/${route.params.id}`)
         .then((response) => {
             user.value = response.data;
         })

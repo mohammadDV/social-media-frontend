@@ -7,6 +7,12 @@
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
+  import { useAuthStore } from '../../stores/auth';
+
+  const authStore = useAuthStore();
+  const hasShowPermission = ref(authStore.permissions.includes('live_show'));
+  const hasUpdatePermission = ref(authStore.permissions.includes('live_update'));
+  const hasDeletePermission = ref(authStore.permissions.includes('live_delete')); 
 
     const { t } = useI18n();
   
@@ -120,7 +126,7 @@
                         </li>
                     </ol>
                 </nav>
-                <div class="place-button">
+                <div v-if="hasShowPermission" class="place-button">
                     <router-link to="/profile/lives/create" :title="$t('site.Create new live')">
                         <button class="btn btn-primary">{{ $t('site.Create new live') }}</button>
                     </router-link>
@@ -158,10 +164,10 @@
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <router-link class="p-1 rounded btn-info m-1 text-white" :to="'/profile/lives/' + item.id">
+                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/lives/' + item.id">
                             <span class="material-icons size-font-ahalf"> edit </span>
                         </router-link>
-                        <span @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
+                        <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
                 </template>
                 <template #item-image="item">

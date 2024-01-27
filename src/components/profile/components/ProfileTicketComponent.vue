@@ -1,11 +1,24 @@
 <script setup>
 
-  import { defineProps } from 'vue';
+  import { defineProps, onMounted, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
   import userImage from '@/components/plugins/UserImage.vue';
 
   const authStore = useAuthStore();
 
+  const menu = ref([]);
+
+  onMounted(() => {
+    authStore.menu.map((item) => {
+        
+        console.log(item.permission);
+        if(!item?.permission || authStore.permissions.includes(item.permission)){
+            menu.value.push(item);
+        }
+    }) 
+    
+  });
+  
   defineProps({
     followersCount: {
         type: Number,
@@ -42,14 +55,14 @@
                 </div>
             </div>
             <div class="user-stats">
-                <a class="user-stat" href="#">
-                    <div class="user-stat-title">دنبال کنندگان</div>
-                    <div class="user-stat-amount">{{ followersCount }}</div>
-                </a>
-                <a class="user-stat" href="#">
-                    <div class="user-stat-title">دنبال شوندگان</div>
+                <router-link class="user-stat" to='/profile/followings'>
+                    <div class="user-stat-title">{{ $t('site.Following') }}</div>
                     <div class="user-stat-amount">{{ followingsCount }}</div>
-                </a>
+                </router-link>
+                <router-link class="user-stat" to='/profile/followers'>
+                    <div class="user-stat-title">{{ $t('site.Followers') }}</div>
+                    <div class="user-stat-amount">{{ followersCount }}</div>
+                </router-link>
                 <a class="user-stat" href="#">
                     <div class="user-stat-title">بازدید از صفحه ی شما</div>
                     <div class="user-stat-amount">19</div>
@@ -60,84 +73,11 @@
                 </a>
             </div>
             <div class="user-links">
-                <router-link class="user-link" to="/profile/posts">
+                <router-link v-for="(item, index) in menu" :key="index" class="user-link" :to="item.route">
                     <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
+                    <span class="material-icons"> {{ item.icon }} </span>
                     </span>
-                    <span class="user-link-title"> {{ $t('site.Post management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/status">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Status management') }} </span>
-                </router-link>
-
-                <router-link class="user-link" to="/profile/account">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> manage_accounts </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Edit profile') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/users">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> manage_accounts </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.User management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/clubs">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Club management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/sports">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Sport management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/countries">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Country management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/lives">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Live management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/advertises">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Advertise management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/pages">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Page management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/leagues">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.League management') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/users/change-password">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> manage_accounts </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Change password') }} </span>
-                </router-link>
-                <router-link class="user-link" to="/profile/clubs/favorite">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Choose your favorite club') }} </span>
+                    <span class="user-link-title"> {{ $t(item.name) }} </span>
                 </router-link>
                 <a class="user-link" href="#">
                     <span class="user-link-icon">
