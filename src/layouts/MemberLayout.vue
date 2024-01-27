@@ -62,7 +62,6 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
                 <MemberTicketComponent 
                   :followersCount="followersCount"
                   :followingsCount="followingsCount"
-                  :memeberId="route.params.id"
                   />
                 <RightSideComponent 
                   :memeberId="route.params.id"

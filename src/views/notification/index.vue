@@ -23,7 +23,7 @@
         items.value = [];
     }
 
-    useApi().get(`/api/profile/notifications?page=${page.value}`)
+    useApi().get(`/api/notifications?page=${page.value}`)
         .then((response) => {
 
             items.value.push(...response.data.data);

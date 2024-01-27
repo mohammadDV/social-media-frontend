@@ -7,10 +7,14 @@
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
+  import { useAuthStore } from '../../stores/auth';
 
-    const { t } = useI18n();
-  
-    const dataTable = ref();
+  const authStore = useAuthStore();
+  const hasShowPermission = ref(authStore.permissions.includes('advertise_show'));
+  const hasUpdatePermission = ref(authStore.permissions.includes('advertise_update'));
+  const hasDeletePermission = ref(authStore.permissions.includes('advertise_delete'));
+  const { t } = useI18n();  
+  const dataTable = ref();
 
     const {
     currentPageFirstIndex,
@@ -130,7 +134,7 @@ onMounted(() => {
                         </li>
                     </ol>
                 </nav>
-                <div class="place-button">
+                <div v-if="hasShowPermission" class="place-button">
                     <router-link to="/profile/advertises/create" :title="$t('site.Create new advertise')">
                         <button class="btn btn-primary">{{ $t('site.Create new advertise') }}</button>
                     </router-link>
@@ -171,10 +175,10 @@ onMounted(() => {
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <router-link class="p-1 rounded btn-info m-1 text-white" :to="'/profile/advertises/' + item.id">
+                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/advertises/' + item.id">
                             <span class="material-icons size-font-ahalf"> edit </span>
                         </router-link>
-                        <span @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
+                        <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
                 </template>
                 <template #item-image="item">

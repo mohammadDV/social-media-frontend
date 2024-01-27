@@ -10,6 +10,12 @@
   import VTSelect from '../../elements/VTSelect.vue'; 
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
+  import { useAuthStore } from '../../stores/auth';
+  
+  const authStore = useAuthStore();
+  const hasStorePermission = ref(authStore.permissions.includes('match_store'));
+  const hasUpdatePermission = ref(authStore.permissions.includes('match_update'));
+  const hasDeletePermission = ref(authStore.permissions.includes('match_delete'));
 
     const { t } = useI18n();
   
@@ -100,7 +106,7 @@
     const countryList = ref();
 
     const getCountries = () => {
-        useApi().get(`/api/profile/countries/index`)
+        useApi().get(`/api/country/index`)
         .then((response) => {
             countryList.value = response.data;
         })
@@ -402,7 +408,7 @@
                         :label="$t('site.Link')"/>
                     </div>
                     <div class="flex gap-2">
-                        <VTButton 
+                        <VTButton v-if="hasStorePermission"
                             class="justify-center btn-outline-secondary btn-sm mt-4" 
                             size="medium"
                             color="primary"
@@ -440,8 +446,8 @@
                 >
                 <template #item-actions="item">
                     <div class="flex">
-                        <span @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
-                        <span @click="editItem(item.id)" class="p-1 rounded btn-info m-1 text-white material-icons size-font-ahalf cursor-pointer"> edit </span>
+                        <span v-if="hasUpdatePermission" @click="editItem(item.id)" class="p-1 rounded btn-info m-1 text-white material-icons size-font-ahalf cursor-pointer"> edit </span>
+                        <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
                 </template>
                 <template #empty-message>

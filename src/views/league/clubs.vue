@@ -58,7 +58,7 @@
     const countryList = ref();
 
     const getCountries = () => {
-        useApi().get(`/api/profile/countries/index`)
+        useApi().get(`/api/country/index`)
         .then((response) => {
             countryList.value = response.data;
         })
