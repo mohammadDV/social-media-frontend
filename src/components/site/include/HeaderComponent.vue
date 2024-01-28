@@ -44,9 +44,9 @@
                                         </span>
                                         <span>{{ authStore?.user?.nickname }}</span>
                                     </button>
-                                    <ul v-show="dropdown" class="dropdown-menu dropdown-menu-end d-block">
+                                    <ul v-show="dropdown" class="absolute w-[180px] rounded-lg bg-white z-50 p-2 d-block">
                                         <li>
-                                            <router-link class="dropdown-item" target="_blank" to="/profile">
+                                            <router-link class="dropdown-item" to="/profile">
                                                 <span class="material-icons"> person </span>
                                                 <span> {{ $t('site.Profile') }} </span>
                                             </router-link>

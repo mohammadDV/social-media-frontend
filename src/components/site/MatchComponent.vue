@@ -25,7 +25,6 @@
             leagueId.value = response.data[1].leagues[0].id;
             matches.value = response.data[1].matches;
             clubs.value = response.data[1].clubs;
-            console.log(matches.value);
         })
   });
 

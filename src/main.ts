@@ -1,7 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/index.css';
+import './assets/site/fonts/vazir-ui/vazir.css';
+import './assets/site/fonts/material-icons/material-icons.css';
 import router from './router';
+
 
 // Data table
 import Vue3EasyDataTable from 'vue3-easy-data-table';
