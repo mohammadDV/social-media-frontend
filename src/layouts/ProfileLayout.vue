@@ -37,8 +37,21 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
   };
 
   onMounted(() => {
+
+    console.log("kiri");
+    const links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    console.log(links);
+    links.forEach(link => {
+      console.log(link);
+        if (link.href === '/assets/site/css/styles.css') {
+          link.parentNode.removeChild(link);
+        }
+      })
+
       updateFollowings()
       getMyClubs();
+    
   });
 
 </script>

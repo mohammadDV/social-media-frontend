@@ -78,7 +78,7 @@ onUnmounted(() => {
         <div class="container-xxl">
             <nav class="navbar navbar-expand navbar-light bg-light">
                 <div class="container-fluid">
-                    <router-link class="navbar-brand" to="/" target="_blank" :title="$t('site.Main page')">
+                    <router-link class="navbar-brand" to="/" :title="$t('site.Main page')">
                         <img src="/profile/images/vt-logo.png" alt="logo" width="36" height="36"/>
                     </router-link>
                     <div id="searchMember" class="searchMember navbar-search-group input-group d-none d-lg-flex">

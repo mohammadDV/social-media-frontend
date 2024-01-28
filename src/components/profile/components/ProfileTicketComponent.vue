@@ -11,7 +11,6 @@
   onMounted(() => {
     authStore.menu.map((item) => {
         
-        console.log(item.permission);
         if(!item?.permission || authStore.permissions.includes(item.permission)){
             menu.value.push(item);
         }

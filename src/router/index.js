@@ -377,7 +377,6 @@ router.beforeEach((to, from, next) => {
     if (authStore.isAuthenticated && ['login', 'register'].includes(to.name)) {
         next('/profile');
     } else {
-      console.log(authStore.permissions.includes(to?.meta?.permission));
       // Otherwise, allow access to the route
       if (!to?.meta?.permission?.length || authStore.permissions.includes(to?.meta?.permission)) {
         next();
@@ -391,14 +390,10 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   const layout = to.meta.layout;
   if (layout === 'main') {
-    require('@/assets/site/fonts/vazir-ui/vazir.css');
-    require('@/assets/site/fonts/material-icons/material-icons.css');
     require('@/assets/site/css/splide.min.css');
     require('@/assets/site/css/styles.css');
 
   } else {
-    require('@/assets/profile/fonts/vazir-ui/vazir.css');
-    require('@/assets/profile/fonts/material-icons/material-icons.css');
     require('@/assets/profile/css/custom.css');
     require('@/assets/profile/css/styles.css');
   }

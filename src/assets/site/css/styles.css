@@ -6922,6 +6922,9 @@ html[dir=rtl] .news-item .material-icons {
 .ads-column {
   width: calc(130px + var(--bs-gutter-x));
 }
+.row .col-12.ads-column {
+  width: calc(130px + var(--bs-gutter-x)) !important;
+}
 
 .splide {
   direction: ltr;
