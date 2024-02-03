@@ -65,7 +65,7 @@ const user = ref([]);
                 <div class="user-cover ratio ratio-21x3 h-75"
                     :style="`background-image: url(${user?.bg_photo_path})`"
                 ></div>
-                <div class="user-avatar">
+                <div class="user-avatar-profile">
                     <userImage  :item="user"/>
                 </div>
                 <div class="user-name">{{ user.nickname }}</div>

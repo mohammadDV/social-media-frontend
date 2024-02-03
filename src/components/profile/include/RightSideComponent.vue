@@ -39,7 +39,7 @@
 
 <template>
     <div class="card list-card mb-3">
-        <div class="card-header">
+        <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Following') }}</span>
             </div>
@@ -63,7 +63,7 @@
     </div>
 
     <div class="card list-card mb-3">
-        <div class="card-header">
+        <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Followers') }}</span>
             </div>
@@ -88,7 +88,7 @@
 
 
     <div class="card list-card mb-3">
-        <div class="card-header">
+        <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Favorite clubs') }}</span>
             </div>
