@@ -48,7 +48,7 @@
 <template>
     <div class="col-3 d-none d-xl-block">
         <div class="card list-card mb-3">
-            <div class="card-header">
+            <div class="card-header-profile">
                 <div class="card-header-title">
                     <span>{{ $t('site.New users') }}</span>
                 </div>
@@ -56,7 +56,7 @@
             <FollowListComponent :members="newMembers" @updateMembers="updateNewMembers" />
         </div>
         <div class="card list-card mb-3">
-            <div class="card-header">
+            <div class="card-header-profile">
                 <div class="card-header-title">
                     <span>هم سلیقه های شما</span>
                 </div>

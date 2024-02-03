@@ -45,7 +45,7 @@
                     :style="`background-image: url(/profile/images/cover.png)`"
                     ></div>
                 </template>
-                <div class="user-avatar">
+                <div class="user-avatar-profile">
                     <userImage :item="authStore?.user" />
                 </div>
                 <div class="user-name">{{ authStore?.user?.nickname }}</div>

@@ -59,7 +59,7 @@
 <template>
      <div class="card posting-card">
         <div class="card-body">
-            <div class="user-avatar">
+            <div class="user-avatar-profile">
             <userImage :item="authStore.user" />
             </div>
             <div class="post-btn-container">

@@ -76,13 +76,13 @@ onUnmounted(() => {
 <template>
    <header class="header-navbar">
         <div class="container-xxl">
-            <nav class="navbar navbar-expand navbar-light bg-light">
-                <div class="container-fluid">
-                    <router-link class="navbar-brand" to="/" :title="$t('site.Main page')">
+            <nav class="navbar navbar-expand navbar-light-profile bg-light">
+                <div class="container-fluid-profile">
+                    <router-link class="navbar-brand-profile" to="/" :title="$t('site.Main page')">
                         <img src="/profile/images/vt-logo.png" alt="logo" width="36" height="36"/>
                     </router-link>
-                    <div id="searchMember" class="searchMember navbar-search-group input-group d-none d-lg-flex">
-                        <span class="input-group-text" id="basic-addon1">
+                    <div id="searchMember" class="navbar-search-group input-group d-none d-lg-flex">
+                        <span class="input-group-text-profile" id="basic-addon1">
                             <span class="material-icons size-font-ahalf"> search </span>
                         </span>
                         <span v-if="state?.users?.length > 0" class="cursor-pointer absolute left-2 z-10 top-2 material-icons size-font-ahalf" @click="resetSearch()"> close </span>
@@ -200,14 +200,14 @@ onUnmounted(() => {
                                 <div class="dropdown-menu is-left" aria-labelledby="dropdownMobileSearch">
                                     <div class="vt-dropdown-search">
                                         <div class="input-group w-full">
-                                            <span class="input-group-text" id="basic-addon1">
+                                            <span class="input-group-text-profile" id="basic-addon1">
                                             <span class="material-icons size-font-ahalf">
                                                 search
                                             </span>
                                             </span>
                                             <form class="searchMember">
                                                 <input class="form-control navbar-search" type="search" placeholder="جستجو" aria-label="Search" id="dropdownSearch" data-bs-toggle="dropdown" aria-expanded="false"/>
-                                            </form>
+                                        .    </form>
                                         </div>
                                         <div class="vt-dropdown-search-history flex-wrap">
                                             <a class="btn btn-primary search-tag" href="#">

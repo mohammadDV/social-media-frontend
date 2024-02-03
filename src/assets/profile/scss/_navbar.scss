@@ -37,7 +37,7 @@
   }
 
   > .container,
-  > .container-fluid {
+  > .container-fluid-profile {
     @extend %container-flex-properties;
   }
 
@@ -205,7 +205,7 @@
 // Styles for switching between navbars with light or dark background.
 
 // Dark links against a light background
-.navbar-light {
+.navbar-light-profile {
   .navbar-brand {
     color: $navbar-light-brand-color;
 
