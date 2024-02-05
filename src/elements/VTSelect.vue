@@ -1,6 +1,6 @@
 <template>
-    <div class="flex">
-        <label :for="identifier" class="form-label block text-sm font-medium mb-3 pt-2" v-if="label">
+    <div>
+        <label :for="identifier" class="block text-sm font-medium mb-2" v-if="label?.length > 0">
             {{ label }}
             <slot name="label"/>
         </label>
@@ -63,7 +63,7 @@ const changeEvent = function (event) {
 
 const styles = computed(() => {
     return {
-        'form-select block w-full pl-3 pr-10 text-base focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200 sm:text-sm rounded-md': true,
+        'form-control-select p-2 block w-full pl-3 pr-10 text-base focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200 sm:text-sm rounded-md': true,
         'py-3.5': props.size === '',
         'cursor-not-allowed bg-gray-50': props.disabled,
     };

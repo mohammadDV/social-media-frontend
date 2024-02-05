@@ -2,10 +2,17 @@
 
     
 //   import {useApi} from '@/utils/api.ts';
-  import { onMounted } from 'vue';
+  import { onMounted, defineEmits } from 'vue';
   import LeftSideComponent from "@/components/profile/include/LeftSideComponent.vue";
   import StatusWallComponents from "@/components/profile/components/status/StatusWallComponent.vue";
   import StatusWallFormComponent from "@/components/profile/components/status/StatusWallFormComponent.vue";
+
+
+ const emit = defineEmits(['updateFollowings']); 
+
+  const updateFollowings = () => {
+    emit('updateFollowings')
+  }
 //   import { useAuthStore } from '@/stores/auth.ts';
 
 //   const categories = ref([]);
@@ -52,5 +59,5 @@
             </div>
         </div>
     </div>
-    <LeftSideComponent />
+    <LeftSideComponent @updateFollowings="updateFollowings"/>
 </template>

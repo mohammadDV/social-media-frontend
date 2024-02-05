@@ -5,13 +5,43 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import MainLayout from '@/layouts/MainLayout.vue';
 import ProfileLayout from '@/layouts/ProfileLayout.vue';
+import MemberLayout from '@/layouts/MemberLayout.vue';
 
 // Import views
 import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
+import Member from '@/views/member/index.vue';
 import Category from '@/views/Category.vue';
 import Profile from '@/views/profile/index.vue';
+import Status from '@/views/profile/status.vue';
+import Notification from '@/views/notification/index.vue';
 import PostList from '@/views/post/index.vue';
+import PostCreate from '@/views/post/create.vue';
+import PageList from '@/views/page/index.vue';
+import PageCreate from '@/views/page/create.vue';
+import ClubList from '@/views/club/index.vue';
+import ClubCreate from '@/views/club/create.vue';
+import ClubFavorite from '@/views/club/favorite.vue';
+import Followings from '@/views/follow/fallowings.vue';
+import Followers from '@/views/follow/followers.vue';
+import LeagueList from '@/views/league/index.vue';
+import LeagueCreate from '@/views/league/create.vue';
+import stepClubs from '@/views/step/clubs.vue';
+import stepMatches from '@/views/step/matches.vue';
+import LeagueClubs from '@/views/league/clubs.vue';
+import LeagueSteps from '@/views/league/steps.vue';
+import AdvertiseList from '@/views/advertise/index.vue';
+import AdvertiseCreate from '@/views/advertise/create.vue';
+import LiveList from '@/views/live/index.vue';
+import LiveCreate from '@/views/live/create.vue';
+import SportList from '@/views/sport/index.vue';
+import SportCreate from '@/views/sport/create.vue';
+import CountryList from '@/views/country/index.vue';
+import CountryCreate from '@/views/country/create.vue';
+import StatusList from '@/views/status/index.vue';
+import UserCreate from '@/views/user/create.vue';
+import ChangePassword from '@/views/user/password.vue';
+import UserList from '@/views/user/index.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
@@ -54,6 +84,31 @@ const routes = [
     ],
   },
   {
+    path: '/member',
+    meta: { 
+      layout: 'member',
+      requiresAuth: false,
+     },
+    component: MemberLayout,
+    children: [
+      {
+        name: 'member',
+        path: '/member/:id',
+        component: Member,
+      },
+      {
+        name: 'member.followings',
+        path: '/member/:id/followings',
+        component: Followings,
+      },
+      {
+        name: 'member.followers',
+        path: '/member/:id/followers',
+        component: Followers,
+      },
+    ],
+  },
+  {
     path: '/profile',
     meta: { 
       layout: 'profile',
@@ -67,9 +122,240 @@ const routes = [
         component: Profile,
       },
       {
-        name: 'profile',
+        name: 'notification',
+        path: '/profile/notifications',
+        component: Notification,
+      },
+      {
+        name: 'status.show',
+        path: '/profile/:id',
+        component: Status,
+      },
+      {
+        name: 'post.index',
+        permission: 'post_show',
         path: '/profile/posts',
         component: PostList,
+      },
+      {
+        name: 'post.create',
+        meta: { 
+          permission: 'post_store',
+        },
+        path: '/profile/posts/create',
+        component: PostCreate,
+      },
+      {
+        name: 'post.edit',
+        permission: 'post_update',
+        path: '/profile/posts/:id',
+        component: PostCreate,
+      },
+      {
+        name: 'page.index',
+        permission: 'page_show',
+        path: '/profile/pages',
+        component: PageList,
+      },
+      {
+        name: 'page.create',
+        permission: 'page_store',
+        path: '/profile/pages/create',
+        component: PageCreate,
+      },
+      {
+        name: 'page.edit',
+        permission: 'page_update',
+        path: '/profile/pages/:id',
+        component: PageCreate,
+      },
+      {
+        name: 'follow.followings',
+        path: '/profile/followings',
+        component: Followings,
+      },
+      {
+        name: 'follow.followers',
+        path: '/profile/followers',
+        component: Followers,
+      },
+      {
+        name: 'club.favorite',
+        path: '/profile/clubs/favorite',
+        component: ClubFavorite,
+      },
+      {
+        name: 'club.index',
+        permission: 'club_show',
+        path: '/profile/clubs',
+        component: ClubList,
+      },
+      {
+        name: 'club.create',
+        permission: 'club_show',
+        path: '/profile/clubs/create',
+        component: ClubCreate,
+      },
+      {
+        name: 'club.edit',
+        permission: 'club_update',
+        path: '/profile/clubs/:id',
+        component: ClubCreate,
+      },
+      {
+        name: 'league.index',
+        permission: 'league_show',
+        path: '/profile/leagues',
+        component: LeagueList,
+      },
+      {
+        name: 'league.create',
+        permission: 'league_store',
+        path: '/profile/leagues/create',
+        component: LeagueCreate,
+      },
+      {
+        name: 'league.edit',
+        permission: 'league_update',
+        path: '/profile/leagues/:id',
+        component: LeagueCreate,
+      },
+      {
+        name: 'league.clubs',
+        permission: 'league_show',
+        path: '/profile/leagues/:id/clubs',
+        component: LeagueClubs,
+      },
+      {
+        name: 'step.clubs',
+        permission: 'step_show',
+        path: '/profile/steps/:id/clubs',
+        component: stepClubs,
+      },
+      {
+        name: 'step.matches',
+        permission: 'matche_show',
+        path: '/profile/steps/:id/matches',
+        component: stepMatches,
+      },
+      {
+        name: 'league.steps',
+        permission: 'league_show',
+        path: '/profile/leagues/:id/steps',
+        component: LeagueSteps,
+      },
+      {
+        name: 'advertise.index',
+        permission: 'advertise_show',
+        path: '/profile/advertises',
+        component: AdvertiseList,
+      },
+      {
+        name: 'advertise.create',
+        permission: 'advertise_store',
+        path: '/profile/advertises/create',
+        component: AdvertiseCreate,
+      },
+      {
+        name: 'advertise.edit',
+        permission: 'advertise_update',
+        path: '/profile/advertises/:id',
+        component: AdvertiseCreate,
+      },
+      {
+        name: 'live.index',
+        permission: 'live_show',
+        path: '/profile/lives',
+        component: LiveList,
+      },
+      {
+        name: 'live.create',
+        permission: 'live_store',
+        path: '/profile/lives/create',
+        component: LiveCreate,
+      },
+      {
+        name: 'live.edit',
+        permission: 'live_update',
+        path: '/profile/lives/:id',
+        component: LiveCreate,
+      },
+      {
+        name: 'sport.index',
+        permission: 'sport_show',
+        path: '/profile/sports',
+        component: SportList,
+      },
+      {
+        name: 'sport.create',
+        permission: 'sport_store',
+        path: '/profile/sports/create',
+        component: SportCreate,
+      },
+      {
+        name: 'sport.edit',
+        permission: 'sport_update',
+        path: '/profile/sports/:id',
+        component: SportCreate,
+      },
+      {
+        name: 'country.index',
+        permission: 'country_show',
+        path: '/profile/countries',
+        component: CountryList,
+      },
+      {
+        name: 'country.create',
+        permission: 'country_store',
+        path: '/profile/countries/create',
+        component: CountryCreate,
+      },
+      {
+        name: 'country.edit',
+        permission: 'country_update',
+        path: '/profile/countries/:id',
+        component: CountryCreate,
+      },
+      {
+        name: 'status.index',
+        permission: 'status_show',
+        path: '/profile/status',
+        component: StatusList,
+      },
+      {
+        name: 'status.create',
+        permission: 'status_store',
+        path: '/profile/status/create',
+        component: PostCreate,
+      },
+      {
+        name: 'status.edit',
+        permission: 'status_update',
+        path: '/profile/status/:id',
+        component: PostCreate,
+      },
+      {
+        name: 'account.edit',
+        permission: 'account_update',
+        path: '/profile/account',
+        component: UserCreate,
+      },
+      {
+        name: 'user.password',
+        path: '/profile/users/change-password',
+        component: ChangePassword,
+      },
+      {
+        name: 'user.edit',
+        permission: 'user_update',
+        path: '/profile/users/edit/:id',
+        component: UserCreate,
+      },
+      {
+        name: 'user.index',
+        permission: 'user_show',
+        path: '/profile/users',
+        component: UserList,
       },
     ],
   },
@@ -89,10 +375,14 @@ router.beforeEach((to, from, next) => {
     next('/login');
   } else {
     if (authStore.isAuthenticated && ['login', 'register'].includes(to.name)) {
-      next('/profile');
+        next('/profile');
     } else {
       // Otherwise, allow access to the route
-      next();
+      if (!to?.meta?.permission?.length || authStore.permissions.includes(to?.meta?.permission)) {
+        next();
+      } else {
+        next('/profile');
+      }
     }
   }
 });
@@ -100,14 +390,10 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   const layout = to.meta.layout;
   if (layout === 'main') {
-    require('@/assets/site/fonts/vazir-ui/vazir.css');
-    require('@/assets/site/fonts/material-icons/material-icons.css');
     require('@/assets/site/css/splide.min.css');
     require('@/assets/site/css/styles.css');
 
-  } else if (layout === 'profile') {
-    require('@/assets/profile/fonts/vazir-ui/vazir.css');
-    require('@/assets/profile/fonts/material-icons/material-icons.css');
+  } else {
     require('@/assets/profile/css/custom.css');
     require('@/assets/profile/css/styles.css');
   }

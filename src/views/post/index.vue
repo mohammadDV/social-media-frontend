@@ -5,8 +5,15 @@
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
-
+  import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
+  import { useAuthStore } from '../../stores/auth';
+
+  const authStore = useAuthStore();
+  const hasShowPermission = ref(authStore.permissions.includes('post_show'));
+  const hasUpdatePermission = ref(authStore.permissions.includes('post_update'));
+  const hasDeletePermission = ref(authStore.permissions.includes('post_delete'));
+
     const { t } = useI18n();
   
     const dataTable = ref();
@@ -80,6 +87,20 @@
     })
     loading.value = false;
   };
+
+  const $toast = useToast();
+  const deletItem = (id: Number) => {
+    if(confirm('Are you sure you want to remove this item?')) {
+        useApi().deleteRequest(`/api/profile/posts/${id}`)
+        .then((response: any) => {
+            if (response.data.status) {
+
+                $toast.success(response.data.message);
+                loadFromServer();
+            }
+        })
+    }
+  };
   
   // initial load
   loadFromServer();
@@ -104,7 +125,7 @@
                         </li>
                     </ol>
                 </nav>
-                <div class="place-button">
+                <div v-if="hasShowPermission" class="place-button">
                     <router-link to="/profile/posts/create" :title="$t('site.Create new post')">
                         <button class="btn btn-primary">{{ $t('site.Create new post') }}</button>
                     </router-link>
@@ -150,8 +171,10 @@
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <a class="p-1 rounded btn-success m-1" :href="'/profile/posts/edit/' + item.id" ><span class="material-icons size-font-ahalf"> edit </span></a>
-                        <a class="p-1 rounded btn-danger m-1" :href="'/profile/posts/edit/' + item.id" ><span class="material-icons size-font-ahalf"> delete </span></a>
+                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/posts/' + item.id">
+                            <span class="material-icons size-font-ahalf"> edit </span>
+                        </router-link>
+                        <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
                 </template>
                 <template #item-image="item">
@@ -204,11 +227,11 @@
                 <button :class="{
                     'prev-page m-2 bg-vt rounded p-2 text-white': true,
                     'cursor-pointer': !isFirstPage,
-                    }" @click="prevPage" :disabled="isFirstPage">{{ $t('site.Next page') }}</button>
+                    }" @click="prevPage" :disabled="isFirstPage">{{ $t('site.Previous page') }}</button>
                 <button :class="{
                     'prev-page m-2 bg-vt rounded p-2 text-white': true,
                     'cursor-pointer': !isLastPage,
-                    }" @click="nextPage" :disabled="isLastPage">{{ $t('site.Previous page') }}</button>
+                    }" @click="nextPage" :disabled="isLastPage">{{ $t('site.Next page') }}</button>
                 </div>
             </div>
         </div>

@@ -6254,12 +6254,12 @@ textarea.form-control-lg {
 }
 
 body {
-  background: #f7f9fc;
+  /* background: #f7f9fc;
   background: linear-gradient(0deg, #f7f9fc 75%, #222b45 75%), linear-gradient(0deg, #f7f9fc 100%, #f7f9fc 0%);
   background-repeat: no-repeat, no-repeat;
   background-size: 100% 22rem, 100%;
   background-position: top center, left center;
-  min-height: 100vh;
+  min-height: 100vh; */
 }
 
 a {
@@ -6921,6 +6921,9 @@ html[dir=rtl] .news-item .material-icons {
 
 .ads-column {
   width: calc(130px + var(--bs-gutter-x));
+}
+.row .col-12.ads-column {
+  width: calc(130px + var(--bs-gutter-x)) !important;
 }
 
 .splide {
@@ -8119,6 +8122,10 @@ html[dir=rtl] .news-item .material-icons {
 
 .ratio-21x9 {
   --bs-aspect-ratio: calc(9 / 21 * 100%);
+}
+
+.ratio-21x3 {
+  --bs-aspect-ratio: calc(3 / 21 * 100%);
 }
 
 .fixed-top {
@@ -12765,4 +12772,12 @@ html[dir=rtl] .news-item .material-icons {
     position: absolute;
     left: 0;
     top: -2px;
+}
+
+.bg-vt-gradient {
+  background: linear-gradient(#2c3652, #191e2f);
+}
+
+.bg-vt {
+  background-color: var(--color-basic-800);
 }

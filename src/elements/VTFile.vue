@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label :for="identifier" class="block text-sm font-medium mb-3" v-if="label">
+        <label :for="identifier" class="p-1 block text-sm font-medium mb-1" v-if="label?.length > 0">
             {{ label }}<slot name="label"/>
         </label>
         <div class="relative rounded-md" style="direction: ltr;">
@@ -38,15 +38,11 @@
 </template>
 
 <script>
-// import IVBaseInput from "./IVBaseInput.vue";
-// import IVError from "./IVError.vue";
 
 import { useAuthStore } from '@/stores/auth.ts';
 import axios from "axios";
 export default {
     name: "VTFile",
-//   components: {IVError},
-    // extends: IVBaseInput,
     computed: {
         styles() {
             return {
@@ -73,6 +69,9 @@ export default {
         name: {
             type: String,
         },
+        label: {
+            type: String,
+        },
         button: {
             type: String,
             default: 'Choose file'
@@ -96,13 +95,6 @@ export default {
 
             // make sure the progress is set to 0
             this.progress = 0;
-
-            // if there is no upload url, return out
-            // if (!this.uploadUrl || !this.file()) {
-                // done, return out
-            //     return;
-            // }
-
             // start the upload
             this.$emit('on-upload-start');
             this.isUploading = true;
@@ -123,16 +115,11 @@ export default {
             // get the file
             let file = this.file();
 
-            // get the request data
-            // let requestData = this.requestData || {};
-
-            // create the form data object
-            // let formData = this.objectToFormData(requestData);
             let formData = new FormData();
             formData.append(this.name, file);
 
             // upload the file and return the file upload
-            return axios.post('/api/upload-file', formData, {
+            return axios.post('/api/upload-' + this.name, formData, {
                     headers: { 
                         Authorization: useAuthStore().token ? `Bearer ${useAuthStore().token}` : undefined,
                         'Content-Type': 'multipart/form-data' 
@@ -156,7 +143,7 @@ export default {
             return fileInputField.files[0];
         },
         uploadDone(event, url) {
-            console.log("Done!");
+
             // emit the upload end event
             this.$emit('getFileLink', url);
 

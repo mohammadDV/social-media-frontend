@@ -1,99 +1,86 @@
 <script setup>
 
-    
-//   import {useApi} from '@/utils/api.ts';
   import userImage from '@/components/plugins/UserImage.vue';
-import { onMounted, defineProps } from 'vue';
-  import { useAuthStore } from '@/stores/auth.ts';
+  import { onMounted, defineProps } from 'vue';
 
-defineProps({
-    followersCount: {
-        type: Number,
-        default: 0
-    },
-    followingCount: {
-        type: Number,
-        default: 0
-    },
-    followingsCount: {
-        type: Array,
-        default: null
-    },
-    followings: {
-        type: Array,
-        default: null
-    },
-});
-  const authStore = useAuthStore();
-//   const followersCount = ref(0);
-//   const followers = ref([]);
 
-  onMounted(() => {
-//     useApi().get('/api/follow-info')
-//         .then((response) => {
-//             followersCount.value = response.data.followersCount;
-//             followers.value = response.data.followers;
-//         })
-  });
+  defineProps({
+        followersCount: {
+            type: Number,
+            default: 0
+        },
+        followingsCount: {
+            type: Number,
+            default: 0
+        },
+        followers: {
+            type: Array,
+            default: null
+        },
+        followings: {
+            type: Array,
+            default: null
+        },
+        memeberId: {
+            type: Number,
+            default: 0
+        },
+        myClubs: {
+            type: Array,
+        },
+    });
+
+  
+    onMounted(() => {
+
+    });
 
 </script>
 
 <template>
     <div class="card list-card mb-3">
-        <div class="card-header">
+        <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Following') }}</span>
             </div>
-            <!-- <a
-            @isset($user)
-                href="{{ route('profile.followings',['user' => $user->id]) }}"
-                @else
-                href="{{ route('profile.followings') }}"
-            @endisset
-            title="{{ $t('site.Following') }}"> -->
+            <router-link class="user-link" :to="memeberId.length > 0 ? `/member/${memeberId}/followings` : '/profile/followings'">
                 <button type="button" class="btn btn-primary">
                     {{ $t('site.All') }} <span class="badge bg-secondary">{{ followingsCount }}</span>
                 </button>
-            <!-- </a> -->
+            </router-link>
         </div>
         <div class="card-body">
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in followings" :key="index" class="item">
-                    <div class="item-avatar">
-                        <userImage :item="item" />
-                    </div>
+                    <router-link :to="`/member/${item.id}`" :title="item.nickname">
+                        <div class="item-avatar">
+                            <userImage :item="item" />
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="card list-card mb-3">
-        <div class="card-header">
+        <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Followers') }}</span>
             </div>
-
-            <!-- <a
-            @isset($user)
-                href="{{ route('profile.followers',['user' => $user->id]) }}"
-                @else
-                href="{{ route('profile.followers') }}"
-            @endisset
-
-             title="{{ $t('site.Followers') }}"> -->
+            <router-link class="user-link" :to="memeberId.length > 0 ? `/member/${memeberId}/followers` : '/profile/followers'">
                 <button type="button" class="btn btn-primary">
-                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ followerCount }}</span>
+                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ followersCount }}</span>
                 </button>
-            <!--  </a> -->
+            </router-link>
         </div>
         <div class="card-body">
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in followers" :key="index" class="item">
-                    <div class="item-avatar">
-                        <!-- <a href="{{ route('profile.member',['user' => $user["id"]]) }}"> -->
+                    <router-link :to="`/member/${item.id}`" :title="item.nickname">
+                        <div class="item-avatar">
                             <userImage :item="item" />
-                        <!-- </a> -->
-                    </div>
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -101,26 +88,26 @@ defineProps({
 
 
     <div class="card list-card mb-3">
-        <div class="card-header">
+        <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Favorite clubs') }}</span>
             </div>
-            <!-- <a href="{{ route('myClubs') }}"> -->
+            <router-link v-if="memeberId.length == 0" class="user-link" to="/profile/clubs/favorite">
                 <button type="button" class="btn btn-primary">
-                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ authStore?.user?.clubs.length }}</span>
+                    {{ $t('site.All') }} <span class="badge bg-secondary">{{ myClubs.length }}</span>
                 </button>
-            <!-- </a> -->
+            </router-link>
         </div>
         <div class="card-body">
             <div class="card-itemlist is-horizon">
-                <div v-for="(item, index) in authStore?.user?.clubs" :key="index" class="item">
+                <div v-for="(item, index) in myClubs" :key="index" class="item">
                     <div class="item-avatar">
-                        <a href="#">
+                        <router-link class="user-link" to="/profile/clubs/favorite" :title="item.title">
                             <img
                                 :src="item.image"
                                 :alt="item.title"
                             />
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>

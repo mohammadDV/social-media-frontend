@@ -72,8 +72,10 @@
             <userImage :item="status?.user" />
         </div>
         <div class="tweet-info">
-            <div class="tweet-info-head">
-                <span class="tweet-user-name">{{ status?.user?.nickname }}</span>
+            <div class="flex tweet-info-head">
+                <span class="tweet-user-name">
+                    <router-link class="text-black text-decoration-none" :to="`/member/${status?.user?.id}`">{{ status?.user?.nickname }}</router-link>
+                </span>
                 <span class="tweet-date">{{ status?.created_at }}</span>
             </div>
             <div class="tweet-body">

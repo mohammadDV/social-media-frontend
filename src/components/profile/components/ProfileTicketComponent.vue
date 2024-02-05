@@ -1,13 +1,29 @@
 <script setup>
 
-  import { defineProps } from 'vue';
+  import { defineProps, onMounted, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
   import userImage from '@/components/plugins/UserImage.vue';
 
   const authStore = useAuthStore();
 
+  const menu = ref([]);
+
+  onMounted(() => {
+    authStore.menu.map((item) => {
+        
+        if(!item?.permission || authStore.permissions.includes(item.permission)){
+            menu.value.push(item);
+        }
+    }) 
+    
+  });
+  
   defineProps({
     followersCount: {
+        type: Number,
+        default: 0
+    },
+    followingsCount: {
         type: Number,
         default: 0
     }
@@ -29,7 +45,7 @@
                     :style="`background-image: url(/profile/images/cover.png)`"
                     ></div>
                 </template>
-                <div class="user-avatar">
+                <div class="user-avatar-profile">
                     <userImage :item="authStore?.user" />
                 </div>
                 <div class="user-name">{{ authStore?.user?.nickname }}</div>
@@ -38,10 +54,14 @@
                 </div>
             </div>
             <div class="user-stats">
-                <a class="user-stat" href="#">
-                    <div class="user-stat-title">دنبال کنندگان</div>
+                <router-link class="user-stat" to='/profile/followings'>
+                    <div class="user-stat-title">{{ $t('site.Following') }}</div>
+                    <div class="user-stat-amount">{{ followingsCount }}</div>
+                </router-link>
+                <router-link class="user-stat" to='/profile/followers'>
+                    <div class="user-stat-title">{{ $t('site.Followers') }}</div>
                     <div class="user-stat-amount">{{ followersCount }}</div>
-                </a>
+                </router-link>
                 <a class="user-stat" href="#">
                     <div class="user-stat-title">بازدید از صفحه ی شما</div>
                     <div class="user-stat-amount">19</div>
@@ -52,108 +72,12 @@
                 </a>
             </div>
             <div class="user-links">
-                <a class="user-link" href="/profile.post.create">
+                <router-link v-for="(item, index) in menu" :key="index" class="user-link" :to="item.route">
                     <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
+                    <span class="material-icons"> {{ item.icon }} </span>
                     </span>
-                    <span class="user-link-title"> {{ $t('site.Create new post') }} </span>
-                </a>
-                <a class="user-link" href="profile.post.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Post management') }} </span>
-                </a>
-                <a class="user-link" href="profile.status.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new status') }} </span>
-                </a>
-                <a class="user-link" href="profile.status.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Status management') }} </span>
-                </a>
-                <a class="user-link" href="profile.user.edit',['user' => auth()->user()->id])">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> manage_accounts </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Edit profile') }} </span>
-                </a>
-                <a class="user-link" href="profile.user.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> manage_accounts </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.User management') }} </span>
-                </a>
-                <a class="user-link" href="profile.user.password">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> manage_accounts </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Change password') }} </span>
-                </a>
-                <a class="user-link" href="clubs.favorite">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Choose your favorite club') }} </span>
-                </a>
-                <a class="user-link" href="profile.league.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new league') }} </span>
-                </a>
-                <a class="user-link" href="profile.league.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.League management') }} </span>
-                </a>
-                <a class="user-link" href="profile.club.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new club') }} </span>
-                </a>
-                <a class="user-link" href="profile.club.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Club management') }} </span>
-                </a>
-                <a class="user-link" href="profile.live.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Live management') }} </span>
-                </a>
-                <a class="user-link" href="profile.page.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new page') }} </span>
-                </a>
-                <a class="user-link" href="profile.page.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Page management') }} </span>
-                </a>
-                <a class="user-link" href="profile.advertise.create">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> post_add </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Create new advertise') }} </span>
-                </a>
-                <a class="user-link" href="profile.advertise.index">
-                    <span class="user-link-icon">
-                    <span class="material-icons"> article </span>
-                    </span>
-                    <span class="user-link-title"> {{ $t('site.Advertise management') }} </span>
-                </a>
+                    <span class="user-link-title"> {{ $t(item.name) }} </span>
+                </router-link>
                 <a class="user-link" href="#">
                     <span class="user-link-icon">
                     <span class="material-icons"> block </span>

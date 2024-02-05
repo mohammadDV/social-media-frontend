@@ -25,7 +25,6 @@
             leagueId.value = response.data[1].leagues[0].id;
             matches.value = response.data[1].matches;
             clubs.value = response.data[1].clubs;
-            console.log(matches.value);
         })
   });
 
@@ -114,7 +113,7 @@
                                         <a target="_blank">{{ match.away }}</a>
                                     </div>
                                     <div class="status">
-                                        <i class="finished"></i>{{ match.status }}
+                                        <i class="finished"></i>{{ match.status_name }}
                                     </div>
                                 </div>
                             </div>

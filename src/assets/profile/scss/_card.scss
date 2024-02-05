@@ -36,7 +36,7 @@
 
   // Due to specificity of the above selector (`.card > .list-group`), we must
   // use a child selector here to prevent double borders.
-  > .card-header + .list-group,
+  > .card-header-profile + .list-group,
   > .list-group + .card-footer {
     border-top: 0;
   }
@@ -77,7 +77,7 @@
 // Optional textual caps
 //
 
-.card-header {
+.card-header-profile {
   padding: $card-cap-padding-y $card-cap-padding-x;
   margin-bottom: 0; // Removes the default margin-bottom of <hN>
   color: $card-cap-color;
@@ -184,7 +184,7 @@
           @include border-end-radius(0);
 
           .card-img-top,
-          .card-header {
+          .card-header-profile {
             // stylelint-disable-next-line property-disallowed-list
             border-top-right-radius: 0;
           }
@@ -199,7 +199,7 @@
           @include border-start-radius(0);
 
           .card-img-top,
-          .card-header {
+          .card-header-profile {
             // stylelint-disable-next-line property-disallowed-list
             border-top-left-radius: 0;
           }

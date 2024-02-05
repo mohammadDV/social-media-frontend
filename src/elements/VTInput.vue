@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label :data-intercom-target="labelDataIntercomTarget" :for="identifier" class="block text-sm font-medium mb-3" v-if="label">
+        <label :data-intercom-target="labelDataIntercomTarget" :for="identifier" class="block text-sm font-medium mb-2" v-if="label">
             {{ label }}
             <slot name="label"/>
         </label>
@@ -56,6 +56,7 @@
 
 <script setup>
 
+import {useApi} from '@/utils/api.ts';
 import { defineProps, computed, defineEmits, ref } from 'vue';
 
 const emit = defineEmits(['update:modelValue', 'change', 'clickBefore', 'clickAfter', 'input'])
@@ -64,6 +65,10 @@ const props = defineProps({
     identifier: {
       type: String,
       default: 'identifier'
+    },
+    requestName: {
+      type: String,
+      default: ''
     },
     classNames: {
         type: String,
@@ -78,6 +83,10 @@ const props = defineProps({
         default: 'text'
     },
     isPrice: {
+        type: Boolean,
+        default: false
+    },
+    isVt: {
         type: Boolean,
         default: false
     },
@@ -121,30 +130,48 @@ const hasError = ref(false);
 
 
 const changeEvent = function (event) {
+
+    validate(event.target.value);
     emit('update:modelValue', event.target.value);
     emit('change', event);
 }
 
-// const hasBeforeSlot = computed(() => {
-//             return !!slots?.before && props.showSlot
-//         })
+const validate = (value) => {
+            // if the request name is not set, return out
+        if (!props.requestName) {
+            return;
+        }
 
-// const hasDefaultSlot = computed(() => {
-//     return !!slots?.default && props.showSlot
-// })
+        let data = {};
+        data['field'] = props.name;
+        data[props.name] = value;
+
+        // validate the field
+        useApi().post(`/api/validation/${props.requestName}`, data)
+            .then(response => {
+                if (response.data.status) {
+                    hasError.value = true;
+                    errorMessage.value = response.data.message;
+                } else {
+                    hasError.value = false;
+                    errorMessage.value = '';
+                }
+            }).catch(() => {
+                hasError.value = false;
+                errorMessage.value = '';
+            });
+    }
 
 const styles = computed(() => {
     return {
-        'block w-full focus:outline-none sm:text-sm py-3.5 p-3': true,
+        'form-control is-vt': props.isVt,
+        'block w-full focus:outline-none sm:text-sm py-3.5': true,
         'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500 pr-10': hasError.value,
         'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200': !hasError.value,
         'pl-7': props.currencySymbol,
         'cursor-not-allowed bg-gray-50': props.disabled && props.inputType !== 'increase',
-        // 'rounded-md': !hasBeforeSlot.value &&  !hasDefaultSlot.value,
-        // 'rounded-r-md': hasBeforeSlot.value && !hasDefaultSlot.value,
-        // 'rounded-l-md': !hasBeforeSlot.value && hasDefaultSlot.value,
         'text-center': props.center,
     };
-})
+});
 
 </script>

@@ -22,6 +22,7 @@ import { useAuthStore } from "@/stores/auth";
 export function useApi() {
 
 
+    const authStore = useAuthStore();
 
     const api = axios.create({
         // baseURL: 'http://localhost:8080/',
@@ -32,20 +33,20 @@ export function useApi() {
 
 
     const errorHandler = (error: any) => {
+        console.log('cos nane');
         let message = null;
         if (!error.response) {
             message = "اتصال شما به اینترنت قطع شده است";
         }
 
-        if (error.response?.status === 503) {
-            // navigateTo("/maintenance");
+        if (error.response?.status === 403) {
+            authStore.logout();
         }
         if (error.response?.status === 401) {
             // if (endpoint.includes("login"))
             //     message = "شماره همراه و رمز عبور مطابقت ندارند";
             // else {
                 message = "لطفا مجددا وارد شوید!";
-                console.log(message);
                 // resetAuth();
                 // setTimeout(() => {
                 //     navigateTo("/admin/auth/login");
@@ -77,32 +78,25 @@ export function useApi() {
     }
 
     const get = async (url: any, queryParams = {}) => {
-        return await api.get(url, { params: queryParams });
-        // .then((response) => {
-        //     return response;
-        // }) 
-        // .catch((err) => {
-        //     errorHandler(err)
-        // });
+        return await api.get(url, { params: queryParams })
+        .catch((err) => {
+            errorHandler(err)
+        });
     }
 
     const post = async (url: any, queryParams = {}) => {
-        console.log(queryParams);
-        return await api.post(url, queryParams);
+        return await api.post(url, queryParams)
+        .catch((err) => {
+            errorHandler(err)
+        });
     }
 
     const deleteRequest = async (url: any, queryParams = {}) => {
-        await api.delete(url, { params: queryParams })
-        .catch((err) => {
-            errorHandler(err)
-        });
+        return await api.delete(url, { params: queryParams });
     }
 
     const patch = async (url: any, queryParams = {}) => {
-        await api.patch(url, { params: queryParams })
-        .catch((err) => {
-            errorHandler(err)
-        });
+        return await api.patch(url, queryParams);
     }
 
 

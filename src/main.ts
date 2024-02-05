@@ -1,7 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/index.css';
+import './assets/site/fonts/vazir-ui/vazir.css';
+import './assets/site/fonts/material-icons/material-icons.css';
 import router from './router';
+
 
 // Data table
 import Vue3EasyDataTable from 'vue3-easy-data-table';
@@ -19,11 +22,21 @@ import {createPinia} from "pinia";
 import {createPinia} from "pinia";
 import {createPersistedState} from 'pinia-plugin-persistedstate';
 
+// editor
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
 const pinia = createPinia();
 pinia.use(createPersistedState({
     storage: localStorage,
     auto: true,
 }));
+
+const globalOptions = {
+    readOnly: false,
+    theme: 'snow'
+  }
+  QuillEditor.props.globalOptions.default = () => globalOptions
 
 
 // import { createStore } from 'vuex'
@@ -36,5 +49,6 @@ createApp(App)
     .use(i18n)
     .use(pinia)
     .use(router)
+    .component('QuillEditor', QuillEditor)
     .component('EasyDataTable', Vue3EasyDataTable)
     .mount('#app')

@@ -38,13 +38,13 @@
                                       <!--  -->
 
                                     <div class="post--cover ratio ratio-16x9"
-                                    :style="`background-image: url('${post?.image?.indexArray['large']}')`">
+                                    :style="`background-image: url('${post?.image}')`">
                                         <div class="post--header--overly"></div>
                                         <div class="post--head-info">
                                             <div class="extend-info">
                                                 <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
                                                 <span>
-                                                    <span class="post-date">{{ $t('site.Time') }}: {{ formattedDate }}</span>
+                                                    <span class="post-date">{{ $t('site.Time') }}: {{ timestamp }}</span>
                                                     <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
                                                 </span>
                                             </div>
@@ -81,7 +81,7 @@
                                     <ul class="news-list" v-if="latest?.length > 0">
                                         <template  v-for="(post, index) in latest" :key="index">
                                             <li v-if="index < 5" class="news-item">
-                                                <router-link target="_blank" :to="`/news/${post.id}/${post.slug}`" :title="post.title" class="news">
+                                                <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title" class="news">
                                                     <span class="material-icons size-font text-primary">
                                                     double_arrow
                                                     </span>
@@ -98,11 +98,13 @@
                     <comment-form-component @updateComments="updateComments"/>
                     <comment-component :comments="post?.comments" @updateComments="updateComments"/>
                 </div>
-                <div class="col-12 col-lg-3 flex-grow-1 item-column">
+                <div class="col-12 col-lg-3 flex-grow-1">
                     
-                    <full-slider-component :slides="specialPosts"></full-slider-component>
+                    <div class="mb-75">
+                        <full-slider-component :slides="specialPosts"></full-slider-component>
+                    </div>
 
-                    <div class="card vt-news-card height-fluid">
+                    <div class="card vt-news-card height-fluid mb-75">
                         <div class="card-header">
                             <tabs-component class="nav">
                                 <tab-component class="nav-item cursor-pointer" :is-active="tabItem == 'latest'"
@@ -125,7 +127,7 @@
                                     <div v-if="tabItem == 'latest'" class="tab-pane fade show active"  id="latest"  role="tabpanel"  aria-labelledby="latest-tab">
                                         <ul v-if="latest?.length > 0" class="news-list">
                                             <li v-for="(post, index) in latest" :key="index" class="news-item">
-                                                <router-link :to="`/news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                     <span class="material-icons size-font text-primary">
                                                     double_arrow
                                                     </span>
@@ -137,7 +139,7 @@
                                     <div v-if="tabItem == 'challenged'" class="tab-pane fade show active"  id="conv"  role="tabpanel"  aria-labelledby="conv-tab">
                                         <ul v-if="challenged?.length > 0" class="news-list">
                                             <li v-for="(post, index) in challenged" :key="index" class="news-item">
-                                                <router-link :to="`/news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                     <span class="material-icons size-font text-primary">
                                                     double_arrow
                                                     </span>
@@ -149,7 +151,7 @@
                                     <div v-if="tabItem == 'popular'" class="tab-pane fade  show active" id="hot" role="tabpanel" aria-labelledby="hot-tab">
                                         <ul v-if="popular?.length > 0" class="news-list">
                                             <li v-for="(post, index) in popular" :key="index" class="news-item">
-                                                <router-link :to="`/news/${post.id}/${post.slug}`" target="_blank" :title="post.title">
+                                                <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                     <span class="material-icons size-font text-primary">
                                                     double_arrow
                                                     </span>
@@ -173,7 +175,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, computed } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
 
   import { useRoute } from 'vue-router';
   import TabsComponent from '@/components/plugins/tabs/TabsComponent';
@@ -185,6 +187,7 @@
   import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
  
   const advertises = ref([]);
+  const timestamp = ref('');
   const posts = ref([]);
   const latest = ref([]);
   const challenged = ref([]);
@@ -197,19 +200,25 @@
 
   const route = useRoute();
 
-  const formattedDate = computed(() => {
-        const date = new Date(post.value.created_at);
+  const formattedDate = (post) => {
+        const date = new Date(post.created_at);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
 
-    return `${year}/${month}/${day}`;
-})
+        timestamp.value = `${year}/${month}/${day}`;
+}
 
   onMounted(() => {
     getPost()
     getAdvertises();
     getPosts();
+  });
+
+  watch(() => route.params.id, () => {
+    if (route.params.id) {
+        getPost();
+    } 
   });
 
 
@@ -225,10 +234,14 @@
   }
 
   const getPost = () => {
-    useApi().get(`/api/post/${route.params.id}`)
-        .then((response) => {
-            post.value = response.data;
-        });
+    
+    if (route.params.id != undefined) {
+        useApi().get(`/api/post/${route.params.id}`)
+            .then((response) => {
+                post.value = response.data;
+                formattedDate(response.data)
+            });
+    }
   }
 
   const getPosts = () => {
@@ -245,7 +258,7 @@
 
   const changeTab = (id) => {
     tabItem.value = id;
-  }
+  };
 
 
 </script>
