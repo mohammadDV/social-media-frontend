@@ -19,7 +19,6 @@ import i18n from './i18n';
 
 //  Store
 import {createPinia} from "pinia";
-import {createPinia} from "pinia";
 import {createPersistedState} from 'pinia-plugin-persistedstate';
 
 // editor

@@ -1,6 +1,6 @@
 <template>
    <button type="button"
-            :class="`flex relative justify-center items-center border text-sm font-normal rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-iv-500 ${sizeCss} ${borderColor} ${textColor} ${backgroundColor} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`">
+            :class="`flex relative justify-center items-center border text-sm font-normal rounded-md hover:bg-sky-600 ${sizeCss} ${borderColor} ${textColor} ${backgroundColor} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`">
         <span v-show="currentIcon"
               class="mr-2 contents items-center text-xs">
           <span :class="`material-icons text-primary w-[30px] ${iconColor} ${loading ? 'animate-spin' : ''}`"> {{ currentIcon }} </span>
@@ -52,7 +52,7 @@ const sizeCss = computed(() => {
     else if (props.size === 'small') {
     return 'px-6 py-1 text-sm';
     }
-    return 'px-4 py-2';
+    return 'px-4 py-2 text-xl';
 });
 
 const currentIcon = computed(() => {
@@ -68,6 +68,9 @@ const backgroundColor = computed(() => {
         return 'btn-primary';
     case 'outline' :
         return 'bg-transparent border border-white hover:border-iv-400';
+    case 'dark' :
+        return 'bg-sky-800 hover:bg-sky-600'
+
     default:
         return 'bg-white hover:bg-gray-50';
     }
@@ -79,6 +82,8 @@ const iconColor = computed(() => {
         return 'text-white';
     case 'iv' :
         return 'text-iv-500';
+    case 'dark' :
+        return 'text-white';
     default:
         return 'text-iv-gray-400';
     }
@@ -92,6 +97,8 @@ const borderColor = computed(() => {
         return 'border-iv-500';
     case 'white' :
         return 'border-white';
+    case 'dark' :
+        return 'border-0';
     default:
         return 'border-iv-gray-200';
     }
@@ -107,6 +114,8 @@ const textColor = computed(() => {
         return 'text-white';
     case 'white' :
         return 'text-iv-500';
+    case 'dark' :
+        return 'text-white';
     default:
         return 'text-gray-700';
     }
