@@ -3,21 +3,41 @@
     
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref } from 'vue';
-  import { useAuthStore } from '@/stores/auth.ts';
+//   import { useAuthStore } from '@/stores/auth.ts';
 //   import userImage from '@/components/plugins/UserImage.vue';
-
-  const authStore = useAuthStore();
+  import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
+  const options = ref( [
+    {
+        name:'one',
+        value: 1,
+    },
+    {
+        name:'two',
+        value: 2,
+    },
+    {
+        name:'three',
+        value: 3,
+    },
+    {
+        name:'four',
+        value: 4 ,
+    },
+  ]
+  );
+  const parentSelectedOption = ref(null);
+//   const authStore = useAuthStore();
   const categories = ref([]);
-  const dropdown = ref(false);
+//   const dropdown = ref(false);
 
 
-  const toggleDropdown = () => {
-    dropdown.value = !dropdown.value
-  }
+//   const toggleDropdown = () => {
+//     dropdown.value = !dropdown.value
+//   }
 
-  const logout = () => {
-    authStore.logout();
-  };
+//   const logout = () => {
+//     authStore.logout();
+//   };
 
   onMounted(() => {
     useApi().get('/api/active-categories')
@@ -31,11 +51,14 @@
 <template>
     <div class="relative w-full flex h-50 bg-vt-gradient mb-[150px] pb-5">
         <div class="flex-start">
-            <div class="relative cursor-pointer" v-if="authStore.isAuthenticated" @click="toggleDropdown">
+            <Dropdown
+                :options="options"
+                v-model="parentSelectedOption"/>
+            <!-- <div class="relative cursor-pointer" v-if="authStore.isAuthenticated" @click="toggleDropdown">
                 <div class="rounded-lg mx-3 mt-[5px] px-3 py-2 flex gap-2 align-items-center cursor-pointer border">
-                    <!-- <span class="">
+                    <span class="">
                         <userImage addclass="w-[35px] h-[35px] rounded-full" :item="authStore?.user" />
-                    </span> -->
+                    </span>
                     <span class="material-icons text-accent"> person </span>
                     <span class="text-black text-white">{{ authStore?.user?.nickname }}</span>
                 </div>
@@ -71,7 +94,7 @@
                         </button>
                     </router-link>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="flex-grow text-left">
             <div class="flex flex-lg-row-reverse gap-3 p-3">
@@ -91,7 +114,8 @@
         </div>
 
         <header class="absolute w-full mb-4 top-10 p-3">
-                
+         
+           
 
                 <!-- <nav class="preheader-navbar navbar navbar-expand navbar-dark">
                     <div class="row preheader-navbar-row">
@@ -188,6 +212,7 @@
                     </div>
                 </nav> -->
                 <section class="header">
+                   
                     <section class="header-main">
                         <div class="header-main-actions">
                             <button class="btn vt-btn-white">سفارش تبلیغات</button>
@@ -208,6 +233,9 @@
                                 <img src="/site/images/logo.png" alt="site's logo" />
                             </a>
                         </div>
+
+
+                        
                     </section>
                     <nav class="subheader-navbar navbar navbar-expand-lg navbar-dark bg-vt-gradient">
                         <div class="collapse navbar-collapse" id="navbarNav">
@@ -228,8 +256,10 @@
                                 </li>
                             </ul>
                         </div>
+                        
                     </nav>
                 </section>
+                
             </header>
     </div>
    <div class="container-xxl">
