@@ -3,6 +3,10 @@ import App from './App.vue'
 import './assets/index.css';
 import './assets/site/fonts/vazir-ui/vazir.css';
 import './assets/site/fonts/material-icons/material-icons.css';
+import './assets/site/css/splide.min.css';
+import './assets/site/css/styles.css';
+import './assets/profile/css/custom.css';
+import './assets/profile/css/styles.css';
 import router from './router';
 
 

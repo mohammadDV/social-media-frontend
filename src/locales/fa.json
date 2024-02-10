@@ -129,6 +129,8 @@
     "Date"                          : "تاریخ",
     "Active"                        : "فعال",
     "Inactive"                      : "غیرفعال",
+    "active"                        : "فعال",
+    "closed"                        : "بسته شده",
     "Image"                         : "تصویر",
     "Comments count"                : "تعداد کامنت ها",
     "Views count"                   : "بازدید",
@@ -195,6 +197,10 @@
     "The league has been deleted"     : "لیگ موردنظر با موفقیت حذف شد.",
     "Create new status"             : "ایجاد استتوس جدید",
     "Status management"             : "مدیریت استتوس ها",
+    "Create new ticket"             : "ایجاد تیکت جدید",
+    "Ticket management"             : "مدیریت تیکت ها",
+    "Create new ticket subject"             : "ایجاد موضوع تیکت جدید",
+    "Ticket subjects management"             : "مدیریت موضوع تیکت ها",
     "New status has been stored"      : "استتوس جدید با موفقیت ثبت شد.",
     "The status has been updated"     : "استتوس موردنظر با موفقیت ویرایش شد.",
     "The status has been deleted"     : "استتوس موردنظر با موفقیت حذف شد.",
@@ -219,6 +225,8 @@
     "Club"          : "باشگاه",
     "Games count"          : "تعداد بازی",
     "Points"          : "امتیاز",
+    "Subject ticket"          : "موضوع تیکت",
+    "Ticket content"          : "متن تیکت",
     "You have already selected your favorite clubs. Please remove previous selections to replace it." : "شما در حال حاضر باشگاه های موردعلاقه خود را انتخاب کرده اید. لطفا برای جایگزین کردن آن انتخاب های قبلی را حذف کنید."
     }
 }

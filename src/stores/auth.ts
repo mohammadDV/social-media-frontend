@@ -25,7 +25,7 @@ interface State {
 }
 
 export const useAuthStore = defineStore('auth',{
-    persist: true,
+    // persist: true,
     state: () :State => ({
       token: '',
       isAuthenticated: false,
@@ -48,6 +48,18 @@ export const useAuthStore = defineStore('auth',{
           icon: 'article',
           name: 'site.Edit profile',
           matches: ['account.edit'],
+        },{
+          route: '/profile/tickets',
+          icon: 'article',
+          name: 'site.Ticket management',
+          matches: ['ticket.index'],
+          permission: 'ticket_show',
+        },{
+          route: '/profile/subjects',
+          icon: 'article',
+          name: 'site.Ticket subjects management',
+          matches: ['subject.index'],
+          permission: 'subject_show',
         },{
           route: '/profile/users',
           icon: 'article',

@@ -22,6 +22,10 @@ import PageList from '@/views/page/index.vue';
 import PageCreate from '@/views/page/create.vue';
 import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
+import TicketList from '@/views/ticket/index.vue';
+import TicketCreate from '@/views/ticket/create.vue';
+import SubjectList from '@/views/subject/index.vue';
+import SubjectCreate from '@/views/subject/create.vue';
 import ClubFavorite from '@/views/club/favorite.vue';
 import Followings from '@/views/follow/fallowings.vue';
 import Followers from '@/views/follow/followers.vue';
@@ -305,6 +309,42 @@ const routes = [
         component: LiveCreate,
       },
       {
+        name: 'subject.index',
+        permission: 'ticket_show',
+        path: '/profile/subjects',
+        component: SubjectList,
+      },
+      {
+        name: 'subject.create',
+        permission: 'subject_store',
+        path: '/profile/subjects/create',
+        component: SubjectCreate,
+      },
+      {
+        name: 'subject.edit',
+        permission: 'subject_update',
+        path: '/profile/subjects/:id',
+        component: SubjectCreate,
+      },
+      {
+        name: 'ticket.index',
+        permission: 'ticket_show',
+        path: '/profile/tickets',
+        component: TicketList,
+      },
+      {
+        name: 'ticket.create',
+        permission: 'ticket_store',
+        path: '/profile/tickets/create',
+        component: TicketCreate,
+      },
+      {
+        name: 'ticket.show',
+        permission: 'ticket_show',
+        path: '/profile/tickets/:id',
+        component: TicketCreate,
+      },
+      {
         name: 'sport.index',
         permission: 'sport_show',
         path: '/profile/sports',
@@ -411,16 +451,16 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.afterEach((to) => {
-  const layout = to.meta.layout;
-  if (layout === 'main') {
-    require('@/assets/site/css/splide.min.css');
-    require('@/assets/site/css/styles.css');
+// router.afterEach((to) => {
+//   const layout = to.meta.layout;
+//   if (layout === 'main') {
+//     require('@/assets/site/css/splide.min.css');
+//     require('@/assets/site/css/styles.css');
 
-  } else {
-    require('@/assets/profile/css/custom.css');
-    require('@/assets/profile/css/styles.css');
-  }
-});
+//   } else {
+//     require('@/assets/profile/css/custom.css');
+//     require('@/assets/profile/css/styles.css');
+//   }
+// });
 
 export default router;
