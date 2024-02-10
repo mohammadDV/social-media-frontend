@@ -43,11 +43,11 @@ const activeIndex = ref(0);
 const currentDate = ref(new Date);
 
 const nextSlide = () => {
-    activeIndex.value = (activeIndex.value + 1) % props.slides.length;
+    activeIndex.value = (activeIndex.value + 1) % props?.slides?.length;
 };
 
 const prevSlide = () => {
-    activeIndex.value = (activeIndex.value - 1 + props.slides.length) % props.slides.length;
+    activeIndex.value = (activeIndex.value - 1 + props?.slides?.length) % props?.slides?.length;
 };
 
 let autoSlideInterval;

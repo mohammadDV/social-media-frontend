@@ -110,6 +110,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    blur: {
+        type: Boolean,
+        default: false,
+    },
     min: {
         type: Number,
     },
@@ -155,7 +159,7 @@ const validate = (value) => {
                 } else {
                     hasError.value = false;
                     errorMessage.value = '';
-                }
+                }3
             }).catch(() => {
                 hasError.value = false;
                 errorMessage.value = '';
@@ -165,12 +169,13 @@ const validate = (value) => {
 const styles = computed(() => {
     return {
         'form-control is-vt': props.isVt,
-        'block w-full focus:outline-none sm:text-sm py-3.5': true,
+        'block w-full focus:outline-none sm:text-sm py-3.5': !props.blur,
         'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500 pr-10': hasError.value,
-        'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200': !hasError.value,
+        'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-100': !hasError.value,
         'pl-7': props.currencySymbol,
         'cursor-not-allowed bg-gray-50': props.disabled && props.inputType !== 'increase',
         'text-center': props.center,
+        'py-2 px-3 w-full text-white border-b border-stone-50 bg-transparent text-l placeholder-white' : props.blur
     };
 });
 

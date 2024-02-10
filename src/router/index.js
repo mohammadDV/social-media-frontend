@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 // Import layouts
 
 import MainLayout from '@/layouts/MainLayout.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
 import ProfileLayout from '@/layouts/ProfileLayout.vue';
 import MemberLayout from '@/layouts/MemberLayout.vue';
 
@@ -42,12 +43,35 @@ import StatusList from '@/views/status/index.vue';
 import UserCreate from '@/views/user/create.vue';
 import ChangePassword from '@/views/user/password.vue';
 import UserList from '@/views/user/index.vue';
-import Login from '@/views/Login.vue';
-import Register from '@/views/Register.vue';
+// import Login from '@/views/Login.vue';
+import Login from '@/views/Auth/Login.vue';
+import Register from '@/views/Auth/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
 
 
 const routes = [
+  {
+    path: '/auth',
+    meta: { 
+      layout: 'auth',
+      requiresAuth: false,
+     },
+    component: AuthLayout,
+    children: [
+      
+      {
+        name: 'login',
+        path: '/login',
+        component: Login,
+      },
+      {
+        name: 'register',
+        path: '/register',
+        component: Register,
+      },
+      
+    ],
+  },
   {
     path: '/',
     meta: { 
@@ -61,16 +85,16 @@ const routes = [
         path: '',
         component: Home,
       },
-      {
-        name: 'login',
-        path: '/login',
-        component: Login,
-      },
-      {
-        name: 'register',
-        path: '/register',
-        component: Register,
-      },
+      // {
+      //   name: 'login',
+      //   path: '/login',
+      //   component: Login,
+      // },
+      // {
+      //   name: 'register',
+      //   path: '/register',
+      //   component: Register,
+      // },
       {
         name: 'news',
         path: '/news/:id/:slug',

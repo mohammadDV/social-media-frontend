@@ -3,15 +3,18 @@
     margin: 0.2px;
     /*padding: 0.3rem 0.5rem !important;*/
 }
+
 .place-button {
     position: absolute;
     left: 10px;
     top: 10px;
 }
+
 .curve-input {
     border-radius: 99rem;
     height: 3rem;
 }
+
 .print-error-msg-popup {
     max-width: 300px;
     position: fixed;
@@ -20,9 +23,11 @@
     left: 0;
     right: 0;
 }
+
 .block-firstly {
     display: none;
 }
+
 .card-body.is-listItem .item-avatar {
     width: 100%;
     display: block;
@@ -33,6 +38,7 @@
     height: 140px;
     margin: auto;
 }
+
 .tweet-card .tweet-comments {
     overflow: scroll;
     max-height: 500px;
@@ -42,63 +48,77 @@
 .ratio-21x9 {
     --bs-aspect-ratio: calc(16 / 70 * 100%);
 }
+
 .ratio-21x3 {
     --bs-aspect-ratio: calc(3 / 21 * 100%);
-  }
+}
+
 .card.vt-news-card.archive-card .card-body .card-body-inner {
     max-height: 100%;
     padding: 0;
     padding-bottom: 0.5em;
     overflow: visible;
 }
+
 .card.vt-news-card .news-item-row {
     width: 100%;
     margin: 0;
 }
+
 .card.vt-news-card.archive-card .news-row-item {
     padding: 0.5em;
     border-radius: 0.75em;
     border: 1px solid transparent;
     transition: all 0.2s ease-out;
 }
+
 .card.vt-news-card .news-item-row .news-row-item {
     position: relative;
 }
+
 .card.vt-news-card .news-item-row .row {
     flex-wrap: nowrap;
 }
+
 .card.vt-news-card.archive-card .news-row-item .news-row-item-thumb {
     opacity: 1;
     transition: all 0.2s ease-out;
 }
+
 .ratio::before {
     display: block;
     padding-top: var(--bs-aspect-ratio);
     content: "";
 }
+
 .card.vt-news-card .news-item-row .news-row-item-link {
     text-decoration: none;
 }
+
 .card.vt-news-card .news-item-row .news-row-item-thumb {
     border-radius: 0.5rem;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
+
 .card.vt-news-card.archive-card .news-row-item:hover {
     background: var(--color-basic-200);
     border-color: var(--color-basic-400);
 }
+
 .btn.vt-btn-white {
     color: var(--text-body);
     background-color: var(--color-basic-100);
     border-color: var(--color-basic-400);
 }
+
 .lazyload-button {
     width: 100%;
     height: 3rem;
     z-index: 1;
 }
+
 .lazyload-loader {
     position: relative;
     width: 100%;
@@ -119,14 +139,15 @@
 #list {
     width: 100%;
     margin: 0 auto;
-  }
-  #main-list {
-   overflow-y: auto;
+}
+
+#main-list {
+    overflow-y: auto;
 
     margin: 0 auto;
-  }
+}
 
-  .loading-spinner {
+.loading-spinner {
     -webkit-animation-duration: 0.75s;
     -moz-animation-duration: 0.75s;
     animation-duration: 0.75s;
@@ -145,16 +166,16 @@
     border-right-color: transparent;
     border-radius: 50%;
     display: inline-block;
-  }
+}
 
 
 
-  .loading-spinner {
+.loading-spinner {
     text-align: center;
     margin: 80% auto 0 auto;
     display: none;
     background: red;
-  }
+}
 
 .user-exes .btn {
     border-radius: 0.5rem;
@@ -162,30 +183,37 @@
     border-color: var(--color-basic-400);
     background-color: var(--color-basic-200);
 }
+
 .user-exes .btn:hover {
     color: var(--color-basic-100);
     border-color: var(--text-primary);
     background-color: var(--text-primary);
 }
+
 .align-baseline-force {
     align-items: baseline !important;
 }
+
 .search-list {
     max-height: 300px;
     overflow: auto;
 }
+
 .select2-container .select2-search--inline .select2-search__field {
     font-family: var(--bs-font-sans-serif) !important;
 }
+
 .card.vt-news-card.breadcrumb-card .card-body .breadcrumb {
     margin: 0;
 }
-.breadcrumb-item + .breadcrumb-item::before {
+
+.breadcrumb-item+.breadcrumb-item::before {
     float: left;
     padding-right: 0.5rem;
     color: #343642;
     content: "";
 }
+
 .breadcrumb-item:not(:last-child)::before {
     float: left;
     padding-right: 0.5rem;
@@ -193,6 +221,7 @@
     color: #343642;
     content: var(--bs-breadcrumb-divider, "/");
 }
+
 .form-control-select {
     width: 100%;
     background-color: var(--color-basic-200);
@@ -200,19 +229,100 @@
     padding: 5px;
     border-radius: 0.25rem;
 }
+
 .bg-vt {
     background-color: var(--color-basic-700);
 }
+
 .customize-button.active {
     background-color: var(--color-basic-700);
     color: #fff;
 }
+
 .vt-bg-text {
-   color: white !important;
-   background-color: var(--color-basic-700) !important;
+    color: white !important;
+    background-color: var(--color-basic-700) !important;
 }
 
 .ql-container.ql-snow {
     min-height: 400px !important;
 }
 
+.bg-auth {
+    background: rgb(1, 53, 119);
+    background: radial-gradient(circle, rgba(1, 53, 119, 1) 0%, rgba(54, 125, 176, 1) 100%);
+}
+
+.bg-blur-box {
+    background: rgb(255 255 255 / 26%);
+    box-shadow: 0 1px 9px 1px rgb(255 255 255 / 70%);
+    backdrop-filter: blur(7.2px);
+    border-radius: 40px;
+}
+
+.bg-login-form {
+    backdrop-filter: grayscale(.8) blur(5px);
+    box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.08);
+
+    border-top: 2px solid rgba(225, 225, 225, 0.3);
+    border-left: 2px solid rgba(225, 225, 225, 0.1);
+    border-right: 1px solid rgba(225, 225, 225, 0.2);
+}
+
+.body-checkbox {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 50px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-checkbox {
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    display: none;
+}
+
+button,
+input:focus {
+    outline: none;
+}
+
+.g-sign-in-button {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.g-sign-in-button .content-wrapper {
+    display: flex;
+    background: blue;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.g-sign-in-button .logo-wrapper {
+    width: 20%;
+    background: white;
+    border-radius: 0 5px 5px 0;
+}
+
+.g-sign-in-button .text-container {
+    color: white;
+    margin-left: 40px;
+
+}
+
+.g-sign-in-button .content-wrapper:hover {
+    cursor: pointer;
+    box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+}
+
+.g-sign-in-button .content-wrapper:active {
+    background-color: #3367d6;
+    transition: background-color .2s;
+}
+.text-blue-300 {
+    color: #add0de;
+}
