@@ -8,6 +8,8 @@
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
  import VTSelect from "@/elements/VTSelect.vue";
+ import CustomDatePicker from "@/components/plugins/date/CustomDatePicker.vue";
+ import CustomTimePicker from "@/components/plugins/date/CustomTimePicker.vue";
  import { useToast } from "vue-toast-notification";
  import { useI18n } from "vue-i18n";
 
@@ -17,7 +19,7 @@ const router = useRouter();
 const initialFormState = {
       title: '',
       teams: '',
-      date: '',
+      date: '1707284234',
       hour: '',
       info: '',
       link: '',
@@ -57,6 +59,9 @@ const initialFormState = {
     if (route.params.id) {
         getItem();
     } 
+  });
+  watch(() => form.date, () => {
+    console.log(form.date)
   });
 
   const resetForm = () => {
@@ -150,7 +155,7 @@ const initialFormState = {
                     :label="$t('site.Teams')"
                     placeholder="پرسپولیس - استقلال"
                     />
-                    <VTInput
+                    <!-- <VTInput
 
                         class="w-full"
                         :is-vt="true"
@@ -159,17 +164,19 @@ const initialFormState = {
                         request-name="LiveRequest"
                         :label="$t('site.Date')"
                         placeholder="دوشنبه 11 تير"
-                    />
-                    <VTInput
-
-                class="w-full"
+                    /> -->
+                    <!-- <VTInput
+                        class="w-full"
                         :is-vt="true"
                         name="hour"
                         v-model="form.hour"
                         request-name="LiveRequest"
                         :label="$t('site.Hour')"
                         placeholder="ساعت 15:00"
-                        />
+                        /> -->
+
+                        <CustomDatePicker class="w-full" v-model="form.date"/>
+                        <CustomTimePicker class="w-full" v-model="form.hour"/>
             </div>
             
             <div class="md:flex gap-2 mt-3">

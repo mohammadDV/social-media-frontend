@@ -2,6 +2,7 @@
  
   import {useApi} from '../../utils/api';
   import { ref, watch } from "vue";
+  import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
@@ -187,6 +188,9 @@
                 </template>
                 <template #item-image="item">
                         <img :src="item.image" alt="image" class="w-[50px]">
+                </template>
+                <template #item-created_at="item">
+                    {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>
