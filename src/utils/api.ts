@@ -33,7 +33,6 @@ export function useApi() {
 
 
     const errorHandler = (error: any) => {
-        console.log('cos nane');
         let message = null;
         if (!error.response) {
             message = "اتصال شما به اینترنت قطع شده است";

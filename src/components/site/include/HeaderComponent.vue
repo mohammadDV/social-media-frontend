@@ -3,30 +3,25 @@
     
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref } from 'vue';
-//   import { useAuthStore } from '@/stores/auth.ts';
+  import { useAuthStore } from '@/stores/auth.ts';
 //   import userImage from '@/components/plugins/UserImage.vue';
   import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
-  const options = ref( [
+  import { useI18n } from "vue-i18n";
+
+  const { t } = useI18n();
+  const accountMenu = ref( [
     {
-        name:'one',
-        value: 1,
+        title: t('site.Profile'),
+        url: '/profile',
     },
     {
-        name:'two',
-        value: 2,
-    },
-    {
-        name:'three',
-        value: 3,
-    },
-    {
-        name:'four',
-        value: 4 ,
-    },
+        title: t('site.Logout'),
+        url: '/logout',
+    }
   ]
   );
   const parentSelectedOption = ref(null);
-//   const authStore = useAuthStore();
+  const authStore = useAuthStore();
   const categories = ref([]);
 //   const dropdown = ref(false);
 
@@ -51,9 +46,33 @@
 <template>
     <div class="relative w-full flex h-50 bg-vt-gradient mb-[150px] pb-5">
         <div class="flex-start">
-            <Dropdown
-                :options="options"
-                v-model="parentSelectedOption"/>
+            <template v-if="authStore.isAuthenticated">
+                <Dropdown
+                    icon="person"
+                    :name="authStore?.user?.nickname"
+                    :options="accountMenu"
+                    v-model="parentSelectedOption"/>
+            </template>
+            <template v-else>
+                <div class="flex button-type">
+                    <div class="nav-item">
+                        <router-link to="/login" title="$t('site.Login')">
+                            <button class="btn vt-btn-tit">
+                                <span class="material-icons text-accent"> person </span>
+                                <span>{{ $t('site.Login') }}</span>
+                            </button>
+                        </router-link>
+                    </div>
+                    <div class="nav-item">
+                        <router-link to="/register">
+                            <button class="btn vt-btn-tit">
+                                <span class="material-icons text-accent"> group_add </span>
+                                <span>{{ $t('site.Register to site') }}</span>
+                            </button>
+                        </router-link>
+                    </div>
+                </div>
+            </template>
             <!-- <div class="relative cursor-pointer" v-if="authStore.isAuthenticated" @click="toggleDropdown">
                 <div class="rounded-lg mx-3 mt-[5px] px-3 py-2 flex gap-2 align-items-center cursor-pointer border">
                     <span class="">

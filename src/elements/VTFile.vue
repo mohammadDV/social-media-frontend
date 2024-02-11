@@ -14,7 +14,7 @@
                             :value="filename"
                             :placeholder="placeholder"
                             :class="styles"/>
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="hasError">
+                        <div class="absolute inset-y-0 -right-0 pr-3 flex items-center pointer-events-none" v-if="hasError">
                             <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                  fill="currentColor"
                                  aria-hidden="true">
