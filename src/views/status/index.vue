@@ -123,7 +123,7 @@
                     </ol>
                 </nav>
                 <div v-if="hasShowPermission" class="place-button">
-                    <router-link to="/profile/posts/create" :title="$t('site.Create new post')">
+                    <router-link to="/profile/status/create" :title="$t('site.Create new post')">
                         <button class="btn btn-primary">{{ $t('site.Create new post') }}</button>
                     </router-link>
                 </div>

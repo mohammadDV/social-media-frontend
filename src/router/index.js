@@ -44,10 +44,11 @@ import SportCreate from '@/views/sport/create.vue';
 import CountryList from '@/views/country/index.vue';
 import CountryCreate from '@/views/country/create.vue';
 import StatusList from '@/views/status/index.vue';
+import StatusCreate from '@/views/status/create.vue';
 import UserCreate from '@/views/user/create.vue';
 import ChangePassword from '@/views/user/password.vue';
 import UserList from '@/views/user/index.vue';
-// import Login from '@/views/Login.vue';
+import Logout from '@/views/Auth/Logout.vue';
 import Login from '@/views/Auth/Login.vue';
 import Register from '@/views/Auth/Register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
@@ -73,6 +74,11 @@ const routes = [
         path: '/register',
         component: Register,
       },
+      {
+        name: 'logout',
+        path: '/logout',
+        component: Logout,
+      },
       
     ],
   },
@@ -89,16 +95,6 @@ const routes = [
         path: '',
         component: Home,
       },
-      // {
-      //   name: 'login',
-      //   path: '/login',
-      //   component: Login,
-      // },
-      // {
-      //   name: 'register',
-      //   path: '/register',
-      //   component: Register,
-      // },
       {
         name: 'news',
         path: '/news/:id/:slug',
@@ -390,13 +386,13 @@ const routes = [
         name: 'status.create',
         permission: 'status_store',
         path: '/profile/status/create',
-        component: PostCreate,
+        component: StatusCreate,
       },
       {
         name: 'status.edit',
         permission: 'status_update',
         path: '/profile/status/:id',
-        component: PostCreate,
+        component: StatusCreate,
       },
       {
         name: 'account.edit',

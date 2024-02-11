@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import axios from "axios";
 
 
+
 interface User {
   id: Number,
   fullname: String,
@@ -178,36 +179,8 @@ export const useAuthStore = defineStore('auth',{
             this.permissions = response.data?.permissions;
           }
 
-          console.log(this);
-
         } catch (error) {
           this.clearToken();
-          console.error('Login Error:', error);
-          throw error;
-        }
-      },
-      async login(email: String, password: String) {
-        try {
-          const response = await axios.post('/api/login/', { email, password });
-
-          if (response.data?.token?.length > 0) {
-            this.setToken(response.data.token);
-          }
-
-        } catch (error) {
-          console.error('Login Error:', error);
-          throw error;
-        }
-      },
-      async register(data: String) {
-        try {
-          const response = await axios.post('/api/register/', data);
-
-          if (response.data?.token?.length > 0) {
-            this.setToken(response.data.token);
-          }
-
-        } catch (error) {
           console.error('Login Error:', error);
           throw error;
         }

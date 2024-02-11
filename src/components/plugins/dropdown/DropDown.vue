@@ -1,47 +1,73 @@
 
 <script setup>
   import {computed, defineProps, defineEmits ,onMounted , onBeforeUnmount , ref} from 'vue'
-  const dropDown = ref(null)
-  defineProps ({
+
+  
+  const props = defineProps ({
     options: {
-      type:Array,
-      require:true
+      type: Array,
+      require: true
+    },
+    isSelector: {
+      type: Boolean,
+      default: false
+    },
+    name: {
+      type: String,
+      require: true
+    },
+    icon: {
+      type: String,
+      default: ''
     },
     modelValue: {
-      default:null
+      default: null
     }
   })
-  const emit = defineEmits(['update:modelValue'])
+  
+  const dropDown = ref(null)
   const selectedOption = ref(null)
   const isDropDownVisible = ref(false)
   const mappedSelecedOption = computed(() => {
     return (selectedOption.value?.name || selectedOption.value) ||
-    'please'
+    props.name
   })
+
+  const emit = defineEmits(['update:modelValue'])
+
   const toggleOptionSelect = (option) => {
-    selectedOption.value = option;
+    if (props.isSelector) {
+      selectedOption.value = option?.title;
+    }
     emit('update:modelValue',option)
     closeDropDown(option)
   }
+
+  const toggleDropDown = () => {
+    isDropDownVisible.value = !isDropDownVisible.value
+  }
+
   const closeDropDown = (element) => {
     if(!dropDown.value.contains(element.target)){
       isDropDownVisible.value = false
     }
   }
+
   onMounted(() => {
-  window.addEventListener('click',closeDropDown) 
+    window.addEventListener('click',closeDropDown) 
   })
   onBeforeUnmount(() => {
-  window.removeEventListener('click',closeDropDown) 
-})
+    window.removeEventListener('click',closeDropDown) 
+});
+
 </script>
 
 <template >
    <div class="dropdown-wrapper" ref="dropDown">
      <div class="dropdown-seleced-option" 
-     @click="isDropDownVisible = true">
-     <span class="material-icons text-accent"> person </span>
-       <span>
+     @click="toggleDropDown">
+     <span v-if="icon?.length > 0" class="material-icons text-accent"> {{ icon }} </span>
+       <span class="px-2 py-1">
         {{mappedSelecedOption}}
        </span>   
     </div>
@@ -50,14 +76,17 @@
       <div class="option-wrapper"
           v-if="isDropDownVisible"
       >
-        <div 
-        class="option"
-        v-for="(option , index) in options"
-        :key="index"
-        @click="toggleOptionSelect(option)"
-        >
-      {{option.name || option}}
-        </div>
+        <template v-for="(option , index) in options" :key="index">
+          <router-link v-if="option?.url?.length > 0 && !isSelector" class="text-decoration-none cursor-pointer" :to="option.url">
+              <div class="option">
+                  <span v-if="option?.icon?.length > 0" class="material-icons"> {{ option.icon }} </span>
+                  <span> {{ option.title }} </span>
+              </div>
+          </router-link>
+          <div v-else-if="isSelector" class="option" @click="toggleOptionSelect(option)">
+            {{ option.title || option }}
+          </div>
+        </template>
       </div>
     </Transition>
    </div>

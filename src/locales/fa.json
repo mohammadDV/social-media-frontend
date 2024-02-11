@@ -1,5 +1,6 @@
 {
     "site": {
+    "Welcome": "خوش آمدید",
     "You choose dupliacate club": "شما یک باشگاه را دوبار انتخاب نموده اید.",
     "Top main page"                             : "بالای صفحه اصلی",
     "Left main page"                             : "سمت چپ صفحه اصلی",
@@ -227,6 +228,8 @@
     "Points"          : "امتیاز",
     "Subject ticket"          : "موضوع تیکت",
     "Ticket content"          : "متن تیکت",
+    "Please fill in the necessary fields"          : "لطفا همه فیلد های الزامی را پر کنید.",
+    "There is no such user with this specification"          : "کاربری با این مشخصات وجود ندارد.",
     "You have already selected your favorite clubs. Please remove previous selections to replace it." : "شما در حال حاضر باشگاه های موردعلاقه خود را انتخاب کرده اید. لطفا برای جایگزین کردن آن انتخاب های قبلی را حذف کنید."
     }
 }
