@@ -2,6 +2,7 @@
  
   import {useApi} from '../../utils/api';
   import { ref, watch } from "vue";
+  import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
@@ -9,6 +10,9 @@
   import { useI18n } from "vue-i18n";
   import { useAuthStore } from '../../stores/auth';
 
+  
+    // moment.locale("fa");
+    // moment.loadPersian();
   const authStore = useAuthStore();
   const hasShowPermission = ref(authStore.permissions.includes('live_show'));
   const hasUpdatePermission = ref(authStore.permissions.includes('live_update'));
@@ -102,6 +106,7 @@
         })
     }
   };
+
   
   // initial load
   loadFromServer();
@@ -175,6 +180,9 @@
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>
+                </template>
+                <template #item-created_at="item">
+                    {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}
                 </template>
 
             </EasyDataTable>

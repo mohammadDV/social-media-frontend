@@ -38,7 +38,6 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
 
   onMounted(() => {
 
-    console.log("kiri");
     const links = document.querySelectorAll('link[rel="stylesheet"]');
 
     console.log(links);

@@ -29,6 +29,10 @@ import {createPersistedState} from 'pinia-plugin-persistedstate';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
+// persian date picker
+import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker'
+
+
 const pinia = createPinia();
 pinia.use(createPersistedState({
     storage: localStorage,
@@ -42,16 +46,13 @@ const globalOptions = {
   QuillEditor.props.globalOptions.default = () => globalOptions
 
 
-// import { createStore } from 'vuex'
-// import Store from './store'
-// const store = createStore(Store);
-
 createApp(App)
     // .use(store)
     .use(VueToast)
     .use(i18n)
     .use(pinia)
     .use(router)
+    .component('DatePicker', Vue3PersianDatetimePicker)
     .component('QuillEditor', QuillEditor)
     .component('EasyDataTable', Vue3EasyDataTable)
     .mount('#app')

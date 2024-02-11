@@ -2,6 +2,7 @@
  
   import {useApi} from '../../utils/api';
   import { ref, watch } from "vue";
+  import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
@@ -164,6 +165,9 @@
                         </router-link>
                            <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
+                </template>
+                <template #item-created_at="item">
+                    {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>
