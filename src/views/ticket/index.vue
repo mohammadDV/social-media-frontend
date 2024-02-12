@@ -12,7 +12,7 @@
 
   const authStore = useAuthStore();
   const hasShowPermission = ref(authStore.permissions.includes('ticket_show'));
-//   const hasUpdatePermission = ref(authStore.permissions.includes('ticket_update'));
+//   const hasUpdatePermission = ref(authStore.permissions.includes('ticket_show'));
 //   const hasDeletePermission = ref(authStore.permissions.includes('ticket_delete'));  
   const { t } = useI18n();  
   const dataTable = ref();
@@ -45,9 +45,9 @@
   const searchValue = ref("");
   const headers: Header[] = [
     { text: t("site.Id"), value: "id", sortable: true},
-    { text: t('site.Title'), value: "title" },
+    { text: t('site.Title'), value: "subject" },
     // { text: t('site.User'), value: "user_id" },
-    { text: t('site.Status'), value: "status", sortable: true },
+    { text: t('site.Status'), value: "status" },
     { text: t('site.Date'), value: "created_at" },
     { text: t('site.Manage'), value: "actions" },
   ];
@@ -152,15 +152,15 @@
                 >
 
                 <template #item-status="item">
-                    <span v-if="item.status == 'active'" class="p-1 rounded btn-success m-1" >{{ $t('site.' . item.status) }}</span>
-                    <span v-else class="p-1 rounded btn-danger m-1" >{{ $t('site.' . item.status) }}</span>
+                    <span v-if="item.status == 'active'" class="p-1 rounded btn-success m-1" >{{ $t('site.' + item.status) }}</span>
+                    <span v-else class="p-1 rounded btn-danger m-1" >{{ $t('site.' + item.status) }}</span>
                 </template>
                 <template #item-subject="item">
                     <span v-if="item?.subject?.title?.length > 1"  >{{ item?.subject?.title }}</span>
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/tickets/' + item.id">
+                        <router-link v-if="hasShowPermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/tickets/' + item.id">
                             <span class="material-icons size-font-ahalf"> list </span>
                         </router-link>
                         <!-- <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span> -->

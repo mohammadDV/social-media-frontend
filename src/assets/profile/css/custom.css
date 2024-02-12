@@ -326,3 +326,6 @@ input:focus {
 .text-blue-300 {
     color: #add0de;
 }
+.bg-green-light {
+    background: #00ffa242;
+}

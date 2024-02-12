@@ -24,6 +24,7 @@ import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
 import TicketList from '@/views/ticket/index.vue';
 import TicketCreate from '@/views/ticket/create.vue';
+import TicketMessages from '@/views/ticket/messages.vue';
 import SubjectList from '@/views/subject/index.vue';
 import SubjectCreate from '@/views/subject/create.vue';
 import ClubFavorite from '@/views/club/favorite.vue';
@@ -338,7 +339,7 @@ const routes = [
         name: 'ticket.show',
         permission: 'ticket_show',
         path: '/profile/tickets/:id',
-        component: TicketCreate,
+        component: TicketMessages,
       },
       {
         name: 'sport.index',

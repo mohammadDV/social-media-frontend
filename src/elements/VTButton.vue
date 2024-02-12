@@ -66,6 +66,8 @@ const backgroundColor = computed(() => {
     switch (props.color) {
     case 'primary' :
         return 'btn-primary';
+    case 'danger' :
+        return 'btn-danger';
     case 'outline' :
         return 'bg-transparent border border-white hover:border-iv-400';
     case 'dark' :
@@ -79,6 +81,8 @@ const backgroundColor = computed(() => {
 const iconColor = computed(() => {
     switch (props.color) {
     case 'primary' :
+        return 'text-white';
+    case 'danger' :
         return 'text-white';
     case 'iv' :
         return 'text-iv-500';
@@ -107,6 +111,8 @@ const borderColor = computed(() => {
 const textColor = computed(() => {
     switch (props.color) {
     case 'primary' :
+        return 'text-white';
+    case 'danger' :
         return 'text-white';
     case 'iv' :
         return 'text-iv-500';

@@ -25,10 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <spa v-if="icon?.length > 0" @click="browseFile" class="bg-white input-group-text-profile cursor-pointer">
-                    <span class="material-icons size-font-ahalf"> link </span>
-                </spa>
-                <span v-else
+                <span
                     class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-iv-gray-200 bg-gray-50 text-gray-500 sm:text-sm cursor-pointer"
                     @click="browseFile">
                   {{ button }}
@@ -54,7 +51,6 @@ export default {
                 'focus:ring-iv-500 focus:border-iv-500 border-iv-gray-200': !this.hasError,
                 'rounded-l-md': true,
                 'text-center': this.center,
-                'hidden': this.icon?.length > 0,
             };
         },
         showProgressBar() {
@@ -70,10 +66,6 @@ export default {
         }
     },
     props: {
-        icon: {
-            type: String,
-            default: ''
-        },
         name: {
             type: String,
         },
