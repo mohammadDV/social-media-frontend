@@ -13,10 +13,12 @@
     {
         title: t('site.Profile'),
         url: '/profile',
+        icon: 'account_circle',
     },
     {
         title: t('site.Logout'),
         url: '/logout',
+        icon: 'logout'
     }
   ]
   );
@@ -49,6 +51,7 @@
             <template v-if="authStore.isAuthenticated">
                 <Dropdown
                     icon="person"
+                    color="primary"
                     :name="authStore?.user?.nickname"
                     :options="accountMenu"
                     v-model="parentSelectedOption"/>

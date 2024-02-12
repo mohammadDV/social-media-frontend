@@ -3,10 +3,26 @@
     
   import {useApi} from '@/utils/api.ts';
   import { onMounted, onUnmounted, watch, reactive, ref } from 'vue';
-  import userImage from '@/components/plugins/UserImage.vue'
+//   import userImage from '@/components/plugins/UserImage.vue'
   import { useAuthStore } from '@/stores/auth.ts';
   import { useI18n } from "vue-i18n";
+  import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
+  const parentSelectedOption = ref(null);
   const { t } = useI18n();
+  const accountMenu = ref( [
+        {
+            title: t('site.Profile'),
+            url: '/profile',
+            icon: 'account_circle',
+        },
+        {
+            title: t('site.Logout'),
+            url: '/logout',
+            icon: 'logout'
+        }
+    ]
+    );
+ 
   const authStore = useAuthStore();
   const state = reactive({
     search: '',
@@ -23,9 +39,9 @@ const resetSearch = () => {
     state.users = [];
 }
 
-const logout = () => {
-    authStore.logout();
-};
+// const logout = () => {
+//     authStore.logout();
+// };
 
 const memberSearch = () => {
 useApi().post('/api/user/search', state)
@@ -68,7 +84,6 @@ onMounted(() => {
 onUnmounted(() => {
     clearInterval(autoInterval.value);
 });
-
 
 
 </script>
@@ -356,7 +371,13 @@ onUnmounted(() => {
                                 </div>
                             </li>
                             <li class="nav-item dropdown user-dropdown">
-                                <button
+                                <Dropdown
+                                    icon="person"
+                                    color="profile"
+                                    :name="authStore?.user?.nickname"
+                                    :options="accountMenu"
+                                    v-model="parentSelectedOption"/>
+                                <!-- <button
                                     class="btn btn-light dropdown-toggle"
                                     type="button"
                                     id="dropdownProfile"
@@ -364,6 +385,7 @@ onUnmounted(() => {
                                     aria-expanded="false"
                                 >
                                     <div class="profile-avatar">
+                                        
                                         <userImage add-class="inline" :item="authStore?.user" />
                                     </div>
                                     <span class="user-name">{{ authStore?.user?.nickname }}</span>
@@ -459,7 +481,7 @@ onUnmounted(() => {
                                             <span class="dropdown-item-title">{{ $t('site.Logout') }}</span>
                                         </a>
                                     </div>
-                                </div>
+                                </div> -->
                             </li>
                         </ul>
                     </div>
