@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import MainLayout from '@/layouts/MainLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import ClubLayout from '@/layouts/ClubLayout.vue';
 import ProfileLayout from '@/layouts/ProfileLayout.vue';
 import MemberLayout from '@/layouts/MemberLayout.vue';
 
@@ -22,6 +23,7 @@ import PageList from '@/views/page/index.vue';
 import PageCreate from '@/views/page/create.vue';
 import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
+import ClubInfo from '@/views/club/info.vue';
 import TicketList from '@/views/ticket/index.vue';
 import TicketCreate from '@/views/ticket/create.vue';
 import TicketMessages from '@/views/ticket/messages.vue';
@@ -81,6 +83,21 @@ const routes = [
         component: Logout,
       },
       
+    ],
+  },
+  {
+    path: '/club',
+    meta: { 
+      layout: 'club',
+      requiresAuth: true,
+     },
+    component: ClubLayout,
+    children: [
+      {
+        name: 'club.info',
+        path: '/club/:id',
+        component: ClubInfo,
+      }
     ],
   },
   {
