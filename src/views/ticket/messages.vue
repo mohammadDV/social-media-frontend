@@ -1,7 +1,6 @@
 <script setup>
  
  import {useApi} from './../../utils/api.ts';
-//  import {helper} from '@/utils/helper.ts';
   
  import jalaliMoment from 'moment-jalaali';
  import { ref, onMounted, watch, reactive } from 'vue';
@@ -9,11 +8,14 @@
  import { useToast } from "vue-toast-notification";
  import VTFile from '@/elements/VTFile'; 
  import VTButton from '@/elements/VTButton'; 
-//  import { useI18n } from "vue-i18n";
+  import { useAuthStore } from '../../stores/auth';
+
+  const authStore = useAuthStore();
+ import { useI18n } from "vue-i18n";
 
 const route = useRoute();
 // const router = useRouter();
-// const { t } = useI18n();
+const { t } = useI18n();
 
 const initialFormState = {
       message: '',
@@ -49,6 +51,25 @@ const initialFormState = {
     } 
   });
 
+  const $toast = useToast();
+  const changeStatus = async () => {
+    if(confirm(t('site.Are you sure you want to do it?'))) {
+        useApi().post(`/api/profile/tickets/status/${route.params.id}`,{status: 'closed'})
+        .then((response) => {
+        if (response?.data?.status) {
+            $toast.success(response.data.message);
+        }
+        })
+        .catch(error => {
+            if (error.response.data.status == 0) {
+                $toast.error(error.response.data.message);
+            }
+        }).finally(() => {
+            getTicket();
+        })
+    }
+  };
+
   const reset = ref(false)
 
   const resetForm = () => {
@@ -59,8 +80,6 @@ const initialFormState = {
 
 
   const send = () => {
-
-    console.log("xasxasx");
     if (!canSubmit.value) {
         return '';
     }
@@ -69,9 +88,11 @@ const initialFormState = {
     useApi().post(`/api/profile/tickets/${route.params.id}`, form)
     .then((response) => {
       if (response.data.status) {
-            $toast.success(response.data.message);
-            resetForm();
-            getTicket();
+        $toast.success(response.data.message);
+        resetForm();
+        getTicket();
+      } else {
+        $toast.error(response.data.message);
       }
     })
     .catch(error => {
@@ -145,7 +166,7 @@ const initialFormState = {
                     </div>
                 </template>
               </div>
-              <div>
+              <div v-if="ticket?.status == 'active' || authStore.user?.is_admin">
                 <div class="bg-white w-full mt-2 input-group d-none d-lg-flex">
                     <span @click="send" class="bg-white input-group-text-profile cursor-pointer">
                         <span class="material-icons size-font-ahalf"> send </span>
@@ -176,8 +197,8 @@ const initialFormState = {
                                 class="justify-center btn-outline-secondary btn-sm mt-3" 
                                 size="medium"
                                 color="danger"  
-                                @click="closeTicket()">
-                                {{ $t('site.Close Ticket') }}
+                                @click="changeStatus()">
+                                {{ $t('site.Close ticket') }}
                             </VTButton> 
                       </div>
                     </div>

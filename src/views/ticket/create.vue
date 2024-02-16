@@ -90,6 +90,8 @@ const initialFormState = {
                 name: 'ticket.index'
             })
         }
+      } else {
+        $toast.error(response.data.message);
       }
     })
     .catch(error => {
