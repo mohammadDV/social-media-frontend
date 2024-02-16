@@ -6,7 +6,7 @@
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
-//   import { useToast } from "vue-toast-notification";
+  import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";  
   import { useAuthStore } from '../../stores/auth';
 
@@ -80,6 +80,27 @@
         serverItemsLength.value = response.data.total;
     })
     loading.value = false;
+  };
+  
+  const $toast = useToast();
+  const changeStatus = async (id: Number ,status: String) => {
+    if(confirm(t('site.Are you sure you want to do it?'))) {
+        loading.value = true;
+        useApi().post(`/api/profile/tickets/status/${id}`,{status})
+        .then((response) => {
+        if (response?.data?.status) {
+            $toast.success(response.data.message);
+        }
+        })
+        .catch(error => {
+            if (error.response.data.status == 0) {
+                $toast.error(error.response.data.message);
+            }
+        }).finally(() => {
+            loading.value = false;
+            loadFromServer();
+        })
+    }
   };
 
 //   const $toast = useToast();
@@ -163,7 +184,8 @@
                         <router-link v-if="hasShowPermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/tickets/' + item.id">
                             <span class="material-icons size-font-ahalf"> list </span>
                         </router-link>
-                        <!-- <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span> -->
+                        <span @click="changeStatus(item.id, 'closed')" class="p-1 rounded btn-danger px-2 py-1 m-1 text-white cursor-pointer">{{ $t('site.Close ticket') }}</span>
+                        <span v-if="authStore.user?.is_admin" @click="changeStatus(item.id, 'active')" class="p-1 rounded btn-success px-2 py-1 m-1 text-white cursor-pointer">{{ $t('site.Activate ticket') }}</span>
                     </div>
                 </template>
                 <template #item-image="item">
