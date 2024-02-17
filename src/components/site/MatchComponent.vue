@@ -5,6 +5,7 @@
   import VTSelect from "@/elements/VTSelect.vue";
   import TabsComponent from '@/components/plugins/tabs/TabsComponent';
   import TabComponent from '@/components/plugins/tabs/TabComponent';
+  import jalaliMoment from 'moment-jalaali';
 
   const title = ref('');
   const tabItem = ref('timing');
@@ -112,8 +113,11 @@
                                         <img :src="match.away_image" width="32" height="32" :alt="match.away"/>
                                         <a target="_blank">{{ match.away }}</a>
                                     </div>
-                                    <div class="status">
+                                    <div v-if="match.status == 1" class="status">
                                         <i class="finished"></i>{{ match.status_name }}
+                                    </div>
+                                    <div v-else class="status">
+                                        <i class="finished"></i><span>{{ jalaliMoment(match.date).format('dddd jD jMMMM - HH:mm') }}</span>
                                     </div>
                                 </div>
                             </div>

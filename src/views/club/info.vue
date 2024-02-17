@@ -593,11 +593,11 @@ const tableData = reactive([
 .shadow-follow-box {
     box-shadow: 0px 0px 4px 0px #000000e0;
 }
-.grid{
+/* .grid{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
-}
+} */
 .grid1{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

@@ -1,21 +1,25 @@
 <template>
     <date-picker 
     v-model="date"
+    :type="type"
     format="YYYY-MM-DD HH:mm:ss"
-    display-format="dddd jDD jMMMM jYYYY"
+    display-format="HH:mm | dddd jDD jMMMM jYYYY"
     >
     
     </date-picker>
 </template>
    
-  <script>
+  <script setup>
+
     import DatePicker from 'vue3-persian-datetime-picker'
-    export default {
-      data(){
-        return {
-          date: ''
-        }
-      },
-      components: { DatePicker }
-    }
+    import { ref, defineProps } from 'vue';
+
+    defineProps ({
+      type: {
+        type: String,
+        default: 'date'
+      }
+    });
+
+    const date = ref('');
   </script>

@@ -128,13 +128,13 @@
 
     useApi().post(url, form)
     .then((response) => {
-    if (response.data.status) {
-        $toast.success(response.data.message);
-        resetForm();
-        loading.value = true;
-        stepId.value = 0;
-        setTimeout(() => { loadFromServer(); loading.value = false; }, 1000);
-    }
+        if (response.data.status) {
+            $toast.success(response.data.message);
+            resetForm();
+            loading.value = true;
+            stepId.value = 0;
+            setTimeout(() => { loadFromServer(); loading.value = false; }, 1000);
+        }
     })
     .catch(error => {
         if (error?.response?.data?.status == 0) {
@@ -273,8 +273,8 @@
                         <router-link v-if="league?.type == 2" class="p-1 rounded btn-warning m-1 text-white" :to="'/profile/steps/' + item.id + '/clubs'">
                             <span class="material-icons size-font-ahalf"> add </span>
                         </router-link>
-                        <router-link class="p-1 rounded btn-success m-1 text-white" :to="'/profile/steps/' + item.id + '/matches'">
-                            <span class="material-icons size-font-ahalf"> list </span>
+                        <router-link class="px-2 py-1 rounded btn-warning m-1 text-white text-decoration-none" :to="'/profile/steps/' + item.id + '/matches'">
+                            <span > {{ $t('site.Match management') }} </span>
                         </router-link>
                         <span @click="editItem(item.id)" class="p-1 rounded btn-info m-1 text-white material-icons size-font-ahalf cursor-pointer"> edit </span>
                     </div>
