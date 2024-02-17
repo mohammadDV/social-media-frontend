@@ -9,7 +9,6 @@
  import VTInput from '@/elements/VTInput'; 
  import VTSelect from "@/elements/VTSelect.vue";
  import CustomDatePicker from "@/components/plugins/date/CustomDatePicker.vue";
- import CustomTimePicker from "@/components/plugins/date/CustomTimePicker.vue";
  import { useToast } from "vue-toast-notification";
  import { useI18n } from "vue-i18n";
 
@@ -19,8 +18,7 @@ const router = useRouter();
 const initialFormState = {
       title: '',
       teams: '',
-      date: '1707284234',
-      hour: '',
+      date: '',
       info: '',
       link: '',
       priority: '',
@@ -59,9 +57,6 @@ const initialFormState = {
     if (route.params.id) {
         getItem();
     } 
-  });
-  watch(() => form.date, () => {
-    console.log(form.date)
   });
 
   const resetForm = () => {
@@ -155,28 +150,10 @@ const initialFormState = {
                     :label="$t('site.Teams')"
                     placeholder="پرسپولیس - استقلال"
                     />
-                    <!-- <VTInput
-
-                        class="w-full"
-                        :is-vt="true"
-                        name="date"
-                        v-model="form.date"
-                        request-name="LiveRequest"
-                        :label="$t('site.Date')"
-                        placeholder="دوشنبه 11 تير"
-                    /> -->
-                    <!-- <VTInput
-                        class="w-full"
-                        :is-vt="true"
-                        name="hour"
-                        v-model="form.hour"
-                        request-name="LiveRequest"
-                        :label="$t('site.Hour')"
-                        placeholder="ساعت 15:00"
-                        /> -->
-
-                        <CustomDatePicker class="w-full" v-model="form.date"/>
-                        <CustomTimePicker class="w-full" v-model="form.hour"/>
+                        <div class="w-full">
+                            <label class="text-sm font-medium mb-2">{{ $t('site.Date and time') }}</label>
+                            <CustomDatePicker v-model="form.date" type="datetime"/>
+                        </div>
             </div>
             
             <div class="md:flex gap-2 mt-3">

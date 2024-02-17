@@ -11,6 +11,7 @@
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
   import { useAuthStore } from '../../stores/auth';
+ import CustomDatePicker from "../../components/plugins/date/CustomDatePicker.vue";
   
   const authStore = useAuthStore();
   const hasStorePermission = ref(authStore.permissions.includes('match_store'));
@@ -33,7 +34,6 @@
         hsc: '',
         asc: '',
         date: '',
-        hour: '',
         link: '',
         status: '',
         priority: '',
@@ -123,7 +123,6 @@
     { text: t('site.Hsc'), value: "hsc" },
     { text: t('site.Asc'), value: "asc" },
     { text: t('site.Date'), value: "date" },
-    { text: t('site.Hour'), value: "hour" },
     { text: t('site.Priority'), value: "priority" },
     { text: t('site.Link'), value: "link" },
     { text: t('site.Status'), value: "status_name" },
@@ -361,21 +360,9 @@
                 </div>
                 <!-- Third Row -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-2 items-end mb-3">
-                    <div >
-                        <VTInput
-                        class="mt-2"
-                        :is-vt="true"
-                        name="date"
-                        v-model="form.date"
-                        :label="$t('site.Date')"/>
-                    </div>
-                    <div >
-                        <VTInput
-                        class="mt-2"
-                        :is-vt="true"
-                        name="hour"
-                        v-model="form.hour"
-                        :label="$t('site.Hour')"/>
+                    <div>
+                        <label class="text-sm font-medium mb-2">{{ $t('site.Date and time') }}</label>
+                        <CustomDatePicker v-model="form.date" type="datetime"/>
                     </div>
                     <div >
                         <VTInput
@@ -397,8 +384,6 @@
                         optionsDisplayValueKey="title"
                         name="status"/>
                     </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 items-end mb-3">
                     <div >
                         <VTInput
                         class="mt-2"
@@ -407,6 +392,9 @@
                         v-model="form.link"
                         :label="$t('site.Link')"/>
                     </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 items-end mb-3">
+                    
                     <div class="flex gap-2">
                         <VTButton v-if="hasStorePermission"
                             class="justify-center btn-outline-secondary btn-sm mt-4" 

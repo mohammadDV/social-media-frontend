@@ -174,13 +174,13 @@
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <router-link v-if="hasShowPermission && item?.type == 1" class="p-1 rounded btn-warning m-1 text-white" :to="'/profile/leagues/' + item.id + '/clubs'">
-                            <span class="material-icons size-font-ahalf"> add </span>
+                        <router-link v-if="hasShowPermission && item?.type == 1" class="px-2 py-1 rounded btn-warning m-1 text-white text-decoration-none" :to="'/profile/leagues/' + item.id + '/clubs'">
+                            <span>{{ $t('site.Add club') }}</span>
                         </router-link>
-                        <router-link v-if="hasShowPermission" class="p-1 rounded btn-success m-1 text-white" :to="'/profile/leagues/' + item.id + '/steps'">
-                            <span class="material-icons size-font-ahalf"> list </span>
+                        <router-link v-if="hasShowPermission" class="px-2 py-1  rounded btn-success m-1 text-white text-decoration-none" :to="'/profile/leagues/' + item.id + '/steps'">
+                            <span>{{ $t('site.Courses management') }}</span>
                         </router-link>
-                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/leagues/' + item.id">
+                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white text-decoration-none" :to="'/profile/leagues/' + item.id">
                             <span class="material-icons size-font-ahalf"> edit </span>
                         </router-link>
                         <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>

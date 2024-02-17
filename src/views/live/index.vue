@@ -54,7 +54,6 @@
     // { text: t('site.User'), value: "user_id" },
     { text: t('site.Teams'), value: "teams" },
     { text: t('site.Date'), value: "date" },
-    { text: t('site.Hour'), value: "hour" },
     { text: t('site.Info'), value: "info" },
     { text: t('site.Link'), value: "link" },
     { text: t('site.Priority'), value: "priority" },
@@ -180,6 +179,9 @@
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>
+                </template>
+                <template #item-date="item">
+                    {{ jalaliMoment(item.date).format('dddd jD jMMMM jYYYY - HH:mm') }}
                 </template>
                 <template #item-created_at="item">
                     {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}

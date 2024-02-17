@@ -52,6 +52,8 @@ export function useApi() {
                 // }, 100);
             // }
         }
+
+
         // if (error.response?.status === 414) message = null;
         // if (error.response?.status === 400 && "error" in error.response) {
         //     message = errorFormat(error.response.error);
@@ -71,7 +73,7 @@ export function useApi() {
         //     lastRequestUrl = error.response?.url;
         //     errorToast(message);
         // }
-        // throw error;
+        throw error;
 
         // router.push('/profile');
     }
