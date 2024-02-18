@@ -46,7 +46,7 @@
 </script>
 
 <template>
-    <div class="relative w-full flex h-50 bg-vt-gradient mb-[150px] pb-5">
+    <div class="relative w-full flex h-50 bg-vt-gradient mb-[130px] pb-5">
         <div class="flex-start">
             <template v-if="authStore.isAuthenticated">
                 <Dropdown

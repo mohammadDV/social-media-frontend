@@ -2,11 +2,11 @@
     <div class="container-xxl">
         <main class="mb-4">
             <div class="row mb-75">
-                <horizontal-advertise-component :advertises="advertises[1]"/>
+                <HorizontalAdvertiseComponent :advertises="advertises[1]"/>
             </div>
             <div class="row">
                 <div class="col-12 col-lg-2 ads-column item-column">
-                    <vertical-advertise-component v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
+                    <VerticalAdvertiseComponent v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
                 </div>
                 <div class="col-12 col-lg-7 flex-grow-1">
                     <div class="card vt-news-card breadcrumb-card mb-3">
