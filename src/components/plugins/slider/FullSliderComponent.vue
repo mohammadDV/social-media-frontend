@@ -10,6 +10,10 @@ const props = defineProps({
     interval: {
       type: Number,
       default: 10000 // 2000 milliseconds = 2 seconds
+    },
+    hasDate: {
+      type: Boolean,
+      default: false // 2000 milliseconds = 2 seconds
     }
 })
 
@@ -44,9 +48,9 @@ onUnmounted(() => {
             <div class="slider--media ratio-3-4 mb-0">
                 <img width="200" height="144" :title="slide.title" :alt="slide.title" :src="slide['image']"/>
             </div>
-            <div class="slider--caption">
+            <div class="flex justify-between slider--caption">
                 <div class="slider--caption-title">{{ slide.title }}</div>
-                <div class="slider--caption-date">{{ jalaliMoment(currentDate).format('dddd jD jMMMM') }}</div>
+                <div v-if="hasDate" class="slider--caption-date px-1">{{ jalaliMoment(currentDate).format('dddd jD jMMMM') }}</div>
             </div>
             <router-link class="stretched-link" :to="`/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
         </div>
