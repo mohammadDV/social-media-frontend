@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-12 col-lg-3 flex-grow-1">
                         <div class="mb-75">
-                            <FullSliderComponent  :slides="posts[7]"></FullSliderComponent>
+                            <FullSliderComponent :hasDate="true" :slides="posts[7]"></FullSliderComponent>
                         </div>
                         <div class="card vt-news-card height-fluid mb-75">
                             <div class="card-header">
