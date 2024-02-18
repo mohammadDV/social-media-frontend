@@ -1,32 +1,6 @@
-<template>
-    <div class="full-slider rounded">
-      <div v-for="(slide, index) in slides" :key="index" class="slide" :class="{ active: index === activeIndex }">
-
-        <div class="slider-item">
-            <div class="slider--media ratio-3-4 mb-0">
-                <img width="200" height="144" :title="slide.title" :alt="slide.title" :src="slide['image']"/>
-                <!-- <img width="200" height="144" :title="slide.title" :alt="slide.title" src="/site/images/news/149606.jpg"/> -->
-            </div>
-            <div class="slider--caption">
-                <span class="slider--caption-title">{{ slide.title }}</span>
-                <span class="slider--caption-date">{{ currentDate }}</span>
-            </div>
-
-            <router-link class="stretched-link" :to="`/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
-        </div>
-      </div>
-      <div @click="nextSlide" class="arrow-btn next">
-          <span class="material-icons text-white"> arrow_right </span>
-      </div>
-      <div @click="prevSlide" class="arrow-btn previous">
-          <span class="material-icons text-white"> arrow_left </span>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
+<script setup>
 import { ref, defineProps, onMounted, onUnmounted } from 'vue';
-
+import jalaliMoment from 'moment-jalaali';
 
 const props = defineProps({
     slides: {
@@ -61,6 +35,32 @@ onUnmounted(() => {
 });
 
 </script>
+
+<template>
+    <div class="full-slider rounded">
+      <div v-for="(slide, index) in slides" :key="index" class="slide" :class="{ active: index === activeIndex }">
+
+        <div class="slider-item">
+            <div class="slider--media ratio-3-4 mb-0">
+                <img width="200" height="144" :title="slide.title" :alt="slide.title" :src="slide['image']"/>
+            </div>
+            <div class="slider--caption">
+                <div class="slider--caption-title">{{ slide.title }}</div>
+                <div class="slider--caption-date">{{ jalaliMoment(currentDate).format('dddd jD jMMMM') }}</div>
+            </div>
+            <router-link class="stretched-link" :to="`/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
+        </div>
+      </div>
+      <div @click="nextSlide" class="arrow-btn next">
+          <span class="material-icons text-white"> arrow_right </span>
+      </div>
+      <div @click="prevSlide" class="arrow-btn previous">
+          <span class="material-icons text-white"> arrow_left </span>
+      </div>
+    </div>
+  </template>
+  
+
   
   <style scoped>
   .full-slider {

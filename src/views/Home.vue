@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl">
             <main class="mb-4">
-                <horizontal-advertise-component :advertises="advertises[1]"/>
+                <HorizontalAdvertiseComponent :advertises="advertises[1]"/>
                 <div class="row">
                     <div class="col-12 col-lg-7 flex-grow-1">
                         <div class="row mx-0 mb-75">
@@ -88,12 +88,12 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[2]" :key="index" class="news-item">
-                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
                                                         {{ post.title}}
-                                                    </router-link> -->
+                                                    </router-link>
                                                 </li>
                                             </ul>
                                         </div>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-12 col-lg-3 flex-grow-1">
                         <div class="mb-75">
-                            <full-slider-component  :slides="posts[7]"></full-slider-component>
+                            <FullSliderComponent  :slides="posts[7]"></FullSliderComponent>
                         </div>
                         <div class="card vt-news-card height-fluid mb-75">
                             <div class="card-header">
@@ -129,36 +129,36 @@
                                         <div v-if="tabItem == 'latest'" class="tab-pane fade show active"  id="latest"  role="tabpanel"  aria-labelledby="latest-tab">
                                             <ul v-if="latest?.length > 0" class="news-list">
                                               <li v-for="(post, index) in latest" :key="index" class="news-item">
-                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
                                                       {{ post.title }}
-                                                  </router-link> -->
+                                                  </router-link>
                                                 </li>
                                             </ul>
                                         </div>
                                         <div v-if="tabItem == 'challenged'" class="tab-pane fade show active"  id="conv"  role="tabpanel"  aria-labelledby="conv-tab">
                                             <ul v-if="challenged?.length > 0" class="news-list">
                                               <li v-for="(post, index) in challenged" :key="index" class="news-item">
-                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
                                                       {{ post.title }}
-                                                  </router-link> -->
+                                                  </router-link>
                                               </li>
                                             </ul>
                                         </div>
                                         <div v-if="tabItem == 'popular'" class="tab-pane fade  show active" id="hot" role="tabpanel" aria-labelledby="hot-tab">
                                             <ul v-if="popular?.length > 0" class="news-list">
                                               <li v-for="(post, index) in popular" :key="index" class="news-item">
-                                                  <!-- <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
                                                       {{ post.title}}
-                                                  </router-link> -->
+                                                  </router-link>
                                               </li>
                                             </ul>
                                         </div>
@@ -168,21 +168,10 @@
                         </div>
 
                         <!-- specialVideos -->
-                        <full-slider-component :slides="specialVideos"></full-slider-component>
+                        <FullSliderComponent :slides="specialVideos"></FullSliderComponent>
                     </div>
                     <div v-if="advertises[2]?.length > 0" class="col-12 col-lg-2 ads-column item-column">
-                        <vertical-advertise-component :advertises="advertises[1]"/>
-                    </div>
-                    <div class="col-12 col-lg-2 ads-column item-column">
-                        <div class="col-ads">
-                            <img class="col-ad" src="/site/images/ads/cols/00911970.gif" alt="site ad"/>
-                        </div>
-                        <div class="col-ads">
-                            <img class="col-ad" src="/site/images/ads/cols/00911861.gif" alt="site ad"/>
-                        </div>
-                        <div class="col-ads">
-                            <img class="col-ad" src="/site/images/ads/cols/00911969.gif" alt="site ad"/>
-                        </div>
+                        <VerticalAdvertiseComponent :advertises="advertises[2]"/>
                     </div>
                 </div>
             </main>
@@ -236,11 +225,11 @@
                                         <div class="news-row-item">
                                             <div class="row gx-2">
                                                 <div class="col-4">
-                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']})`"></div>
+                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(${post['image']})`"></div>
                                                 </div>
                                                 <div class="col-8">
                                                     <p class="news-row-item-title">{{ post.title }}</p>
-                                                    <router-link :to="`'news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
+                                                    <router-link class="text-decoration-none"  :to="`news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
                                                 </div>
                                             </div>
                                         </div>
@@ -259,15 +248,15 @@
                         <div class="card-body">
                             <div class="card-body-inner">
                                 <div v-if="posts[6]?.length > 0" class="row gy-3 news-item-row">
-                                    <div class="col-12 col-lg-6" v-for="(post, index) in posts[5]" :key="index">
+                                    <div class="col-12 col-lg-6" v-for="(post, index) in posts[6]" :key="index">
                                         <div class="news-row-item">
                                             <div class="row gx-2">
                                                 <div class="col-4">
-                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(/${post['image']})`"></div>
+                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(${post['image']})`"></div>
                                                 </div>
                                                 <div class="col-8">
                                                     <p class="news-row-item-title">{{ post.title }}</p>
-                                                    <router-link :to="`'news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
+                                                    <router-link class="text-decoration-none" :to="`news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
                                                 </div>
                                             </div>
                                         </div>
