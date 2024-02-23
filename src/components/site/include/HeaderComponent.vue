@@ -4,11 +4,14 @@
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
+
+  import { useRoute } from 'vue-router';
 //   import userImage from '@/components/plugins/UserImage.vue';
   import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
   import { useI18n } from "vue-i18n";
 
   const { t } = useI18n();
+  const route = useRoute();
   const accountMenu = ref( [
     {
         title: t('site.Profile'),
@@ -36,7 +39,13 @@
 //     authStore.logout();
 //   };
 
+const search = ref('');
+
   onMounted(() => {
+
+    search.value = route?.query?.q;
+
+
     useApi().get('/api/active-categories')
         .then((response) => {
             categories.value = response.data;
@@ -240,10 +249,8 @@
                             <button class="btn vt-btn-white">سفارش تبلیغات</button>
                         </div>
                         <div class="search-container">
-                            <!-- <form action="{{ route('search') }}" method="POST"> -->
-                            <form action="" method="POST">
-                                <!-- @csrf -->
-                                <input class="form-control is-white" name="search" type="text" placeholder="جستجو اخبار، تیم ها، بازیکنان و ویدیو های ورزشی ..."/>
+                            <form action="/search">
+                                <input class="form-control is-white" v-model="search" name="q" type="text" placeholder="جستجو اخبار، تیم ها، بازیکنان و ویدیو های ورزشی ..."/>
                                 <button class="btn vt-btv-primary">
                                     <span class="material-icons text-body-invert"> search </span>
                                 </button>

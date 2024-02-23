@@ -14,6 +14,8 @@ import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
 import Member from '@/views/member/index.vue';
 import Category from '@/views/Category.vue';
+import Tag from '@/views/Tag.vue';
+import SearchPost from '@/views/Search.vue';
 import Profile from '@/views/profile/index.vue';
 import Status from '@/views/profile/status.vue';
 import Notification from '@/views/notification/index.vue';
@@ -122,6 +124,16 @@ const routes = [
         name: 'category',
         path: '/category/:id/:title',
         component: Category,
+      },
+      {
+        name: 'tag',
+        path: '/tag/:id/:title',
+        component: Tag,
+      },
+      {
+        name: 'search',
+        path: '/search',
+        component: SearchPost,
       },
     ],
   },
