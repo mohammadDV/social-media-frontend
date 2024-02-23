@@ -23,6 +23,10 @@
       type: String,
       default: 'primary'
     },
+    float: {
+      type: String,
+      default: 'right'
+    },
     modelValue: {
       default: null
     }
@@ -96,7 +100,15 @@ const backgroundColorDropdown = computed(() => {
     case 'primary' :
         return 'bg-[#384c78] ';
     default:
-        return 'profile-gradient';
+        return 'profile-gradient ';
+    }
+});
+const openDropdown = computed(() => {
+    switch (props.float) {
+    case 'left' :
+        return 'left-[-1em]';
+    default:
+        return 'right-[-1em]';
     }
 });
 const iconColor = computed(() => {
@@ -130,7 +142,7 @@ const gradientColor = computed(() => {
     case 'primary' :
         return 'main-gradient';
     case 'profile'   :
-    return 'profile-gradient';
+    return 'profile-gradient ';
 
     default:
         return '';
@@ -172,7 +184,7 @@ const textColor = computed(() => {
     </div>
     
     <Transition name="slide-fade">
-      <div :class=" `w-full mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${backgroundColorDropdown}`"
+      <div :class=" `w-full mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${openDropdown} ${backgroundColorDropdown}`"
           v-if="isDropDownVisible"
       >
         <template v-for="(option , index) in options" :key="index">
@@ -198,17 +210,7 @@ const textColor = computed(() => {
   cursor: pointer;
   max-width: 200px;
 } */
-/* .option-wrapper {
-    padding: 0.5rem 0.5rem;
-    box-sizing: border-box;
-    background: #ffffff;
-    box-shadow: 1px 1px 4px 1px #eee;
-    border-radius: 5px;
-    margin-top: 5px;
-    position: absolute;
-    z-index: 9999;
-    width: 10%;
-} */
+
 .dropdown-seleced-option{
   /* border-radius: 30px;
     padding: 5px;

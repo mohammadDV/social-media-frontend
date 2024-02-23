@@ -1,0 +1,189 @@
+
+<script setup>
+  import {computed, defineProps ,onMounted , onBeforeUnmount , ref} from 'vue';
+  const openDropdown = computed(() => {
+    switch (props.float) {
+    case 'left' :
+        return 'left-[-1em]';
+    default:
+        return 'right-[-1em]';
+    }
+});
+  const props = defineProps ({
+    options: {
+      type: Array,
+      require: true
+    },
+    name: {
+      type: String,
+      require: true
+    },
+    icon: {
+      type: String,
+      default: ''
+    },
+    color: {
+      type: String,
+      default: 'primary'
+    },
+    float: {
+      type: String,
+      default: 'right'
+    },
+    modelValue: {
+      default: null
+    }
+  })
+  
+  const notifDropDown = ref(null)
+  const selectedOption = ref(null)
+  const isDropDownVisible = ref(false)
+  const mappedSelecedOption = computed(() => {
+    return (selectedOption.value?.name || selectedOption.value) ||
+    props.name
+  })
+
+
+  // const toggleOptionSelect = (option) => {
+    
+  //   emit('update:modelValue',option)
+  //   closeDropDown(option)
+  // }
+
+  const toggleDropDown = () => {
+    isDropDownVisible.value = !isDropDownVisible.value
+  }
+
+  const closeDropDown = (element) => {
+    if(!notifDropDown.value.contains(element.target)){
+      isDropDownVisible.value = false
+    }
+  }
+
+  onMounted(() => {
+    window.addEventListener('click',closeDropDown) 
+  })
+  onBeforeUnmount(() => {
+    window.removeEventListener('click',closeDropDown) 
+});
+
+
+</script>
+
+<template >
+    <div class="dropdown-notif relative py-4 px-[14px] cursor-pointer max-w-[200px] " ref="notifDropDown">
+     <div class="dropdown-notif-option rounded-[5px] p-4 profile-gradient" 
+     @click="toggleDropDown">
+     <span v-if="icon?.length > 0" class="material-icons text-accent " @click="mappedSelecedOption"> {{ icon }} </span>
+       <!-- <span class="px-2 py-1">
+        {{mappedSelecedOption}}
+       </span>    -->
+    </div>
+    
+    <Transition name="slide-fade">
+      <div :class="`option-notif min-w-[450px] mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${openDropdown}`"
+          v-if="isDropDownVisible"
+      >
+        <template v-for="(option , index) in options" :key="index">
+          <router-link v-if="option?.url?.length > 0" class="text-decoration-none cursor-pointer text-black " :to="option.url">
+              <div class="p-[0.5rem] border-b-1 shadow-[1px_2px_0px_-1px_rgba(238,238,221,255)] text-black last-of-type:shadow-none last-of-type:border-b-none ">
+                <div class="flex justify-content-between bg-[#f0f8ff] rounded-md p-2 gap-3 hover:bg-[#cbe0f2] hover:text-black ">
+                  <div>
+                    <img v-if="option?.img?.length > 0" :src="option.img " alt="" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
+                  </div> 
+                  <div class="w-[80%]">
+                    <div class="flex justify-content-between">
+                      <div class="notifName">مهرداد کردی</div>
+                      <div class="notifDate text-slate-400 text-sm">۲ ساعت پیش</div>
+                    </div>
+                    <div> یک خبر را به اشتراک گذاشت </div>
+                    <div class="truncate max-w-[200px] border-r-[3px] border-r-indigo-600 pr-1 text-slate-600 text-sm">
+
+                      لیونل مسی، ستاره آرژانتینی دنیای فوتبال سرانجام و پس
+                            از 20 سال حضور در نیوکمپ، بارسلونا را ترک کرد و پاری
+                            سن ژرمن پیوست. در این ویدیو که کاری از تیفو فوتبال
+                            است به آمار و رکوردهای این بازیکن پرداخته شده است.
+                          
+
+                    </div>
+                  </div>
+                </div>
+                 
+              </div>
+          </router-link>
+        </template>
+      </div>
+    </Transition>
+   </div>
+</template>
+
+
+<style scoped>
+.dropdown-notif {
+  padding: 5px 10px;;
+  cursor: pointer;
+  max-width: 200px;
+} 
+
+.option-notif {
+    padding: 0.5rem 0.5rem;
+    box-sizing: border-box;
+    background: #ffffff;
+    box-shadow: 1px 1px 4px 1px #eee;
+    border-radius: 5px;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 9999;
+} 
+.dropdown-notif-option{
+  border-radius: 30px;
+    padding: 5px;
+    background: #ecf0f7;
+
+}
+
+.main-gradient {
+  background: #4b6cb7;  
+    background: linear-gradient(to right, #3f5483 , #182848);
+    color: white;
+}
+.profile-gradient {
+  background: linear-gradient(to right, #1CB5E0, #006cbdbd);
+  color: white;
+
+}
+
+/* .option:hover{
+  background: #06b4f9;
+  border-radius: 5px;
+} */
+
+/* .option{
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+    box-shadow: 1px 2px 0px -1px #EED;
+} */
+
+/* .option:last-of-type {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom: none;
+  box-shadow: none;
+
+} */
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}
+</style>
