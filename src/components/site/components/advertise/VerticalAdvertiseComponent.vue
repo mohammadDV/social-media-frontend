@@ -11,8 +11,8 @@
 
 <template>
     <div class="col-ads" v-for="(advertise, index) in advertises" :key="index">
-        <router-link :to="advertise.link" :title="advertise.title">
-            <img class="col-ad" :src="advertise.image" :alt="advertise.title"/>
-        </router-link>
+        <a :href="advertise.link"  :title="advertise.title" target="_blank">
+          <img class="col-ad" :src="advertise.image" :alt="advertise.title"/>
+        </a>
     </div>
 </template>

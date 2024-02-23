@@ -172,7 +172,7 @@ onMounted(() => {
                         <span v-else class="p-1 rounded btn-danger m-1" >{{ $t('site.Inactive') }}</span>
                 </template>
                 <template #item-place="item">
-                        <span>{{ places[item?.place_id]?.title }}</span>
+                        <span>{{ places[item?.place_id - 1]?.title }}</span>
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
