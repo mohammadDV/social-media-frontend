@@ -239,7 +239,7 @@ const tableData = reactive([
                     <h3 class="p-4 m-0 text-lg">اخبار باشگاه منچستر سیتی</h3>
                     <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
                 </div>
-                <div class="grid w-full py-2 ">
+                <div class="grid-box w-full py-2 ">
 
                     <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
                         <div class="flex flex-[20%]">
@@ -297,7 +297,7 @@ const tableData = reactive([
                     <h3 class="p-4 m-0 text-lg">ویدیوهای باشگاه منچستر سیتی</h3>
                     <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
                 </div>
-                <div class="grid1 w-full py-2 ">
+                <div class="grid-box1 w-full py-2 ">
 
                     <div class="flex-col gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
                         <div class="">
@@ -593,12 +593,12 @@ const tableData = reactive([
 .shadow-follow-box {
     box-shadow: 0px 0px 4px 0px #000000e0;
 }
-/* .grid{
+.grid-box{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
-} */
-.grid1{
+}
+.grid-box1{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;

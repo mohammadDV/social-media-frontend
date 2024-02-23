@@ -1,12 +1,13 @@
 <script setup>
-
     
-  import {useApi} from '@/utils/api.ts';
-  import { onMounted, onUnmounted, watch, reactive, ref } from 'vue';
-//   import userImage from '@/components/plugins/UserImage.vue'
-  import { useAuthStore } from '@/stores/auth.ts';
-  import { useI18n } from "vue-i18n";
-  import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
+    import {useApi} from '@/utils/api.ts';
+    import { onMounted, onUnmounted, watch, reactive, ref } from 'vue';
+    //   import userImage from '@/components/plugins/UserImage.vue'
+    import { useAuthStore } from '@/stores/auth.ts';
+    import { useI18n } from "vue-i18n";
+    import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
+    import DropDownNotif from '@/components/plugins/dropdown/DropDownNotif.vue';
+    import DropDownSearchBox from '@/components/plugins/dropdown/DropDownSearchBox.vue';
   const parentSelectedOption = ref(null);
   const { t } = useI18n();
   const accountMenu = ref( [
@@ -19,10 +20,20 @@
             title: t('site.Logout'),
             url: '/logout',
             icon: 'logout'
-        }
+        }        
     ]
     );
- 
+    const notifMenu = ref( [
+    
+        {
+            title: t('site.Logout'),
+            url: '/profile',
+            img: '../../../assets/site/images/user.jpg'
+        }
+    
+        
+    ]
+    );
   const authStore = useAuthStore();
   const state = reactive({
     search: '',
@@ -33,11 +44,11 @@
 
 const notifCount = ref(0);
 
-const resetSearch = () => {
-    state.search = '';
-    state.message = '';
-    state.users = [];
-}
+// const resetSearch = () => {
+//     state.search = '';
+//     state.message = '';
+//     state.users = [];
+// }
 
 // const logout = () => {
 //     authStore.logout();
@@ -96,7 +107,10 @@ onUnmounted(() => {
                     <router-link class="navbar-brand-profile" to="/" :title="$t('site.Main page')">
                         <img src="/profile/images/vt-logo.png" alt="logo" width="36" height="36"/>
                     </router-link>
-                    <div id="searchMember" class="navbar-search-group input-group d-none d-lg-flex">
+
+
+
+                     <!-- <div id="searchMember" class="navbar-search-group input-group d-none d-lg-flex">
                         <span class="input-group-text-profile" id="basic-addon1">
                             <span class="material-icons size-font-ahalf"> search </span>
                         </span>
@@ -117,7 +131,17 @@ onUnmounted(() => {
                         <div v-if="state?.message?.length > 0" class="max-h-[350px] overflow-scroll shadow-lg absolute z-10 top-[40px] w-full bg-gray-200">
                             <p class="p-2">{{ state.message }}</p>
                         </div>
-                    </div>
+                    </div>  -->
+
+
+                    <DropDownSearchBox 
+                    
+                    icon=""
+                                    color=""
+                                    name=""
+                                    :options="dropdownItems"
+                    
+                    />
                             <!-- <input id="searchLimit" class="form-control navbar-search" type="hidden" name="limit" value="50"/>
                             <input id="searchOffset"  class="form-control navbar-search" type="hidden" name="offset" value="0"/>
                             <div class="dropdown-menu is-right" aria-labelledby="dropdownSearch">
@@ -276,7 +300,7 @@ onUnmounted(() => {
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <router-link class="text-decoration-none" to="/profile/notifications">
+                                <!-- <router-link class="text-decoration-none" to="/profile/notifications">
                                     <button
                                         class="btn btn-light"
                                         type="button"
@@ -291,8 +315,8 @@ onUnmounted(() => {
                                             {{ notifCount }}
                                         </span>
                                     </button>
-                                </router-link>
-                                <div
+                                </router-link> -->
+                                <!-- <div
                                     class="dropdown-menu is-left"
                                     aria-labelledby="dropdownNotifications"
                                 >
@@ -368,7 +392,17 @@ onUnmounted(() => {
                                             مشاهده تمام اعلان ها
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
+
+
+                                <DropDownNotif
+                                icon="notifications"
+                                    color=""
+                                    float="left"
+                                    name=""
+                                    :options="notifMenu"
+                                    v-model="parentSelectedOption"
+                                   />
                             </li>
                             <li class="nav-item dropdown user-dropdown">
                                 <Dropdown
