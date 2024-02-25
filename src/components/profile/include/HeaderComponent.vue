@@ -77,10 +77,13 @@ watch(() => state.search, () => {
 });
 
 const getRpc = () => {
-    useApi().get('/api/profile/rpc')
-            .then((response) => {
-                notifCount.value = response.data.notification_count;
-            })
+    if (authStore?.user?.id > 0) {
+
+        useApi().get('/api/profile/rpc')
+                .then((response) => {
+                    notifCount.value = response.data.notification_count;
+                })
+    }
 }
 
 const autoInterval = ref([]);

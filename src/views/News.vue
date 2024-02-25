@@ -10,6 +10,7 @@
   import CommentComponent from '@/components/site/components/comments/CommentComponent';
   import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
+  import VideoPlayerComponent from '@/components/site/components/video/VideoPlayerComponent';
   
   const advertises = ref([]);
   const timestamp = ref('');
@@ -114,6 +115,7 @@
                     </div>
                     <div class="card vt-news-card mb-3">
                         <div class="card-body">
+                            <VideoPlayerComponent />
                             <div class="post">
                                 <div class="post--header">
                                       <!--  -->
