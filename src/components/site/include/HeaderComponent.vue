@@ -58,12 +58,14 @@ const search = ref('');
     <div class="relative w-full flex h-50 bg-vt-gradient mb-[130px] pb-5">
         <div class="flex-start">
             <template v-if="authStore.isAuthenticated">
-                <Dropdown
+                <div class="pt-[4px] px-3">
+                    <Dropdown
                     icon="person"
                     color="primary"
                     :name="authStore?.user?.nickname"
                     :options="accountMenu"
                     v-model="parentSelectedOption"/>
+                </div>
             </template>
             <template v-else>
                 <div class="flex button-type">
