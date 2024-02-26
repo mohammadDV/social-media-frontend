@@ -11,6 +11,10 @@
       type: Boolean,
       default: false
     },
+    dropDownIcon: {
+      type: Boolean,
+      default: true
+    },
     name: {
       type: String,
       require: true
@@ -26,6 +30,10 @@
     float: {
       type: String,
       default: 'right'
+    },
+    menuClass: {
+      type: String,
+      default: 'w-full'
     },
     modelValue: {
       default: null
@@ -106,9 +114,9 @@ const backgroundColorDropdown = computed(() => {
 const openDropdown = computed(() => {
     switch (props.float) {
     case 'left' :
-        return 'left-[-1em]';
+        return 'left-0';
     default:
-        return 'right-[-1em]';
+        return 'right-0';
     }
 });
 const iconColor = computed(() => {
@@ -170,12 +178,19 @@ const textColor = computed(() => {
     }
 });
 
+const dDIcon = computed(() => {
+    if (props.dropDownIcon) {
+      return 'dropdown-seleced-option'
+    }
+    return '';
+});
+
 
 </script>
 
 <template >
-   <div :class="`relative py-[5px] px-[14px] cursor-pointer max-w-[200px] ${sizeCss} ${borderColor} ${textColor} `" ref="dropDown">
-     <div :class="`dropdown-seleced-option rounded-[5px] p-[5px] flex justify-between items-center gap-[5px] ${backgroundColor} ${gradientColor}`" 
+   <div :class="`relative cursor-pointer max-w-[200px] ${sizeCss} ${borderColor} ${textColor} `" ref="dropDown">
+     <div :class="`${dDIcon} rounded-[5px] p-[5px] flex justify-between items-center gap-[5px] ${backgroundColor} ${gradientColor}`" 
      @click="toggleDropDown">
      <span v-if="icon?.length > 0" :class="`material-icons text-accent ${iconColor}`"> {{ icon }} </span>
        <span class="px-2 py-1">
@@ -184,7 +199,7 @@ const textColor = computed(() => {
     </div>
     
     <Transition name="slide-fade">
-      <div :class=" `w-full mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${openDropdown} ${backgroundColorDropdown}`"
+      <div :class=" `${menuClass} mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${openDropdown} ${backgroundColorDropdown}`"
           v-if="isDropDownVisible"
       >
         <template v-for="(option , index) in options" :key="index">

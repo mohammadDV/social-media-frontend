@@ -6,6 +6,17 @@
   import CommentWallComponent from '../comment/CommentWallComponent.vue';
   import CommentWallFormComponent from '../comment/CommentWallFormComponent.vue';
   import { useAuthStore } from '@/stores/auth.ts';
+  import jalaliMoment from 'moment-jalaali';
+  import { useI18n } from "vue-i18n";
+  import Dropdown from '@/components/plugins/dropdown/DropDown.vue';
+  const { t } = useI18n();
+  const accountMenu = ref( [
+        {
+            title: t('site.Edit'),
+            url: '/profile',
+        }
+    ]
+    );
 
     const authStore = useAuthStore();
 
@@ -67,21 +78,32 @@
 </script>
 
 <template>
-    <div class="card-body">
-        <div class="tweet-user-avatar">
-            <userImage :item="status?.user" />
-        </div>
-        <div class="tweet-info">
-            <div class="flex tweet-info-head">
-                <span class="tweet-user-name">
+    <div class="p-3">
+        <div class="flex gap-3">
+            <div class="">
+                <userImage addclass="w-[50px] h-[50px] rounded-full" :item="status?.user" />
+            </div>
+            <div class="flex-1 mt-2">
+                <div class="tweet-user-name">
                     <router-link class="text-black text-decoration-none" :to="`/member/${status?.user?.id}`">{{ status?.user?.nickname }}</router-link>
-                </span>
-                <span class="tweet-date">{{ status?.created_at }}</span>
+                </div>
+                <div class="tweet-date">
+                    {{ jalaliMoment(status.created_at).fromNow() }}
+                </div>
             </div>
-            <div class="tweet-body">
-                {{ status?.text }}
-                <img v-if="status?.file?.length > 0" :src="status.file"/>
+            <div class="">
+                <Dropdown
+                    :dropDownIcon="false"
+                    menuClass="w-[90px]"
+                    float="left"
+                    name="..."
+                    :options="accountMenu"
+                    v-model="parentSelectedOption"/>
             </div>
+        </div>
+        <div class="tweet-body mt-2 p-2">
+            {{ status?.text }}
+            <img v-if="status?.file?.length > 0" :src="status.file"/>
         </div>
         <div class="tweet-exes">
             <button @click="likeStatus(status.id)" :class="{

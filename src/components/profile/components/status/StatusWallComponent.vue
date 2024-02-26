@@ -1,14 +1,21 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref, watch, defineProps } from 'vue';
   import statusCardComponent from './StatusCardComponent.vue'
   import { useRoute } from 'vue-router';
   import VTButton from '@/elements/VTButton'; 
 
+    const props = defineProps({
+        userId: {
+            type: Number,
+            default: 0
+        }
+    });
     const items = ref([]);
     const page = ref(1);
     const more = ref(false);
+    const identifier = ref(false);
     const loading = ref(false);
     const route = useRoute();
 
@@ -16,8 +23,17 @@
 
         loading.value = true;
         let url = `/api/statuses?page=${page.value}`;
-        if (route?.params?.id?.length > 0) {
-            url = `/api/statuses/${route?.params?.id}?page=${page.value}`;
+
+
+        identifier.value = props.userId;
+
+        if (identifier.value < 1 && route?.params?.id?.length > 0) {
+            identifier.value = route?.params?.id?.length;
+        }
+
+
+        if (identifier.value > 0) {
+            url = `/api/statuses/${identifier.value}?page=${page.value}`;
         }
 
         if (page.value == 1) {

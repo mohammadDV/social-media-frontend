@@ -1,5 +1,5 @@
 <template>
-    <li role="presentation" :class="{ active: isActive }">
+    <li role="presentation" :class="{ 'active': isActive }">
         <a :class="{
             'nav-link': true,
             'active': isActive,
