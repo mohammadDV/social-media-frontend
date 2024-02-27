@@ -7,9 +7,9 @@
       type: Array,
       require: true
     },
-    isSelector: {
-      type: Boolean,
-      default: false
+    type: {
+      type: String,
+      default: 'menu'
     },
     dropDownIcon: {
       type: Boolean,
@@ -51,10 +51,10 @@
   const emit = defineEmits(['update:modelValue'])
 
   const toggleOptionSelect = (option) => {
-    if (props.isSelector) {
+    if (props.type == 'selector') {
       selectedOption.value = option?.title;
     }
-    emit('update:modelValue',option)
+    emit('update:modelValue', option)
     closeDropDown(option)
   }
 
@@ -203,13 +203,13 @@ const dDIcon = computed(() => {
           v-if="isDropDownVisible"
       >
         <template v-for="(option , index) in options" :key="index">
-          <router-link v-if="option?.url?.length > 0 && !isSelector" :class="`text-decoration-none cursor-pointer ${textColor}`" :to="option.url">
+          <router-link v-if="option?.url?.length > 0 && type == 'menu'" :class="`text-decoration-none cursor-pointer ${textColor}`" :to="option.url">
               <div :class="`p-[0.5rem] border-b-1 shadow-[1px_2px_0px_-1px_rgba(238,238,221,255)] hover:text-white hover:rounded-[5px] last-of-type:shadow-none last-of-type:border-b-none ${hoverBackgroundColor}`">
                   <span v-if="option?.icon?.length > 0" class="material-icons ml-3"> {{ option.icon }} </span>
                   <span> {{ option.title }} </span>
               </div>
           </router-link>
-          <div v-else-if="isSelector" class="option" @click="toggleOptionSelect(option)">
+          <div v-else class="option" @click="toggleOptionSelect(option)">
             {{ option.title || option }}
           </div>
         </template>
