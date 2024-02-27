@@ -1,22 +1,81 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, defineProps, ref } from 'vue';
+  import { onMounted, defineProps, ref, onBeforeUnmount, reactive, defineEmits } from 'vue';
   import userImage from '@/components/plugins/UserImage.vue';
   import CommentWallComponent from '../comment/CommentWallComponent.vue';
   import CommentWallFormComponent from '../comment/CommentWallFormComponent.vue';
   import { useAuthStore } from '@/stores/auth.ts';
   import jalaliMoment from 'moment-jalaali';
+ import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
-  import Dropdown from '@/components/plugins/dropdown/DropDown.vue';
+  import VTModal from '@/elements/VTModal.vue'
+  import VTFile from '@/elements/VTFile.vue'
+  import VTTextArea from '@/elements/VTTextArea';
+  import VTButton from '@/elements/VTButton'; 
+ import VTSelect from "@/elements/VTSelect.vue";
   const { t } = useI18n();
-  const accountMenu = ref( [
-        {
-            title: t('site.Edit'),
-            url: '/profile',
+
+
+const emit = defineEmits(['updateData'])
+
+    
+const initialFormState = {
+    text: '',
+    file: '',
+    status: '',
+};
+
+const statusList = ref([
+    {
+        id:0,
+        title: t('site.Inactive')
+    },
+    {
+        id:1,
+        title: t('site.Active')
+    }
+  ]);
+
+ const canSubmit = ref(true);
+ const form = reactive({ ...initialFormState });
+
+ const updateStatus = () => {
+
+    if (!canSubmit.value) {
+        return '';
+    }
+    const $toast = useToast();
+
+    useApi().post(`/api/profile/status/${editId.value}`, form)
+    .then((response) => {
+        if (response.data.status) {
+            $toast.success(response.data.message);
+            resetForm()
         }
-    ]
-    );
+    })
+    .catch(error => {
+        if (error.response.data.status == 0) {
+            $toast.error(error.response.data.message);
+        }
+    })
+};
+
+const editId = ref(0)
+
+const resetForm = () => {
+    Object.assign(form, { ...initialFormState });
+    editId.value = 0;
+    isModalVisible.value = false;
+    emit('updateData');
+  };
+
+  const isModalVisible = ref(false);
+  const isDropDownVisible = ref('');
+
+  const showModal = () => {
+    isModalVisible.value = true;
+  }
 
     const authStore = useAuthStore();
 
@@ -71,10 +130,43 @@
                     comments.value = response.data;
                 });
     }
+
+    const shoeEditStatus = (id) => {
+        editId.value = id;
+        useApi().get(`/api/status/preview/${id}`)
+            .then((response) => {
+                Object.assign(form, { ...response.data });
+            });
+        showModal();
+
+    }
+
+    const dropDown = ref(null)
+
+    const toggleDropDown = () => {
+        isDropDownVisible.value = !isDropDownVisible.value
+    }
+
+    const closeDropDown = (element) => {
+        if(!dropDown.value.contains(element.target)){
+        isDropDownVisible.value = false
+        }
+    }
+
+    const getFileLink = (item) => {
+        form.file = item;
+        canSubmit.value = true;
+    };
     
     onMounted(() => {
+        window.addEventListener('click',closeDropDown) 
         checkLike();
     });
+
+    onBeforeUnmount(() => {
+        window.removeEventListener('click',closeDropDown) 
+    });
+    
 </script>
 
 <template>
@@ -92,13 +184,28 @@
                 </div>
             </div>
             <div class="">
-                <Dropdown
-                    :dropDownIcon="false"
-                    menuClass="w-[90px]"
-                    float="left"
-                    name="..."
-                    :options="accountMenu"
-                    v-model="parentSelectedOption"/>
+                <div :class="`relative cursor-pointer max-w-[200px]`" ref="dropDown">
+                    <div :class="`border border-gray-200 rounded-[5px] p-[5px] flex justify-between items-center gap-[5px]`" 
+                    @click="toggleDropDown">
+                        <span class="px-2 py-1">
+                            ...
+                        </span>   
+                    </div>
+                    <Transition name="slide-fade">
+                        <div :class=" `mt-[5px] w-[200px] left-0 border border-gray-100 bg-white rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50 p-[0.5rem]`"
+                            v-if="isDropDownVisible"
+                        >
+                            <div v-if="status.user.id === authStore.user.id" class="p-2 border-b option hover:bg-gray-100" @click="shoeEditStatus(status.id)">
+                                <span class="material-icons"> edit </span>
+                                {{ $t('site.Edit') }}
+                            </div>
+                            <div class="p-2 option hover:bg-gray-100">
+                                <span class="material-icons"> bookmark </span>
+                                {{ $t('site.Save') }}
+                            </div>
+                        </div>
+                    </Transition>
+                </div>
             </div>
         </div>
         <div class="tweet-body mt-2 p-2">
@@ -126,5 +233,47 @@
             <CommentWallFormComponent @updateComments="updateComments(status.id)" :model-id="status.id" model-type="status" />
             <CommentWallComponent @updateComments="updateComments(status.id)" :comments="comments" :model-id="status.id" model-type="status"/>
         </div>
+
+        
     </div>
+    <VTModal v-if="isModalVisible" v-model="isModalVisible" :title="$t('site.Please share your post')">
+        <div class="w-[300px] sm:w-[600px]">
+            <div class="mb-3">
+                <VTTextArea
+                    name="text"
+                    rows="4"
+                    v-model="form.text"
+                    :disabled="false"
+                    request-name="StatusRequest"
+                    :placeholder="$t('site.Please share your post')"/>
+            </div>
+            <div v-if="form.file?.length > 0">
+                <img class="thumbnail w-[100px] rounded mt-2" :src="form.file" alt="image">
+            </div>
+            <VTFile
+                class="mb-1"
+                :label="$t('site.Choose image')"
+                name="image"
+                @getFileLink="getFileLink"
+            ></VTFile>
+
+            <VTSelect 
+                class="mb-3"
+                :label="$t('site.Status')"
+                v-model="form.status" 
+                :options="statusList" 
+                optionsValueKey="id"
+                optionsDisplayValueKey="title"
+                name="status"/>
+
+            <VTButton 
+                class="btn btn-outline-secondary btn-sm" 
+                size="medium"
+                color="primary"  
+                @click="updateStatus()">
+                {{ $t('site.Submit post') }}
+            </VTButton>  
+            
+        </div>
+    </VTModal>
 </template>

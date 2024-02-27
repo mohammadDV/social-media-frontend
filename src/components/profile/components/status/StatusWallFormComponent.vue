@@ -37,7 +37,7 @@
   const sendStatus = () => {
     const $toast = useToast();
     useApi().post(`/api/profile/status/`, {
-        content: content.value, 
+        text: content.value, 
         file: file.value,
         status: 1
     })
@@ -74,7 +74,7 @@
         <div class="w-[300px] sm:w-[600px]">
             <div class="mb-3">
                 <VTTextArea
-                    name="content"
+                    name="text"
                     rows="4"
                     v-model="content"
                     :disabled="false"

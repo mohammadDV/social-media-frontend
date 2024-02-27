@@ -15,7 +15,6 @@
     const items = ref([]);
     const page = ref(1);
     const more = ref(false);
-    const identifier = ref(false);
     const loading = ref(false);
     const route = useRoute();
 
@@ -24,16 +23,10 @@
         loading.value = true;
         let url = `/api/statuses?page=${page.value}`;
 
-
-        identifier.value = props.userId;
-
-        if (identifier.value < 1 && route?.params?.id?.length > 0) {
-            identifier.value = route?.params?.id?.length;
-        }
-
-
-        if (identifier.value > 0) {
-            url = `/api/statuses/${identifier.value}?page=${page.value}`;
+        if (props.userId > 0) {
+            url = `/api/status/all/${props.userId}?page=${page.value}`;
+        } else if(route?.params?.id?.length > 0) {
+            url = `/api/statuses/${route?.params?.id}?page=${page.value}`;
         }
 
         if (page.value == 1) {
@@ -64,6 +57,11 @@
         getStatuses();
     } 
   });
+
+  const updateData = () => {
+    page.value = 1;
+    getStatuses();
+  }
     
     onMounted(() => {
         getStatuses();
@@ -87,7 +85,7 @@
     </div>
     <div class="tweet-reel">
         <div v-for="(status, index) in items" :key="index" class="card tweet-card">
-            <statusCardComponent 
+            <statusCardComponent @updateData="updateData"
                 :status="status"
             ></statusCardComponent>
         </div>

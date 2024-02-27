@@ -5386,7 +5386,6 @@ textarea.form-control-lg {
 .modal-body {
   position: relative;
   flex: 1 1 auto;
-  padding: 1rem;
 }
 
 .modal-footer {
