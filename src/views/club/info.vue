@@ -33,8 +33,12 @@ const tableData = reactive([
 <template>
   <div class="relative w-full h-[250px] bg">
     <div class="bg1 w-[70%] h-[250px]  ">
-        <div class=" flex items-center justify-start mr-[240px]">
-            <div class="m-[20px] flex gap-[10px] flex-col items-center">
+       
+     
+    </div>
+    <div class="container">
+        <div class=" flex items-center justify-start absolute top-[25px]">
+            <div class="m-[20px] flex gap-4 flex-col items-center">
                 <img class=" rounded-full w-[150px] h-[150px] " src="../../assets/site/images/user.jpg" alt="">
             </div>
             <div class="flex-col">
@@ -51,14 +55,14 @@ const tableData = reactive([
             </div>
             
         </div>
-     
     </div>
+   
   </div>
   <div class="container">
     <div class="text-lg my-[20px]">
       <p>بازی های منچسرسیتی</p>
     </div>
-    <div class="flex gap-[10px]">
+    <div class="flex gap-[10px] xs:flex-col sm:grid sm:grid-cols-2 md:grid md:grid-cols-2">
         <div class="shadow-games-box rounded-md w-full bg-white">
             <div class="flex flex-col bg-gray-300 p-[10px] gap-[10px] ">
                 <div class="flex gap-[10px]">
@@ -232,17 +236,17 @@ const tableData = reactive([
     </div>
 
 
-    <div class="flex mt-2">
-        <div class="flex-auto w-[70%]">
-            <div class="flex-auto flex-wrap ml-2 mb-3 mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2">
+    <div class="flex mt-2 sm:flex sm:flex-col-reverse xs:flex-col-reverse md:flex-col-reverse">
+        <div class="flex-auto w-[70%] xs:w-full sm:w-full md:w-full">
+            <div class="flex-auto flex-wrap ml-2 mb-3 mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2 xs:ml-0 sm:ml-0 md:ml-0">
                 <div class="flex justify-between bg-white rounded-md mb-2">
                     <h3 class="p-4 m-0 text-lg">اخبار باشگاه منچستر سیتی</h3>
                     <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
                 </div>
-                <div class="grid-box w-full py-2 ">
+                <div class="grid grid-cols-2 gap-2.5 w-full py-2 sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
 
-                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
-                        <div class="flex flex-[20%]">
+                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100 xs:flex xs:flex-col ">
+                        <div class="flex flex-[20%] ">
                             <a href=""><img class="rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
                         </div>
                         <div class="flex flex-col flex-[50%]">
@@ -257,8 +261,8 @@ const tableData = reactive([
                         </div>
                     </div>
 
-                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
-                        <div class="flex flex-[20%]">
+                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100 xs:flex xs:flex-col ">
+                        <div class="flex flex-[20%] ">
                             <a href=""><img class=" rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
                         </div>
                         <div class="flex flex-col flex-[50%]">
@@ -273,7 +277,7 @@ const tableData = reactive([
                         </div>
                     </div>
 
-                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
+                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100 xs:flex xs:flex-col ">
                         <div class="flex flex-[20%]">
                             <a href=""><img class=" rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
                         </div>
@@ -297,7 +301,7 @@ const tableData = reactive([
                     <h3 class="p-4 m-0 text-lg">ویدیوهای باشگاه منچستر سیتی</h3>
                     <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
                 </div>
-                <div class="grid-box1 w-full py-2 ">
+                <div class="grid grid-cols-3 gap-2.5 w-full py-2 sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
 
                     <div class="flex-col gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
                         <div class="">
@@ -352,8 +356,8 @@ const tableData = reactive([
 
       
 
-      <div class="flex-auto w-[20%] ">
-        <div class="bg-white rounded-md mr-2 mb-3 mt-2">
+      <div class="flex-auto w-[20%]  xs:w-full sm:w-full md:w-full">
+        <div class="bg-white rounded-md mr-2 mb-3 mt-2 sm:flex sm:flex-col xs:flex-col xs:mr-0 sm:mr-0 md:mr-0">
             <h3 class="p-3 m-0 mr-[3px] pr-[3px] text-lg bg-[#013577] text-white rounded-t-md ">جدول رده بندی</h3>
             <div class="m-2 p-2">
                 <table class="w-full">
@@ -422,7 +426,7 @@ const tableData = reactive([
             </div>
 
         </div>
-        <div class="bg-white rounded-md mr-2 mb-2 mt-2 pb-1">
+        <div class="bg-white rounded-md mr-2 mb-2 mt-2 pb-1 xs:mr-0 sm:mr-0 md:mr-0">
             <h3 class="p-3 m-0 mr-[3px] pr-[3px] text-lg bg-[#013577] text-white rounded-t-md ">مورد علاقه ها </h3>
             <div class="m-2 p-2  bg-[#f0f8ff] rounded-md">
                 <div class="flex gap-6">
@@ -437,20 +441,28 @@ const tableData = reactive([
                             
                             <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
                         </div>
-                        <div class="flex justify-start gap-1">
+                        <div class="flex justify-start gap-1  flex-wrap">
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                اینتر
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">اینتر</span>
+
+                                </div>
+                                
                             </a>
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">لاتزیو</span>
+                                </div>
                                 
-                                لاتزیو</a>
+                            </a>
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                
-                                بایرن</a>
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">بایرن</span>
+                                </div>
+                            </a>
                            
                         </div>
                      
@@ -471,20 +483,66 @@ const tableData = reactive([
                             
                             <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
                         </div>
-                        <div class="flex justify-start gap-1">
+                        <div class="flex justify-start gap-1  flex-wrap">
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                اینتر
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">لاتزیو</span>
+                                </div>
                             </a>
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-
-                                
-                                لاتزیو</a>
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">لاتزیو</span>
+                                </div>
+                            </a>
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">اینتر</span>
+
+                                </div>
+                            </a>
+                           
+                        </div>
+                     
+                    </div>
+                </div>
+            </div>
+            <div class="m-2 p-2 bg-[#f0f8ff] rounded-md">
+                <div class="flex gap-6">
+                    <div>
+                        <a href="">
+                            <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " src="../../assets/site/images/user.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="flex-col flex-[50%] gap-9">
+                        <div class="flex justify-content-between align-items-center mb-2">
+                            <a class="no-underline text-base text-black" href="">نام کاربر</a>
+                            
+                            <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
+                        </div>
+                        <div class="flex justify-start gap-1 flex-wrap">
+                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">اینتر</span>
+                                </div>
                                 
-                                بایرن</a>
+                            </a>
+                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">لاتزیو</span>
+                                </div>
+                            </a>
+                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">اینتر</span>
+
+                                </div>
+                            </a>
                            
                         </div>
                      
@@ -502,57 +560,27 @@ const tableData = reactive([
                     <div class="flex-col flex-[50%] gap-9">
                         <div class="flex justify-content-between align-items-center mb-2">
                             <a class="no-underline text-base text-black" href="">نام کاربر</a>
-                            
                             <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
                         </div>
-                        <div class="flex justify-start gap-1">
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                اینتر
+                        <div class="flex justify-start gap-1  flex-wrap">
+                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">اینتر</span>
+                                </div>
                             </a>
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-
-                                
-                                لاتزیو</a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                
-                                بایرن</a>
-                           
-                        </div>
-                     
-                    </div>
-
-                </div>
-            </div>
-            <div class="m-2 p-2 bg-[#f0f8ff] rounded-md">
-                <div class="flex gap-6">
-                    <div>
-                        <a href="">
-                            <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " src="../../assets/site/images/user.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="flex-col flex-[50%] gap-9">
-                        <div class="flex justify-content-between align-items-center mb-2">
-                            <a class="no-underline text-base text-black" href="">نام کاربر</a>
-                            
-                            <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
-                        </div>
-                        <div class="flex justify-start gap-1">
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                اینتر
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">لاتزیو</span>
+                                </div>
                             </a>
                             <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-
-                                
-                                لاتزیو</a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                
-                                بایرن</a>
+                                <div class="flex">
+                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                    <span class="">اینتر</span>
+                                </div>
+                            </a>
                            
                         </div>
                      
@@ -593,14 +621,15 @@ const tableData = reactive([
 .shadow-follow-box {
     box-shadow: 0px 0px 4px 0px #000000e0;
 }
-.grid-box{
+/* .grid-box{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
-}
-.grid-box1{
+} */
+/* .grid-box1{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
-}
+} */
+
 </style>

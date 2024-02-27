@@ -7,7 +7,9 @@
 
   import { useRoute } from 'vue-router';
 //   import userImage from '@/components/plugins/UserImage.vue';
-  import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
+  import Dropdown from '@/components/plugins/dropdown/DropDown.vue';
+  import DropDownMainSearch from '@/components/plugins/dropdown/DropDownMainSearch.vue';
+
   import { useI18n } from "vue-i18n";
 
   const { t } = useI18n();
@@ -251,12 +253,20 @@ const search = ref('');
                             <button class="btn vt-btn-white">سفارش تبلیغات</button>
                         </div>
                         <div class="search-container">
-                            <form action="/search">
+
+                            <!-- <form action="/search">
                                 <input class="form-control is-white" v-model="search" name="q" type="text" placeholder="جستجو اخبار، تیم ها، بازیکنان و ویدیو های ورزشی ..."/>
                                 <button class="btn vt-btv-primary">
                                     <span class="material-icons text-body-invert"> search </span>
                                 </button>
-                            </form>
+                            </form> -->
+
+                            <DropDownMainSearch
+                                icon=""
+                                color=""
+                                :options="dropdownItems"
+                                />
+                        
                         </div>
     
                         <div class="logo-wrap">
