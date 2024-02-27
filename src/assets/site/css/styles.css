@@ -6282,8 +6282,8 @@ a {
 
 section.header {
   box-shadow: var(--box-shadow);
-  border-radius: 0.5em;
-  overflow: hidden;
+  border-radius: 1em;
+  /* overflow: hidden; */
 }
 section.header .header-main {
   background-color: var(--color-basic-200);

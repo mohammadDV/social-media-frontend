@@ -1,8 +1,17 @@
 <template>
   <div class="flex-auto relative" ref="closeBox">
-    <input type="text" v-model="searchQuery"  @input="handleInput" class="w-full px-2 rounded-sm border-1 bg-[#edf1f7] py-2 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="جستجو کنید...">
-   
-    <ul v-if="showDropdown" :class="`absolute z-10 border border-gray-300 min-w-40 top-full opacity-100 transition-transform duration-600 ease-in-out delay-200 shadow-md w-full bg-white p-2 rounded-3 ${openDropdown}` ">
+    <div class="flex">
+      <input type="text" v-model="searchQuery"  @input="handleInput" class="w-full px-2 rounded-sm border-1 bg-[#edf1f7] py-2 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="جستجو کنید...">
+      <button class="btn vt-btv-primary">
+        <span class="material-icons text-body-invert"> search </span>
+      </button>
+
+    </div>
+
+
+
+    <ul v-if="showDropdown" class="absolute z-10 border border-gray-300 min-w-40 top-full opacity-100
+     transition-transform duration-600 ease-in-out delay-200 shadow-md w-full bg-white p-2 rounded-3  ">
       <li class="p-2 hover:bg-slate-200 hover:rounded-3 cursor-pointer" v-for="(item, index) in filteredItems" :key="index">
         <div class="flex gap-2 items-center ">
           <img src="../../../assets/site/images/user.jpg" alt="" class="shadow-follow-box rounded-full w-[30px] h-[30px]">
@@ -58,37 +67,37 @@
 </template>
 
 <script setup>
-import {computed,defineProps, ref, watch,onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch,onMounted, onBeforeUnmount } from 'vue';
 
     const searchQuery = ref('');
     const closeBox = ref('');
     const showDropdown = ref(false);
     const dropdownItems = ['Option 1', 'Option 2', 'Option 3'];
-    const props = defineProps ({
-    options: {
-      type: Array,
-      require: true
-    },
-    name: {
-      type: String,
-      require: true
-    },
-    icon: {
-      type: String,
-      default: ''
-    },
-    color: {
-      type: String,
-      default: 'primary'
-    },
-    float: {
-      type: String,
-      default: 'right'
-    },
-    modelValue: {
-      default: null
-    }
-  })
+  //   const props = defineProps ({
+  //   options: {
+  //     type: Array,
+  //     require: true
+  //   },
+  //   name: {
+  //     type: String,
+  //     require: true
+  //   },
+  //   icon: {
+  //     type: String,
+  //     default: ''
+  //   },
+  //   color: {
+  //     type: String,
+  //     default: 'primary'
+  //   },
+  //   float: {
+  //     type: String,
+  //     default: 'right'
+  //   },
+  //   modelValue: {
+  //     default: null
+  //   }
+  // })
     const handleInput = () => {
       showDropdown.value = searchQuery.value.length >= 2;
     };
@@ -99,14 +108,14 @@ import {computed,defineProps, ref, watch,onMounted, onBeforeUnmount } from 'vue'
     window.removeEventListener('click',closeDropDown) 
 });
     
-    const openDropdown = computed(() => {
-    switch (props.float) {
-    case 'left' :
-        return 'left-[-1em]';
-    default:
-        return 'right-[-1em]';
-    }
-});
+//     const openDropdown = computed(() => {
+//     switch (props.float) {
+//     case 'left' :
+//         return 'left-[-1em]';
+//     default:
+//         return 'right-[-1em]';
+//     }
+// });
 const closeDropDown = (element) => {
     if(!closeBox.value.contains(element.target)){
       showDropdown.value = false
