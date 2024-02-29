@@ -12,6 +12,7 @@ import MemberLayout from '@/layouts/MemberLayout.vue';
 // Import views
 import Home from '@/views/Home.vue';
 import News from '@/views/News.vue';
+import Page from '@/views/Page.vue';
 import Member from '@/views/member/index.vue';
 import Category from '@/views/Category.vue';
 import Tag from '@/views/Tag.vue';
@@ -119,6 +120,11 @@ const routes = [
         name: 'news',
         path: '/news/:id/:slug',
         component: News,
+      },
+      {
+        name: 'page',
+        path: '/page/:slug',
+        component: Page,
       },
       {
         name: 'category',

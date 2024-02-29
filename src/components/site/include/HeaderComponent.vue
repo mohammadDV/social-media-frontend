@@ -30,6 +30,7 @@
   const parentSelectedOption = ref(null);
   const authStore = useAuthStore();
   const categories = ref([]);
+  const pages = ref([]);
 //   const dropdown = ref(false);
 
 
@@ -43,15 +44,25 @@
 
 const search = ref('');
 
-  onMounted(() => {
-
-    search.value = route?.query?.q;
-
-
+const getActiveCategory = () => {
     useApi().get('/api/active-categories')
         .then((response) => {
             categories.value = response.data;
         })
+}
+const getActivePages = () => {
+    useApi().get('/api/pages')
+        .then((response) => {
+            pages.value = response.data;
+        })
+}
+  
+onMounted(() => {
+
+    search.value = route?.query?.q;
+
+    getActiveCategory();
+    getActivePages();
   });
 
 </script>
@@ -133,17 +144,8 @@ const search = ref('');
         </div>
         <div class="flex-grow text-left">
             <div class="flex flex-lg-row-reverse gap-3 p-3">
-                <div class="">
-                    <a href="" class="text-white text-decoration-none">تبلیغات</a>
-                </div>
-                <div class="">
-                    <a href="" class="text-white text-decoration-none">اخبار زنده</a>
-                </div>
-                <div class="">
-                    <a href="" class="text-white text-decoration-none">ارتباط با ما</a>
-                </div>
-                <div class="">
-                    <a href="" class="text-white text-decoration-none">درباره ما</a>
+                <div class="" v-for="(page, index) in pages" :key="index">
+                    <router-link class="text-white text-decoration-none" :to="`/page/${page.slug}`">{{ page.title }}</router-link>
                 </div>
             </div>
         </div>
