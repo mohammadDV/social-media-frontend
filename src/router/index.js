@@ -92,7 +92,7 @@ const routes = [
     path: '/club',
     meta: { 
       layout: 'club',
-      requiresAuth: true,
+      requiresAuth: false,
      },
     component: ClubLayout,
     children: [

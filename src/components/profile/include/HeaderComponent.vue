@@ -1,7 +1,7 @@
 <script setup>
     
     import {useApi} from '@/utils/api.ts';
-    import { onMounted, onUnmounted, watch, reactive, ref } from 'vue';
+    import { onMounted, onUnmounted, ref } from 'vue';
     //   import userImage from '@/components/plugins/UserImage.vue'
     import { useAuthStore } from '@/stores/auth.ts';
     import { useI18n } from "vue-i18n";
@@ -12,8 +12,8 @@
   const { t } = useI18n();
   const accountMenu = ref( [
         {
-            title: t('site.Profile'),
-            url: '/profile',
+            title: t('site.Main page'),
+            url: '/',
             icon: 'account_circle',
         },
         {
@@ -35,12 +35,7 @@
     ]
     );
   const authStore = useAuthStore();
-  const state = reactive({
-    search: '',
-    message: '',
-    users: [
-    ],
-});
+
 
 const notifCount = ref(0);
 
@@ -54,27 +49,7 @@ const notifCount = ref(0);
 //     authStore.logout();
 // };
 
-const memberSearch = () => {
-useApi().post('/api/user/search', state)
-    .then((response) => {
-        if (response.data.data?.length) {
-            state.message = '';
-            state.users = response.data.data;
-        }
-        if (!response.data.to) {
-            state.users = [];
-            state.message = t('site.nothing here');
-        }
-    })
-}
 
-watch(() => state.search, () => {
-    if (state.search) {
-        memberSearch();
-    } else {
-        state.users = [];
-    }
-});
 
 const getRpc = () => {
     if (authStore?.user?.id > 0) {
@@ -137,171 +112,15 @@ onUnmounted(() => {
                     </div>  -->
 
 
-                    <DropDownSearchBox 
-                    
-                    icon=""
-                                    color=""
-                                    name=""
-                                    :options="dropdownItems"
-                    
-                    />
-                            <!-- <input id="searchLimit" class="form-control navbar-search" type="hidden" name="limit" value="50"/>
-                            <input id="searchOffset"  class="form-control navbar-search" type="hidden" name="offset" value="0"/>
-                            <div class="dropdown-menu is-right" aria-labelledby="dropdownSearch">
-                                <div class="vt-dropdown-search">
-                                    <div class="search-list card-itemlist vt-dropdown-search-results">
-                                        {{-- <a class="item align-baseline-force result-item">
-                                            <div class="item-avatar">
-                                                <img
-                                                    src="/assets/profile/images/users/gPZwCbdS.jpg"
-                                                    alt="user's avatar"
-                                                />
-                                            </div>
-                                            <span>پرسپولیس</span>
-                                        </a>
-                                        <a class="result-item">
-                                            <span>پاری سن ژرمن</span>
-                                        </a>
-                                        <a class="result-item">
-                                            <span>پرز</span>
-                                        </a>
-                                        <a class="result-item">
-                                            <span>پخش زنده</span>
-                                        </a>
-                                        <a class="result-item">
-                                            <span>داریوش تاج پرست</span>
-                                        </a> --}}
-                                    </div>
-    
-    
-                                    {{-- <div class="section-title">
-                                        <span class="material-icons"> schedule </span>
-                                        <span>تاریخچه جستجو</span>
-                                    </div>
-                                    <div class="vt-dropdown-search-history">
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> schedule </span>
-                                            <span class="tag-name">مسی</span>
-                                        </a>
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> schedule </span>
-                                            <span class="tag-name">پرسپولیس</span>
-                                        </a>
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> schedule </span>
-                                            <span class="tag-name">رونالدو</span>
-                                        </a>
-                                    </div>
-                                    <div class="section-title">
-                                        <span class="material-icons"> local_fire_department </span>
-                                        <span>داغ ترینها</span>
-                                    </div>
-                                    <div class="vt-dropdown-search-trends">
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> tag </span>
-                                            <span class="tag-name">استقلال</span>
-                                        </a>
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> tag </span>
-                                            <span class="tag-name">پرسپولیس</span>
-                                        </a>
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> tag </span>
-                                            <span class="tag-name">تراکتورسازی</span>
-                                        </a>
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> tag </span>
-                                            <span class="tag-name">مسی</span>
-                                        </a>
-                                        <a class="btn btn-primary search-tag" href="#">
-                                            <span class="material-icons tag-icon"> tag </span>
-                                            <span class="tag-name">داربی</span>
-                                        </a>
-                                    </div> --}}
-                                </div>
-                            </div> -->
-                    <!-- </div> -->
-
+                    <DropDownSearchBox :options="dropdownItems"/>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav mb-lg-2 mb-lg-0">
-                            <li class="nav-item dropdown d-block d-lg-none">
-                                <button
-                                    class="btn btn-light"
-                                    type="button"
-                                    id="dropdownMobileSearch"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    <span class="material-icons size-font-ahalf"> search </span>
-                                </button>
-
-                                <div class="dropdown-menu is-left" aria-labelledby="dropdownMobileSearch">
-                                    <div class="vt-dropdown-search">
-                                        <div class="input-group w-full">
-                                            <span class="input-group-text-profile" id="basic-addon1">
-                                            <span class="material-icons size-font-ahalf">
-                                                search
-                                            </span>
-                                            </span>
-                                            <form class="searchMember">
-                                                <input class="form-control navbar-search" type="search" placeholder="جستجو" aria-label="Search" id="dropdownSearch" data-bs-toggle="dropdown" aria-expanded="false"/>
-                                        .    </form>
-                                        </div>
-                                        <div class="vt-dropdown-search-history flex-wrap">
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon">
-                                                    schedule
-                                                </span>
-                                                <span class="tag-name">مسی</span>
-                                            </a>
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon">
-                                                    schedule
-                                                </span>
-                                                <span class="tag-name">پرسپولیس</span>
-                                            </a>
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon">
-                                                    schedule
-                                                </span>
-                                                <span class="tag-name">رونالدو</span>
-                                            </a>
-                                        </div>
-                                        <div class="section-title">
-                                            <span class="material-icons">
-                                            local_fire_department
-                                            </span>
-                                            <span>داغ ترینها</span>
-                                        </div>
-                                        <div class="vt-dropdown-search-trends flex-wrap">
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon"> tag </span>
-                                                <span class="tag-name">استقلال</span>
-                                            </a>
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon"> tag </span>
-                                                <span class="tag-name">پرسپولیس</span>
-                                            </a>
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon"> tag </span>
-                                                <span class="tag-name">تراکتورسازی</span>
-                                            </a>
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon"> tag </span>
-                                                <span class="tag-name">مسی</span>
-                                            </a>
-                                            <a class="btn btn-primary search-tag" href="#">
-                                                <span class="material-icons tag-icon"> tag </span>
-                                                <span class="tag-name">داربی</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                        <div>
+                            <ul class="navbar-nav items-center">
+                            
                             <li class="nav-item dropdown">
                                 <!-- <router-link class="text-decoration-none" to="/profile/notifications">
                                     <button
@@ -319,83 +138,7 @@ onUnmounted(() => {
                                         </span>
                                     </button>
                                 </router-link> -->
-                                <!-- <div
-                                    class="dropdown-menu is-left"
-                                    aria-labelledby="dropdownNotifications"
-                                >
-                                    <div class="vt-dropdown-notification-reel">
-                                        <div class="notification">
-                                            <a href="#" class="stretched-link"></a>
-                                            <div class="notification-avatar-container">
-                                                <img class="inline" v-if="authStore?.user?.profile_photo_path?.length > 0" :src="authStore?.user?.profile_photo_path" :alt="authStore?.user?.nickname" />
-                                                <img class="inline" v-else src="/assets/site/images/user-icon.png" :alt="authStore?.user?.nickname" />
-                                            </div>
-                                            <div class="notification-info-container">
-                                                <div class="notification-actor">مهرداد کردی</div>
-                                                <div class="notification-date">2 ساعت پیش</div>
-                                                <div class="notification-action">
-                                                    یک خبر را به اشتراک گذاشت
-                                                </div>
-                                                <div class="notification-details">
-                                                    لیونل مسی، ستاره آرژانتینی دنیای فوتبال سرانجام و پس
-                                                    از 20 سال حضور در نیوکمپ، بارسلونا را ترک کرد و پاری
-                                                    سن ژرمن پیوست. در این ویدیو که کاری از تیفو فوتبال
-                                                    است به آمار و رکوردهای این بازیکن پرداخته شده است.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="notification">
-                                            <a href="#" class="stretched-link"></a>
-                                            <div class="notification-avatar-container">
-                                                <img
-                                                    src="/assets/profile/images/users/pexels-photo-764529.jpeg"
-                                                    alt=""
-                                                />
-                                            </div>
-                                            <div class="notification-info-container">
-                                                <div class="notification-actor">احمد بارسلونا</div>
-                                                <div class="notification-date">3 ساعت پیش</div>
-                                                <div class="notification-action">
-                                                    نظر شما را لایک کرد
-                                                </div>
-                                                <div class="notification-details">
-                                                    لیونل مسی، ستاره آرژانتینی دنیای فوتبال سرانجام و پس
-                                                    از 20 سال حضور در نیوکمپ، بارسلونا را ترک کرد و پاری
-                                                    سن ژرمن پیوست. در این ویدیو که کاری از تیفو فوتبال
-                                                    است به آمار و رکوردهای این بازیکن پرداخته شده است.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="notification">
-                                            <a href="#" class="stretched-link"></a>
-                                            <div class="notification-avatar-container">
-                                                <img
-                                                    src="/assets/profile/images/users/gPZwCbdS.jpg"
-                                                    alt=""
-                                                />
-                                            </div>
-                                            <div class="notification-info-container">
-                                                <div class="notification-actor">احمد بارسلونا</div>
-                                                <div class="notification-date">3 ساعت پیش</div>
-                                                <div class="notification-action">
-                                                    نظر شما را لایک کرد
-                                                </div>
-                                                <div class="notification-details">
-                                                    لیونل مسی، ستاره آرژانتینی دنیای فوتبال سرانجام و پس
-                                                    از 20 سال حضور در نیوکمپ، بارسلونا را ترک کرد و پاری
-                                                    سن ژرمن پیوست. در این ویدیو که کاری از تیفو فوتبال
-                                                    است به آمار و رکوردهای این بازیکن پرداخته شده است.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="vt-dropdown-executables">
-                                        <button class="btn btn-primary is-full">
-                                            مشاهده تمام اعلان ها
-                                        </button>
-                                    </div>
-                                </div> -->
+                               
 
 
                                 <DropDownNotif
@@ -521,6 +264,7 @@ onUnmounted(() => {
                                 </div> -->
                             </li>
                         </ul>
+                        </div>
                     </div>
                 </div>
             </nav>
