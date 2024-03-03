@@ -72,9 +72,9 @@
 
 <template >
     <div class="dropdown-notif relative py-4 px-[14px] cursor-pointer max-w-[200px] " ref="notifDropDown">
-     <div class="dropdown-notif-option rounded-[5px] p-4 profile-gradient" 
+     <div class="dropdown-notif-option rounded-[5px] p-4 bg-primary" 
      @click="toggleDropDown">
-     <span v-if="icon?.length > 0" class="material-icons text-accent " @click="mappedSelecedOption"> {{ icon }} </span>
+     <span v-if="icon?.length > 0" class="material-icons text-white " @click="mappedSelecedOption"> {{ icon }} </span>
        <!-- <span class="px-2 py-1">
         {{mappedSelecedOption}}
        </span>    -->
@@ -138,7 +138,6 @@
 .dropdown-notif-option{
   border-radius: 30px;
     padding: 5px;
-    background: #ecf0f7;
 
 }
 
@@ -147,31 +146,6 @@
     background: linear-gradient(to right, #3f5483 , #182848);
     color: white;
 }
-.profile-gradient {
-  background: linear-gradient(to right, #1CB5E0, #006cbdbd);
-  color: white;
-
-}
-
-/* .option:hover{
-  background: #06b4f9;
-  border-radius: 5px;
-} */
-
-/* .option{
-    padding: 0.5rem;
-    box-sizing: border-box;
-    border-bottom: 1px solid #eee;
-    box-shadow: 1px 2px 0px -1px #EED;
-} */
-
-/* .option:last-of-type {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom: none;
-  box-shadow: none;
-
-} */
 
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;

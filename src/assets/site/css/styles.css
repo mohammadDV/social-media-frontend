@@ -4234,9 +4234,6 @@ textarea.form-control-lg {
   flex-wrap: nowrap;
   justify-content: flex-start;
 }
-.navbar-expand .navbar-nav {
-  flex-direction: row;
-}
 .navbar-expand .navbar-nav .dropdown-menu {
   position: absolute;
 }
@@ -12780,4 +12777,8 @@ html[dir=rtl] .news-item .material-icons {
 
 .bg-vt {
   background-color: var(--color-basic-800);
+}
+
+.bg-vt-dark {
+  background-color: var(--color-basic-700);
 }

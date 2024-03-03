@@ -108,7 +108,7 @@ const backgroundColorDropdown = computed(() => {
     case 'primary' :
         return 'bg-[#384c78] ';
     default:
-        return 'profile-gradient ';
+        return 'bg-primary ';
     }
 });
 const openDropdown = computed(() => {
@@ -122,13 +122,13 @@ const openDropdown = computed(() => {
 const iconColor = computed(() => {
     switch (props.color) {
     case 'primary' :
-        return 'text-blue';
+        return 'text-accent';
     case 'danger' :
         return 'text-red';
     case 'dark' :
         return 'text-black';
     default:
-        return 'text-gray-400';
+        return 'text-white';
     }
 });
 
@@ -150,7 +150,7 @@ const gradientColor = computed(() => {
     case 'primary' :
         return 'main-gradient';
     case 'profile'   :
-    return 'profile-gradient ';
+    return 'bg-primary';
 
     default:
         return '';
@@ -189,11 +189,11 @@ const dDIcon = computed(() => {
 </script>
 
 <template >
-   <div :class="`relative cursor-pointer max-w-[200px] ${sizeCss} ${borderColor} ${textColor} `" ref="dropDown">
+   <div :class="`relative cursor-pointer max-w-[210px] ${sizeCss} ${borderColor} ${textColor} `" ref="dropDown">
      <div :class="`${dDIcon} rounded-[5px] p-[5px] flex justify-between items-center gap-[5px] ${backgroundColor} ${gradientColor}`" 
      @click="toggleDropDown">
-     <span v-if="icon?.length > 0" :class="`material-icons text-accent ${iconColor}`"> {{ icon }} </span>
-       <span class="px-2 py-1">
+     <span v-if="icon?.length > 0" :class="`material-icons ${iconColor}`"> {{ icon }} </span>
+       <span class="">
         {{mappedSelecedOption}}
        </span>   
     </div>
@@ -242,7 +242,7 @@ const dDIcon = computed(() => {
     color: white;
 }
 .profile-gradient {
-  background: linear-gradient(to right, #1CB5E0, #006cbdbd);
+  background: #06b4f9;
   color: white;
 
 }

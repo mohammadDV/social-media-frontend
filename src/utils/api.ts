@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// import router from '@/router';
+import router from '@/router';
 
 import { useAuthStore } from "@/stores/auth";
 
@@ -38,6 +38,13 @@ export function useApi() {
             message = "اتصال شما به اینترنت قطع شده است";
         }
 
+        if (error.response?.status === 401) {
+            authStore.logout();
+            router.push({
+                name:'login'
+            })
+        }   
+
         if (error.response?.status === 403) {
             authStore.logout();
         }
@@ -45,7 +52,7 @@ export function useApi() {
             // if (endpoint.includes("login"))
             //     message = "شماره همراه و رمز عبور مطابقت ندارند";
             // else {
-                message = "لطفا مجددا وارد شوید!";
+                // message = "لطفا مجددا وارد شوید!";
                 // resetAuth();
                 // setTimeout(() => {
                 //     navigateTo("/admin/auth/login");

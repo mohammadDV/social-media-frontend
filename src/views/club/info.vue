@@ -1,635 +1,280 @@
 <script lang="ts" setup>
  
-//   import {useApi} from '../../utils/api';
-//   import { ref, watch } from "vue";
-//   import jalaliMoment from 'moment-jalaali';
+  import {useApi} from '../../utils/api';
+  import { ref, onMounted, watch} from "vue";
+  import { useRoute } from 'vue-router';
+  import jalaliMoment from 'moment-jalaali';
+  import VTButton from '@/elements/VTButton'; 
 //   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
 //   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
 //   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
 //   import { useToast } from "vue-toast-notification";
 //   import { useI18n } from "vue-i18n";  
 //   import { useAuthStore } from '../../stores/auth';
-import { reactive } from 'vue';
 
-const tableData = reactive([
-      { column1: '1', column2: 'منچستزسیتی', column3: '24' , column4: '64'},
-      { column1: '2', column2: 'لیورپول', column3: '24' , column4: '60'},
-      { column1: '3', column2: 'اورتون', column3: '24' , column4: '54'}
-    ]);
+const info = ref([]);
+const posts = ref([]);
+const videos = ref([]);
+const clubs = ref([]);
+const matches = ref([]);
 
+const route = useRoute();
 
-    const addItem = () => {
-      tableData.push({
-        column1: 'ردیف جدید',
-        column2: 'تیم جدید',
-        column3: 'بازی جدید',
-        column4: 'امتیاز جدید'
-      });
-    };
+const getData = () => {
+useApi().get(`/api/club/${route.params.id}`)
+    .then((response) => {
+        info.value = response.data?.info;
+        posts.value = response.data?.posts;
+        videos.value = response.data?.videos;
+        clubs.value = response.data?.clubs;
+        matches.value = response.data?.matches;
+    });
+}
+
+const followers = ref([]);
+const page = ref(1);
+const more = ref(false);
+const loading = ref(false);
+
+const getFollowers = () => {
+    loading.value = true;
+
+    if (page.value == 1) {
+        followers.value = [];
+    }
+
+    useApi().post(`/api/club/${route.params.id}/followers`)
+        .then((response) => {
+
+            followers.value.push(...response.data.data);
+
+            if (response.data.total > page.value * response.data.per_page) {
+                more.value = true;
+            } else {
+                more.value = false;
+            }
+
+            page.value++;
+        })
+        .finally(() => {
+            loading.value = false;
+        })
+}
+
+    watch(() => route.params.id, () => {
+        if (route.params.id) {
+            page.value = 1;
+            getData();
+            getFollowers();
+        } 
+    });
+
+    onMounted(() => {
+        getData();
+        getFollowers();
+    });
+
 
 
 </script>
 
 <template>
-  <div class="relative w-full h-[250px] bg">
-    <div class="bg1 w-[70%] h-[250px]  ">
-       
-     
-    </div>
-    <div class="container">
-        <div class=" flex items-center justify-start absolute top-[25px]">
-            <div class="m-[20px] flex gap-4 flex-col items-center">
-                <img class=" rounded-full w-[150px] h-[150px] " src="../../assets/site/images/user.jpg" alt="">
-            </div>
-            <div class="flex-col">
-                <h1 class="mb-0 m-[20px] text-white">
-                Team Name
-                </h1>
-                <div class="m-[20px] rounded-2 border-solid border-1 border-gray-300 flex items-center ">
-                <p class="text-white mb-0 border-l-2 p-2 border-gray-300">۸۰۰ نفر </p>
-                <button class="text-white   p-[10px]">
-                عضویت در کانون هواداران
 
-                </button>
+    <div class="main-gradient mb-10" >
+        <div class="relative container">
+            <div class="flex p-3">                
+                <div>
+                    <p class="mb-2 text-primary">{{ info?.sport?.title }}</p>
+                    <h1 class="ml-5 text-white">
+                        {{ info?.title }}
+                    </h1>
+                </div>
+                <div class="flex flex-col items-center text-white">
+                    <p class="text-md text-white mb-0 p-2 border-gray-300">۸۰۰ نفر </p>
+                    <VTButton 
+                        :loading="loading"
+                        :disabled="loading"
+                        class="w-full justify-center btn-outline-secondary btn-sm" 
+                        size="medium"
+                        color="primary"  
+                        @click="getFollowers()">
+                        {{ $t('site.Follow') }}
+                    </VTButton>
+                </div>
             </div>
+            <div class="absolute left-0 bottom-0 top-0 m-[20px] flex gap-4 flex-col items-center">
+                <img class=" rounded-full w-[150px] h-[150px]" :src="info.image" alt="">
             </div>
-            
         </div>
     </div>
-   
-  </div>
+    
+  <!-- </div> -->
   <div class="container">
     <div class="text-lg my-[20px]">
-      <p>بازی های منچسرسیتی</p>
+      <p>{{ $t("site.Club latest results") }} {{ info?.title }}</p>
     </div>
-    <div class="flex gap-[10px] xs:flex-col sm:grid sm:grid-cols-2 md:grid md:grid-cols-2">
-        <div class="shadow-games-box rounded-md w-full bg-white">
-            <div class="flex flex-col bg-gray-300 p-[10px] gap-[10px] ">
+    <div class="grid grid-cols-2 gap-2 md:grid-cols-6">
+        <div v-for="(match, index) in matches" :key="index" class="rounded-md w-full bg-white">
+            <div class="flex flex-col bg-vt-dark rounded-md text-white p-[10px] gap-[10px] ">
                 <div class="flex gap-[10px]">
                     <img alt="" src="https://match-cdn.varzesh3.com/football-league/2022/03/02/D/u2kqk4qa.png?w=15">
-                    <span>جام حذفی انگلیس</span>
+                    <span>{{ match?.step?.league?.title }}</span>
                 </div>
             </div>
             <div class="flex flex-col gap-[10px] p-[10px]">
                 <div class="flex justify-between">
                     <div class="flex gap-[10px]" >
-                        <img alt=""  src="https://static.farakav.com/files/pictures/01167877.png?w=20">
-                        <span>بلکبرن</span>
+                        <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_home?.title"  :src="match?.team_home?.image">
+                        <span>{{ match?.team_home?.title }}</span>
                     </div>
-                    <div class="">1</div>
+                    <div class="">{{ match?.hsc }}</div>
                 </div>
                 <div class="flex justify-between">
                     <div class="flex gap-[10px]">
-                        <img alt="" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/pykn41gz.png?w=20">
-                        <span>نیوکسل</span>
+                        <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_away?.title" :src="match?.team_away?.image">
+                        <span>{{ match?.team_away?.title }}</span>
                     </div>
-                    <div class="">2</div>
+                    <div class="">{{ match?.asc }}</div>
                 </div>
                 <div class="flex gap-[10px] border-t-2 border-dotted border-[#afb1b9] pt-2 ">
                     <img class="w-[20px]" alt="" src="https://static.varzesh3.com/img/icons/date-icon2.svg">
-                    <span>1402/12/08 23:15</span>            
+                    <span class="text-xs">{{ jalaliMoment(match.date).format('dddd jD jMMMM - HH:mm') }}</span>            
                 </div>
             </div>        
         </div>
-        <div class="shadow-games-box rounded-md w-full bg-white">
-            <div class="flex flex-col bg-gray-300 p-[10px] gap-[10px] ">
-                <div class="flex gap-[10px]">
-                    <img alt="" src="https://match-cdn.varzesh3.com/football-league/2022/03/02/D/u2kqk4qa.png?w=15">
-                    <span>جام حذفی انگلیس</span>
-                </div>
-            </div>
-            <div class="flex flex-col gap-[10px] p-[10px]">
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]" >
-                        <img alt=""  src="https://static.farakav.com/files/pictures/01167877.png?w=20">
-                        <span>بلکبرن</span>
-                    </div>
-                    <div class="">1</div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]">
-                        <img alt="" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/pykn41gz.png?w=20">
-                        <span>نیوکسل</span>
-                    </div>
-                    <div class="">2</div>
-                </div>
-                <div class="flex gap-[10px] border-t-2 border-dotted border-[#afb1b9] pt-2 ">
-                    <img class="w-[20px]" alt="" src="https://static.varzesh3.com/img/icons/date-icon2.svg">
-                    <span>1402/12/08 23:15</span>            
-                </div>
-            </div>        
-        </div>
-<div class="shadow-games-box rounded-md w-full bg-white">
-            <div class="flex flex-col bg-gray-300 p-[10px] gap-[10px] ">
-                <div class="flex gap-[10px]">
-                    <img alt="" src="https://match-cdn.varzesh3.com/football-league/2022/03/02/D/u2kqk4qa.png?w=15">
-                    <span>جام حذفی انگلیس</span>
-                </div>
-            </div>
-            <div class="flex flex-col gap-[10px] p-[10px]">
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]" >
-                        <img alt=""  src="https://static.farakav.com/files/pictures/01167877.png?w=20">
-                        <span>بلکبرن</span>
-                    </div>
-                    <div class="">1</div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]">
-                        <img alt="" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/pykn41gz.png?w=20">
-                        <span>نیوکسل</span>
-                    </div>
-                    <div class="">2</div>
-                </div>
-                <div class="flex gap-[10px] border-t-2 border-dotted border-[#afb1b9] pt-2 ">
-                    <img class="w-[20px]" alt="" src="https://static.varzesh3.com/img/icons/date-icon2.svg">
-                    <span>1402/12/08 23:15</span>            
-                </div>
-            </div>        
-        </div>
-<div class="shadow-games-box rounded-md w-full bg-white">
-            <div class="flex flex-col bg-gray-300 p-[10px] gap-[10px] ">
-                <div class="flex gap-[10px]">
-                    <img alt="" src="https://match-cdn.varzesh3.com/football-league/2022/03/02/D/u2kqk4qa.png?w=15">
-                    <span>جام حذفی انگلیس</span>
-                </div>
-            </div>
-            <div class="flex flex-col gap-[10px] p-[10px]">
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]" >
-                        <img alt=""  src="https://static.farakav.com/files/pictures/01167877.png?w=20">
-                        <span>بلکبرن</span>
-                    </div>
-                    <div class="">1</div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]">
-                        <img alt="" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/pykn41gz.png?w=20">
-                        <span>نیوکسل</span>
-                    </div>
-                    <div class="">2</div>
-                </div>
-                <div class="flex gap-[10px] border-t-2 border-dotted border-[#afb1b9] pt-2 ">
-                    <img class="w-[20px]" alt="" src="https://static.varzesh3.com/img/icons/date-icon2.svg">
-                    <span>1402/12/08 23:15</span>            
-                </div>
-            </div>        
-        </div>
-<div class="shadow-games-box rounded-md w-full bg-white">
-            <div class="flex flex-col bg-gray-300 p-[10px] gap-[10px] ">
-                <div class="flex gap-[10px]">
-                    <img alt="" src="https://match-cdn.varzesh3.com/football-league/2022/03/02/D/u2kqk4qa.png?w=15">
-                    <span>جام حذفی انگلیس</span>
-                </div>
-            </div>
-            <div class="flex flex-col gap-[10px] p-[10px]">
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]" >
-                        <img alt=""  src="https://static.farakav.com/files/pictures/01167877.png?w=20">
-                        <span>بلکبرن</span>
-                    </div>
-                    <div class="">1</div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]">
-                        <img alt="" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/pykn41gz.png?w=20">
-                        <span>نیوکسل</span>
-                    </div>
-                    <div class="">2</div>
-                </div>
-                <div class="flex gap-[10px] border-t-2 border-dotted border-[#afb1b9] pt-2 ">
-                    <img class="w-[20px]" alt="" src="https://static.varzesh3.com/img/icons/date-icon2.svg">
-                    <span>1402/12/08 23:15</span>            
-                </div>
-            </div>        
-        </div>
-<div class="shadow-games-box rounded-md w-full bg-white">
-            <div class="flex flex-col bg-gray-300 p-[10px] gap-[10px] ">
-                <div class="flex gap-[10px]">
-                    <img alt="" src="https://match-cdn.varzesh3.com/football-league/2022/03/02/D/u2kqk4qa.png?w=15">
-                    <span>جام حذفی انگلیس</span>
-                </div>
-            </div>
-            <div class="flex flex-col gap-[10px] p-[10px]">
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]" >
-                        <img alt=""  src="https://static.farakav.com/files/pictures/01167877.png?w=20">
-                        <span>بلکبرن</span>
-                    </div>
-                    <div class="">1</div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="flex gap-[10px]">
-                        <img alt="" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/pykn41gz.png?w=20">
-                        <span>نیوکسل</span>
-                    </div>
-                    <div class="">2</div>
-                </div>
-                <div class="flex gap-[10px] border-t-2 border-dotted border-[#afb1b9] pt-2 ">
-                    <img class="w-[20px]" alt="" src="https://static.varzesh3.com/img/icons/date-icon2.svg">
-                    <span>1402/12/08 23:15</span>            
-                </div>
-            </div>        
-        </div>
-
-       
     </div>
-
-
-    <div class="flex mt-2 sm:flex sm:flex-col-reverse xs:flex-col-reverse md:flex-col-reverse">
-        <div class="flex-auto w-[70%] xs:w-full sm:w-full md:w-full">
-            <div class="flex-auto flex-wrap ml-2 mb-3 mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2 xs:ml-0 sm:ml-0 md:ml-0">
+    <div class="md:flex mt-2 gap-3">
+        <div class="md:flex-auto md:w-[30%]">
+            <div class="bg-white rounded-md mr-2 mb-3 mt-2 sm:flex sm:flex-col xs:flex-col xs:mr-0 sm:mr-0 md:mr-0">
+                <h3 class="p-3 m-0 mr-[3px] pr-[3px] text-lg bg-vt-dark text-white rounded-t-md ">جدول رده بندی</h3>
+                <div class="m-2 p-2">
+                    <table class="w-full">
+                        <thead class="w-full">
+                            <tr class=" gap-[10px]">
+                                <th class="w-[15%] pb-3">{{ $t('site.Row') }}</th>
+                                <th class="w-[55%] pb-3">{{ $t('site.Team') }}</th>
+                                <th class="w-[20%] pb-3">{{ $t('site.Game count') }}</th>
+                                <th class="w-[15%] pb-3">{{ $t('site.Points') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(club, index) in clubs" :key="index" 
+                                :class="{'bg-[#d1d5db]' : club.id === info.id}">
+                                <td class="px-2 py-2 text-sm ">{{ index + 1 }}</td>
+                                <td class="py-2 flex">
+                                    <img class="rounded-full w-[25px] h-[25px] mx-1" :alt="club.title" width="30" :src="club.image">
+                                    <router-link :title="club.title" :to="`/club/${club.id}`" class="no-underline text-base text-black">
+                                        {{ club.title }}
+                                    </router-link>
+                                </td>
+                                <td class="py-2 text-sm ">{{ club?.pivot?.games_count }}</td>
+                                <td class="py-2 text-sm ">{{ club?.pivot?.points }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="bg-white rounded-md mr-2 mb-2 mt-2 pb-1 xs:mr-0 sm:mr-0 md:mr-0">
+                <h3 class="p-3 m-0 mr-[3px] pr-[3px] text-lg bg-vt-dark text-white rounded-t-md ">{{ $t('site.Fans') }} </h3>
+                <div class="p-2 max-h-[600px] overflow-auto">
+                    <div v-for="(follower, index) in followers" :key="index" class="mb-2 p-2 bg-[#f0f8ff] rounded-md">
+                        <div class="flex gap-6">
+                            <div>
+                                <router-link :to="`/member/${follower.id}`" class="no-underline">
+                                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
+                                </router-link>
+                            </div>
+                            <div class="flex-col flex-[50%] gap-9">
+                                <div class="flex justify-content-between align-items-center mb-2">
+                                    <router-link :to="`/member/${follower.id}`" class="no-underline text-base text-black">{{ follower.nickname }}</router-link>
+                                    <!-- <button class="border-1 border-solid bg-primary text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">{{ $t('site.View') }}</button> -->
+                                </div>
+                                <div class="flex justify-start gap-1  flex-wrap">
+                                    <router-link v-for="(club, index) in follower?.clubs" :key="index" :to="`/club/${club.id}`" class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-vt-dark rounded-md">
+                                        <div class="flex">
+                                            <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                            <span class="">{{ club.title }}</span>
+                                        </div>
+                                    </router-link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full" v-if="more">
+                        <VTButton 
+                            :loading="loading"
+                            :disabled="loading"
+                            class="w-full justify-center btn-outline-secondary btn-sm" 
+                            size="medium"
+                            color="primary"  
+                            @click="getFollowers()">
+                            {{ $t('site.More post')  }}
+                        </VTButton> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="search-material md:flex-auto md:w-[70%]">
+            <div class="flex-auto flex-wrap mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2">
                 <div class="flex justify-between bg-white rounded-md mb-2">
-                    <h3 class="p-4 m-0 text-lg">اخبار باشگاه منچستر سیتی</h3>
+                    <h3 class="p-4 m-0 text-lg">{{ $t("site.Club news") }} {{ info?.title }}</h3>
                     <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
                 </div>
-                <div class="grid grid-cols-2 gap-2.5 w-full py-2 sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
-
-                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100 xs:flex xs:flex-col ">
-                        <div class="flex flex-[20%] ">
-                            <a href=""><img class="rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
-                        </div>
-                        <div class="flex flex-col flex-[50%]">
-                            <h3><a class="no-underline text-base"  href="">حکم سنگین برای هوادار چلسی: ۳ سال محرومیت!</a></h3>
-                            <p class="text-sm">جیمی جامپ بازی چلسی-نیوکسل که پس از گل آبی‌ها به سمت مارتین دوبراوکا رفت، سه سال از حضور در ورزشگاه‌های فوتبال محروم شد.
-                            </p>
-                            <div class="flex gap-6">
-                                <div class="time text-gray-400 text-xs">۱۷ ساعت پیش</div>
-                                <div class="view text-gray-400 text-xs">۱۲۲نفر</div>
-                                <div class="comment text-gray-400 text-xs">نظرات</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
+                    <div class="cursor-pointer" v-for="(post, index) in posts" :key="index">
+                        <router-link :to="`/news/${post.id}/${post.slug}`" class="text-decoration-none flex p-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-white  hover:bg-gray-200 xs:flex xs:flex-col">
+                            <div class="flex-none">
+                                <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100 xs:flex xs:flex-col ">
-                        <div class="flex flex-[20%] ">
-                            <a href=""><img class=" rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
-                        </div>
-                        <div class="flex flex-col flex-[50%]">
-                            <h3><a class="no-underline text-base"  href="">حکم سنگین برای هوادار چلسی: ۳ سال محرومیت!</a></h3>
-                            <p class="text-sm">جیمی جامپ بازی چلسی-نیوکسل که پس از گل آبی‌ها به سمت مارتین دوبراوکا رفت، سه سال از حضور در ورزشگاه‌های فوتبال محروم شد.
-                            </p>
-                            <div class="flex gap-[10px]">
-                                <div class="time text-gray-400 text-xs">۱۷ ساعت پیش</div>
-                                <div class="view text-gray-400 text-xs">۱۲۲نفر</div>
-                                <div class="comment text-gray-400 text-xs">نظرات</div>
+                            <div class="flex-grow p-2">
+                                <h3 class="h-[20px] text-dark overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
+                                <p class="text-gray-400 text-xs h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
+                                <div id="search-material" class="flex gap-6 justify-between">
+                                    <div class="flex gap-2">
+                                    <div class="view text-gray-400 text-xs">
+                                        <span class="text-primary material-icons text-sm">visibility</span>
+                                        {{ post.view }}
+                                    </div>
+                                    </div>
+                                    <div class="time text-gray-400 text-xs">
+                                    <span class="text-primary material-icons text-sm">schedule</span>
+                                    {{ jalaliMoment(post.created_at).format('dddd jD jMMMM') }}
+                                </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100 xs:flex xs:flex-col ">
-                        <div class="flex flex-[20%]">
-                            <a href=""><img class=" rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
-                        </div>
-                        <div class="flex flex-col flex-[50%]">
-                            <h3><a class="no-underline text-base"  href="">حکم سنگین برای هوادار چلسی: ۳ سال محرومیت!</a></h3>
-                            <p class="text-sm">جیمی جامپ بازی چلسی-نیوکسل که پس از گل آبی‌ها به سمت مارتین دوبراوکا رفت، سه سال از حضور در ورزشگاه‌های فوتبال محروم شد.
-                            </p>
-                            <div class="flex gap-6">
-                                <div class="time text-gray-400 text-xs">۱۷ ساعت پیش</div>
-                                <div class="view text-gray-400 text-xs">۱۲۲نفر</div>
-                                <div class="comment text-gray-400 text-xs">نظرات</div>
-                            </div>
-                        </div>
+                        </router-link>
                     </div>
                 </div>
             </div>
-
-
-            <div class="flex-auto flex-wrap ml-2 mb-3 mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2">
+            <div class="flex-auto flex-wrap mb-3 mt-2 border-b-2">
                 <div class="flex justify-between bg-white rounded-md mb-2">
-                    <h3 class="p-4 m-0 text-lg">ویدیوهای باشگاه منچستر سیتی</h3>
+                    <h3 class="p-4 m-0 text-lg">{{ $t("site.Club videos") }} {{ info?.title }}</h3>
                     <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
                 </div>
-                <div class="grid grid-cols-3 gap-2.5 w-full py-2 sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
-
-                    <div class="flex-col gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
-                        <div class="">
-                            <a href=""><img class="rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <router-link :to="`/news/${post.id}/${post.slug}`" v-for="(post, index) in videos" :key="index" class="text-decoration-none flex-col p-2 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
+                        <div>
+                            <img class="rounded-md w-full h-[150px]" :src="post.image" :alt="post.title">
                         </div>
-                        <div class="flex flex-col my-3">
-                            <h3><a class="no-underline text-base"  href="">حکم سنگین برای هوادار چلسی: ۳ سال محرومیت!</a></h3>
-                      
-                            <div class="flex gap-6">
-                                <div class="time text-gray-400 text-xs">۱۷ ساعت پیش</div>
-                                <div class="view text-gray-400 text-xs">۱۲۲نفر</div>
-                                <div class="comment text-gray-400 text-xs">نظرات</div>
+                        <div class="flex-grow p-2">
+                            <h3 class="text-dark h-[20px] overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
+                            <p class="text-gray-400 text-xs h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
+                            <div id="search-material" class="flex gap-6 justify-between">
+                                <div class="flex gap-2">
+                                <div class="view text-gray-400 text-xs">
+                                    <span class="text-primary material-icons text-sm">visibility</span>
+                                    {{ post.view }}
+                                </div>
+                                </div>
+                                <div class="time text-gray-400 text-xs">
+                                <span class="text-primary material-icons text-sm">schedule</span>
+                                {{ jalaliMoment(post.created_at).format('dddd jD jMMMM') }}</div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="flex-col gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
-                        <div class="">
-                            <a href=""><img class=" rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
-                        </div>
-                        <div class="flex flex-col my-3 ">
-                            <h3><a class="no-underline text-base"  href="">حکم سنگین برای هوادار چلسی: ۳ سال محرومیت!</a></h3>
-                         
-                            <div class="flex gap-6">
-                                <div class="time text-gray-400 text-xs">۱۷ ساعت پیش</div>
-                                <div class="view text-gray-400 text-xs">۱۲۲نفر</div>
-                                <div class="comment text-gray-400 text-xs">نظرات</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex-col gap-3 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
-                        <div class="">
-                            <a href=""><img class=" rounded-md w-full h-[150px]" src="../../assets/site/images/poosstt.jpg" alt="img"></a>
-                        </div>
-                        <div class="flex flex-col my-3 ">
-                            <h3><a class="no-underline text-base"  href="">حکم سنگین برای هوادار چلسی: ۳ سال محرومیت!</a></h3>
-                          
-                            <div class="flex gap-6">
-                                <div class="time text-gray-400 text-xs">۱۷ ساعت پیش</div>
-                                <div class="view text-gray-400 text-xs">۱۲۲نفر</div>
-                                <div class="comment text-gray-400 text-xs">نظرات</div>
-                            </div>
-                        </div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>
-
-     
-     
-
-      
-
-      <div class="flex-auto w-[20%]  xs:w-full sm:w-full md:w-full">
-        <div class="bg-white rounded-md mr-2 mb-3 mt-2 sm:flex sm:flex-col xs:flex-col xs:mr-0 sm:mr-0 md:mr-0">
-            <h3 class="p-3 m-0 mr-[3px] pr-[3px] text-lg bg-[#013577] text-white rounded-t-md ">جدول رده بندی</h3>
-            <div class="m-2 p-2">
-                <table class="w-full">
-                    <thead class="w-full">
-                        <tr class=" gap-[10px]">
-                            <th class="w-[15%] pb-3">ردیف</th>
-                            <th class="w-[55%] pb-3">تیم</th>
-                            <th class="w-[15%] pb-3">بازی</th>
-                            <th class="w-[15%] pb-3">امتیاز</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- <tr class="bg-[#d1d5db]"  v-for="(item, index) in tableData" :key="index">
-                            <td class="p-2 text-sm ">{{ item.column1 }}</td>
-                            <td class="p-2 flex">
-                                <img alt="لیورپول" width="30" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/sl1c4w3f.png?w=30">
-                                <a class="no-underline text-base text-black" href="">{{ item.column2 }}</a>
-                            </td>
-                            <td class="p-2 text-sm ">{{ item.column3 }}</td>
-                            <td class="p-2 text-sm ">{{ item.column4 }}</td>
-                        </tr> -->
-                        <tr class="bg-[#d1d5db]">
-                            <td class="p-2 text-sm ">1</td>
-                            <td class="p-2 flex">
-                                <img alt="منچسرسیتی" width="30" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/sl1c4w3f.png?w=30">
-                                <a class="no-underline text-base text-black" href="">منچسرسیتی</a>
-                            </td>
-                            <td class="p-2 text-sm ">50</td>
-                            <td class="p-2 text-sm ">90</td>
-                        </tr>
-                        <tr class="">
-                            <td class="p-2 text-sm ">1</td>
-                            <td class="p-2 flex">
-                                <img alt="لیورپول" width="30" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/sl1c4w3f.png?w=30">
-                                <a class="no-underline text-base text-black" href="">لیورپول</a>
-                            </td>
-                            <td class="p-2 text-sm ">50</td>
-                            <td class="p-2 text-sm ">90</td>
-                        </tr>
-                        <tr class="">
-                            <td class="p-2 text-sm ">1</td>
-                            <td class="p-2 flex">
-                                <img alt="اورتون" width="30" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/sl1c4w3f.png?w=30">
-                                <a class="no-underline text-base text-black" href="">اورتون</a>
-                            </td>
-                            <td class="p-2 text-sm ">50</td>
-                            <td class="p-2 text-sm ">90</td>
-                        </tr>
-                        <tr class="">
-                            <td class="p-2 text-sm ">1</td>
-                            <td class="p-2 flex">
-                                <img alt="ارسنال" width="30" src="https://match-cdn.varzesh3.com/football-team/2022/07/12/C/sl1c4w3f.png?w=30">
-                                <a class="no-underline text-base text-black" href="">ارسنال</a>
-                            </td>
-                            <td class="p-2 text-sm ">50</td>
-                            <td class="p-2 text-sm ">90</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-                <div class="text-left p-2 text-blue-400 hover:text-blue-600">
-                    <button class="items-center" @click="addItem">جدول کامل</button>
-
-                </div>
-
-            </div>
-
-        </div>
-        <div class="bg-white rounded-md mr-2 mb-2 mt-2 pb-1 xs:mr-0 sm:mr-0 md:mr-0">
-            <h3 class="p-3 m-0 mr-[3px] pr-[3px] text-lg bg-[#013577] text-white rounded-t-md ">مورد علاقه ها </h3>
-            <div class="m-2 p-2  bg-[#f0f8ff] rounded-md">
-                <div class="flex gap-6">
-                    <div>
-                        <a href="">
-                            <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " src="../../assets/site/images/user.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="flex-col flex-[50%] gap-9">
-                        <div class="flex justify-content-between align-items-center mb-2">
-                            <a class="no-underline text-base text-black" href="">نام کاربر</a>
-                            
-                            <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
-                        </div>
-                        <div class="flex justify-start gap-1  flex-wrap">
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">اینتر</span>
-
-                                </div>
-                                
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">لاتزیو</span>
-                                </div>
-                                
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">بایرن</span>
-                                </div>
-                            </a>
-                           
-                        </div>
-                     
-                    </div>
-
-                </div>
-            </div>
-            <div class="m-2 p-2 bg-[#f0f8ff] rounded-md">
-                <div class="flex gap-6">
-                    <div>
-                        <a href="">
-                            <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " src="../../assets/site/images/user.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="flex-col flex-[50%] gap-9">
-                        <div class="flex justify-content-between align-items-center mb-2">
-                            <a class="no-underline text-base text-black" href="">نام کاربر</a>
-                            
-                            <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
-                        </div>
-                        <div class="flex justify-start gap-1  flex-wrap">
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">لاتزیو</span>
-                                </div>
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">لاتزیو</span>
-                                </div>
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">اینتر</span>
-
-                                </div>
-                            </a>
-                           
-                        </div>
-                     
-                    </div>
-                </div>
-            </div>
-            <div class="m-2 p-2 bg-[#f0f8ff] rounded-md">
-                <div class="flex gap-6">
-                    <div>
-                        <a href="">
-                            <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " src="../../assets/site/images/user.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="flex-col flex-[50%] gap-9">
-                        <div class="flex justify-content-between align-items-center mb-2">
-                            <a class="no-underline text-base text-black" href="">نام کاربر</a>
-                            
-                            <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
-                        </div>
-                        <div class="flex justify-start gap-1 flex-wrap">
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md"  href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">اینتر</span>
-                                </div>
-                                
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">لاتزیو</span>
-                                </div>
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">اینتر</span>
-
-                                </div>
-                            </a>
-                           
-                        </div>
-                     
-                    </div>
-
-                </div>
-            </div>
-            <div class="m-2 p-2 bg-[#f0f8ff] rounded-md">
-                <div class="flex gap-6">
-                    <div>
-                        <a href="">
-                            <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " src="../../assets/site/images/user.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="flex-col flex-[50%] gap-9">
-                        <div class="flex justify-content-between align-items-center mb-2">
-                            <a class="no-underline text-base text-black" href="">نام کاربر</a>
-                            <button class="border-1 border-solid bg-[#405de6] text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">دنبال کنید</button>
-                        </div>
-                        <div class="flex justify-start gap-1  flex-wrap">
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">اینتر</span>
-                                </div>
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">لاتزیو</span>
-                                </div>
-                            </a>
-                            <a class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-[#013577] rounded-md" href="">
-                                <div class="flex">
-                                    <span class="material-symbols-outlined text-[#06b4f9]">#</span>
-                                    <span class="">اینتر</span>
-                                </div>
-                            </a>
-                           
-                        </div>
-                     
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-
-      </div>
     </div>
   </div>
 </template>
-
-
-<style>
-
-.bg {
-  background-image: url('../../assets/site/images/CITY-LASTEST-BANNER-1.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  box-shadow: 0px 0px 15px 2px #05050573;
-}
-.bg1{
-  background: #000428;  
-  background: -webkit-linear-gradient(to left, #004e92, #000428);  
-  background: linear-gradient(to right, #004e9200, #317dbf);
-  padding: 20px;
-  z-index: 22;
-  border-radius: 280px 0px 0px 0px;
-}
-
-.shadow-games-box {
-    box-shadow: 0px -3px 0px 0px #babcbf;
-}
-.shadow-follow-box {
-    box-shadow: 0px 0px 4px 0px #000000e0;
-}
-/* .grid-box{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 15px;
-} */
-/* .grid-box1{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 10px;
-} */
-
-</style>

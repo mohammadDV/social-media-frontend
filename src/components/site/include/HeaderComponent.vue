@@ -71,8 +71,9 @@ onMounted(() => {
     <div class="relative w-full flex h-50 bg-vt-gradient mb-[130px] pb-5">
         <div class="flex-start">
             <template v-if="authStore.isAuthenticated">
-                <div class="pt-[4px] px-3">
+                <div class="py-[7px] px-3">
                     <Dropdown
+                    menuClass="min-w-[170px]"
                     icon="person"
                     color="primary"
                     :name="authStore?.user?.nickname"
@@ -263,11 +264,7 @@ onMounted(() => {
                                 </button>
                             </form> -->
 
-                            <DropDownMainSearch
-                                icon=""
-                                color=""
-                                :options="dropdownItems"
-                                />
+                            <DropDownMainSearch :options="dropdownItems" />
                         
                         </div>
     
@@ -276,9 +273,6 @@ onMounted(() => {
                                 <img src="/site/images/logo.png" alt="site's logo" />
                             </a>
                         </div>
-
-
-                        
                     </section>
                     <nav class="subheader-navbar navbar navbar-expand-lg navbar-dark bg-vt-gradient">
                         <div class="collapse navbar-collapse" id="navbarNav">
@@ -299,10 +293,8 @@ onMounted(() => {
                                 </li>
                             </ul>
                         </div>
-                        
                     </nav>
                 </section>
-                
             </header>
     </div>
    <div class="container-xxl">
