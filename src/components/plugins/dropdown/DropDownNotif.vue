@@ -1,6 +1,10 @@
 
 <script setup>
   import {computed, defineProps ,onMounted , onBeforeUnmount , ref} from 'vue';
+  import jalaliMoment from 'moment-jalaali';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
   const openDropdown = computed(() => {
     switch (props.float) {
     case 'left' :
@@ -34,6 +38,13 @@
       default: null
     }
   })
+
+  const goToPost = (url) => {
+    isDropDownVisible.value = false
+    router.push({
+          path: url
+      })
+  };
   
   const notifDropDown = ref(null)
   const selectedOption = ref(null)
@@ -42,13 +53,6 @@
     return (selectedOption.value?.name || selectedOption.value) ||
     props.name
   })
-
-
-  // const toggleOptionSelect = (option) => {
-    
-  //   emit('update:modelValue',option)
-  //   closeDropDown(option)
-  // }
 
   const toggleDropDown = () => {
     isDropDownVisible.value = !isDropDownVisible.value
@@ -72,37 +76,32 @@
 
 <template >
     <div class="dropdown-notif relative py-4 px-[14px] cursor-pointer max-w-[200px] " ref="notifDropDown">
-     <div class="dropdown-notif-option rounded-[5px] p-4 bg-primary" 
+     <div class="dropdown-notif-option rounded-[5px] p-4 bg-vt hover:bg-gray-500" 
      @click="toggleDropDown">
      <span v-if="icon?.length > 0" class="material-icons text-white " @click="mappedSelecedOption"> {{ icon }} </span>
-       <!-- <span class="px-2 py-1">
-        {{mappedSelecedOption}}
-       </span>    -->
+       
     </div>
     
     <Transition name="slide-fade">
-      <div :class="`option-notif min-w-[450px] mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${openDropdown}`"
+      <div :class="`option-notif min-w-[350px] mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${openDropdown}`"
           v-if="isDropDownVisible"
       >
         <template v-for="(option , index) in options" :key="index">
-          <router-link v-if="option?.url?.length > 0" class="text-decoration-none cursor-pointer text-black " :to="option.url">
-              <div class="p-[0.5rem] border-b-1 shadow-[1px_2px_0px_-1px_rgba(238,238,221,255)] text-black last-of-type:shadow-none last-of-type:border-b-none ">
+          <a v-if="option?.link?.length > 0" class="text-decoration-none cursor-pointer text-black " @click="goToPost(option.link)">
+              <div class="py-1 border-b-1 shadow-[1px_2px_0px_-1px_rgba(238,238,221,255)] text-black last-of-type:shadow-none last-of-type:border-b-none ">
                 <div class="flex justify-content-between bg-[#f0f8ff] rounded-md p-2 gap-3 hover:bg-[#cbe0f2] hover:text-black ">
                   <div>
-                    <img v-if="option?.img?.length > 0" :src="option.img " alt="" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
+                    <img v-if="option?.model?.profile_photo_path?.length > 0" :src="option?.model?.profile_photo_path" alt="" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
                   </div> 
                   <div class="w-[80%]">
                     <div class="flex justify-content-between">
-                      <div class="notifName">مهرداد کردی</div>
-                      <div class="notifDate text-slate-400 text-sm">۲ ساعت پیش</div>
+                      <div class="notifName" >{{ option?.model?.nickname?.length > 0 ? option?.model?.nickname : 'Admin' }}</div>
+                      <div class="notifDate text-slate-400 text-sm">{{ jalaliMoment(option.created_at).fromNow() }}</div>
                     </div>
-                    <div> یک خبر را به اشتراک گذاشت </div>
-                    <div class="truncate max-w-[200px] border-r-[3px] border-r-indigo-600 pr-1 text-slate-600 text-sm">
+                    <!-- <div> یک خبر را به اشتراک گذاشت </div> -->
+                    <div class="mt-2 truncate max-w-[200px] border-r-[3px] border-r-indigo-600 pr-1 text-slate-600 text-sm">
 
-                      لیونل مسی، ستاره آرژانتینی دنیای فوتبال سرانجام و پس
-                            از 20 سال حضور در نیوکمپ، بارسلونا را ترک کرد و پاری
-                            سن ژرمن پیوست. در این ویدیو که کاری از تیفو فوتبال
-                            است به آمار و رکوردهای این بازیکن پرداخته شده است.
+                      {{ option.message }}
                           
 
                     </div>
@@ -110,8 +109,13 @@
                 </div>
                  
               </div>
-          </router-link>
+            </a>
         </template>
+        <a @click="goToPost('/profile/notifications')" class="no-underline" :title="$t('site.Display All')">
+        <div class="text-center cursor-pointer text-md bg-gray-100 p-2">
+          {{ $t('site.Display All') }}
+        </div>
+      </a>
       </div>
     </Transition>
    </div>

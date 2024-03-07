@@ -108,7 +108,7 @@ const backgroundColorDropdown = computed(() => {
     case 'primary' :
         return 'bg-[#384c78] ';
     default:
-        return 'bg-primary ';
+        return 'bg-vt ';
     }
 });
 const openDropdown = computed(() => {
@@ -150,7 +150,7 @@ const gradientColor = computed(() => {
     case 'primary' :
         return 'main-gradient';
     case 'profile'   :
-    return 'bg-primary';
+    return 'bg-vt';
 
     default:
         return '';

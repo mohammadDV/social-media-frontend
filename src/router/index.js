@@ -1,5 +1,6 @@
 
 import { createRouter, createWebHistory } from 'vue-router';
+import {helper} from '@/utils/helper.ts';
 
 // Import layouts
 
@@ -481,6 +482,8 @@ router.beforeEach((to, from, next) => {
       }
     }
   }
+
+  helper().goToTop();
 });
 
 // router.afterEach((to) => {

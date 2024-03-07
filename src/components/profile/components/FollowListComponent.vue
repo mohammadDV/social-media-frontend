@@ -2,7 +2,7 @@
 
     import { defineProps, defineEmits} from 'vue';
     import {useApi} from '@/utils/api.ts';
-    import userImage from '@/components/plugins/UserImage.vue';
+    // import userImage from '@/components/plugins/UserImage.vue';
 
     const emit = defineEmits(['updateMembers']);
 
@@ -26,25 +26,34 @@
 
 <template>
     <div class="card-body">
-        <div class="card-itemlist">
-            <div v-for="(item, index) in members" :key="index" class="item">
-                <a href="">
-                    <div class="item-avatar">
-                        <userImage :item="item" />
-                    </div>
-                </a>
-                <div class="user-info">
-                    <div class="user-name">{{ item.nickname }}</div>
-                    <div class="user-likes">
-                        <span v-for="(club, key) in item.clubs" :key="key" class="badge bg-secondary like-item m-1">{{ club.title }}</span>
-                    </div>
-                    <div class="user-exes d-grid gap-2">
-                        <button @click="followUser(item.id)" class="btn btn-outline-secondary btn-sm">
-                            {{ $t('site.Follow') }}
-                        </button>
-                    </div>
+    <div v-for="(follower, index) in members" :key="index" class="mb-2 p-2 bg-[#f0f8ff] rounded-md">
+        <div class="flex gap-6">
+            <div>
+                <router-link :to="`/member/${follower.id}`" class="no-underline">
+                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
+                </router-link>
+            </div>
+            <div class="flex-col flex-[50%] gap-9">
+                <div class="flex justify-content-between align-items-center mb-2">
+                    <router-link :to="`/member/${follower.id}`" class="no-underline text-base text-black">{{ follower.nickname }}</router-link>
+                    <!-- <button class="border-1 border-solid bg-primary text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">{{ $t('site.View') }}</button> -->
+                    <button v-if="follower?.clubs?.length > 0" @click="followUser(follower.id)" class="btn btn-primary btn-sm">
+                        {{ $t('site.Follow') }}
+                    </button>
+                </div>
+                <div class="flex justify-start gap-1  flex-wrap">
+                    <button v-if="!follower?.clubs?.length > 0" @click="followUser(follower.id)" class="btn btn-primary btn-sm">
+                        {{ $t('site.Follow') }}
+                    </button>
+                    <router-link v-for="(club, index) in follower?.clubs" :key="index" :to="`/club/${club.id}`" class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-vt-dark rounded-md">
+                        <div class="flex">
+                            <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                            <span class="">{{ club.title }}</span>
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </template>

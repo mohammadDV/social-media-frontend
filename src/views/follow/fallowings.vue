@@ -136,7 +136,7 @@ const initialFormState = {
 
         <div>
             <div :class="{
-                'grid gap-4 grid-cols-4 my-3' : true,
+                'grid gap-3 grid-cols-4 my-3' : true,
                 'grid-cols-3' : route?.params?.id?.length > 0,
             }">
                 <div v-for="(user, index) in items" :key="index" class='card'>

@@ -1,68 +1,65 @@
+<script setup>
+import { ref, onMounted, defineProps } from 'vue';
+
+    
+    const videoPlayer = ref('');
+    const advertisePlayer = ref('');
+    const showAd = ref(true);
+    const origin = ref('https://s3.eu-central-1.amazonaws.com/varzeshtimes.ir/uploads/videos/default/2024/02/17/mkwejV6E6Vhgg5Uw2q7VvP92cqvDE647bzdEKB79.mp4');
+
+    defineProps({
+      video: {
+        type: String,
+        required: true
+      }
+    })
+
+    const startVideo = () => {
+      showAd.value = false;
+            
+      // advertisePlayer.value.pause();
+      // console.log(videoPlayer.value.play());
+    }
+
+    // https://stackblitz.com/edit/vitejs-vite-rf6dum?file=src%2FApp.vue
+    // https://cloudinary.com/blog/guest_post/creating-a-custom-video-player-in-vue
+
+    onMounted(() => {
+
+      if (advertisePlayer.value) {
+          advertisePlayer.value.play();
+      }
+      setTimeout(() => { showAd.value = false; }, 5000);
+
+    });
+</script>
+
 <template>
-    <div>
-      <button @click="cos">add</button>
-      <video ref="videoPlayer" width="640" height="360" controls>
-        <!-- Ad video source -->
-        <source v-if="showAd" src="https://s3.eu-central-1.amazonaws.com/varzeshtimes.ir/uploads/videos/default/2023/11/18/kkgm68xexWOhfcgT3b8tJ7wCp7WR7nkp2Yt4XbQj.mov" type="video/mov" />
-        <!-- Original video source -->
-        <source v-else src="https://s3.eu-central-1.amazonaws.com/varzeshtimes.ir/uploads/videos/default/2024/02/17/mkwejV6E6Vhgg5Uw2q7VvP92cqvDE647bzdEKB79.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
+    <div class="relative w-full">
+      <video v-if="showAd" class="w-full rounded" ref="advertisePlayer">
+        <source  :src="origin" type="video/mp4" />
       </video>
+      <video v-else class="w-full rounded" ref="videoPlayer"  controls>
+        <source  :src="video" type="video/mp4" />
+      </video>
+      <button v-if="showAd" class="btn absolute right-2 bottom-2 absolute btn-sm right-2 bg-primary text-white p-2" @click="startVideo">Start video</button>
     </div>
   </template>
-  
-  <script>
-  import { ref, onMounted } from 'vue';
-  
-  export default {
-    name: 'VideoPlayer',
-  
-    setup() {
 
-      
-      const videoPlayer = ref('');
-      const showAd = ref(true);
+<style>
 
-      const cos = () => {
-        console.log('xasxasx');
+.test {
+  object-fit: contain;
+  position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    background: transparent;
+}
 
-        showAd.value = false;
-
-        console.log(videoPlayer.value);
-        // console.log(videoPlayer.value.pause());
-      }
+</style>
   
-      // https://stackblitz.com/edit/vitejs-vite-rf6dum?file=src%2FApp.vue
-      // https://cloudinary.com/blog/guest_post/creating-a-custom-video-player-in-vue
-      // Function to handle video playback
-      // const handleVideoPlayback = () => {
-      //   // Show advertisement for the first 5 minutes
-      //   setTimeout(() => {
-      //     console.log(videoPlayer.value);
-      //     console.log("xasxxasx");
-      //     // showAd.value = false;
-      //     videoPlayer.value.stop(); // Start playing the original video
-      //   }, 5000); // 5 minutes in milliseconds
-      // };
-  
-      // Lifecycle hook to execute code after the component is mounted
-      onMounted(() => {
-        if (videoPlayer.value) {
-          // Add event listener for the 'ended' event
-          videoPlayer.value.addEventListener('ended', () => {
-            // Handle the original video end event if needed
-          });
-  
-          // Start playing the advertisement
-          // handleVideoPlayback();
-        }
-      });
-  
-      return {
-        videoPlayer,
-        cos,
-        showAd
-      };
-    }
-  };
-  </script>
