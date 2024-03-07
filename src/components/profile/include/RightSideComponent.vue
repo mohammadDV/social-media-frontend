@@ -102,7 +102,7 @@
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in myClubs" :key="index" class="item">
                     <div class="item-avatar">
-                        <router-link class="user-link" to="/profile/clubs/favorite" :title="item.title">
+                        <router-link class="user-link" :to="`/club/${item.id}`" :title="item.title">
                             <img
                                 :src="item.image"
                                 :alt="item.title"

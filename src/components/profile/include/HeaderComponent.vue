@@ -2,15 +2,15 @@
     
     import {useApi} from '@/utils/api.ts';
     import { onMounted, onUnmounted, ref } from 'vue';
-    //   import userImage from '@/components/plugins/UserImage.vue'
     import { useAuthStore } from '@/stores/auth.ts';
     import { useI18n } from "vue-i18n";
     import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
     import DropDownNotif from '@/components/plugins/dropdown/DropDownNotif.vue';
     import DropDownSearchBox from '@/components/plugins/dropdown/DropDownSearchBox.vue';
-  const parentSelectedOption = ref(null);
-  const { t } = useI18n();
-  const accountMenu = ref( [
+  
+    const parentSelectedOption = ref(null);
+    const { t } = useI18n();
+    const accountMenu = ref( [
         {
             title: t('site.Main page'),
             url: '/',
@@ -23,56 +23,32 @@
         }        
     ]
     );
-    const notifMenu = ref( [
-    
-        {
-            title: t('site.Logout'),
-            url: '/profile',
-            img: '../../../assets/site/images/user.jpg'
-        }
-    
-        
-    ]
-    );
-  const authStore = useAuthStore();
+  
+    const authStore = useAuthStore();
+    const notifications = ref([]);
 
+    const getRpc = () => {
+        if (authStore?.user?.id > 0) {
 
-const notifCount = ref(0);
-
-// const resetSearch = () => {
-//     state.search = '';
-//     state.message = '';
-//     state.users = [];
-// }
-
-// const logout = () => {
-//     authStore.logout();
-// };
-
-
-
-const getRpc = () => {
-    if (authStore?.user?.id > 0) {
-
-        useApi().get('/api/profile/rpc')
+            useApi().get('/api/profile/rpc')
                 .then((response) => {
-                    notifCount.value = response.data.notification_count;
+                    notifications.value = response.data.notifications;
                 })
+        }
     }
-}
 
-const autoInterval = ref([]);
+    const autoInterval = ref([]);
 
-onMounted(() => {
-    getRpc();
-    autoInterval.value = setInterval(function() {
+    onMounted(() => {
         getRpc();
-    }, 30000);
-});
+        autoInterval.value = setInterval(function() {
+            getRpc();
+        }, 3000);
+    });
 
-onUnmounted(() => {
-    clearInterval(autoInterval.value);
-});
+    onUnmounted(() => {
+        clearInterval(autoInterval.value);
+    });
 
 
 </script>
@@ -141,127 +117,22 @@ onUnmounted(() => {
                                
 
 
-                                <DropDownNotif
-                                icon="notifications"
-                                    color=""
+                                <DropDownNotif 
+                                    icon="notifications"
                                     float="left"
-                                    name=""
-                                    :options="notifMenu"
+                                    :options="notifications"
                                     v-model="parentSelectedOption"
                                    />
                             </li>
                             <li class="nav-item dropdown user-dropdown">
                                 <Dropdown
+                                    menuClass="min-w-[170px]"
                                     icon="person"
+                                    float="left"
                                     color="profile"
                                     :name="authStore?.user?.nickname"
                                     :options="accountMenu"
                                     v-model="parentSelectedOption"/>
-                                <!-- <button
-                                    class="btn btn-light dropdown-toggle"
-                                    type="button"
-                                    id="dropdownProfile"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    <div class="profile-avatar">
-                                        
-                                        <userImage add-class="inline" :item="authStore?.user" />
-                                    </div>
-                                    <span class="user-name">{{ authStore?.user?.nickname }}</span>
-                                </button>
-                                <div
-                                    class="dropdown-menu is-left"
-                                    aria-labelledby="dropdownProfile"
-                                >
-                                    <div class="vt-dropdown-list-menu">
-                                        <a class="vt-list-menu-item" href="#" :title="$t('site.Profile')">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> account_circle </span>
-                                            </span>
-                                            <span class="dropdown-item-title">{{ $t('site.Profile') }}</span>
-                                        </a>
-
-                                        <a class="vt-list-menu-item" href="#">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> bookmark </span>
-                                            </span>
-                                            <span class="dropdown-item-title">ذخیره شده</span>
-                                        </a>
-
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> manage_accounts </span>
-                                            </span>
-                                            <span class="user-link-title">
-                                            ویرایش حساب کاربری
-                                            </span>
-                                        </a>
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> group_add </span>
-                                            </span>
-                                            <span class="user-link-title">
-                                            درخواست های دنبال کردن
-                                            </span>
-                                        </a>
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> chat </span>
-                                            </span>
-                                            <span class="user-link-title"> پیام های خصوصی </span>
-                                        </a>
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> verified_user </span>
-                                            </span>
-                                            <span class="user-link-title"> تایید حساب کاربری </span>
-                                        </a>
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> paid </span>
-                                            </span>
-                                            <span class="user-link-title">
-                                            ارتقاع حساب کاربری
-                                            </span>
-                                        </a>
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                                <span class="material-icons"> article </span>
-                                            </span>
-                                            <span class="user-link-title"> مدیریت مطالب </span>
-                                        </a>
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                                <span class="material-icons"> post_add </span>
-                                            </span>
-                                            <span class="user-link-title"> ایجاد مطالب جدید </span>
-                                        </a>
-                                        <a class="vt-list-menu-item is-mobile" href="#">
-                                            <span class="dropdown-item-icon">
-                                                <span class="material-icons"> block </span>
-                                            </span>
-                                            <span class="user-link-title"> مسدود شده ها </span>
-                                        </a>
-
-                                        <a class="vt-list-menu-item" href="#">
-                                            <span class="dropdown-item-icon">
-                                            <span class="material-icons"> settings </span>
-                                            </span>
-                                            <span class="dropdown-item-title">تنظیمات</span>
-                                        </a>
-
-                                        <div class="vt-list-menu-divider"></div>
-                                        <a @click="logout" lass="vt-list-menu-item">
-                                            <span class="dropdown-item-icon">
-                                                <span class="material-icons">
-                                                    power_settings_new
-                                                </span>
-                                            </span>
-                                            <span class="dropdown-item-title">{{ $t('site.Logout') }}</span>
-                                        </a>
-                                    </div>
-                                </div> -->
                             </li>
                         </ul>
                         </div>

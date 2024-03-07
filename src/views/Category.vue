@@ -93,7 +93,9 @@
                         <div class="card-body">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="" :title="$t('site.Main page')">{{ $t('site.Main page') }}</a></li>
+                                    <li class="breadcrumb-item">
+                                        <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
+                                    </li>
                                     <li class="breadcrumb-item">
                                         <router-link :to="`/category/${category?.id}/${category?.title}`" :title="category?.title">
                                             {{ category?.title }}

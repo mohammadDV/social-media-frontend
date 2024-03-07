@@ -4,6 +4,7 @@
   import LeftSideComponent from "@/components/profile/include/LeftSideComponent.vue";
   import {useApi} from '@/utils/api.ts';
   import VTButton from '@/elements/VTButton'; 
+  import jalaliMoment from 'moment-jalaali';
 
   const emit = defineEmits(['updateFollowings']); 
 
@@ -71,14 +72,16 @@
                     <div v-for="(item, index) in items" :key="index" class="card tweet-card">
                         <div class="card-body">
                             <div class="tweet-user-avatar">
-                                <img v-if="item?.model?.profile_photo_path?.length > 0" class="rounded-full w-[120px] h-[120px]"  :src="item.model.profile_photo_path" :alt="item.nickname" />
+                                <router-link v-if="item?.model?.profile_photo_path?.length > 0" class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">
+                                    <img class="rounded-full w-[120px] h-[120px]"  :src="item.model.profile_photo_path" :alt="item.nickname" />
+                                </router-link>
                             </div>
                             <div class="tweet-info">
                                 <div class="flex tweet-info-head">
                                     <span v-if="item?.model?.nickname?.length > 0" class="tweet-user-name">
                                         <router-link class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">{{ item?.model?.nickname }}</router-link>
                                     </span>
-                                    <span class="tweet-date">{{ item?.created_at }}</span>
+                                    <span class="tweet-date">{{ jalaliMoment(item.created_at).fromNow() }}</span>
                                 </div>
                                 <div class="tweet-body">
                                     <router-link v-if="item?.link?.length > 0" class="text-black text-decoration-none" :to="item?.link">

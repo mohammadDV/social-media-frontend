@@ -95,7 +95,9 @@
                         <div class="card-body">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="" :title="$t('site.Main page')">{{ $t('site.Main page') }}</a></li>
+                                    <li class="breadcrumb-item">
+                                        <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
+                                    </li>
                                     <li class="breadcrumb-item">
                                         <router-link :to="`/category/${post?.category?.id}/${post?.category?.title}`" :title="post?.category?.title">
                                             {{ post?.category?.title }}
@@ -115,11 +117,21 @@
                     </div>
                     <div class="card vt-news-card mb-3">
                         <div class="card-body">
-                            <VideoPlayerComponent />
                             <div class="post">
-                                <div class="post--header">
-                                      <!--  -->
-
+                                <div v-if="post.type == 1">
+                                    <VideoPlayerComponent  :video="post.video"/>
+                                    <div class="extend-info">
+                                        <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
+                                        <span>
+                                            <span class="post-date">{{ $t('site.Time') }}: {{ timestamp }}</span>
+                                            <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
+                                        </span>
+                                    </div>
+                                    <div v-if="post?.pre_titl" class="main-info">
+                                        <span class="fs-6 post--subtitle">{{ post.pre_title }}</span>
+                                    </div>
+                                </div>
+                                <div v-else class="post--header">
                                     <div class="post--cover ratio ratio-16x9"
                                     :style="`background-image: url('${post?.image}')`">
                                         <div class="post--header--overly"></div>
