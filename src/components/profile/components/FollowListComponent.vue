@@ -26,7 +26,7 @@
 
 <template>
     <div class="card-body">
-    <div v-for="(follower, index) in members" :key="index" class="mb-2 p-2 bg-[#f0f8ff] rounded-md">
+    <div v-for="(follower, index) in members" :key="index" class="mb-2 p-2 bg-gray-100 hover:bg-blue-100 rounded-md">
         <div class="flex gap-6">
             <div>
                 <router-link :to="`/member/${follower.id}`" class="no-underline">
