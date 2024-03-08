@@ -14,6 +14,8 @@ import { ref, onMounted, defineProps } from 'vue';
       }
     })
 
+    const visible = ref(false);
+
     const startVideo = () => {
       showAd.value = false;
             
@@ -29,7 +31,7 @@ import { ref, onMounted, defineProps } from 'vue';
       if (advertisePlayer.value) {
           advertisePlayer.value.play();
       }
-      setTimeout(() => { showAd.value = false; }, 5000);
+      setTimeout(() => { visible.value = true; }, 5000);
 
     });
 </script>
@@ -42,7 +44,7 @@ import { ref, onMounted, defineProps } from 'vue';
       <video v-else class="w-full rounded" ref="videoPlayer"  controls>
         <source  :src="video" type="video/mp4" />
       </video>
-      <button v-if="showAd" class="btn absolute right-2 bottom-2 absolute btn-sm right-2 bg-primary text-white p-2" @click="startVideo">Start video</button>
+      <button v-if="visible && showAd" class="btn absolute right-2 bottom-2 absolute btn-sm right-2 bg-primary text-white p-2" @click="startVideo">Start video</button>
     </div>
   </template>
 
