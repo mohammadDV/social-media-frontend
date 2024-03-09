@@ -119,7 +119,7 @@
                         <div class="card-body">
                             <div class="post">
                                 <div v-if="post.type == 1">
-                                    <VideoPlayerComponent  :video="post.video"/>
+                                    <VideoPlayerComponent  :video="post.video" :advertise="post?.advertise?.file"/>
                                     <div class="extend-info">
                                         <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
                                         <span>

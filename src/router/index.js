@@ -23,6 +23,8 @@ import Status from '@/views/profile/status.vue';
 import Notification from '@/views/notification/index.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
+import VideoList from '@/views/video/index.vue';
+import VideoCreate from '@/views/video/create.vue';
 import PageList from '@/views/page/index.vue';
 import PageCreate from '@/views/page/create.vue';
 import ClubList from '@/views/club/index.vue';
@@ -191,6 +193,26 @@ const routes = [
         name: 'status.show',
         path: '/profile/:id',
         component: Status,
+      },
+      {
+        name: 'video.index',
+        permission: 'video_show',
+        path: '/profile/videos',
+        component: VideoList,
+      },
+      {
+        name: 'video.create',
+        meta: { 
+          permission: 'video_store',
+        },
+        path: '/profile/videos/create',
+        component: VideoCreate,
+      },
+      {
+        name: 'video.edit',
+        permission: 'video_update',
+        path: '/profile/videos/:id',
+        component: VideoCreate,
       },
       {
         name: 'post.index',
