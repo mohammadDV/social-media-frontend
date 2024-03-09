@@ -14,7 +14,7 @@
     
   const authStore = useAuthStore();
   const emit = defineEmits(['updateFollowings']); 
-  const tabItem = ref(false);
+  const tabItem = ref(1);
   const route = useRoute();
 
   const changeTab = (tab) => {
@@ -53,21 +53,28 @@
     <div class="col-12 col-lg-8 col-xl-6">
         <StatusWallFormComponent />
         <tabs-component v-if="route?.params?.id == undefined" class="nav nav-pills feedType">
-            <tab-component class="nav-item text-center cursor-pointer" :is-active="!tabItem"
-                            @tab-clicked="changeTab(false)">
+            <tab-component class="nav-item text-center cursor-pointer" :is-active="tabItem == 1"
+                            @tab-clicked="changeTab(1)">
                             {{ $t('site.Users statuses') }}
             </tab-component>
-            <tab-component class="nav-item cursor-pointer  text-center" :is-active="tabItem"
-                            @tab-clicked="changeTab(true)">
+            <tab-component class="nav-item cursor-pointer  text-center" :is-active="tabItem == 2"
+                            @tab-clicked="changeTab(2)">
                             {{ $t('site.My statuses') }}
+            </tab-component>
+            <tab-component class="nav-item cursor-pointer  text-center" :is-active="tabItem == 3"
+                            @tab-clicked="changeTab(3)">
+                            {{ $t('site.Save') }}
             </tab-component>
         </tabs-component>
         <div class="tab-content" id="feedTypeContent">
-            <div v-if="!tabItem" class="tab-pane fade show active" id="tweet-pane" role="tabpanel" aria-labelledby="tweet-tab">
-                <StatusWallComponent />
+            <div v-if="tabItem == 3" class="tab-pane fade show active">
+                <StatusWallComponent :user-id="authStore?.user?.id" :tab="tabItem"/>
             </div>
-            <div v-else class="tab-pane fade show active" id="news-pane" role="tabpanel" aria-labelledby="news-pane">
-                <StatusWallComponent :user-id="authStore?.user?.id"/>
+            <div v-else-if="tabItem == 2" class="tab-pane fade show active">
+                <StatusWallComponent :user-id="authStore?.user?.id" :tab="tabItem"/>
+            </div>
+            <div v-else class="tab-pane fade show active">
+                <StatusWallComponent  :tab="tabItem"/>
             </div>
         </div>
     </div>

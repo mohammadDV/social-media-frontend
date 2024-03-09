@@ -40,12 +40,12 @@ const statusList = ref([
  const canSubmit = ref(true);
  const form = reactive({ ...initialFormState });
 
+ const $toast = useToast();
  const updateStatus = () => {
 
     if (!canSubmit.value) {
         return '';
     }
-    const $toast = useToast();
 
     useApi().post(`/api/profile/status/${editId.value}`, form)
     .then((response) => {
@@ -83,6 +83,10 @@ const resetForm = () => {
         status: {
             type: Object,
             require: true
+        },
+        tab: {
+            type: Number,
+            default: 1
         }
     });
 
@@ -124,6 +128,15 @@ const resetForm = () => {
         }
     }
 
+    const checkFavorite = () => {
+        if (props.status?.favorites?.length > 0) {
+            let user = props.status?.favorites.find(item => item.user_id == authStore.user.id);
+            if (user) {
+                isSave.value = true;
+            }
+        }
+    }
+
     const updateComments = (id) => {
         useApi().get(`/api/comment/status/${id}`)
                 .then((response) => {
@@ -131,7 +144,7 @@ const resetForm = () => {
                 });
     }
 
-    const shoeEditStatus = (id) => {
+    const showEditStatus = (id) => {
         editId.value = id;
         useApi().get(`/api/status/preview/${id}`)
             .then((response) => {
@@ -139,6 +152,24 @@ const resetForm = () => {
             });
         showModal();
 
+    }
+
+    const isSave = ref(false);
+
+    const saveStatus = (id) => {
+        useApi().post(`/api/status/favorite/${id}`)
+            .then((response) => {
+                if (response.data.status) {
+                    isSave.value = response.data.active;
+                    $toast.success(response.data.message);
+                } else {
+                    $toast.error(response.data.message);
+                }
+            });
+
+        if (props.tab == 3) {
+            emit('updateData');
+        }    
     }
 
     const dropDown = ref(null)
@@ -161,6 +192,7 @@ const resetForm = () => {
     onMounted(() => {
         window.addEventListener('click',closeDropDown) 
         checkLike();
+        checkFavorite();
     });
 
     onBeforeUnmount(() => {
@@ -195,13 +227,19 @@ const resetForm = () => {
                         <div :class=" `mt-[5px] w-[200px] left-0 border border-gray-100 bg-white rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50 p-[0.5rem]`"
                             v-if="isDropDownVisible"
                         >
-                            <div v-if="status.user.id === authStore.user.id" class="p-2 border-b option hover:bg-gray-100" @click="shoeEditStatus(status.id)">
+                            <div v-if="status.user.id === authStore.user.id" class="p-2 border-b option hover:bg-gray-100" @click="showEditStatus(status.id)">
                                 <span class="material-icons"> edit </span>
                                 {{ $t('site.Edit') }}
                             </div>
-                            <div class="p-2 option hover:bg-gray-100">
-                                <span class="material-icons"> bookmark </span>
-                                {{ $t('site.Save') }}
+                            <div class="p-2 option hover:bg-gray-100"  @click="saveStatus(status.id)">
+                                <template v-if="isSave">
+                                    <span class="material-icons"> bookmark_remove </span>
+                                    {{ $t('site.Unsave') }}
+                                </template>
+                                <template v-else>
+                                    <span class="material-icons"> bookmark </span>
+                                    {{ $t('site.Save') }}
+                                </template>
                             </div>
                         </div>
                     </Transition>
