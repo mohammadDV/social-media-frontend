@@ -5,12 +5,16 @@ import { ref, onMounted, defineProps } from 'vue';
     const videoPlayer = ref('');
     const advertisePlayer = ref('');
     const showAd = ref(true);
-    const origin = ref('https://s3.eu-central-1.amazonaws.com/varzeshtimes.ir/uploads/videos/default/2024/02/17/mkwejV6E6Vhgg5Uw2q7VvP92cqvDE647bzdEKB79.mp4');
+    // const origin = ref('https://s3.eu-central-1.amazonaws.com/varzeshtimes.ir/uploads/videos/default/2024/02/17/mkwejV6E6Vhgg5Uw2q7VvP92cqvDE647bzdEKB79.mp4');
 
-    defineProps({
+    const props = defineProps({
       video: {
         type: String,
         required: true
+      },
+      advertise: {
+        type: String,
+        default: ''
       }
     })
 
@@ -28,10 +32,16 @@ import { ref, onMounted, defineProps } from 'vue';
 
     onMounted(() => {
 
-      if (advertisePlayer.value) {
-          advertisePlayer.value.play();
+      console.log(props.advertise?.length);
+      if (props.advertise?.length > 0) {
+        if (advertisePlayer.value) {
+            advertisePlayer.value.play();
+        }
+        setTimeout(() => { visible.value = true; }, 5000);
+      } else {
+        showAd.value = false;
+        visible.value = true;
       }
-      setTimeout(() => { visible.value = true; }, 5000);
 
     });
 </script>
@@ -39,7 +49,7 @@ import { ref, onMounted, defineProps } from 'vue';
 <template>
     <div class="relative w-full">
       <video v-if="showAd" class="w-full rounded" ref="advertisePlayer">
-        <source  :src="origin" type="video/mp4" />
+        <source  :src="advertise" type="video/mp4" />
       </video>
       <video v-else class="w-full rounded" ref="videoPlayer"  controls>
         <source  :src="video" type="video/mp4" />

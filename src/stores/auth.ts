@@ -40,6 +40,12 @@ export const useAuthStore = defineStore('auth',{
             matches: ['post.index'],
             permission: 'post_show',
         },{
+            route: '/profile/videos',
+            icon: 'article',
+            name: 'site.Video management',
+            matches: ['video.index'],
+            permission: 'video_show',
+        },{
           route: '/profile/status',
           icon: 'article',
           name: 'site.Status management',

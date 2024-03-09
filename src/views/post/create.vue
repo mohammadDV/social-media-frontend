@@ -32,6 +32,7 @@ const initialFormState = {
       special: 0,
       tags: [],
       category_id: 1,
+      video_id: null,
       content: '',
       image: '',
       video: '',
@@ -82,6 +83,15 @@ const initialFormState = {
         categoryList.value = response.data;
     })
   }
+  
+  const videoList = ref();
+
+  const getVideos = () => {
+    useApi().get(`/api/profile/videos/index`)
+    .then((response) => {
+        videoList.value = response.data;
+    })
+  }
 
   const getPost = () => {
     
@@ -100,6 +110,12 @@ const initialFormState = {
   watch(() => route.params.id, () => {
     if (route.params.id) {
         getPost();
+    } 
+  });
+
+  watch(() => form.type, () => {
+    if (form.type == 1) {
+        getVideos();
     } 
   });
 
@@ -338,6 +354,16 @@ const modules = ref([
                     @getFileLink="getVideoLink"
                     @on-upload-start="onUploadStart"
                 />
+            </div>
+
+            <div class="mt-3">
+                <VTSelect v-if="form.type == 1"
+                    :label="$t('site.Choose video advertise')"
+                    v-model="form.video_id" 
+                    :options="videoList" 
+                    optionsValueKey="id"
+                    optionsDisplayValueKey="title"
+                    name="video_id"/>
             </div>
 
             <VTButton 
