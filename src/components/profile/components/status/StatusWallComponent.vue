@@ -10,6 +10,10 @@
         userId: {
             type: Number,
             default: 0
+        },
+        tab: {
+            type: Number,
+            default: 1
         }
     });
     const items = ref([]);
@@ -21,19 +25,26 @@
     const getStatuses = () => {
 
         loading.value = true;
-        let url = `/api/statuses?page=${page.value}`;
+        let url = `/api/statuses`;
 
         if (props.userId > 0) {
-            url = `/api/status/all/${props.userId}?page=${page.value}`;
+            if (props.tab == 3) {
+                url = `/api/status/favorite/${props.userId}`;
+            } else {
+                url = `/api/status/all/${props.userId}`;
+            }
         } else if(route?.params?.id?.length > 0) {
-            url = `/api/statuses/${route?.params?.id}?page=${page.value}`;
+            url = `/api/statuses/${route?.params?.id}`;
         }
 
         if (page.value == 1) {
             items.value = [];
         }
 
-         useApi().get(url)
+        let pageQuery = `?page=${page.value}`;
+
+
+         useApi().get(url + pageQuery)
             .then((response) => {
 
                 items.value.push(...response.data.data);
@@ -85,8 +96,10 @@
     </div>
     <div class="tweet-reel">
         <div v-for="(status, index) in items" :key="index" class="card tweet-card">
-            <statusCardComponent @updateData="updateData"
+            <statusCardComponent 
+                @updateData="updateData"
                 :status="status"
+                :tab="tab"
             ></statusCardComponent>
         </div>
         <div class="w-full pt-2" v-if="more">
