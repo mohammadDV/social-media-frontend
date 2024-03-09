@@ -86,7 +86,7 @@ onMounted(() => {
                     <div class="nav-item mx-[14px] my-[6px] ">
                         <router-link to="/login" title="$t('site.Login')" class="text-white">
                             <button class="vt-btn-tit main-gradient rounded-[5px] py-[5px] px-[10px] hover:text-[#06b4f9] ">
-                                <span class="material-icons text-accent"> person </span>
+                                <span class="material-icons text-accent ml-1"> person </span>
                                 <span>{{ $t('site.Login') }}</span>
                             </button>
                         </router-link>
@@ -94,7 +94,7 @@ onMounted(() => {
                     <div class="nav-item mx-[10px] my-[6px]">
                         <router-link to="/register" class="text-white ">
                             <button class="vt-btn-tit main-gradient rounded-[5px] py-[5px] px-[10px] hover:text-[#06b4f9] ">
-                                <span class="material-icons text-accent"> group_add </span>
+                                <span class="material-icons text-accent ml-1"> group_add </span>
                                 <span>{{ $t('site.Register to site') }}</span>
                             </button>
                         </router-link>

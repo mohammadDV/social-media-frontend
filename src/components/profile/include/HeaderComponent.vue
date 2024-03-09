@@ -54,9 +54,9 @@
 </script>
 
 <template>
-   <header class="header-navbar">
+   <header class="header-navbar bg-vt-gradient">
         <div class="container-xxl">
-            <nav class="navbar navbar-expand navbar-light-profile bg-light">
+            <nav class="navbar navbar-expand navbar-light-profile">
                 <div class="container-fluid-profile">
                     <router-link class="navbar-brand-profile" to="/" :title="$t('site.Main page')">
                         <img src="/profile/images/vt-logo.png" alt="logo" width="36" height="36"/>
@@ -129,7 +129,6 @@
                                     menuClass="min-w-[170px]"
                                     icon="person"
                                     float="left"
-                                    color="profile"
                                     :name="authStore?.user?.nickname"
                                     :options="accountMenu"
                                     v-model="parentSelectedOption"/>

@@ -76,7 +76,7 @@
 
 <template >
     <div class="dropdown-notif relative py-4 px-[14px] cursor-pointer max-w-[200px] " ref="notifDropDown">
-     <div class="dropdown-notif-option rounded-[5px] p-4 bg-vt hover:bg-gray-500" 
+     <div class="dropdown-notif-option rounded-[5px] p-4 main-gradient" 
      @click="toggleDropDown">
      <span v-if="icon?.length > 0" class="material-icons text-white " @click="mappedSelecedOption"> {{ icon }} </span>
        
@@ -145,11 +145,6 @@
 
 }
 
-.main-gradient {
-  background: #4b6cb7;  
-    background: linear-gradient(to right, #3f5483 , #182848);
-    color: white;
-}
 
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;

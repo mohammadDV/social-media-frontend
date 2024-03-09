@@ -236,11 +236,19 @@ const dDIcon = computed(() => {
     gap: 5px; */
 }
 
-.main-gradient {
-  background: #4b6cb7;  /* fallback for old browsers */
-    background: linear-gradient(to right, #3f5483 , #182848);
-    color: white;
+.main-gradient {    
+  border: 1px solid #737373;
+    /* background: linear-gradient(to right, #3f5483 , #182848); */
+  background: #3f5483;
+  color: white;
 }
+
+.main-gradient:hover {
+  transition: .3;
+  background: #182848;
+  border: 1px solid #515761;
+}
+
 .profile-gradient {
   background: #06b4f9;
   color: white;

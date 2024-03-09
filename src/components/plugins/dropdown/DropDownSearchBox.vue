@@ -46,7 +46,7 @@ const closeDropDown = (element) => {
   <div class="flex-auto relative" ref="closeBox">
     <div class="flex">
       <input type="text" v-model.lazy="searchQuery"  @input="handleInput" class="w-full px-2 rounded-sm border-1 bg-[#edf1f7] py-2 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="جستجو کنید...">
-      <button class="bg-vt text-white p-2 rounded-l hover:bg-gray-500">
+      <button class="bg-primary text-white p-2 rounded-l hover:bg-gray-500">
         <span class="material-icons text-body-invert"> search </span>
       </button>
     </div>
