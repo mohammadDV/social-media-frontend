@@ -6260,9 +6260,6 @@ a {
   transition: all 0.2s ease-out;
 }
 
-.header-navbar {
-  border-bottom: 4px solid #222943;
-}
 .header-navbar,
 .navbar.bg-light {
   background-color: var(--color-basic-100);
