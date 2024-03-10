@@ -111,9 +111,9 @@
               </div>
             </a>
         </template>
-        <a @click="goToPost('/profile/notifications')" class="no-underline" :title="$t('site.Display All')">
+        <a @click="goToPost('/profile/notifications')" class="no-underline" :title="$t('site.Display all')">
         <div class="text-center cursor-pointer text-md bg-gray-100 p-2">
-          {{ $t('site.Display All') }}
+          {{ $t('site.Display all') }}
         </div>
       </a>
       </div>

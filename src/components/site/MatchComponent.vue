@@ -101,8 +101,10 @@
                             <div id="match-list-id" class="match-list rows">
                                 <div class="row" v-for="(match, index) in matches" :key="index">
                                     <div class="team-home">
-                                        <img  :src="match.home_image"  width="32"  height="32"  :alt="match.home"/>
-                                        <a target="_blank" >{{ match.home }}</a>
+                                        <router-link class="flex flex-row-reverse items-center justify-content-center" :to="`/club/${match.home_id}`" :title="match.home">
+                                            <img class="rounded-full w-[32px] h-[32px]" :src="match.home_image" :alt="match.home"/>
+                                            {{ match.home }}
+                                        </router-link>
                                     </div>
                                     <div class="result">
                                         <span class="home"> {{ match.hsc }} </span>
@@ -110,8 +112,10 @@
                                         <span class="away"> {{ match.asc }} </span>
                                     </div>
                                     <div class="team-away">
-                                        <img :src="match.away_image" width="32" height="32" :alt="match.away"/>
-                                        <a target="_blank">{{ match.away }}</a>
+                                        <router-link class="flex flex-row items-center justify-content-center" :to="`/club/${match.away_id}`" :title="match.away">
+                                            <img :src="match.away_image" class="rounded-full w-[32px] h-[32px]" :alt="match.away"/>
+                                            {{ match.away }}
+                                        </router-link>
                                     </div>
                                     <div v-if="match.status == 1" class="status">
                                         <i class="finished"></i>{{ match.status_name }}
