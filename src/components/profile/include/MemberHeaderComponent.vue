@@ -59,7 +59,7 @@ const user = ref([]);
 </script>
 
 <template>
-   <div class="card profile-card mb-3">
+   <div class="bg-white profile-card mb-3">
         <div class="card-body">
             <div class="user-info" style="border-bottom:0;">
                 <div class="user-cover ratio ratio-21x3 h-75"

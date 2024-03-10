@@ -237,7 +237,7 @@ const dDIcon = computed(() => {
 }
 
 .main-gradient {    
-  border: 1px solid #737373;
+  border: 1px solid #7373736b;
     /* background: linear-gradient(to right, #3f5483 , #182848); */
   background: #3f5483;
   color: white;

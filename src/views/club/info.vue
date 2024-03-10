@@ -17,6 +17,7 @@ const posts = ref([]);
 const videos = ref([]);
 const clubs = ref([]);
 const matches = ref([]);
+const tag = ref([]);
 
 const route = useRoute();
 
@@ -28,6 +29,7 @@ useApi().get(`/api/club/${route.params.id}`)
         videos.value = response.data?.videos;
         clubs.value = response.data?.clubs;
         matches.value = response.data?.matches;
+        tag.value = response.data?.tag;
     });
 }
 
@@ -123,17 +125,17 @@ const getFollowers = () => {
             </div>
             <div class="flex flex-col gap-[10px] p-[10px]">
                 <div class="flex justify-between">
-                    <div class="flex gap-[10px]" >
+                    <router-link class="text-gray-500 text-decoration-none flex gap-2 items-center justify-content-center" :to="`/club/${match?.team_home?.id}`" :title="match?.team_home?.title">
                         <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_home?.title"  :src="match?.team_home?.image">
                         <span>{{ match?.team_home?.title }}</span>
-                    </div>
+                    </router-link>
                     <div class="">{{ match?.hsc }}</div>
                 </div>
                 <div class="flex justify-between">
-                    <div class="flex gap-[10px]">
+                    <router-link class="text-gray-500 text-decoration-none flex gap-2 items-center justify-content-center" :to="`/club/${match?.team_away?.id}`" :title="match?.team_away?.title">
                         <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_away?.title" :src="match?.team_away?.image">
                         <span>{{ match?.team_away?.title }}</span>
-                    </div>
+                    </router-link>
                     <div class="">{{ match?.asc }}</div>
                 </div>
                 <div class="flex gap-[10px] border-t-2 border-dotted border-[#afb1b9] pt-2 ">
@@ -218,7 +220,10 @@ const getFollowers = () => {
             <div class="flex-auto flex-wrap mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2">
                 <div class="flex justify-between bg-white rounded-md mb-2">
                     <h3 class="p-4 m-0 text-lg">{{ $t("site.Club news") }} {{ info?.title }}</h3>
-                    <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
+                    <router-link :to="`/tag/${tag?.id}/${tag?.title}`" 
+                        class="text-decoration-none p-4 m-0 text-lg text-blue-400 hover:text-blue-600">
+                        {{ $t('site.Display all') }}
+                    </router-link>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
                     <div class="cursor-pointer" v-for="(post, index) in posts" :key="index">
@@ -249,7 +254,10 @@ const getFollowers = () => {
             <div class="flex-auto flex-wrap mb-3 mt-2 border-b-2">
                 <div class="flex justify-between bg-white rounded-md mb-2">
                     <h3 class="p-4 m-0 text-lg">{{ $t("site.Club videos") }} {{ info?.title }}</h3>
-                    <button class="p-4 m-0 text-lg text-blue-400 hover:text-blue-600">نمایش همه</button>
+                    <router-link :to="`/tag/${tag?.id}/${tag?.title}`" 
+                        class="text-decoration-none p-4 m-0 text-lg text-blue-400 hover:text-blue-600">
+                        {{ $t('site.Display all') }}
+                    </router-link>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
                     <router-link :to="`/news/${post.id}/${post.slug}`" v-for="(post, index) in videos" :key="index" class="text-decoration-none flex-col p-2 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
