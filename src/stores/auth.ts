@@ -57,6 +57,12 @@ export const useAuthStore = defineStore('auth',{
           name: 'site.Edit profile',
           matches: ['account.edit'],
         },{
+          route: '/profile/chats',
+          icon: 'article',
+          name: 'site.Private messages',
+          matches: ['chat.index'],
+          permission: 'chat_show',
+        },{
           route: '/profile/tickets',
           icon: 'article',
           name: 'site.Ticket management',

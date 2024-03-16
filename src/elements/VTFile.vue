@@ -136,7 +136,9 @@ export default {
                         this.progress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100));
                     }.bind(this)
                 }
-            );
+            ).catch((error) => {
+                this.$emit('getErrors', error);
+            }) ;
         },
         file() {
             // get the file upload component
