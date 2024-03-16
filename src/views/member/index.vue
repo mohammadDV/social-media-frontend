@@ -1,30 +1,12 @@
 <script setup>
 
-    
 //   import {useApi} from '@/utils/api.ts';
   import { onMounted } from 'vue';
   import StatusWallComponent from "@/components/profile/components/status/StatusWallComponent.vue";
-//   import StatusWallFormComponent from "@/components/profile/components/status/StatusWallFormComponent.vue";
 
+  // import { useAuthStore } from '@/stores/auth.ts';
 
-//  const emit = defineEmits(['updateFollowings']); 
-
-//   const updateFollowings = () => {
-//     emit('updateFollowings')
-//   }
-//   import { useAuthStore } from '@/stores/auth.ts';
-
-//   const categories = ref([]);
-//   const dropdown = ref(false);
-
-
-//   const toggleDropdown = () => {
-//     dropdown.value = !dropdown.value
-//   }
-
-//   const logout = () => {
-//     authStore.logout();
-//   };
+  // const authStore = useAuthStore();
 
   onMounted(() => {
     // useApi().get('/api/active-categories')

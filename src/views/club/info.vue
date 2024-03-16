@@ -8,10 +8,14 @@
 //   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
 //   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
 //   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
-//   import { useToast } from "vue-toast-notification";
-//   import { useI18n } from "vue-i18n";  
-//   import { useAuthStore } from '../../stores/auth';
+  import { useToast } from "vue-toast-notification";
+  import { useI18n } from "vue-i18n";  
+  import { useAuthStore } from '../../stores/auth';
 
+  const { t } = useI18n();
+
+
+const authStore = useAuthStore();
 const info = ref([]);
 const posts = ref([]);
 const videos = ref([]);
@@ -19,7 +23,10 @@ const clubs = ref([]);
 const matches = ref([]);
 const tag = ref([]);
 
+const $toast = useToast();
+
 const route = useRoute();
+const active = ref(false);
 
 const getData = () => {
 useApi().get(`/api/club/${route.params.id}`)
@@ -29,9 +36,20 @@ useApi().get(`/api/club/${route.params.id}`)
         videos.value = response.data?.videos;
         clubs.value = response.data?.clubs;
         matches.value = response.data?.matches;
-        tag.value = response.data?.tag;
     });
 }
+
+const follow = (clubId: Number) => {
+    useApi().post(`/api/favorite/clubs/${clubId}`)
+        .then((response) => {
+            if (response.data?.status == 1) {
+                active.value = response.data.active;
+                $toast.success(response.data.message);
+            } else {
+                $toast.error(response.data.message);
+            }
+        });
+  }
 
 const followers = ref([]);
 const page = ref(1);
@@ -71,9 +89,23 @@ const getFollowers = () => {
         } 
     });
 
+    const getActive = () => {
+        useApi().get(`/api/profile/clubs/active/${route.params.id}`)
+            .then((response) => {
+                active.value = response.data?.active;
+            });
+        }
+
+    const loginWarning = () => {
+        $toast.error(t('site.Please login for follow the club'))
+    }
+
     onMounted(() => {
         getData();
         getFollowers();
+        if (authStore?.user?.id) {
+            getActive();
+        }
     });
 
 
@@ -93,13 +125,21 @@ const getFollowers = () => {
                 </div>
                 <div class="flex flex-col items-center text-white">
                     <p class="text-md text-white mb-0 p-2 border-gray-300">۸۰۰ نفر </p>
-                    <VTButton 
+                    <VTButton v-if="authStore?.user?.id > 0"
                         :loading="loading"
                         :disabled="loading"
                         class="w-full justify-center btn-outline-secondary btn-sm" 
                         size="medium"
                         color="primary"  
-                        @click="getFollowers()">
+                        @click="follow(info?.id)">
+
+                        {{ active ? $t('site.Unfollow') : $t('site.Follow') }}
+                    </VTButton>
+                    <VTButton v-else
+                        @click="loginWarning"
+                        class="w-full justify-center btn-outline-secondary btn-sm" 
+                        size="medium"
+                        color="primary">
                         {{ $t('site.Follow') }}
                     </VTButton>
                 </div>
@@ -110,7 +150,6 @@ const getFollowers = () => {
         </div>
     </div>
     
-  <!-- </div> -->
   <div class="container">
     <div class="text-lg my-[20px]">
       <p>{{ $t("site.Club latest results") }} {{ info?.title }}</p>
@@ -182,13 +221,17 @@ const getFollowers = () => {
                     <div v-for="(follower, index) in followers" :key="index" class="mb-2 p-2 bg-[#f0f8ff] rounded-md">
                         <div class="flex gap-6">
                             <div>
-                                <router-link :to="`/member/${follower.id}`" class="no-underline">
+                                <router-link v-if="authStore?.user?.id > 0" :to="`/member/${follower.id}`" class="no-underline">
                                     <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
                                 </router-link>
+                                <a v-else @click="loginWarning" class="cursor-pointer no-underline">
+                                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
+                                </a>
                             </div>
                             <div class="flex-col flex-[50%] gap-9">
                                 <div class="flex justify-content-between align-items-center mb-2">
-                                    <router-link :to="`/member/${follower.id}`" class="no-underline text-base text-black">{{ follower.nickname }}</router-link>
+                                    <router-link v-if="authStore?.user?.id > 0" :to="`/member/${follower.id}`" class="no-underline text-base text-black">{{ follower.nickname }}</router-link>
+                                    <a v-else @click="loginWarning" class="cursor-pointer no-underline text-base text-black">{{ follower.nickname }}</a>
                                     <!-- <button class="border-1 border-solid bg-primary text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">{{ $t('site.View') }}</button> -->
                                 </div>
                                 <div class="flex justify-start gap-1  flex-wrap">

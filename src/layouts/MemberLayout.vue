@@ -54,8 +54,8 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
 
 <template>
   <div>
-      <header-component/>
-      <member-header-component/>
+      <headerComponent/>
+      <memberHeaderComponent/>
       <div class="container py-3">
           <div class="row">
             <div class="col-4 col-xl-4 d-none d-lg-block">
@@ -79,7 +79,6 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
                 :my-clubs="myCLubs"
               ></router-view>
         </div>
-
       </div>
       <footer-component />
   </div>

@@ -39,10 +39,10 @@ export function useApi() {
         }
 
         if (error.response?.status === 401) {
-            authStore.logout();
-            router.push({
-                name:'login'
-            })
+            // authStore.logout();
+            // router.push({
+            //     name:'login'
+            // })
         }   
 
         if (error.response?.status === 403) {
