@@ -52,9 +52,9 @@
         <div class="card-body">
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in followings" :key="index" class="item">
-                    <router-link :to="`/member/${item.id}`" :title="item.nickname">
+                    <router-link :to="`/member/${item.user.id}`" :title="item.user.nickname">
                         <div class="item-avatar">
-                            <userImage :item="item" />
+                            <userImage :item="item.user" />
                         </div>
                     </router-link>
                 </div>
@@ -76,9 +76,9 @@
         <div class="card-body">
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in followers" :key="index" class="item">
-                    <router-link :to="`/member/${item.id}`" :title="item.nickname">
+                    <router-link :to="`/member/${item.follower.id}`" :title="item.follower.nickname">
                         <div class="item-avatar">
-                            <userImage :item="item" />
+                            <userImage :item="item.follower" />
                         </div>
                     </router-link>
                 </div>
@@ -92,7 +92,7 @@
             <div class="card-header-title">
                 <span>{{ $t('site.Favorite clubs') }}</span>
             </div>
-            <router-link v-if="memeberId.length == 0" class="user-link" to="/profile/clubs/favorite">
+            <router-link v-if="memeberId == 0" class="user-link" to="/profile/clubs/favorite">
                 <button type="button" class="btn btn-primary">
                     {{ $t('site.All') }} <span class="badge bg-secondary">{{ myClubs.length }}</span>
                 </button>

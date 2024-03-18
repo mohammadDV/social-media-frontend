@@ -6,9 +6,7 @@
 
   const newMembers = ref([]);
   const congenialMembers = ref([]);
-
-
- const emit = defineEmits(['updateFollowings']); 
+  const emit = defineEmits(['updateFollowings']); 
   
   // Get the new members
   const getNewMembers = () => {
