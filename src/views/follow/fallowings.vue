@@ -139,11 +139,13 @@ const initialFormState = {
                 'grid gap-3 grid-cols-4 my-3' : true,
                 'grid-cols-3' : route?.params?.id?.length > 0,
             }">
-                <div v-for="(user, index) in items" :key="index" class='card'>
+                <div v-for="(item, index) in items" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
-                    <userImage :item="user" addclass="rounded-full w-[120px] h-[120px]"/>
-                    <span class='item-title'>{{ user.nickname }}</span>
-                        <a @click="follow(user.id)" :class="{
+                        <router-link class="text-decoration-none" :to="`/member/${item.user.id}`" :title="item.user.nickname">
+                            <userImage :item="item.user" addclass="rounded-full w-[120px] h-[120px]"/>
+                        </router-link>
+                    <span class='item-title'>{{ item.user.nickname }}</span>
+                        <a @click="follow(item.user.id)" :class="{
                             'w-100 btn text-white' : true,
                             'btn-info' : route?.params?.id?.length > 0,
                             'btn-danger' : !route?.params?.id?.length,
