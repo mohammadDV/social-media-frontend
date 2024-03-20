@@ -10,12 +10,6 @@
 
   onMounted(() => {
     authStore.menu.map((item) => {
-        
-        console.log("test");
-        console.log(item);
-        console.log(!item?.permission);
-        console.log(authStore.permissions.includes(item.permission));
-
         if(!item?.permission || authStore.permissions.includes(item.permission)){
             menu.value.push(item);
         }

@@ -153,74 +153,136 @@ const router = useRouter();
             </div>
         </div>
         <div class="card p-3">
-            
-            <VTInput
-                :is-vt="true"
-                name="first_name"
-                v-model="form.first_name"
-                request-name="PostRequest"
-                :label="$t('site.First name')"/>
-            <VTInput
-                :is-vt="true"
-                class="mt-3"
-                name="last_name"
-                v-model="form.last_name"
-                request-name="PostRequest"
-                :label="$t('site.Last name')"/>
-            <VTInput
-                :is-vt="true"
-                class="mt-3"
-                name="email"
-                :disabled="true"
-                v-model="form.email"
-                request-name="PostRequest"
-                :label="$t('site.Email')"/>
-            <VTInput
-                :is-vt="true"
-                class="mt-3"
-                name="nickname"
-                v-model="form.nickname"
-                request-name="PostRequest"
-                :label="$t('site.Nickname')"/>
-            <VTInput
-                :is-vt="true"
-                class="mt-3"
-                name="mobile"
-                v-model="form.mobile"
-                request-name="PostRequest"
-                :label="$t('site.Mobile')"/>
-            <VTInput
-                :is-vt="true"
-                class="mt-3"
-                name="biography"
-                v-model="form.biography"
-                request-name="PostRequest"
-                :label="$t('site.Biography')"/>
-
-
-            <div v-if="form.profile_photo_path?.length > 0">
-                <img class="thumbnail w-[100px] rounded mt-2" :src="form.profile_photo_path" alt="image">
-            </div>
-
-            <VTFile
-                class="mt-3"
-                :label="$t('site.Image profile')"
-                name="image"
-                @getFileLink="getImageLink"
-                @on-upload-start="onUploadStart"
-            />
-
-            <div v-if="form.bg_photo_path?.length > 0">
-                <img class="thumbnail w-[100px] rounded mt-2" :src="form.bg_photo_path" alt="image">
-            </div>
-
-            <VTFile
-                class="mt-3"
-                :label="$t('site.Image background')"
-                name="image"
-                @getFileLink="getBackgroundLink"
-                @on-upload-start="onUploadStart"
-            />
+                <div class="row mb-3">
+                  <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                    <VTInput
+                        :is-vt="true"
+                        name="first_name"
+                        v-model="form.first_name"
+                        request-name="PostRequest"
+                        :label="$t('site.First name')"/>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <VTInput
+                        :is-vt="true"
+                        name="last_name"
+                        v-model="form.last_name"
+                        request-name="PostRequest"
+                        :label="$t('site.Last name')"/>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                    <VTInput
+                        :is-vt="true"
+                        name="nickname"
+                        v-model="form.nickname"
+                        request-name="PostRequest"
+                        :label="$t('site.Nickname')"/>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <VTInput
+                        :is-vt="true"
+                        :disabled="true"
+                        name="email"
+                        v-model="form.email"
+                        :label="$t('site.Email')"
+                        request-name="PostRequest"/>
+                    <div id="EmailHelp" class="form-text px-1 text-primary text-xs">
+                    {{ $t('site.If you forget your password, new information will be sent to your email') }}        
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                    <VTInput
+                        :is-vt="true"
+                        name="mobile"
+                        v-model="form.mobile"
+                        request-name="PostRequest"
+                        :label="$t('site.Mobile')"/>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <VTInput
+                        :is-vt="true"
+                        name="biography"
+                        v-model="form.biography"
+                        request-name="PostRequest"
+                        :label="$t('site.Biography')"/>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <fieldset class="is-fieldset">
+                    <legend>{{ $t('site.Image profile') }} :</legend>
+                    <div class="d-flex flex-column flex-lg-row">
+                      <div class="flex-grow-1 ms-lg-5">
+                        <div class="mb-3">
+                          <VTFile
+                                name="image"
+                                @getFileLink="getImageLink"
+                                @on-upload-start="onUploadStart"
+                            />
+                          <div id="profileCoverHelp" class="form-text">
+                            تصاویر بزرگتر از 1024x1024 پیکسل کوچک می‌شوند.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="">
+                        <div class="preview-container">
+                          <img
+                            :src="form.profile_photo_path"
+                            id="profileCoverPreview"
+                            class="profile-preview fix-hidden"
+                            alt="profile cover preview"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="mb-3">
+                  <fieldset class="is-fieldset">
+                    <legend>{{ $t('site.Image background') }} :</legend>
+                    <div class="d-flex flex-column flex-lg-row">
+                      <div class="flex-grow-1 ms-lg-5">
+                        <div class="mb-3">
+                          <VTFile
+                                name="image"
+                                @getFileLink="getBackgroundLink"
+                                @on-upload-start="onUploadStart"
+                            />
+                          <div id="profileCoverHelp" class="form-text">
+                            تصاویر بزرگتر از 1024x1024 پیکسل کوچک می‌شوند.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="">
+                        <div class="preview-container-cover">
+                          <img
+                            :src="form.bg_photo_path"
+                            id="profileCoverPreview"
+                            class="profile-preview fix-hidden"
+                            alt="profile cover preview"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="form.is_private"
+                    id="privateCheck"
+                  />
+                  <label class="form-check-label" for="privateCheck">
+                    {{ $t('site.Private account') }}
+                  </label>
+                  <div id="privateCheckHelp" class="form-text">
+                  {{ $t('site.Only your followers will be able to see your statuses') }}
+                  </div>
+                </div>
             
             <div class="mt-3">
                 <VTSelect 
@@ -231,7 +293,6 @@ const router = useRouter();
                     optionsDisplayValueKey="title"
                     name="status"/>
             </div>
-
 
             <VTButton 
                 :loading="!canSubmit"

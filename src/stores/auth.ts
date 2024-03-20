@@ -14,6 +14,7 @@ interface User {
   role_id: Number,
   point: Number,
   is_admin: Boolean,
+  is_private: Boolean,
   clubs: null
 }
 
@@ -145,6 +146,7 @@ export const useAuthStore = defineStore('auth',{
         role_id: 1,
         clubs: null,
         is_admin: false,
+        is_private: false,
         point: 0,
       }
     }),
@@ -167,6 +169,7 @@ export const useAuthStore = defineStore('auth',{
           role_id: 1,
           clubs: null,
           is_admin: false,
+          is_private: false,
           point: 0,
         };
         this.token = '';
@@ -192,6 +195,7 @@ export const useAuthStore = defineStore('auth',{
             this.user.clubs = response.data?.clubs;
             this.roles = response.data?.roles;
             this.user.is_admin = response.data?.is_admin;
+            this.user.is_private = response.data?.is_private;
             this.permissions = response.data?.permissions;
           }
 

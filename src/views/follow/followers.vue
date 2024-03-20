@@ -3,14 +3,18 @@
  import {useApi} from './../../utils/api.ts';
   
  import {helper} from '@/utils/helper.ts';
- import { ref, onMounted, reactive } from 'vue';
+ import { ref, onMounted, reactive, defineProps } from 'vue';
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
  import { useToast } from "vue-toast-notification";
  import { useRoute } from 'vue-router';
  import userImage from '@/components/plugins/UserImage.vue';
 
-
+ const props = defineProps({
+    user: {
+        type: Object
+    }
+ })
  
  const $toast = useToast();
 
@@ -46,6 +50,10 @@
 
   
   const getFollowings = (pageId = false) => {
+
+    if (props.user.is_private == 1) {
+        return;
+    }
     
     if (!pageId) {
         page.value = 1
@@ -102,7 +110,7 @@
                                 {{ $t('site.Profile') }}
                             </router-link>
                         </li>
-                        <li v-if="!route?.params?.id?.length" class="breadcrumb-item active">
+                        <li class="breadcrumb-item active">
                             {{ $t('site.Followers') }}
                         </li>
                     </ol>
