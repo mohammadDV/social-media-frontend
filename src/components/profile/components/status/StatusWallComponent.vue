@@ -27,6 +27,9 @@
         tab: {
             type: Number,
             default: 1
+        },
+        user: {
+            type: Object
         }
     });
     const items = ref([]);
@@ -36,6 +39,10 @@
     const route = useRoute();
 
     const getStatuses = () => {
+
+        if (props.user?.is_private == 1) {
+            return;
+        }
 
         loading.value = true;
         let url = `/api/statuses`;
@@ -60,15 +67,18 @@
          useApi().get(url + pageQuery)
             .then((response) => {
 
-                items.value.push(...response.data.data);
+                if (response.data?.data) {
 
-                if (response.data.total > page.value * response.data.per_page) {
-                    more.value = true;
-                } else {
-                    more.value = false;
+                    items.value.push(...response.data.data);
+    
+                    if (response.data.total > page.value * response.data.per_page) {
+                        more.value = true;
+                    } else {
+                        more.value = false;
+                    }
+    
+                    page.value++;
                 }
-
-                page.value++;
             })
             .finally(() => {
                 loading.value = false;
@@ -143,7 +153,7 @@
                 </div>
             </div>
         </div>
-    <div class="tweet-reel">
+    <div v-if="user?.is_private != 1" class="tweet-reel">
         <div v-for="(status, index) in items" :key="index" class="card tweet-card">
             <statusCardComponent 
                 @updateData="updateData"

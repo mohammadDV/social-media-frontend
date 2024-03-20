@@ -13,6 +13,7 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
   const followers = ref([]);
   const followings = ref([]);
   const myCLubs = ref([]);
+  const user = ref([]);
   const route = useRoute();
 
   const getMyClubs = () => {
@@ -30,6 +31,7 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
             followingsCount.value = response.data.followingsCount;
             followers.value = response.data.followers;
             followings.value = response.data.followings;
+            user.value = response.data.info;
         });
   };
 
@@ -55,7 +57,7 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
 <template>
   <div>
       <headerComponent/>
-      <memberHeaderComponent/>
+      <memberHeaderComponent :user="user"/>
       <div class="container py-3">
           <div class="row">
             <div class="col-4 col-xl-4 d-none d-lg-block">
@@ -64,6 +66,7 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
                   :followingsCount="followingsCount"
                   />
                 <RightSideComponent 
+                  :user="user"
                   :memeberId="route.params.id"
                   :followersCount="followersCount"
                   :followers="followers"
@@ -73,6 +76,7 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent"
                 />
             </div>
               <router-view 
+                :user="user" 
                 @getMyClubs="getMyClubs" 
                 @setFollowings="setFollowings"
                 @updateFollowings="updateFollowings"

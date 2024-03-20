@@ -28,6 +28,9 @@
         myClubs: {
             type: Array,
         },
+        user: {
+            type: Array,
+        },
     });
 
   
@@ -38,7 +41,7 @@
 </script>
 
 <template>
-    <div class="card list-card mb-3">
+    <div v-if="user?.is_private != 1" class="card list-card mb-3">
         <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Following') }}</span>
@@ -62,7 +65,7 @@
         </div>
     </div>
 
-    <div class="card list-card mb-3">
+    <div v-if="user?.is_private != 1" class="card list-card mb-3">
         <div class="card-header-profile">
             <div class="card-header-title">
                 <span>{{ $t('site.Followers') }}</span>

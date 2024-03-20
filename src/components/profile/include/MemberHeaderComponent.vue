@@ -1,7 +1,7 @@
 <script setup>
 
 import {useApi} from '@/utils/api.ts';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, defineProps } from 'vue';
 import userImage from '@/components/plugins/UserImage.vue'
 import { useRoute } from 'vue-router';
 import { useToast } from "vue-toast-notification";
@@ -12,12 +12,12 @@ const $toast = useToast();
 const route = useRoute();
 const active = ref(false);
 
-const getUser = () => {
-    useApi().get(`/api/user/info/${route.params.id}`)
-        .then((response) => {
-            user.value = response.data;
-        })
-}
+defineProps({
+    user: {
+        type: Object,
+        required: true
+    }
+})
 
 const isFollower = () => {
     useApi().get(`/api/is-follower/${route.params.id}`)
@@ -43,15 +43,12 @@ const follow = () => {
         });
 }
 
-const user = ref([]);
   onMounted(() => {
-    getUser();
     isFollower();
   });
 
   watch(() => route.params.id, () => {
     if (route.params.id) {
-      getUser();
       isFollower();
     } 
   });
@@ -68,11 +65,14 @@ const user = ref([]);
                 <div class="user-avatar-profile">
                     <userImage  :item="user"/>
                 </div>
-                <div class="user-name">{{ user.nickname }}</div>
+                <div class="user-name">{{ user?.nickname }}</div>
                 <div v-if="authStore.user?.id != route.params.id" class="user-exes d-grid gap-2 m-auto w-[200px]">
                     <button @click="follow" class="btn btn-outline-secondary btn-sm">
                         {{ active ? $t('site.Unfollow') : $t('site.Follow') }}
                     </button>
+                </div>
+                <div class="bg-blue-100 border text-blue-900 py-2 px-5 w-[250px] mt-3 border-gray-10 text-center m-auto" v-if="user?.is_private == 1">
+                    {{ $t('site.This account is private') }}
                 </div>
             </div>
         </div>

@@ -7507,12 +7507,22 @@ a {
   justify-content: center;
   align-items: center;
 }
+.is-fieldset .preview-container-cover {
+  height: 100%;
+  width: 250px;
+  background-color: var(--color-basic-100);
+  border: 1px solid var(--color-basic-500);
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .is-fieldset .preview-container .profile-preview {
   width: 100%;
   object-fit: cover;
 }
 .is-fieldset .preview-container .fix-hidden {
-  opacity: 0;
+  /* opacity: 0; */
 }
 
 .ql-container {

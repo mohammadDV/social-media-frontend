@@ -2,12 +2,19 @@
  
  import {useApi} from './../../utils/api.ts';
  import { useRoute, useRouter } from 'vue-router';
- import { ref, onMounted, reactive, defineEmits } from 'vue';
+ import { ref, onMounted, reactive, defineEmits, defineProps } from 'vue';
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
  import { useToast } from "vue-toast-notification";
  import userImage from '@/components/plugins/UserImage.vue';
  import {helper} from '@/utils/helper.ts';
+
+
+ const props = defineProps({
+    user: {
+        type: Object
+    }
+ })
 
 const initialFormState = {
       search: '',
@@ -45,6 +52,10 @@ const initialFormState = {
   }
   
   const getFollowings = (pageId = false) => {
+
+    if (props.user?.is_private == 1) {
+        return;
+    }
     
     if (!pageId) {
         page.value = 1
