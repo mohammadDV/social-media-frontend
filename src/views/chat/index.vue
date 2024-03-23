@@ -8,14 +8,61 @@
  import { useToast } from "vue-toast-notification";
  import VTFile from '@/elements/VTFile'; 
  import VTButton from '@/elements/VTButton'; 
-  import { useAuthStore } from '../../stores/auth';
+ import { useAuthStore } from '../../stores/auth';import 
+ DropDown from '@/components/plugins/dropdown/DropDown.vue'
+import { useI18n } from "vue-i18n";
+
+
+const block = ref(false);  
+const banned = ref(false);
+
+
+const parentSelectedOption = ref(null);
+    const { t } = useI18n();
+    const accountMenu = ref([
+        {
+            id: 1,
+            title: t('site.Delete All messages'),
+            func: 'deleteMessages',
+            icon: 'delete',
+        },
+        {
+            id: 2,
+            title: t('site.Block'),
+            func: 'blockUser',
+            icon: 'block'
+        },      
+    ]
+    );
+
+    const blockUser = () => {
+
+      if (!chat.value.target_id) {
+          return;
+      }
+
+      useApi().post(`/api/block/${chat.value.target_id == authStore?.user?.id ? chat.value.user_id : chat.value.target_id}`)
+          .then((response) => {
+              if (response.data.status == 1) {
+                  block.value = response.data.block;
+                  $toast.success(response.data.message);
+              } else {
+                  $toast.error(response.data.message);
+              }
+          });
+    }
+
+  watch(() => block.value, () => {
+    if (chatId.value) {
+        let blockItem = accountMenu.value.find(item => item.id == 2);
+        blockItem.title = block.value ? t('site.Unblock') : t('site.Block');
+        blockItem.icon = block.value ? 'check' : 'block';
+    } 
+  });
 
   const authStore = useAuthStore();
- import { useI18n } from "vue-i18n";
 
 const route = useRoute();
-// const router = useRouter();
-const { t } = useI18n();
 
 const initialFormState = {
       message: '',
@@ -64,13 +111,6 @@ const initialFormState = {
                 page.value++;
             }
         })
-        // .finally(() => {
-        //   if (!pageId) {
-        //     setTimeout(() => {
-        //       scrollToDown();
-        //       }, 2000)
-        //   }
-        // });
     };
 
     const temp = ref([]);
@@ -80,6 +120,8 @@ const initialFormState = {
 
     chatId.value = id;
     
+    resetForm();
+
     if (!pageId) {
         updateChat(id);
         getChat(id);
@@ -138,9 +180,14 @@ const initialFormState = {
   };
 
   const $toast = useToast();
-  const deleteMessages = async (id) => {
+  const deleteMessages = async () => {
+
+    if (chatId.value < 1) {
+      return;
+    }
+
     if(confirm(t('site.Are you sure you want to do it?'))) {
-        useApi().post(`/api/profile/chats/delete/${id}`)
+        useApi().post(`/api/profile/chats/delete/${chatId.value}`)
         .then((response) => {
           if (response?.data?.status) {
               $toast.success(response.data.message);
@@ -151,8 +198,8 @@ const initialFormState = {
                 $toast.error(error.response.data.message);
             }
         }).finally(() => {
-            getMessages(id);
-            updateChat(id);
+            getMessages(chatId.value);
+            updateChat(chatId.value);
         })
     }
   };
@@ -161,6 +208,8 @@ const initialFormState = {
         useApi().get(`/api/profile/chats/info/${id}`)
         .then((response) => {
           chat.value = response?.data;
+          block.value = response?.data?.block;
+          banned.value = response?.data?.banned;
         })
   };
 
@@ -192,7 +241,6 @@ const initialFormState = {
             scrollToDown();
         }, 100)
         
-        // getMessages(chat.value.id);
       } else {
         $toast.error(response.data.message);
       }
@@ -219,25 +267,11 @@ const initialFormState = {
   const scrollableDiv = ref(null);
 
   const scrollToDown = () => {
-      // Scroll to the top of the scrollable div with smooth behavior
       scrollableDiv.value.scrollTo({ top: scrollableDiv.value.scrollHeight});
     };
 
 
-    // const dropDown = ref(null)
-    // const isDropDownVisible = ref('');
-    // const toggleDropDown = () => {
-    //     isDropDownVisible.value = !isDropDownVisible.value
-    // }
-
-    // const closeDropDown = (element) => {
-    //     if(!dropDown.value?.contains(element.target)){
-    //     isDropDownVisible.value = false
-    //     }
-    // }
-
   onMounted(() => {
-        // window.addEventListener('click',closeDropDown) 
         getChats();
         if (route.params.id) {
           getMessages(route.params.id);
@@ -245,7 +279,6 @@ const initialFormState = {
     });
 
     onBeforeUnmount(() => {
-        // window.removeEventListener('click',closeDropDown) 
     });
 
 </script>
@@ -271,9 +304,6 @@ const initialFormState = {
 
         <div class="row">
             <div class="col-12 col-md-7 col-lg-8 order-2 order-md-2">
-              
-
-
               <div class="flex gap-3 p-2 mb-3 rounded-t bg-white" v-if="chat?.user_id == authStore.user?.id || chat?.target_id == authStore.user?.id">
                   <div class="">
                      
@@ -292,10 +322,18 @@ const initialFormState = {
                       </div>
                   </div>
                   <div>
-                    <a @click="deleteMessages(chatId)" :title="$t('site.Delete All messages')"
+                    <DropDown
+                        menuClass="min-w-[170px]"
+                        color="white"
+                        float="left"
+                        @deleteMessages="deleteMessages"
+                        @blockUser="blockUser"
+                        :options="accountMenu"
+                        v-model="parentSelectedOption"/>
+                    <!-- <a @click="deleteMessages(chatId)" :title="$t('site.Delete All messages')"
                         class="bg-danger rounded text-white p-2 hover:text-white hover:bg-red-700 flex justify-center mx-auto justify-center m-2 text-decoration-none cursor-pointer">
                       {{ $t('site.Delete All messages') }}
-                    </a>
+                    </a> -->
                   </div>
                   <!-- <div class="">
                       <div :class="`relative cursor-pointer max-w-[200px]`" ref="dropDown">
@@ -357,7 +395,7 @@ const initialFormState = {
                     </div>
                 </template>
               </div>
-              <div class="relative" v-if="chat?.user_id == authStore.user?.id || chat?.target_id == authStore.user?.id">
+              <div class="relative" v-if="!banned && (chat?.user_id == authStore.user?.id || chat?.target_id == authStore.user?.id)">
                 <div class="flex gap-2 absolute top-[-75px] right-0 my-4">
                     <a v-if="form?.file?.length > 0" 
                         class="bg-vt text-white hover:text-white hover:bg-blue-900 rounded p-3 text-decoration-none cursor-pointer">

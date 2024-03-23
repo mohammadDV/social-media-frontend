@@ -17,7 +17,7 @@
     },
     name: {
       type: String,
-      require: true
+      require: false
     },
     icon: {
       type: String,
@@ -55,6 +55,9 @@
       selectedOption.value = option?.title;
     }
     emit('update:modelValue', option)
+    if (option?.func?.length) {
+      emit(option.func, option)
+    }
     closeDropDown(option)
   }
 
@@ -107,6 +110,8 @@ const backgroundColorDropdown = computed(() => {
     switch (props.color) {
     case 'primary' :
         return 'bg-[#384c78] ';
+    case 'white' :
+        return 'bg-white border';
     default:
         return 'bg-vt ';
     }
@@ -126,6 +131,8 @@ const iconColor = computed(() => {
     case 'danger' :
         return 'text-red';
     case 'dark' :
+        return 'text-black';
+    case 'white' :
         return 'text-black';
     default:
         return 'text-white';
@@ -161,7 +168,8 @@ const hoverBackgroundColor = computed(() => {
     switch (props.color) {
     case 'primary' :
         return 'hover:bg-[#06b4f9]';
- 
+    case 'white' :
+        return 'hover:bg-black';
     default:
         return 'hover:bg-[#f0f8ff80]';
     }
@@ -172,7 +180,8 @@ const textColor = computed(() => {
     switch (props.color) {
     case 'primary' :
         return 'text-white';
-
+    case 'white' :
+        return 'text-gray-500';
     default:
         return 'text-white';
     }
@@ -190,13 +199,19 @@ const dDIcon = computed(() => {
 
 <template >
    <div :class="`relative cursor-pointer max-w-[210px] ${sizeCss} ${borderColor} ${textColor} `" ref="dropDown">
-     <div :class="`${dDIcon} rounded-[5px] p-[5px] flex justify-between items-center gap-[5px] ${backgroundColor} ${gradientColor}`" 
+     <div v-if="name" :class="`${dDIcon} rounded-[5px] p-[5px] flex justify-between items-center gap-[5px] ${backgroundColor} ${gradientColor}`" 
      @click="toggleDropDown">
      <span v-if="icon?.length > 0" :class="`material-icons ${iconColor}`"> {{ icon }} </span>
        <span class="">
         {{mappedSelecedOption}}
        </span>   
     </div>
+    <div v-else :class="`border border-gray-200 rounded-[5px] p-[5px] flex justify-between items-center gap-[5px]`" 
+      @click="toggleDropDown">
+          <span class="px-2 py-1 text-gray-500">
+              ...
+          </span>   
+      </div>
     
     <Transition name="slide-fade">
       <div :class=" `${menuClass} mt-[5px] rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50  p-[0.5rem] ${openDropdown} ${backgroundColorDropdown}`"
@@ -210,7 +225,10 @@ const dDIcon = computed(() => {
               </div>
           </router-link>
           <div v-else class="option" @click="toggleOptionSelect(option)">
-            {{ option.title || option }}
+            <div :class="`p-[0.5rem] border-b-1 shadow-[1px_2px_0px_-1px_rgba(238,238,221,255)] hover:text-white hover:rounded-[5px] last-of-type:shadow-none last-of-type:border-b-none ${hoverBackgroundColor}`">
+                  <span v-if="option?.icon?.length > 0" class="material-icons ml-3"> {{ option.icon }} </span>
+                  <span>{{ option.title || option }} </span>
+              </div>
           </div>
         </template>
       </div>
