@@ -39,6 +39,7 @@ import SubjectCreate from '@/views/subject/create.vue';
 import ClubFavorite from '@/views/club/favorite.vue';
 import Followings from '@/views/follow/fallowings.vue';
 import Followers from '@/views/follow/followers.vue';
+import Block from '@/views/follow/block.vue';
 import LeagueList from '@/views/league/index.vue';
 import LeagueCreate from '@/views/league/create.vue';
 import stepClubs from '@/views/step/clubs.vue';
@@ -262,6 +263,11 @@ const routes = [
         name: 'follow.followers',
         path: '/profile/followers',
         component: Followers,
+      },
+      {
+        name: 'block.users',
+        path: '/profile/block-users',
+        component: Block,
       },
       {
         name: 'club.favorite',

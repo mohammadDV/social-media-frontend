@@ -64,6 +64,11 @@ export const useAuthStore = defineStore('auth',{
           matches: ['chat.index'],
           permission: 'chat_show',
         },{
+          route: '/profile/block-users',
+          icon: 'block',
+          name: 'site.Blocked users',
+          matches: ['block.users'],
+        },{
           route: '/profile/tickets',
           icon: 'article',
           name: 'site.Ticket management',

@@ -4,7 +4,7 @@
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useAuthStore } from '@/stores/auth.ts';
     import { useI18n } from "vue-i18n";
-    import Dropdown from '@/components/plugins/dropdown/DropDown.vue'
+    import DropDown from '@/components/plugins/dropdown/DropDown.vue'
     import DropDownNotif from '@/components/plugins/dropdown/DropDownNotif.vue';
     import DropDownSearchBox from '@/components/plugins/dropdown/DropDownSearchBox.vue';
   
@@ -82,7 +82,7 @@
                                     />
                                 </li>
                                 <li class="nav-item dropdown user-dropdown">
-                                    <Dropdown
+                                    <DropDown
                                         menuClass="min-w-[170px]"
                                         icon="person"
                                         float="left"
