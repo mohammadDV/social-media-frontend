@@ -27,7 +27,7 @@
                                :data-intercom-target="dataIntercomTarget"
                                v-on:input="emit('input', $event.target.value)"
                                @change="changeEvent($event)"
-                               :placeholder="placeholder" :autocomplete="autocomplete"
+                               :placeholder="placeholder"
                                :inputmode="inputType === 'number' ? 'decimal' : 'text'"
                                :class="styles"/>
                         <div class="absolute inset-y-0 -right-[20px] pr-3 flex items-center pointer-events-none" v-if="hasError">

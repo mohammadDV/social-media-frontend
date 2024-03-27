@@ -75,6 +75,12 @@ export const useAuthStore = defineStore('auth',{
           matches: ['ticket.index'],
           permission: 'ticket_show',
         },{
+          route: '/profile/reports',
+          icon: 'article',
+          name: 'site.Report management',
+          matches: ['report.index'],
+          permission: 'report_show',
+        },{
           route: '/profile/subjects',
           icon: 'article',
           name: 'site.Ticket subjects management',

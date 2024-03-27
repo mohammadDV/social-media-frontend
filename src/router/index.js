@@ -30,6 +30,8 @@ import PageCreate from '@/views/page/create.vue';
 import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
 import ClubInfo from '@/views/club/info.vue';
+import ReportList from '@/views/report/index.vue';
+import ReportInfo from '@/views/report/info.vue';
 import TicketList from '@/views/ticket/index.vue';
 import TicketCreate from '@/views/ticket/create.vue';
 import TicketMessages from '@/views/ticket/messages.vue';
@@ -369,6 +371,18 @@ const routes = [
         permission: 'live_update',
         path: '/profile/lives/:id',
         component: LiveCreate,
+      },
+      {
+        name: 'report.index',
+        permission: 'report_show',
+        path: '/profile/reports',
+        component: ReportList,
+      },
+      {
+        name: 'report.info',
+        permission: 'report_update',
+        path: '/profile/reports/:id',
+        component: ReportInfo,
       },
       {
         name: 'subject.index',
