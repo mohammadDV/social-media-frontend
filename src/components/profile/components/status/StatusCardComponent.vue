@@ -25,6 +25,11 @@ const initialFormState = {
     file: '',
     status: '',
 };
+const initialReportFormState = {
+    message: '',
+    type: 'status',
+    id: 0,
+};
 
 const statusList = ref([
     {
@@ -39,6 +44,7 @@ const statusList = ref([
 
  const canSubmit = ref(true);
  const form = reactive({ ...initialFormState });
+ const reportForm = reactive({ ...initialReportFormState });
 
  const $toast = useToast();
  const updateStatus = () => {
@@ -52,6 +58,31 @@ const statusList = ref([
         if (response.data.status) {
             $toast.success(response.data.message);
             resetForm()
+        } else {
+            $toast.error(response.data.message);
+        }
+    })
+    .catch(error => {
+        if (error.response.data.status == 0) {
+            $toast.error(error.response.data.message);
+        }
+    })
+};
+ const sendReport = () => {
+
+    if (!reportId.value) {
+        return '';
+    } else {
+        reportForm.id = reportId.value;
+    }
+
+    useApi().post(`/api/profile/reports`, reportForm)
+    .then((response) => {
+        if (response.data.status) {
+            $toast.success(response.data.message);
+            resetForm()
+        } else {
+            $toast.error(response.data.message);
         }
     })
     .catch(error => {
@@ -62,19 +93,27 @@ const statusList = ref([
 };
 
 const editId = ref(0)
+const reportId = ref(0)
 
 const resetForm = () => {
     Object.assign(form, { ...initialFormState });
+    Object.assign(reportForm, { ...initialReportFormState });
     editId.value = 0;
+    reportId.value = 0;
     isModalVisible.value = false;
+    isReportModalVisible.value = false;
     emit('updateData');
   };
 
   const isModalVisible = ref(false);
+  const isReportModalVisible = ref(false);
   const isDropDownVisible = ref('');
 
   const showModal = () => {
     isModalVisible.value = true;
+  }
+  const showReportModal = () => {
+    isReportModalVisible.value = true;
   }
 
     const authStore = useAuthStore();
@@ -154,6 +193,12 @@ const resetForm = () => {
 
     }
 
+    const showReport = (id) => {
+        reportId.value = id;
+        showReportModal();
+
+    }
+
     const isSave = ref(false);
 
     const saveStatus = (id) => {
@@ -227,17 +272,21 @@ const resetForm = () => {
                         <div :class=" `mt-[5px] w-[200px] left-0 border border-gray-100 bg-white rounded-md shadow-[1px_1px_4px_1px_rgba(40, 68, 120 ,0.59)] absolute z-50 p-[0.5rem]`"
                             v-if="isDropDownVisible"
                         >
-                            <div v-if="status.user.id === authStore.user.id" class="p-2 border-b option hover:bg-gray-100" @click="showEditStatus(status.id)">
-                                <span class="material-icons"> edit </span>
+                            <div v-if="status.user.id === authStore.user.id && status.is_report == 0" class="p-2 border-b option hover:bg-gray-100" @click="showEditStatus(status.id)">
+                                <span class="material-icons text-gray-400"> edit </span>
                                 {{ $t('site.Edit') }}
+                            </div>
+                            <div v-if="status.user.id != authStore.user.id" class="p-2 border-b option hover:bg-gray-100" @click="showReport(status.id)">
+                                <span class="material-icons text-gray-400"> report </span>
+                                {{ $t('site.Report') }}
                             </div>
                             <div class="p-2 option hover:bg-gray-100"  @click="saveStatus(status.id)">
                                 <template v-if="isSave">
-                                    <span class="material-icons"> bookmark_remove </span>
+                                    <span class="material-icons text-gray-400"> bookmark_remove </span>
                                     {{ $t('site.Unsave') }}
                                 </template>
                                 <template v-else>
-                                    <span class="material-icons"> bookmark </span>
+                                    <span class="material-icons text-gray-400"> bookmark </span>
                                     {{ $t('site.Save') }}
                                 </template>
                             </div>
@@ -310,6 +359,28 @@ const resetForm = () => {
                 color="primary"  
                 @click="updateStatus()">
                 {{ $t('site.Submit post') }}
+            </VTButton>  
+            
+        </div>
+    </VTModal>
+    <VTModal v-if="isReportModalVisible" v-model="isReportModalVisible" :title="$t('site.Report')">
+        <div class="w-[350px] sm:w-[600px]">
+            <div class="mb-3">
+                <VTTextArea
+                    name="message"
+                    rows="4"
+                    v-model="reportForm.message"
+                    :disabled="false"
+                    request-name="ReportRequest"
+                    :placeholder="$t('site.Please Write your report')"/>
+            </div>
+
+            <VTButton 
+                class="btn btn-outline-secondary btn-sm" 
+                size="medium"
+                color="primary"  
+                @click="sendReport()">
+                {{ $t('site.Save') }}
             </VTButton>  
             
         </div>

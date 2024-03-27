@@ -1,13 +1,16 @@
 <script setup>
 
 import {useApi} from '@/utils/api.ts';
-import { onMounted, ref, watch, defineProps } from 'vue';
+import { onMounted, ref, watch, defineProps, reactive } from 'vue';
 import userImage from '@/components/plugins/UserImage.vue'
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from "vue-toast-notification";
 import { useAuthStore } from '@/stores/auth.ts';
 import DropDown from '@/components/plugins/dropdown/DropDown.vue'
 import { useI18n } from "vue-i18n";
+import VTModal from '@/elements/VTModal.vue'  
+import VTTextArea from '@/elements/VTTextArea';  
+import VTButton from '@/elements/VTButton'; 
 
 
 const router = useRouter();
@@ -26,7 +29,13 @@ const parentSelectedOption = ref(null);
             title: t('site.Block'),
             func: 'blockUser',
             icon: 'block'
-        }   ,      
+        }, 
+        {
+            id: 3,
+            title: t('site.Report'),
+            func: 'reportUser',
+            icon: 'report'
+        },      
     ]
     );
 
@@ -91,6 +100,50 @@ const blockUser = () => {
         });
 }
 
+const initialReportFormState = {
+    message: '',
+    type: 'user',
+    id: 0,
+}
+
+const reportForm = reactive({ ...initialReportFormState });
+const reportId = ref(0);
+const isReportModalVisible = ref(false);
+const resetForm = () => {
+    Object.assign(reportForm, { ...initialReportFormState });
+    reportId.value = 0;
+    isReportModalVisible.value = false;
+  };
+
+const reportUser = () => {
+    reportId.value = route?.params?.id;
+    isReportModalVisible.value = true;
+}
+
+const sendReport = () => {
+
+    if (!reportId.value) {
+        return '';
+    } else {
+        reportForm.id = reportId.value;
+    }
+
+    useApi().post(`/api/profile/reports`, reportForm)
+    .then((response) => {
+        if (response.data.status) {
+            $toast.success(response.data.message);
+            resetForm()
+        } else {
+            $toast.error(response.data.message);
+        }
+    })
+    .catch(error => {
+        if (error.response.data.status == 0) {
+            $toast.error(error.response.data.message);
+        }
+    })
+};
+
   onMounted(() => {
     isFollower();
   });
@@ -137,6 +190,7 @@ const blockUser = () => {
                         :name="$t('site.Activities')"
                         @follow="follow"
                         @blockUser="blockUser"
+                        @reportUser="reportUser"
                         :options="accountMenu"
                         v-model="parentSelectedOption"/>
                     <button @click="follow" class="btn btn-outline-secondary btn-sm">
@@ -149,5 +203,28 @@ const blockUser = () => {
             </div>
         </div>
     </div>
+
+    <VTModal v-if="isReportModalVisible" v-model="isReportModalVisible" :title="$t('site.Report')">
+        <div class="w-[300px] sm:w-[600px]">
+            <div class="mb-3">
+                <VTTextArea
+                    name="message"
+                    rows="4"
+                    v-model="reportForm.message"
+                    :disabled="false"
+                    request-name="ReportRequest"
+                    :placeholder="$t('site.Please Write your report')"/>
+            </div>
+
+            <VTButton 
+                class="btn btn-outline-secondary btn-sm" 
+                size="medium"
+                color="primary"  
+                @click="sendReport()">
+                {{ $t('site.Save') }}
+            </VTButton>  
+            
+        </div>
+    </VTModal>
 
 </template>

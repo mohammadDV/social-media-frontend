@@ -3,18 +3,24 @@
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref, watch } from 'vue';
   import statusCardComponent from './StatusCardComponent.vue'
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
 
     const item = ref([]);
     const loading = ref(false);
     const notFound = ref(false);
     const route = useRoute();
+    const router = useRouter();
 
     const getStatus = () => {
 
         loading.value = true;
          useApi().get(`/api/status/preview/${route.params.id}`)
             .then((response) => {
+                if (response.data?.length == undefined) {
+                    router.push({
+                        path: '/profile'
+                    })
+                }
                 item.value = response.data;
             })
             .catch(() => {

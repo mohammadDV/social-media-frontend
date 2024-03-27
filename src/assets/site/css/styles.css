@@ -6362,7 +6362,7 @@ section.header .subheader-navbar .navbar-nav:first-child {
 @media (min-width: 1200px) {
   .user-avatar {
     width: 2rem;
-    height: 2rem;
+    height: 100%;
   }
   .user-avatar img {
     width: 2rem;

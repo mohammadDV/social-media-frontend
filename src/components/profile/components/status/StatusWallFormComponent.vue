@@ -45,6 +45,8 @@
       if (response.data.status) {
         $toast.success(response.data.message);
         closeModal()
+      } else {
+        $toast.error(response.data.message);
       }
     })
     .catch(error => {

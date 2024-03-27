@@ -191,7 +191,7 @@
                     </div>
 
                     <comment-form-component @updateComments="updateComments"/>
-                    <comment-component :comments="post?.comments" @updateComments="updateComments"/>
+                    <CommentComponent :comments="post?.comments" @updateComments="updateComments"/>
                 </div>
                 <div class="col-12 col-lg-3 flex-grow-1">
                     

@@ -73,24 +73,38 @@
                         <div class="card-body">
                             <div class="tweet-user-avatar">
                                 <router-link v-if="item?.model?.profile_photo_path?.length > 0" class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">
-                                    <img class="rounded-full w-[120px] h-[120px]"  :src="item.model.profile_photo_path" :alt="item.nickname" />
+                                    <img class="rounded-full w-[120px] h-[120px]" :src="item.model.profile_photo_path" :alt="item.nickname" />
                                 </router-link>
+                                <a v-else>
+                                    <img class="rounded-full w-[120px] h-[120px]" src="/assets/site/images/user-icon.png" :alt="$t('site.Admin')" />
+                                </a>
                             </div>
                             <div class="tweet-info">
                                 <div class="flex tweet-info-head">
                                     <span v-if="item?.model?.nickname?.length > 0" class="tweet-user-name">
                                         <router-link class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">{{ item?.model?.nickname }}</router-link>
                                     </span>
+                                    <span v-else class="tweet-user-name">
+                                        <a class="text-black text-decoration-none">{{ $t('site.Admin') }}</a>
+                                    </span>
                                     <span class="tweet-date">{{ jalaliMoment(item.created_at).fromNow() }}</span>
                                 </div>
-                                <div class="tweet-body">
-                                    <router-link v-if="item?.link?.length > 0" class="text-black text-decoration-none" :to="item?.link">
+                                <div class="tweet-body pt-2">
+                                    <router-link v-if="item?.link?.length > 0" class="mt-2 text-black text-decoration-none" :to="item?.link">
                                         {{ item?.message }}
                                         <img v-if="item?.file?.length > 0" :src="item.file"/>
                                     </router-link>
                                     <template v-else>
-                                        {{ item?.message }}
-                                        <img v-if="item?.file?.length > 0" :src="item.file"/>
+                                        <p>
+                                            {{ item?.message }}
+                                        </p>
+                                        <br>
+                                        <div class="mx-5 p-2 border-t">
+                                            <p class="truncate">
+                                                {{  item?.model?.text }}
+                                            </p>
+                                            <img v-if="item?.model?.file?.length > 0" :src="item?.model?.file"/>
+                                        </div>
                                     </template>
                                 </div>
                             </div>

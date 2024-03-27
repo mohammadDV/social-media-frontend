@@ -6,18 +6,16 @@
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
-  import { useToast } from "vue-toast-notification";
-  import { useI18n } from "vue-i18n";
+//   import { useToast } from "vue-toast-notification";
+  import { useI18n } from "vue-i18n";  
   import { useAuthStore } from '../../stores/auth';
 
   const authStore = useAuthStore();
-  const hasShowPermission = ref(authStore.permissions.includes('status_show'));
-  const hasUpdatePermission = ref(authStore.permissions.includes('status_update'));
-  const hasDeletePermission = ref(authStore.permissions.includes('status_delete'));
-
-    const { t } = useI18n();
-  
-    const dataTable = ref();
+  const hasShowPermission = ref(authStore.permissions.includes('report_show'));
+//   const hasUpdatePermission = ref(authStore.permissions.includes('report_show'));
+//   const hasDeletePermission = ref(authStore.permissions.includes('report_delete'));  
+  const { t } = useI18n();  
+  const dataTable = ref();
 
     const {
     currentPageFirstIndex,
@@ -47,11 +45,9 @@
   const searchValue = ref("");
   const headers: Header[] = [
     { text: t("site.Id"), value: "id", sortable: true},
-    { text: t('site.Content'), value: "text" },
-    // { text: t('site.User'), value: "user_id" },
-    { text: t('site.Image'), value: "file", sortable: true },
-    { text: t('site.Status'), value: "status", sortable: true },
-    { text: t('site.Comments'), value: "comments_count" },
+    { text: t('site.User'), value: "user_id" },
+    { text: t('site.Type'), value: "type" },
+    { text: t('site.Status'), value: "status" },
     { text: t('site.Date'), value: "created_at" },
     { text: t('site.Manage'), value: "actions" },
   ];
@@ -78,29 +74,12 @@
   
   const loadFromServer = async () => {
     loading.value = true;
-    await useApi().get('/api/profile/status', serverOptions.value)
+    await useApi().get('/api/profile/reports', serverOptions.value)
     .then((response: any) => {
         items.value = response.data.data;
         serverItemsLength.value = response.data.total;
     })
     loading.value = false;
-  };
-
-  const $toast = useToast();
-  const deletItem = (id: Number) => {
-    if(confirm('Are you sure you want to remove this item?')) {
-        useApi().deleteRequest(`/api/profile/status/${id}`)
-        .then((response: any) => {
-            if (response.data.status) {
-
-                $toast.success(response.data.message);
-                loadFromServer();
-            } else {
-                $toast.error(response.data.message);
-
-            }
-        })
-    }
   };
   
   // initial load
@@ -122,15 +101,10 @@
                             </router-link>
                         </li>
                         <li class="breadcrumb-item">
-                            {{ $t('site.Post management') }}
+                            {{ $t('site.Report management') }}
                         </li>
                     </ol>
                 </nav>
-                <div v-if="hasShowPermission" class="place-button">
-                    <router-link to="/profile/status/create" :title="$t('site.Create new post')">
-                        <button class="btn btn-primary">{{ $t('site.Create new post') }}</button>
-                    </router-link>
-                </div>
             </div>
         </div>
         <div class="card p-3">
@@ -159,20 +133,24 @@
                 >
 
                 <template #item-status="item">
-                        <span v-if="item.status == 1" class="p-1 rounded btn-success m-1" >{{ $t('site.Active') }}</span>
-                        <span v-else class="p-1 rounded btn-danger m-1" >{{ $t('site.Inactive') }}</span>
+                    <span v-if="item.status == 'pending'" class="p-1 flex-none rounded btn-warning text-white m-1" >{{ $t('site.' + item.status) }}</span>
+                    <span v-else class="p-1 rounded btn-success m-1" >{{ $t('site.' + item.status) }}</span>
+                </template>
+                <template #item-type="item">
+                    <span >{{ $t(`site.${item?.model?.commentable_id > 0 ? 'Comment' : item?.model?.nickname?.length > 0 ? 'User' : 'Status post'}`) }}</span>
+                </template>
+                <template #item-user_id="item">
+                    <span >{{ item?.user_id }}</span>
                 </template>
                 <template #item-actions="item">
                     <div class="flex">
-                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/status/' + item.id">
-                            <span class="material-icons size-font-ahalf"> edit </span>
+                        <router-link v-if="hasShowPermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/reports/' + item.id">
+                            <span class="material-icons size-font-ahalf"> list </span>
                         </router-link>
-                        <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
                 </template>
-                <template #item-file="item">
-                    <img v-if="item?.file?.length > 0" :src="item.file" alt="image" class="w-[50px]">
-                    <p v-else>-</p>
+                <template #item-image="item">
+                        <img :src="item.image" alt="image" class="w-[50px]">
                 </template>
                 <template #item-created_at="item">
                     {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}
