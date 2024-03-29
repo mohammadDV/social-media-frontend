@@ -22,6 +22,7 @@
                                :name="name"
                                :min="min"
                                :max="max"
+                               :maxlength="max"
                                :step="step"
                                :value="modelValue"
                                :data-intercom-target="dataIntercomTarget"

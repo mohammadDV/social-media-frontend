@@ -11,13 +11,14 @@ import ProfileLayout from '@/layouts/ProfileLayout.vue';
 import MemberLayout from '@/layouts/MemberLayout.vue';
 
 // Import views
-import Home from '@/views/Home.vue';
-import News from '@/views/News.vue';
-import Page from '@/views/Page.vue';
+import Home from '@/views/home.vue';
+import News from '@/views/news.vue';
+import AdvertiseOrder from '@/views/advertiseOrder.vue';
+import Page from '@/views/page.vue';
 import Member from '@/views/member/index.vue';
-import Category from '@/views/Category.vue';
-import Tag from '@/views/Tag.vue';
-import SearchPost from '@/views/Search.vue';
+import Category from '@/views/category.vue';
+import Tag from '@/views/tag.vue';
+import SearchPost from '@/views/search.vue';
 import Profile from '@/views/profile/index.vue';
 import Status from '@/views/profile/status.vue';
 import Notification from '@/views/notification/index.vue';
@@ -48,6 +49,7 @@ import stepClubs from '@/views/step/clubs.vue';
 import stepMatches from '@/views/step/matches.vue';
 import LeagueClubs from '@/views/league/clubs.vue';
 import LeagueSteps from '@/views/league/steps.vue';
+import AdvertiseFormList from '@/views/advertise/formList.vue';
 import AdvertiseList from '@/views/advertise/index.vue';
 import AdvertiseCreate from '@/views/advertise/create.vue';
 import LiveList from '@/views/live/index.vue';
@@ -127,6 +129,11 @@ const routes = [
         name: 'news',
         path: '/news/:id/:slug',
         component: News,
+      },
+      {
+        name: 'advertise.order',
+        path: '/advertising-order',
+        component: AdvertiseOrder,
       },
       {
         name: 'page',
@@ -349,10 +356,10 @@ const routes = [
         component: AdvertiseCreate,
       },
       {
-        name: 'advertise.edit',
-        permission: 'advertise_update',
-        path: '/profile/advertises/:id',
-        component: AdvertiseCreate,
+        name: 'advertise.form.index',
+        permission: 'advertise_show',
+        path: '/profile/advertise-forms',
+        component: AdvertiseFormList,
       },
       {
         name: 'live.index',

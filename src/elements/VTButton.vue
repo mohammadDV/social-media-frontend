@@ -1,5 +1,5 @@
 <template>
-   <button type="button"
+   <button :type="submit ? 'submit' : 'button'"
             :class="`flex relative justify-center items-center border text-sm font-normal rounded-md hover:bg-sky-600 ${sizeCss} ${borderColor} ${textColor} ${backgroundColor} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`">
         <span v-show="currentIcon"
               class="mr-2 contents items-center text-xs">
@@ -42,6 +42,10 @@ const props = defineProps({
     badge: {
       type: Number,
       default: 0,
+    },
+    submit: {
+      type: Boolean,
+      default: false,
     }
 })
 
