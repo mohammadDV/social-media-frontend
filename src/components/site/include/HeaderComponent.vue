@@ -255,21 +255,13 @@ onMounted(() => {
                    
                     <section class="header-main">
                         <div class="header-main-actions">
-                            <button class="btn vt-btn-white">سفارش تبلیغات</button>
+                            <router-link to="/advertising-order" :title="$t('site.Advertising order')">
+                                <button class="btn vt-btn-white">{{ $t('site.Advertising order') }}</button>
+                            </router-link>
                         </div>
                         <div class="search-container">
-
-                            <!-- <form action="/search">
-                                <input class="form-control is-white" v-model="search" name="q" type="text" placeholder="جستجو اخبار، تیم ها، بازیکنان و ویدیو های ورزشی ..."/>
-                                <button class="btn vt-btv-primary">
-                                    <span class="material-icons text-body-invert"> search </span>
-                                </button>
-                            </form> -->
-
                             <DropDownMainSearch :options="dropdownItems" />
-                        
                         </div>
-    
                         <div class="logo-wrap">
                             <a href="" title="{{ $t('site.Main page') }}">
                                 <img src="/site/images/logo.png" alt="site's logo" />

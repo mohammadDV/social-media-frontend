@@ -123,6 +123,12 @@ export const useAuthStore = defineStore('auth',{
           matches: ['advertise.index'],
           permission: 'advertise_show',
         },{
+          route: '/profile/advertise-forms',
+          icon: 'article',
+          name: 'site.Advertise form management',
+          matches: ['advertise.form.index'],
+          permission: 'advertise_show',
+        },{
           route: '/profile/pages',
           icon: 'article',
           name: 'site.Page management',
