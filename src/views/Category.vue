@@ -115,7 +115,7 @@
                         </div>
                         <div class="card-body">
                             <div class="card-body-inner">
-                            <div id="main-list" class="row gy-3 news-item-row">
+                            <div id="main-list" class="row gy-3 news-item-row" :key="category?.id">
                                 <div v-for="(post, index) in posts" :key="index" class="col-12 col-lg-6">
                                     <div class="news-row-item">
                                         <div class="row gx-2">

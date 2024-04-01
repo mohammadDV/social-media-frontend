@@ -151,10 +151,9 @@ const resetForm = () => {
         commentActive.value = !commentActive.value
 
         if (commentActive.value && comments.value.length == 0) {
-            useApi().get(`/api/comment/status/${id}`)
-                .then((response) => {
-                    comments.value = response.data;
-                });
+
+            page.value = 1;
+            getComments(id);
         }
     }
 
@@ -177,10 +176,8 @@ const resetForm = () => {
     }
 
     const updateComments = (id) => {
-        useApi().get(`/api/comment/status/${id}`)
-                .then((response) => {
-                    comments.value = response.data;
-                });
+        page.value = 1;
+        getComments(id);
     }
 
     const showEditStatus = (id) => {
@@ -233,6 +230,46 @@ const resetForm = () => {
         form.file = item;
         canSubmit.value = true;
     };
+
+    const page = ref(1);
+    const more = ref(false);
+    const loading = ref(false);
+
+    const getComments = (statusId) => {
+
+        loading.value = true;
+
+        if (page.value == 1) {
+            comments.value = [];
+        }
+
+         useApi().get(`/api/comment/status/${statusId}?page=${page.value}`)
+            .then((response) => {
+
+                if (response.data?.data) {
+
+                    comments.value.push(...response.data.data);
+    
+                    if (response.data.total > page.value * response.data.per_page) {
+                        more.value = true;
+                    } else {
+                        more.value = false;
+                    }
+    
+                    page.value++;
+                }
+            })
+            .finally(() => {
+                loading.value = false;
+            })
+    }
+
+    // watch(() => route.params.id, () => {
+    //     if (route.params.id) {
+    //         page.value = 1;
+    //         getStatuses();
+    //     } 
+    // });
     
     onMounted(() => {
         window.addEventListener('click',closeDropDown) 
@@ -319,6 +356,11 @@ const resetForm = () => {
         <div v-if="commentActive" class="tweet-comments">
             <CommentWallFormComponent @updateComments="updateComments(status.id)" :model-id="status.id" model-type="status" />
             <CommentWallComponent @updateComments="updateComments(status.id)" :comments="comments" :model-id="status.id" model-type="status"/>
+            <div class="text-center">
+                <button v-if="more" class="btn btn-light" @click="getComments(status.id)">
+                    <span>{{ $t('site.More post') }}</span>
+                </button>
+            </div>
         </div>
 
         

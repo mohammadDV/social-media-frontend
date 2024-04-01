@@ -184,7 +184,7 @@ const getFollowers = () => {
             </div>        
         </div>
     </div>
-    <div class="md:flex mt-2 gap-3">
+    <div class="md:flex mt-2 gap-3" :key="info?.id">
         <div class="md:flex-auto md:w-[30%]">
             <div class="bg-white rounded-md mr-2 mb-3 mt-2 sm:flex sm:flex-col xs:flex-col xs:mr-0 sm:mr-0 md:mr-0">
                 <h3 class="p-3 m-0 mr-[3px] pr-[3px] text-lg bg-vt-dark text-white rounded-t-md ">جدول رده بندی</h3>
@@ -221,7 +221,7 @@ const getFollowers = () => {
                     <div v-for="(follower, index) in followers" :key="index" class="mb-2 p-2 bg-[#f0f8ff] rounded-md">
                         <div class="flex gap-6">
                             <div>
-                                <router-link v-if="authStore?.user?.id > 0" :to="`/member/${follower.id}`" class="no-underline">
+                                <router-link v-if="authStore?.user?.id > 0" :to="`/member/${follower.id}`" :title="follower.nickname" class="no-underline">
                                     <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
                                 </router-link>
                                 <a v-else @click="loginWarning" class="cursor-pointer no-underline">
@@ -230,7 +230,7 @@ const getFollowers = () => {
                             </div>
                             <div class="flex-col flex-[50%] gap-9">
                                 <div class="flex justify-content-between align-items-center mb-2">
-                                    <router-link v-if="authStore?.user?.id > 0" :to="`/member/${follower.id}`" class="no-underline text-base text-black">{{ follower.nickname }}</router-link>
+                                    <router-link v-if="authStore?.user?.id > 0" :to="`/member/${follower.id}`"  :title="follower.nickname" class="no-underline text-base text-black">{{ follower.nickname }}</router-link>
                                     <a v-else @click="loginWarning" class="cursor-pointer no-underline text-base text-black">{{ follower.nickname }}</a>
                                     <!-- <button class="border-1 border-solid bg-primary text-white px-2 py-1 rounded-md hover:bg-[#4e87c3e6]">{{ $t('site.View') }}</button> -->
                                 </div>
