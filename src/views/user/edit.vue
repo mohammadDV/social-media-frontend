@@ -1,7 +1,7 @@
 <script setup>
  
  import {useApi} from './../../utils/api.ts';
- import {helper} from '@/utils/helper.ts';
+//  import {helper} from '@/utils/helper.ts';
   
  import { ref, onMounted, reactive, watch } from 'vue';
  import { useRoute, useRouter } from 'vue-router';
@@ -17,27 +17,12 @@
  const authStore = useAuthStore();
  const hasRolePermission = ref(authStore.permissions.includes('role_show'));
 
-
-const initialFormState = {
-      first_name: '',
-      last_name: '',
-      nickname: '',
-      email: '',
-      password: '',
-      mobile: '',
-      status: 0,
-      role_id: 4,
-      biography: '',
-      profile_photo_path: '',
-      bg_photo_path: '',
-    };
-
 const route = useRoute();
 const router = useRouter();
 
  const { t } = useI18n();
  const canSubmit = ref(true);
- const form = reactive({ ...initialFormState });
+ const form = reactive({ ...authStore.user });
 
  const statusList = ref([
     {
@@ -54,12 +39,12 @@ const router = useRouter();
 
   const getRoles = () => {
     
+    if (route.params.id != undefined) {
         useApi().get(`/api/profile/role`)
             .then((response) => {
-              console.log('xsxa');
-              console.log(response.data);
               roleList.value = response.data;
             });
+    }
   }
 
   const getUser = () => {
@@ -95,10 +80,10 @@ const router = useRouter();
     canSubmit.value = true;
   };
 
-  const resetForm = () => {
-    Object.assign(form, { ...initialFormState });
-    helper().goToTop();
-  };
+//   const resetForm = () => {
+//     Object.assign(form, { ...initialFormState });
+//     helper().goToTop();
+//   };
 
   const send = () => {
 
@@ -106,7 +91,11 @@ const router = useRouter();
         return '';
     }
 
-    let url = `/api/profile/users`;
+    let url = `/api/profile/users/${form.id}`;
+
+    if (route.params.id) {
+        url = `/api/profile/users/${route.params.id}`;
+    }
 
     const $toast = useToast();
     useApi().post(url, form)
@@ -118,7 +107,7 @@ const router = useRouter();
         }
         
         $toast.success(response.data.message);
-        resetForm();
+        // resetForm()
         if (route.params.id && 1 == 2) {
             router.push({
                 name: 'users.index'
@@ -138,9 +127,9 @@ const router = useRouter();
     if (route.params.id) {
         getUser();
       }
-      // if (hasRolePermission.value) {
+      if (hasRolePermission.value) {
         getRoles();
-      // }
+      }
 
   });
 
@@ -176,7 +165,7 @@ const router = useRouter();
                         :is-vt="true"
                         name="first_name"
                         v-model="form.first_name"
-                        request-name="UserRequest"
+                        request-name="UpdateUserRequest"
                         :label="$t('site.First name')"/>
                   </div>
                   <div class="col-12 col-lg-6">
@@ -184,7 +173,7 @@ const router = useRouter();
                         :is-vt="true"
                         name="last_name"
                         v-model="form.last_name"
-                        request-name="UserRequest"
+                        request-name="UpdateUserRequest"
                         :label="$t('site.Last name')"/>
                   </div>
                 </div>
@@ -194,28 +183,20 @@ const router = useRouter();
                         :is-vt="true"
                         name="nickname"
                         v-model="form.nickname"
-                        request-name="UserRequest"
+                        request-name="UpdateUserRequest"
                         :label="$t('site.Nickname')"/>
                   </div>
                   <div class="col-12 col-lg-6">
                     <VTInput
                         :is-vt="true"
+                        :disabled="true"
                         name="email"
                         v-model="form.email"
                         :label="$t('site.Email')"
-                        request-name="UserRequest"/>
+                        request-name="UpdateUserRequest"/>
                     <div id="EmailHelp" class="form-text px-1 text-primary text-xs">
                     {{ $t('site.If you forget your password, new information will be sent to your email') }}        
                     </div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <VTInput
-                        :is-vt="true"
-                        inputType="password"
-                        name="password"
-                        v-model="form.password"
-                        :label="$t('site.Password')"
-                        request-name="UserRequest"/>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -224,7 +205,7 @@ const router = useRouter();
                         :is-vt="true"
                         name="mobile"
                         v-model="form.mobile"
-                        request-name="UserRequest"
+                        request-name="UpdateUserRequest"
                         :label="$t('site.Mobile')"/>
                   </div>
                   <div class="col-12 col-lg-6">
@@ -232,7 +213,7 @@ const router = useRouter();
                         :is-vt="true"
                         name="biography"
                         v-model="form.biography"
-                        request-name="UserRequest"
+                        request-name="UpdateUserRequest"
                         :label="$t('site.Biography')"/>
                   </div>
                 </div>
@@ -283,8 +264,7 @@ const router = useRouter();
                       </div>
                       <div class="">
                         <div class="preview-container-cover">
-                          <img
-                            v-if="form?.bg_photo_path?.length > 0"
+                          <img v-if="form?.bg_photo_path?.length > 0"
                             :src="form.bg_photo_path"
                             id="profileCoverPreview"
                             class="profile-preview fix-hidden"

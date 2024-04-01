@@ -32,7 +32,7 @@
                                :inputmode="inputType === 'number' ? 'decimal' : 'text'"
                                :class="styles"/>
                         <div class="absolute inset-y-0 -right-[20px] pr-3 flex items-center pointer-events-none" v-if="hasError">
-                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            <svg :class="{'h-5 w-5': true, 'text-red-500': !blur, 'text-red-200': blur}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                  fill="currentColor"
                                  aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -51,7 +51,7 @@
             </div>
         </div>
         <p class="mt-2 mb-0 text-sm text-gray-500" v-if="!errorMessage && helpText">{{ helpText }}</p>
-        <p class="mt-2 mb-0 text-sm text-red-600" v-if="errorMessage">{{errorMessage }}</p>
+        <p :class="{'mt-2 mb-0 text-sm': true,  'text-red-600': !blur , 'text-red-300': blur}" v-if="errorMessage">{{errorMessage }}</p>
     </div>
 </template>
 

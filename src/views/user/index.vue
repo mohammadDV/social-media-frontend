@@ -1,7 +1,7 @@
 <script lang="ts" setup>
  
   import {useApi} from '../../utils/api';
-  import { ref, watch } from "vue";
+  import { ref, watch, onMounted } from "vue";
   import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
@@ -48,9 +48,11 @@
     { text: t("site.Id"), value: "id", sortable: true},
     { text: t('site.First name'), value: "first_name" },
     { text: t('site.Last name'), value: "last_name" },
+    { text: t('site.Role'), value: "role_id" },
     { text: t('site.Email'), value: "email" },
     { text: t('site.Nickname'), value: "nickname", sortable: true },
     { text: t('site.Status'), value: "status", sortable: true },
+    { text: t('site.Report'), value: "is_report" },
     { text: t('site.Date'), value: "created_at" },
     { text: t('site.Manage'), value: "actions" },
   ];
@@ -98,9 +100,31 @@
         })
     }
   };
+
+  const roleList = ref([]);
+
+    const getRoles = () => {
+    
+        useApi().get(`/api/profile/role`)
+            .then((response) => {
+                console.log('xsxa');
+                console.log(response.data);
+                roleList.value = response.data;
+            });
+    }
+
+    const getRoleName = (id: Number) => {
+    
+        let role = roleList.value.find(c => c.id == id);
+        return role.name;
+    }
+
+    onMounted (() => {
+        getRoles();
+        // initial load
+        loadFromServer();
+    })
   
-  // initial load
-  loadFromServer();
   
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
 
@@ -118,13 +142,13 @@
                             </router-link>
                         </li>
                         <li class="breadcrumb-item">
-                            {{ $t('site.Post management') }}
+                            {{ $t('site.User management') }}
                         </li>
                     </ol>
                 </nav>
                 <div v-if="hasShowPermission" class="place-button">
-                    <router-link to="/profile/posts/create" :title="$t('site.Create new post')">
-                        <button class="btn btn-primary">{{ $t('site.Create new post') }}</button>
+                    <router-link to="/profile/users/create" :title="$t('site.Create new user')">
+                        <button class="btn btn-primary">{{ $t('site.Create new user') }}</button>
                     </router-link>
                 </div>
             </div>
@@ -158,6 +182,10 @@
                         <span v-if="item.status == 1" class="p-1 rounded btn-success m-1" >{{ $t('site.Active') }}</span>
                         <span v-else class="p-1 rounded btn-danger m-1" >{{ $t('site.Inactive') }}</span>
                 </template>
+                <template #item-is_report="item">
+                        <span v-if="item.is_report == 1" class="p-1 rounded btn-info m-1 text-white" >{{ $t('site.Reported') }}</span>
+                        <span v-else class="p-1 rounded m-1" > - </span>
+                </template>
                 <template #item-actions="item">
                     <div class="flex">
                         <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/users/edit/' + item.id">
@@ -168,6 +196,9 @@
                 </template>
                 <template #item-created_at="item">
                     {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}
+                </template>
+                <template #item-role_id="item">
+                    {{ getRoleName(item.role_id) }}
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>

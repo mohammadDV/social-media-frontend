@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 import axios from "axios";
 
 
-
 interface User {
   id: Number,
   fullname: String,
@@ -160,7 +159,7 @@ export const useAuthStore = defineStore('auth',{
         profile_photo_path: '',
         bg_photo_path: '',
         email: '',
-        role_id: 1,
+        role_id: 4,
         clubs: null,
         is_admin: false,
         is_private: false,
