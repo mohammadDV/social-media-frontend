@@ -74,17 +74,15 @@
         type: 'comment',
         id: 0,
     };
-
  
     const reportForm = reactive({ ...initialReportFormState });
-
   
     const resetForm = () => {
-    Object.assign(reportForm, { ...initialReportFormState });
-    reportId.value = 0;
-    isReportModalVisible.value = false;
-    emit('updateData');
-  };
+        Object.assign(reportForm, { ...initialReportFormState });
+        reportId.value = 0;
+        isReportModalVisible.value = false;
+        emit('updateData');
+    }
 
   const sendReport = () => {
 
@@ -108,7 +106,7 @@
             $toast.error(error.response.data.message);
         }
     })
-  };
+  }
 
 
     const reportId = ref(0);

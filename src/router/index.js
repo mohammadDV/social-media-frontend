@@ -60,6 +60,7 @@ import CountryList from '@/views/country/index.vue';
 import CountryCreate from '@/views/country/create.vue';
 import StatusList from '@/views/status/index.vue';
 import StatusCreate from '@/views/status/create.vue';
+import UserEdit from '@/views/user/edit.vue';
 import UserCreate from '@/views/user/create.vue';
 import ChangePassword from '@/views/user/password.vue';
 import UserList from '@/views/user/index.vue';
@@ -491,7 +492,7 @@ const routes = [
         name: 'account.edit',
         permission: 'account_update',
         path: '/profile/account',
-        component: UserCreate,
+        component: UserEdit,
       },
       {
         name: 'user.password',
@@ -502,6 +503,12 @@ const routes = [
         name: 'user.edit',
         permission: 'user_update',
         path: '/profile/users/edit/:id',
+        component: UserEdit,
+      },
+      {
+        name: 'user.create',
+        permission: 'user_store',
+        path: '/profile/users/create',
         component: UserCreate,
       },
       {
