@@ -92,7 +92,7 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="card vt-news-card mb-3">
+                    <div class="card vt-news-card mb-3" :key="route.params.slug">
                         <div class="card-body">
                             <div class="post">
                                 <div class="post--header">
@@ -113,7 +113,7 @@
                 <div class="col-12 col-lg-3 flex-grow-1">
                     
                     <div class="mb-75">
-                        <full-slider-component :slides="specialPosts"></full-slider-component>
+                        <full-slider-component :key="route.params.slug" :slides="specialPosts"></full-slider-component>
                     </div>
 
                     <LatestNewsComponent 
@@ -122,7 +122,7 @@
                             :popular="popular"
                         />
                     <!-- specialVideos -->
-                    <full-slider-component :slides="specialVideos"></full-slider-component>
+                    <full-slider-component :key="route.params.slug" :slides="specialVideos"></full-slider-component>
                 </div>
             </div>
         </main>

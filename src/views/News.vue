@@ -38,10 +38,12 @@
     getPost()
     getAdvertises();
     getPosts();
+    getComments();
   });
 
   const updateComments = () => {
-    getPost()
+    page.value = 1;
+    getComments()
   }
 
   const getAdvertises = () => {
@@ -74,21 +76,60 @@
         });
   }
 
-  watch(() => route.params.id, () => {
-    if (route.params.id) {
-        getPost();
-    } 
-  });
+    const comments = ref([]);
+    const page = ref(1);
+    const more = ref(false);
+    const loading = ref(false);
+
+    const getComments = () => {
+
+        loading.value = true;
+         
+        if (page.value == 1) {
+            comments.value = [];
+        }
+
+         useApi().get(`/api/comment/post/${route?.params?.id}?page=${page.value}`)
+            .then((response) => {
+
+                if (response.data?.data) {
+
+                    comments.value.push(...response.data.data);
+    
+                    if (response.data.total > page.value * response.data.per_page) {
+                        more.value = true;
+                    } else {
+                        more.value = false;
+                    }
+    
+                    page.value++;
+                }
+            })
+            .finally(() => {
+                loading.value = false;
+            })
+    }
+
+    watch(() => route.params.id, () => {
+        if (route.params.id) {
+            getPost();
+            console.log('xasxasx');
+            console.log(post.value.video);
+            page.value = 1;
+            getComments();
+        } 
+    });
+
 
 </script>
 
 <template>
     <div class="container-xxl">
         <main class="mb-4">
-            <horizontal-advertise-component :advertises="advertises[1]"/>
+            <horizontal-advertise-component :key="post.id" :advertises="advertises[1]"/>
             <div class="row">
                 <div class="col-12 col-lg-2 ads-column item-column">
-                    <vertical-advertise-component v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
+                    <vertical-advertise-component :key="post.id" v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
                 </div>
                 <div class="col-12 col-lg-7 flex-grow-1">
                     <div class="card vt-news-card breadcrumb-card mb-3">
@@ -119,7 +160,7 @@
                         <div class="card-body">
                             <div class="post">
                                 <div v-if="post.type == 1">
-                                    <VideoPlayerComponent  :video="post.video" :advertise="post?.advertise?.file"/>
+                                    <VideoPlayerComponent :key="post.id" :video="post.video" :advertise="post?.advertise?.file"/>
                                     <div class="extend-info">
                                         <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
                                         <span>
@@ -190,22 +231,27 @@
                         </div>
                     </div>
 
-                    <comment-form-component @updateComments="updateComments"/>
-                    <CommentComponent :comments="post?.comments" @updateComments="updateComments"/>
+                    <CommentFormComponent :key="post.id" @updateComments="updateComments"/>
+                    <CommentComponent :key="post.id" :comments="comments" @updateComments="updateComments"/>
+                    <div class="text-center">
+                        <button v-if="more" class="btn btn-light" @click="getComments()">
+                            <span>{{ $t('site.More post') }}</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="col-12 col-lg-3 flex-grow-1">
                     
                     <div class="mb-75">
-                        <full-slider-component :slides="specialPosts"></full-slider-component>
+                        <full-slider-component :key="post.id" :slides="specialPosts"></full-slider-component>
                     </div>
 
-                    <LatestNewsComponent 
+                    <LatestNewsComponent :key="post.id"
                             :latest="latest"
                             :challenged="challenged"
                             :popular="popular"
                         />
                     <!-- specialVideos -->
-                    <full-slider-component :slides="specialVideos"></full-slider-component>
+                    <full-slider-component :key="post.id" :slides="specialVideos"></full-slider-component>
                 </div>
             </div>
         </main>

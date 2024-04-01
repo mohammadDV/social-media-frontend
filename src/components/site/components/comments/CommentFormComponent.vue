@@ -49,24 +49,20 @@
 
 <template>
 
-    <template v-if="isAuthenticated">
         <VTTextArea
-        name="comment"
-        rows="4"
-        v-model="comment"
-        :disabled="false"
-        :placeholder="$t('site.Add your comment')"/>
+          name="comment"
+          rows="4"
+          v-model="comment"
+          :disabled="false"
+          :placeholder="$t('site.Add your comment')"/>
 
-            <VTButton class="mt-3 w-100" color="primary" size="medium"
+            <VTButton v-if="isAuthenticated" class="mt-3 w-100" color="primary" size="medium"
                         @click="sendComment()">
                 {{ $t('site.Submit') }}
             </VTButton>
-    </template>
-    <template v-else>
-        <VTButton class="mt-3 w-100" color="primary" size="medium"
+        <VTButton v-if="!isAuthenticated" class="mt-3 w-100" color="primary" size="medium"
                     @click="goToRoute('login')">
             {{ $t('site.Login') }}
         </VTButton>
-    </template>
         
 </template>

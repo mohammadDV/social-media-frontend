@@ -108,7 +108,6 @@
     })
   }
 
-
     const reportId = ref(0);
     const isReportModalVisible = ref(false);
 

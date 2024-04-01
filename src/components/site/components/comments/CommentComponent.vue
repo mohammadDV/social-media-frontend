@@ -1,7 +1,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, defineProps, defineEmits, reactive, ref } from 'vue';
+  import { onMounted, defineProps, defineEmits, reactive, ref, computed } from 'vue';
   import CommentFormComponent from './CommentFormComponent';
   import userImage from '@/components/plugins/UserImage.vue';
   import jalaliMoment from 'moment-jalaali';
@@ -9,6 +9,10 @@
   import VTModal from '@/elements/VTModal.vue'
   import VTTextArea from '@/elements/VTTextArea';
   import VTButton from '@/elements/VTButton'; 
+  import { useAuthStore } from '@/stores/auth.ts';
+  import { useI18n } from "vue-i18n";  
+
+  const { t } = useI18n();
 
   const props = defineProps({
     comments: {
@@ -16,6 +20,10 @@
         required: true
     }
   });
+
+
+  const authStore = useAuthStore();
+  const isAuthenticated = computed(() => authStore.isAuthenticated);
  
   const $toast = useToast();
 
@@ -79,6 +87,9 @@
     })
   };
 
+  const loginWarning = () => {
+        $toast.error(t('site.Please login for entering to social media'))
+    }
 
     const reportId = ref(0);
     const isReportModalVisible = ref(false);
@@ -116,16 +127,20 @@
                     <div class="commenter-avatar-wrap">
                         <div class="commenter-avatar">
                             <userImage :item="comment?.user" />
-                            <a href="#" class="stretched-link"></a>
+                            <router-link v-if="isAuthenticated" :to="`/member/${comment?.user?.id}`" :title="comment?.user?.nickname" class="stretched-link"></router-link>
+                            <a v-else @click="loginWarning" class="stretched-link cursor-pointer" :title="comment?.user?.nickname" ></a>
                         </div>
                     </div>
                     <div class="comment-text">
                         <p class="comment-text-pragraph">
-                            <a class="comment-user-text-link" href="#">
+                            <router-link v-if="isAuthenticated" :to="`/member/${comment?.user?.id}`" :title="comment?.user?.nickname" class="comment-user-text-link">
+                                <span class="user-name"> {{ comment?.user?.nickname }} </span>
+                            </router-link>
+                            <a v-else @click="loginWarning" :title="comment?.user?.nickname" class="comment-user-text-link cursor-pointer">
                                 <span class="user-name"> {{ comment?.user?.nickname }} </span>
                             </a>
                             <br>
-                            <span class="comment-text-span">{{ comment?.message }}</span>
+                            <span class="comment-text-span">{{ comment?.text }}</span>
                         </p>
                     </div>
                 </div>
@@ -161,7 +176,7 @@
                                     <span class="user-name"> {{ parent.user.nickname }} </span>
                                 </a>
                                 <br>
-                                <span class="comment-text-span">{{ parent.message }}</span>
+                                <span class="comment-text-span">{{ parent.text }}</span>
                             </p>
                         </div>
                     </div>
