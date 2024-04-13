@@ -59,8 +59,6 @@ const getActivePages = () => {
   
 onMounted(() => {
 
-    console.log("Xasxasxasx");
-    console.log(authStore.menu);
     search.value = route?.query?.q;
 
     getActiveCategory();

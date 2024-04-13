@@ -56,8 +56,6 @@ const router = useRouter();
     
         useApi().get(`/api/profile/role`)
             .then((response) => {
-              console.log('xsxa');
-              console.log(response.data);
               roleList.value = response.data;
             });
   }
