@@ -72,7 +72,7 @@
                     <div v-for="(item, index) in items" :key="index" class="card tweet-card">
                         <div class="card-body">
                             <div class="tweet-user-avatar">
-                                <router-link v-if="item?.model?.profile_photo_path?.length > 0" class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">
+                                <router-link v-if="item?.model?.profile_photo_path?.length > 0 && !item.is_admin" class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">
                                     <img class="rounded-full w-[120px] h-[120px]" :src="item.model.profile_photo_path" :alt="item.nickname" />
                                 </router-link>
                                 <a v-else>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="tweet-info">
                                 <div class="flex tweet-info-head">
-                                    <span v-if="item?.model?.nickname?.length > 0" class="tweet-user-name">
+                                    <span v-if="item?.model?.nickname?.length > 0 && !item.is_admin" class="tweet-user-name">
                                         <router-link class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">{{ item?.model?.nickname }}</router-link>
                                     </span>
                                     <span v-else class="tweet-user-name">

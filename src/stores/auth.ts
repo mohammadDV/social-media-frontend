@@ -68,23 +68,29 @@ export const useAuthStore = defineStore('auth',{
           name: 'site.Blocked users',
           matches: ['block.users'],
         },{
-          route: '/profile/tickets',
-          icon: 'article',
-          name: 'site.Ticket management',
-          matches: ['ticket.index'],
-          permission: 'ticket_show',
-        },{
           route: '/profile/reports',
           icon: 'article',
           name: 'site.Report management',
           matches: ['report.index'],
           permission: 'report_show',
         },{
+          route: '/profile/notifications/list',
+          icon: 'article',
+          name: 'site.Notification management',
+          matches: ['notification.list'],
+          permission: 'notification_send',
+        },{
           route: '/profile/subjects',
           icon: 'article',
           name: 'site.Ticket subjects management',
           matches: ['subject.index'],
           permission: 'subject_show',
+        },{
+          route: '/profile/tickets',
+          icon: 'article',
+          name: 'site.Ticket management',
+          matches: ['ticket.index'],
+          permission: 'ticket_show',
         },{
           route: '/profile/users',
           icon: 'article',

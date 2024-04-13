@@ -22,6 +22,8 @@ import SearchPost from '@/views/search.vue';
 import Profile from '@/views/profile/index.vue';
 import Status from '@/views/profile/status.vue';
 import Notification from '@/views/notification/index.vue';
+import NotificationCreate from '@/views/notification/create.vue';
+import NotificationList from '@/views/notification/list.vue';
 import PostList from '@/views/post/index.vue';
 import PostCreate from '@/views/post/create.vue';
 import VideoList from '@/views/video/index.vue';
@@ -202,6 +204,18 @@ const routes = [
         component: Notification,
       },
       {
+        name: 'notification.create',
+        path: '/profile/notifications/create',
+        component: NotificationCreate,
+        permission: 'notification_send',
+      },
+      {
+        name: 'notification.list',
+        path: '/profile/notifications/list',
+        component: NotificationList,
+        permission: 'notification_send',
+      },
+      {
         name: 'status.show',
         path: '/profile/:id',
         component: Status,
@@ -214,9 +228,7 @@ const routes = [
       },
       {
         name: 'video.create',
-        meta: { 
-          permission: 'video_store',
-        },
+        permission: 'video_store',
         path: '/profile/videos/create',
         component: VideoCreate,
       },

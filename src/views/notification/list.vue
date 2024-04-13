@@ -1,19 +1,14 @@
 <script lang="ts" setup>
  
   import {useApi} from '../../utils/api';
-  import { ref, watch, onMounted } from "vue";
+  import { ref, watch } from "vue";
   import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
-  import { useToast } from "vue-toast-notification";
+//   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";
-  import { useAuthStore } from '../../stores/auth';
 
-  const authStore = useAuthStore();
-  const hasShowPermission = ref(authStore.permissions.includes('user_show'));
-  const hasUpdatePermission = ref(authStore.permissions.includes('user_update'));
-  const hasDeletePermission = ref(authStore.permissions.includes('user_delete'));
 
     const { t } = useI18n();
   
@@ -42,19 +37,17 @@
     updateRowsPerPageActiveOption(Number((e.target as HTMLInputElement).value));
   };
 
+
   const searchField = ref("title");
   const searchValue = ref("");
   const headers: Header[] = [
     { text: t("site.Id"), value: "id", sortable: true},
-    { text: t('site.First name'), value: "first_name" },
-    { text: t('site.Last name'), value: "last_name" },
-    { text: t('site.Role'), value: "role_id" },
-    { text: t('site.Email'), value: "email" },
-    { text: t('site.Nickname'), value: "nickname", sortable: true },
-    { text: t('site.Status'), value: "status", sortable: true },
-    { text: t('site.Report'), value: "is_report" },
+    { text: t('site.User'), value: "user_id" },
+    { text: t('site.Conditions'), value: "conditions" },
+    { text: t('site.Users count'), value: "users_count"},
+    { text: t('site.Send count'), value: "send_count"},
     { text: t('site.Date'), value: "created_at" },
-    { text: t('site.Manage'), value: "actions" },
+    // { text: t('site.Manage'), value: "actions" },
   ];
   
   const items = ref<Item[]>([]);
@@ -79,50 +72,16 @@
   
   const loadFromServer = async () => {
     loading.value = true;
-    await useApi().get('/api/profile/users', serverOptions.value)
+    await useApi().get('/api/profile/notifications/send-list', serverOptions.value)
     .then((response: any) => {
         items.value = response.data.data;
         serverItemsLength.value = response.data.total;
     })
     loading.value = false;
   };
-
-  const $toast = useToast();
-  const deletItem = (id: Number) => {
-    if(confirm('Are you sure you want to remove this item?')) {
-        useApi().deleteRequest(`/api/profile/users/${id}`)
-        .then((response: any) => {
-            if (response.data.status) {
-
-                $toast.success(response.data.message);
-                loadFromServer();
-            }
-        })
-    }
-  };
-
-  const roleList = ref([]);
-
-    const getRoles = () => {
-    
-        useApi().get(`/api/profile/role`)
-            .then((response) => {
-                roleList.value = response.data;
-            });
-    }
-
-    const getRoleName = (id: Number) => {
-    
-        let role = roleList.value.find(c => c.id == id);
-        return role.name;
-    }
-
-    onMounted (() => {
-        getRoles();
-        // initial load
-        loadFromServer();
-    })
   
+  // initial load
+  loadFromServer();
   
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
 
@@ -140,13 +99,13 @@
                             </router-link>
                         </li>
                         <li class="breadcrumb-item">
-                            {{ $t('site.User management') }}
+                            {{ $t('site.Notification management') }}
                         </li>
                     </ol>
                 </nav>
-                <div v-if="hasShowPermission" class="place-button">
-                    <router-link to="/profile/users/create" :title="$t('site.Create new user')">
-                        <button class="btn btn-primary">{{ $t('site.Create new user') }}</button>
+                <div class="place-button">
+                    <router-link to="/profile/notifications/create" :title="$t('site.Create new notification')">
+                        <button class="btn btn-primary">{{ $t('site.Create new notification') }}</button>
                     </router-link>
                 </div>
             </div>
@@ -180,23 +139,27 @@
                         <span v-if="item.status == 1" class="p-1 rounded btn-success m-1" >{{ $t('site.Active') }}</span>
                         <span v-else class="p-1 rounded btn-danger m-1" >{{ $t('site.Inactive') }}</span>
                 </template>
-                <template #item-is_report="item">
-                        <span v-if="item.is_report == 1" class="p-1 rounded btn-info m-1 text-white" >{{ $t('site.Reported') }}</span>
-                        <span v-else class="p-1 rounded m-1" > - </span>
+                <template #item-user_id="item">
+                        {{ item?.user_id }}
                 </template>
-                <template #item-actions="item">
+                <template #item-conditions="item">
+                        {{ $t('site.Users') + ':' + item?.conditions?.users }}
+                        <br>
+                        {{ $t('site.Roles') + ':' + item?.conditions?.roles }}
+                </template>
+                <!-- <template #item-actions="item">
                     <div class="flex">
-                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/users/edit/' + item.id">
+                        <router-link v-if="hasUpdatePermission" class="p-1 rounded btn-info m-1 text-white" :to="'/profile/posts/' + item.id">
                             <span class="material-icons size-font-ahalf"> edit </span>
                         </router-link>
-                           <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
+                        <span v-if="hasDeletePermission" @click="deletItem(item.id)" class="p-1 rounded btn-danger m-1 text-white material-icons size-font-ahalf cursor-pointer"> delete </span>
                     </div>
+                </template> -->
+                <template #item-image="item">
+                        <img :src="item.image" alt="image" class="w-[50px]">
                 </template>
                 <template #item-created_at="item">
                     {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}
-                </template>
-                <template #item-role_id="item">
-                    {{ getRoleName(item.role_id) }}
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>
