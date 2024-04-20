@@ -66,9 +66,9 @@ import UserEdit from '@/views/user/edit.vue';
 import UserCreate from '@/views/user/create.vue';
 import ChangePassword from '@/views/user/password.vue';
 import UserList from '@/views/user/index.vue';
-import Logout from '@/views/Auth/logout.vue';
-import Login from '@/views/Auth/login.vue';
-import Register from '@/views/Auth/register.vue';
+import Logout from '@/views/auth/logout.vue';
+import Login from '@/views/auth/login.vue';
+import Register from '@/views/auth/register.vue';
 import { useAuthStore } from '@/stores/auth.ts';
 
 
