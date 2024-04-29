@@ -8,6 +8,9 @@
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
+  import { useI18n } from "vue-i18n";  
+
+  const { t } = useI18n();  
 
   const advertises = ref([]);
   const posts = ref([]);
@@ -55,6 +58,7 @@
             }
             page.value++;
             category.value = response.data.category;
+            window.document.title =  `${category.value?.title} | ` + t('site.Website name');
         });
   }
 

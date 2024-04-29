@@ -246,9 +246,7 @@ const routes = [
       },
       {
         name: 'post.create',
-        meta: { 
-          permission: 'post_store',
-        },
+        permission: 'post_store',
         path: '/profile/posts/create',
         component: PostCreate,
       },
