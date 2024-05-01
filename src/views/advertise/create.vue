@@ -115,6 +115,7 @@ const initialFormState = {
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Create new advertise')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getAdvertise();
     }

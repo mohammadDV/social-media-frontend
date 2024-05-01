@@ -122,6 +122,8 @@ const $toast = useToast();
 
 
   onMounted(() => {
+
+    window.document.title =   `${t('site.Choose favorite clubs')} | ${t('site.Website name')}`;
     helper().goToTop();
     send();
     getClubs();
@@ -212,15 +214,18 @@ const $toast = useToast();
             <div class='grid grid-cols-4 gap-4 my-3'>
                 <div v-for="(club, index) in items" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
-                    <img class='rounded-full w-[150px]' :src='club.image'/>
+                    <img :class="{
+                        'w-[150px]': true,
+                        'rounded-full': club.is_country,
+                        }" :src='club.image'/>
                     <span class='item-date'>{{ club.sport.title }}</span>
-                    <span class='item-title'>{{ club.title +  ' ' + club.country.title }}</span>
-                        <a @click="follow(club.id)" class='w-100 btn btn-info text-white'  >{{ $t('site.Follow') }}</a>
+                    <span class='item-title' v-if="club.is_country == 1">{{ club.title }}</span>
+                    <span class='item-title' v-else>{{ club.title +  ' ' + club.country.title }}</span>
+                    <a @click="follow(club.id)" class='w-100 btn btn-info text-white'  >{{ $t('site.Follow') }}</a>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <div class="card p-3" v-if="more">
             <VTButton 

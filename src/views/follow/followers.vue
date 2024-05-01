@@ -9,6 +9,9 @@
  import { useToast } from "vue-toast-notification";
  import { useRoute } from 'vue-router';
  import userImage from '@/components/plugins/UserImage.vue';
+ import { useI18n } from "vue-i18n";
+  
+ const { t } = useI18n();
 
  const props = defineProps({
     user: {
@@ -89,6 +92,7 @@
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Followers')} | ${t('site.Website name')}`;
     helper().goToTop();
     getFollowings();
   });

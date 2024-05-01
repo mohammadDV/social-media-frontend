@@ -14,7 +14,6 @@
     });
 
     const followUser = (id) => {
-        console.log('followUser')
         useApi().post(`/api/follow/${id}`)
         .then(() => {
             emit('updateMembers');

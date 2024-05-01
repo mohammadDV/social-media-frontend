@@ -130,6 +130,8 @@ const initialFormState = {
         getClub();
     }
 
+    window.document.title =   `${t('site.Create new club')} | ${t('site.Website name')}`;
+
     getCountries();
     getSports();
   });

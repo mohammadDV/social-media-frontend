@@ -114,6 +114,8 @@
 
 
 onMounted(() => {
+
+    window.document.title =   `${t('site.Advertise management')} | ${t('site.Website name')}`;
     getPlaces();
 });
 

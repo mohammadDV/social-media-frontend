@@ -114,14 +114,12 @@ const hasError = ref(false);
 
 
 const tagsChanged = (tags) => {  
-    console.log(tags);
     emit('update:modelValue', tags.map(tab => tab.text));
 }
-const changeEvent = function (tabs) {
-    console.log(tabs);
+// const changeEvent = function (tabs) {
     // emit('update:modelValue', tabs.map(tab => tab.text));
     // emit('change', event);
-}
+// }
 
 
 const tag= ref('');

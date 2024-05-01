@@ -10,7 +10,9 @@
   import VTInput from '@/elements/VTInput'; 
   import VTTextArea from '@/elements/VTTextArea'; 
   import { useToast } from "vue-toast-notification";
-  
+  import { useI18n } from "vue-i18n";  
+
+  const { t } = useI18n(); 
   const advertises = ref([]);
   const posts = ref([]);
   const latest = ref([]);
@@ -76,6 +78,9 @@
   onMounted(() => {
     getAdvertises();
     getPosts();
+
+
+    window.document.title =  t('site.Advertising order') ` | ` + t('site.Website name');
   });
 
 </script>

@@ -1,6 +1,6 @@
 <script setup>
 
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useAuthStore } from '@/stores/auth.ts';
   import VTButton from '@/elements/VTButton'; 
   import VTInput from '@/elements/VTInput'; 
@@ -36,6 +36,10 @@
             $toast.error(t('site.There is no such user with this specification'));
         })
     };
+
+    onMounted(() => {
+        window.document.title =   `${t('site.Login to site')} | ${t('site.Website name')}`;
+    });
     
 
 </script>

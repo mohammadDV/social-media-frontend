@@ -1,6 +1,6 @@
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuthStore } from '@/stores/auth.ts';
 import VTButton from '@/elements/VTButton'; 
 import VTInput from '@/elements/VTInput'; 
@@ -43,6 +43,10 @@ const register = async function() {
         })
   };
 
+  onMounted(()=> {
+    window.document.title =   `${t('site.Register to site')} | ${t('site.Website name')}`;
+  });
+
 </script>
 <template>
     <div class="pt-[80px] bg-dark vh-100 bg-auth">
@@ -51,7 +55,7 @@ const register = async function() {
                 <div class="flex-1 text-center rounded-[40px]  ">
                     <div class="pt-[20px] pr-[80px] pb-[30px] pl-[50px]">
                         <div class="my-3">
-                            <p class="text-white text-xl">ثبت نام در سایت ورزش تایمز</p>
+                            <p class="text-white text-xl">{{ $t('Register to site') }}</p>
                         </div>
                        <div class="flex gap-2">
                             <VTInput

@@ -103,7 +103,7 @@
 
 
 onMounted(() => {
-    //
+    window.document.title =   `${t('site.Advertise form management')} | ${t('site.Website name')}`;
 });
 
 </script>

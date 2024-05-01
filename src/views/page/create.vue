@@ -14,10 +14,11 @@
  import { QuillEditor } from '@vueup/vue-quill'
  import '@vueup/vue-quill/dist/vue-quill.snow.css'
  import ImageUploader from 'quill-image-uploader';
- import BlotFormatter from 'quill-blot-formatter'
+ import BlotFormatter from 'quill-blot-formatter';
  import { useI18n } from "vue-i18n";
 
 
+ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -28,7 +29,6 @@ const initialFormState = {
       image: '',
     };
 
- const { t } = useI18n();
  const canSubmit = ref(true);
  const form = reactive({ ...initialFormState });
 
@@ -146,6 +146,8 @@ const modules = ref([
 ])
 
   onMounted(() => {
+
+    window.document.title =   `${t('site.Create new page')} | ${t('site.Website name')}`;
 
     if (route.params.id) {
         getPage();
