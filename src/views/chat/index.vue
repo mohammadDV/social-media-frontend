@@ -12,10 +12,8 @@
  DropDown from '@/components/plugins/dropdown/DropDown.vue'
 import { useI18n } from "vue-i18n";
 
-
 const block = ref(false);  
 const banned = ref(false);
-
 
 const parentSelectedOption = ref(null);
     const { t } = useI18n();
@@ -113,7 +111,7 @@ const initialFormState = {
         })
     };
 
-    const temp = ref([]);
+  const temp = ref([]);
   
 
   const getMessages = (id, pageId = false) => {
@@ -168,6 +166,7 @@ const initialFormState = {
   const deleteFile = () => {
     form.file = '';
   }
+
   const getFileLink = (item) => {
     form.file = item;
     canSubmit.value = true;
@@ -276,6 +275,8 @@ const initialFormState = {
         if (route.params.id) {
           getMessages(route.params.id);
         }
+
+      window.document.title =   `${t('site.Private messages')} | ${t('site.Website name')}`;
     });
 
     onBeforeUnmount(() => {

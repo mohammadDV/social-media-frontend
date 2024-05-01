@@ -1,21 +1,21 @@
 <script lang="ts" setup>
  
   import {useApi} from '../../utils/api';
-  import { ref, watch } from "vue";
+  import { onMounted, ref, watch } from "vue";
   import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
   import { useToast } from "vue-toast-notification";
-  import { useI18n } from "vue-i18n";
   import { useAuthStore } from '../../stores/auth';
+  import { useI18n } from "vue-i18n";
 
+  const { t } = useI18n();
   const authStore = useAuthStore();
   const hasShowPermission = ref(authStore.permissions.includes('country_show'));
   const hasUpdatePermission = ref(authStore.permissions.includes('country_update'));
   const hasDeletePermission = ref(authStore.permissions.includes('country_delete')); 
 
-    const { t } = useI18n();
   
     const dataTable = ref();
 
@@ -103,6 +103,11 @@
   loadFromServer();
   
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
+
+  onMounted(() => {
+
+    window.document.title =   `${t('site.Country management')} | ${t('site.Website name')}`;
+  })
 
 </script>
 

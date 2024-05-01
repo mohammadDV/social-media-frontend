@@ -194,6 +194,7 @@
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.League management')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getStep();
         getCountries();

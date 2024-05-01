@@ -2,11 +2,13 @@
  
  import {useApi} from './../../utils/api.ts';
   
- import { ref, reactive } from 'vue';
+ import { ref, reactive, onMounted } from 'vue';
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
- import { useToast } from "vue-toast-notification";
-
+ import { useToast } from "vue-toast-notification"; 
+ import { useI18n } from "vue-i18n";
+ 
+ const { t } = useI18n();
 
 const initialFormState = {
       current_password: '',
@@ -42,6 +44,11 @@ const initialFormState = {
         }
     })
   };
+
+  onMounted(() => {
+    window.document.title =   `${t('site.Edit profile')} | ${t('site.Website name')}`;
+
+  });
 
 
 </script>

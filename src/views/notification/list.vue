@@ -1,7 +1,7 @@
 <script lang="ts" setup>
  
   import {useApi} from '../../utils/api';
-  import { ref, watch } from "vue";
+  import { onMounted, ref, watch } from "vue";
   import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
@@ -85,6 +85,9 @@
   
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
 
+  onMounted(() => {
+    window.document.title =   `${t('site.Notification management')} | ${t('site.Website name')}`;
+  })
 </script>
 
 <template>

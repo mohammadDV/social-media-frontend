@@ -124,6 +124,8 @@ const router = useRouter();
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Edit profile')} | ${t('site.Website name')}`;
+
     if (route.params.id) {
         getUser();
       }

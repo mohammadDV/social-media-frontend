@@ -19,8 +19,6 @@ import { useRoute } from 'vue-router';
 
 watch(() => route.params.id, () => {
     if (route.params.id) {
-        console.log("xaskxmkamxkm------");
-        console.log(route);
         window.document.title = "test"
     } 
   });

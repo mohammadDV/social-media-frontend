@@ -9,12 +9,12 @@
  import VTTextArea from '@/elements/VTTextArea'; 
  import VTSelect from "@/elements/VTSelect.vue";
  import { useToast } from "vue-toast-notification";
-//  import { useI18n } from "vue-i18n";
+ import { useI18n } from "vue-i18n";
 
 
 const route = useRoute();
 const router = useRouter();
-// const { t } = useI18n();
+const { t } = useI18n();
 const initialFormState = {
       message: '',
       subject_id: 1,
@@ -103,6 +103,8 @@ const initialFormState = {
 
 
   onMounted(() => {
+
+    window.document.title =   `${t('site.Create new ticket')} | ${t('site.Website name')}`;
 
     if (route.params.id) {
         getTicket();
