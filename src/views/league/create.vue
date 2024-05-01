@@ -139,6 +139,7 @@ const initialFormState = {
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Create new league')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getLeague();
     }

@@ -5,6 +5,9 @@
   import {useApi} from '@/utils/api.ts';
   import VTButton from '@/elements/VTButton'; 
   import jalaliMoment from 'moment-jalaali';
+ import { useI18n } from "vue-i18n";   
+
+ const { t } = useI18n();
 
   const emit = defineEmits(['updateFollowings']); 
 
@@ -43,6 +46,8 @@
  }  
     
   onMounted(() => {
+
+    window.document.title =   `${t('site.Notification')} | ${t('site.Website name')}`;
     getItems();
   });
 

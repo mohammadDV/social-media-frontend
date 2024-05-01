@@ -11,9 +11,10 @@
  import VTSelectMultiple from "@/elements/VTSelectMultiple";
  import { useToast } from "vue-toast-notification";
  import '@vueup/vue-quill/dist/vue-quill.snow.css'
- import { useI18n } from "vue-i18n";   
  import DropDownUserSearchBox from '@/components/plugins/dropdown/DropDownUserSearchBox.vue';
+ import { useI18n } from "vue-i18n";   
 
+ const { t } = useI18n();
 
 const initialFormState = {
       roles: [],
@@ -24,7 +25,6 @@ const initialFormState = {
       link: '',
     };
 
- const { t } = useI18n();
  const canSubmit = ref(true);
  const form = reactive({ ...initialFormState });
 
@@ -95,6 +95,7 @@ const getRoles = () => {
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Create new notification')} | ${t('site.Website name')}`;
     getRoles();
   });
 

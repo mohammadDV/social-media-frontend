@@ -36,6 +36,8 @@ useApi().get(`/api/club/${route.params.id}`)
         videos.value = response.data?.videos;
         clubs.value = response.data?.clubs;
         matches.value = response.data?.matches;
+
+        window.document.title =   `${info.value?.title} | ${t('site.Website name')}`;
     });
 }
 

@@ -24,7 +24,6 @@ import { ref, onMounted, defineProps } from 'vue';
       showAd.value = false;
             
       // advertisePlayer.value.pause();
-      // console.log(videoPlayer.value.play());
     }
 
     // https://stackblitz.com/edit/vitejs-vite-rf6dum?file=src%2FApp.vue
@@ -32,7 +31,6 @@ import { ref, onMounted, defineProps } from 'vue';
 
     onMounted(() => {
 
-      console.log(props.advertise?.length);
       if (props.advertise?.length > 0) {
         if (advertisePlayer.value) {
             advertisePlayer.value.play();

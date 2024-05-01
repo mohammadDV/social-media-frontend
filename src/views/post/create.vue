@@ -211,6 +211,8 @@ const modules = ref([
 
   onMounted(() => {
 
+
+    window.document.title =   `${t('site.Create new post')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getPost();
     }

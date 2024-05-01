@@ -90,6 +90,7 @@ const statusList = ref([
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Create new ticket subject')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getTicket();
     }

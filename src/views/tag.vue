@@ -8,7 +8,9 @@
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
+  import { useI18n } from "vue-i18n";  
 
+  const { t } = useI18n(); 
   const advertises = ref([]);
   const posts = ref([]);
   const latest = ref([]);
@@ -36,6 +38,8 @@
     if (page.value < 2) {
         posts.value = [];
     }
+
+    window.document.title =   `${route.params.title} | ${t('site.Website name')}`;
 
     useApi().get(`/api/tag/${route.params.id}?page=${page.value}`)
         .then((response) => {

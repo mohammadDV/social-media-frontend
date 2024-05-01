@@ -46,7 +46,6 @@ const initialFormState = {
         useApi().get(`/api/profile/videos/${route.params.id}`)
             .then((response) => {
                 Object.assign(form, { ...response.data });
-                console.log(form)
             });
     }
   }
@@ -109,6 +108,8 @@ const initialFormState = {
 
 
   onMounted(() => {
+
+    window.document.title =   `${t('site.Create new video')} | ${t('site.Website name')}`;
 
     if (route.params.id) {
         getVideo();

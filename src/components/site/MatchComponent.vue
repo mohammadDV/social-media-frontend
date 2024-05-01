@@ -19,13 +19,15 @@
   onMounted(() => {
     useApi().get('api/leagues')
         .then((response) => {
-            title.value = response.data[1].title;
-            steps.value = response.data[1].steps.steps;
-            stepId.value = response.data[1].steps?.current?.id;
-            leagues.value = response.data[1].leagues;
-            leagueId.value = response.data[1].leagues[0].id;
-            matches.value = response.data[1].matches;
-            clubs.value = response.data[1].clubs;
+            if (response.data[1] != undefined) {
+                title.value = response.data[1].title;
+                steps.value = response.data[1].steps.steps;
+                stepId.value = response.data[1].steps?.current?.id;
+                leagues.value = response.data[1].leagues;
+                leagueId.value = response.data[1].leagues[0].id;
+                matches.value = response.data[1].matches;
+                clubs.value = response.data[1].clubs;
+            }
         })
   });
 

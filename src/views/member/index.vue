@@ -4,9 +4,8 @@
   import { onMounted, defineProps } from 'vue';
   import StatusWallComponent from "@/components/profile/components/status/StatusWallComponent.vue";
 
-  // import { useAuthStore } from '@/stores/auth.ts';
-
-  // const authStore = useAuthStore();
+  import { useI18n } from "vue-i18n";
+  const { t } = useI18n();
 
   defineProps({
     user: {
@@ -16,6 +15,7 @@
   });
 
   onMounted(() => {
+    window.document.title =   `${t('site.Profile')} | ${t('site.Website name')}`;
   });
 
 </script>

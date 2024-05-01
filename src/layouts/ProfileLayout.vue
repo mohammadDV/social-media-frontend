@@ -41,7 +41,6 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
     const links = document.querySelectorAll('link[rel="stylesheet"]');
 
     links.forEach(link => {
-      console.log(link);
         if (link.href === '/assets/site/css/styles.css') {
           link.parentNode.removeChild(link);
         }

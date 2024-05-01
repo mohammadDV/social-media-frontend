@@ -1,7 +1,7 @@
 <script lang="ts" setup>
  
   import {useApi} from '../../utils/api';
-  import { ref, watch } from "vue";
+  import { onMounted, ref, watch } from "vue";
   import jalaliMoment from 'moment-jalaali';
   import type { Header, Item, HeaderItemClassNameFunction, BodyItemClassNameFunction } from "vue3-easy-data-table";
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
@@ -11,7 +11,7 @@
   import { useAuthStore } from '../../stores/auth';
 
   const authStore = useAuthStore();
-  const hasShowPermission = ref(authStore.permissions.includes('status_show'));
+//   const hasShowPermission = ref(authStore.permissions.includes('status_show'));
   const hasUpdatePermission = ref(authStore.permissions.includes('status_update'));
   const hasDeletePermission = ref(authStore.permissions.includes('status_delete'));
 
@@ -108,6 +108,11 @@
   
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
 
+  onMounted(() => {
+
+    window.document.title =   `${t('site.Status management')} | ${t('site.Website name')}`;
+  })
+
 </script>
 
 <template>
@@ -122,15 +127,15 @@
                             </router-link>
                         </li>
                         <li class="breadcrumb-item">
-                            {{ $t('site.Post management') }}
+                            {{ $t('site.Status management') }}
                         </li>
                     </ol>
                 </nav>
-                <div v-if="hasShowPermission" class="place-button">
+                <!-- <div v-if="hasShowPermission" class="place-button">
                     <router-link to="/profile/status/create" :title="$t('site.Create new post')">
                         <button class="btn btn-primary">{{ $t('site.Create new post') }}</button>
                     </router-link>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="card p-3">

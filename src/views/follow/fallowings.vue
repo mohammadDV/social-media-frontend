@@ -8,6 +8,9 @@
  import { useToast } from "vue-toast-notification";
  import userImage from '@/components/plugins/UserImage.vue';
  import {helper} from '@/utils/helper.ts';
+ import { useI18n } from "vue-i18n";
+  
+ const { t } = useI18n();
 
 
  const props = defineProps({
@@ -93,6 +96,8 @@ const initialFormState = {
     };
 
   onMounted(() => {
+
+    window.document.title =   `${t('site.Following')} | ${t('site.Website name')}`;
     helper().goToTop();
     getFollowings();
   });

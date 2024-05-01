@@ -10,8 +10,10 @@
   import TabComponent from '@/components/plugins/tabs/TabComponent';
   import { useAuthStore } from '@/stores/auth.ts';
   import { useRoute } from 'vue-router';
+  import { useI18n } from "vue-i18n";
 
-    
+ 
+  const { t } = useI18n();   
   const authStore = useAuthStore();
   const emit = defineEmits(['updateFollowings']); 
   const tabItem = ref(1);
@@ -41,6 +43,8 @@
 //   };
 
   onMounted(() => {
+
+    window.document.title =   `${t('site.Profile')} | ${t('site.Website name')}`;
     // useApi().get('/api/active-categories')
     //     .then((response) => {
     //         categories.value = response.data;

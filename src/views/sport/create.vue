@@ -105,6 +105,8 @@ const initialFormState = {
 
   onMounted(() => {
 
+
+    window.document.title =   `${t('site.Create new sport')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getItem();
     }

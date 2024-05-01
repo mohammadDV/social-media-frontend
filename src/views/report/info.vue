@@ -65,6 +65,7 @@ const { t } = useI18n();
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Report management')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getReport();
     }

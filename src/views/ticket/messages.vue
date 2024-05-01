@@ -105,6 +105,8 @@ const initialFormState = {
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Ticket')} | ${t('site.Website name')}`;
+
     if (route.params.id) {
         getTicket();
     }

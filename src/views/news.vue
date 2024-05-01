@@ -11,7 +11,9 @@
   import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import VideoPlayerComponent from '@/components/site/components/video/VideoPlayerComponent';
-  
+  import { useI18n } from "vue-i18n";  
+
+  const { t } = useI18n();    
   const advertises = ref([]);
   const timestamp = ref('');
   const posts = ref([]);
@@ -59,7 +61,8 @@
         useApi().get(`/api/post/${route.params.id}`)
             .then((response) => {
                 post.value = response.data;
-                formattedDate(response.data)
+                formattedDate(response.data);
+                window.document.title =   `${response.data?.title} | ${t('site.Website name')}`;
             });
     }
   }
@@ -113,8 +116,6 @@
     watch(() => route.params.id, () => {
         if (route.params.id) {
             getPost();
-            console.log('xasxasx');
-            console.log(post.value.video);
             page.value = 1;
             getComments();
         } 

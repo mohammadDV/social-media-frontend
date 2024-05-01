@@ -9,7 +9,9 @@
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
+  import { useI18n } from "vue-i18n";  
 
+  const { t } = useI18n();  
   const advertises = ref([]);
   const posts = ref([]);
   const latest = ref([]);
@@ -38,6 +40,8 @@
   }
   
   onMounted(() => {
+
+    window.document.title =   `${t('site.Main page')} | ${t('site.Website name')}`;
     getAdvertises();
     getPosts();
   });

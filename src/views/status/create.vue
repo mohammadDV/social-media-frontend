@@ -195,6 +195,7 @@ const modules = ref([
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Create new status')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getPost();
     }
@@ -216,13 +217,13 @@ const modules = ref([
                             </router-link>
                         </li>
                         <li class="breadcrumb-item active">
-                            {{ $t('site.Create new post') }}
+                            {{ $t('site.Create new status') }}
                         </li>
                     </ol>
                 </nav>
                 <div class="place-button">
-                    <router-link to="/profile/posts" :title="$t('site.Post management')">
-                        <button class="btn btn-primary">{{ $t('site.Post management') }}</button>
+                    <router-link to="/profile/posts" :title="$t('site.Status management')">
+                        <button class="btn btn-primary">{{ $t('site.Status management') }}</button>
                     </router-link>
                 </div>
             </div>

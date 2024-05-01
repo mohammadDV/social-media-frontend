@@ -7,15 +7,15 @@
   import { usePagination, useRowsPerPage } from "use-vue3-easy-data-table";
   import type { UsePaginationReturn, UseRowsPerPageReturn } from "use-vue3-easy-data-table";
   import { useToast } from "vue-toast-notification";
-  import { useI18n } from "vue-i18n";
   import { useAuthStore } from '../../stores/auth';
+  import { useI18n } from "vue-i18n";
 
+  const { t } = useI18n();
   const authStore = useAuthStore();
   const hasShowPermission = ref(authStore.permissions.includes('user_show'));
   const hasUpdatePermission = ref(authStore.permissions.includes('user_update'));
   const hasDeletePermission = ref(authStore.permissions.includes('user_delete'));
 
-    const { t } = useI18n();
   
     const dataTable = ref();
 
@@ -125,6 +125,11 @@
   
   
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
+
+  onMounted(() => {
+    window.document.title =   `${t('site.User management')} | ${t('site.Website name')}`;
+
+  })
 
 </script>
 

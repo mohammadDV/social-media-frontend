@@ -6,15 +6,17 @@
   import LeftSideComponent from "@/components/profile/include/LeftSideComponent.vue";
   import StatusPageComponent from "@/components/profile/components/status/StatusPageComponent.vue";
 
+  import { useI18n } from "vue-i18n";
 
- const emit = defineEmits(['updateFollowings']); 
+  const { t } = useI18n();   
+  const emit = defineEmits(['updateFollowings']); 
 
   const updateFollowings = () => {
     emit('updateFollowings')
   }
 
   onMounted(() => {
-
+    window.document.title =   `${t('site.Profile')} | ${t('site.Website name')}`;
   });
 
 </script>

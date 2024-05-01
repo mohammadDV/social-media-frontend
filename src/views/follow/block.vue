@@ -9,8 +9,9 @@
  import { useToast } from "vue-toast-notification";
  import { useRoute } from 'vue-router';
  import userImage from '@/components/plugins/UserImage.vue';
-
- 
+ import { useI18n } from "vue-i18n";
+  
+ const { t } = useI18n();
  const $toast = useToast();
 
  const initialFormState = {
@@ -74,6 +75,7 @@
 
   onMounted(() => {
 
+    window.document.title =   `${t('site.Blocked users')} | ${t('site.Website name')}`;
     helper().goToTop();
     getUsers();
   });
