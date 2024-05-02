@@ -34,7 +34,7 @@ const register = async function() {
                 $toast.success(t('site.Welcome'));
                     authStore.setToken(response.data.token);
                     router.push({
-                    name: 'home'
+                    name: 'profile'
                 })
             }
         })
