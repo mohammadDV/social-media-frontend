@@ -77,7 +77,7 @@
                     </span>
                     <span class="user-link-title"> {{ $t(item.name) }} </span>
                 </router-link>
-                <a class="user-link" href="#">
+                <!-- <a class="user-link" href="#">
                     <span class="user-link-icon">
                     <span class="material-icons"> block </span>
                     </span>
@@ -112,8 +112,8 @@
                     <span class="user-link-icon">
                     <span class="material-icons"> paid </span>
                     </span>
-                    <span class="user-link-title"> ارتقاع حساب کاربری </span>
-                </a>
+                    <span class="user-link-title"> ارتقا حساب کاربری </span>
+                </a> -->
             </div>
         </div>
     </div>
