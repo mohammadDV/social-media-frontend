@@ -191,7 +191,7 @@
                         <p class="h1 mb-4">
                             ثبت و تحلیل رخدادهای ورزشی های ورزشی، شبکه اجتماعی ورزشی
                         </p>
-                        <a href="register">
+                        <a href="profile">
                             <div class="btn vt-btv-primary px-4">{{ $t('site.Please register') }}</div>
                         </a> 
                     </div>

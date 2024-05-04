@@ -9,12 +9,9 @@
   const menu = ref([]);
 
   onMounted(() => {
-    authStore.menu.map((item) => {
-        if(!item?.permission || authStore.permissions.includes(item.permission)){
-            menu.value.push(item);
-        }
-    }) 
-    
+    setTimeout(() => {
+            menu.value = authStore.menu.filter(item => !item.permission || authStore.permissions.includes(item.permission));
+    }, 500);
   });
   
   defineProps({
