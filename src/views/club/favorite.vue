@@ -155,7 +155,7 @@ const $toast = useToast();
             <div class='grid grid-cols-4 gap-4 my-3'>
                 <div v-for="(myClub, index) in myClubs" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
-                    <img class='rounded-full w-[150px] h-[150px]' :src='myClub.image'/>
+                    <img class='w-[150px] h-[150px]' :src='myClub.image'/>
                     <span class='item-date'>{{ myClub.sport.title }}</span>
                     <span class='item-title'>{{ myClub.title +  ' ' + myClub.country.title }}</span>
                         <a @click="follow(myClub.id)" class='w-100 btn btn-danger text-white'  >{{ $t('site.Unfollow') }}</a>
@@ -216,7 +216,7 @@ const $toast = useToast();
                     <div class='card-body is-listItem items-center'>
                     <img :class="{
                         'w-[150px]': true,
-                        'rounded-full': club.is_country,
+                        // 'rounded-full': club.is_country,
                         }" :src='club.image'/>
                     <span class='item-date'>{{ club.sport.title }}</span>
                     <span class='item-title' v-if="club.is_country == 1">{{ club.title }}</span>

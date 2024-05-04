@@ -147,7 +147,7 @@ const getFollowers = () => {
                 </div>
             </div>
             <div class="absolute left-0 bottom-0 top-0 m-[20px] flex gap-4 flex-col items-center">
-                <img class=" rounded-full w-[150px] h-[150px]" :src="info.image" alt="">
+                <img class="w-[150px] h-[150px]" :src="info.image" alt="">
             </div>
         </div>
     </div>
