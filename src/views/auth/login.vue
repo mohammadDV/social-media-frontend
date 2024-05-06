@@ -8,7 +8,13 @@
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n"; 
   import {useApi} from '@/utils/api.ts'; 
+  
+  import { useRecaptchaProvider, Checkbox } from "vue-recaptcha";
 
+  useRecaptchaProvider();
+
+  const checkboxWidgetID = ref();
+  const checkboxResponse = ref();
   const { t } = useI18n();  
   const $toast = useToast();
   const authStore = useAuthStore();
@@ -22,7 +28,11 @@
         return;
     }
 
-    await useApi().post('/api/login/', { email : username.value, password : password.value })
+    await useApi().post('/api/login/', { 
+        email : username.value, 
+        password : password.value,
+        'g-recaptcha-response': checkboxResponse.value
+     })
         .then((response) => {
         if (response.data?.token?.length > 0) {
             $toast.success(t('site.Welcome'));
@@ -32,15 +42,18 @@
             })
         }
         })
-        .catch(() => {
-            $toast.error(t('site.There is no such user with this specification'));
+        .catch((error) => {
+            if (error.response.data) {
+                $toast.error(error.response.data.message);
+            } else {
+                $toast.error(t('site.There is no such user with this specification'));
+            }
         })
     };
 
     onMounted(() => {
         window.document.title =   `${t('site.Login to site')} | ${t('site.Website name')}`;
     });
-    
 
 </script>
 
@@ -87,6 +100,11 @@
                                 name="password"
                                 v-model="password"
                                 :placeholder="$t('site.Password')"/>
+
+                                <Checkbox
+                                    v-model="checkboxResponse"
+                                    v-model:widget-id="checkboxWidgetID"
+                                />
                             <VTButton class="mt-4 w-100" color="dark" size="medium" type="submit">
                                 {{ $t('site.Login') }}
                             </VTButton>
