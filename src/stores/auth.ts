@@ -218,8 +218,6 @@ export const useAuthStore = defineStore('auth',{
             this.roles = response.data?.roles;
             this.user.is_admin = response.data?.is_admin;
             this.user.is_private = response.data?.is_private;
-            console.log('sssss');
-            console.log(response.data?.permissions);
             this.permissions = response.data?.permissions || [];
           }
 
