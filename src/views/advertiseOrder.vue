@@ -10,8 +10,13 @@
   import VTInput from '@/elements/VTInput'; 
   import VTTextArea from '@/elements/VTTextArea'; 
   import { useToast } from "vue-toast-notification";
-  import { useI18n } from "vue-i18n";  
+  import { useI18n } from "vue-i18n";    
+  import { useRecaptchaProvider, Checkbox } from "vue-recaptcha";
+  
+  useRecaptchaProvider();
 
+  const checkboxWidgetID = ref();
+  const checkboxResponse = ref();
   const { t } = useI18n(); 
   const advertises = ref([]);
   const posts = ref([]);
@@ -80,7 +85,7 @@
     getPosts();
 
 
-    window.document.title =  t('site.Advertising order') ` | ` + t('site.Website name');
+    window.document.title =  t('site.Advertising order') + ` | ` + t('site.Website name');
   });
 
 </script>
@@ -156,7 +161,10 @@
                                                 :disabled="false"
                                                 request-name="PostRequest"
                                                 :placeholder="$t('site.Description')"/>
-
+                                                <Checkbox class="pt-2"
+                                                    v-model="checkboxResponse"
+                                                    v-model:widget-id="checkboxWidgetID"
+                                                />
                                             <VTButton 
                                                 :submit="true"
                                                 :loading="!canSubmit"

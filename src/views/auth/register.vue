@@ -7,7 +7,13 @@ import VTInput from '@/elements/VTInput';
 import { useRouter } from 'vue-router';
 import { useToast } from "vue-toast-notification";
 import { useI18n } from "vue-i18n";   
-import {useApi} from '@/utils/api.ts'; 
+import {useApi} from '@/utils/api.ts';   
+import { useRecaptchaProvider, Checkbox } from "vue-recaptcha";
+
+useRecaptchaProvider();
+
+const checkboxWidgetID = ref();
+const checkboxResponse = ref();
 
 const { t } = useI18n();    
 const $toast = useToast();
@@ -116,6 +122,10 @@ const register = async function() {
                                 v-model="data.password"
                                 :placeholder="$t('site.Password')"/>
 
+                                <Checkbox
+                                    v-model="checkboxResponse"
+                                    v-model:widget-id="checkboxWidgetID"
+                                />
                             <VTButton class="mt-4 w-100" color="dark" size="medium" type="submit">
                                 {{ $t('site.Register') }}
                             </VTButton>
