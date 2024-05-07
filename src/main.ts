@@ -32,9 +32,10 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // persian date picker
 import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker'
 
-import { VueReCaptcha } from "vue-recaptcha-v3";
 
-import GoogleSignInPlugin from "vue3-google-signin"
+// import { createHead } from "@unhead/vue";
+// import { VueRecaptchaPlugin } from "vue-recaptcha";
+import { VueReCaptcha } from "vue-recaptcha-v3";
 
 
 const pinia = createPinia();
@@ -56,10 +57,6 @@ createApp(App)
     .use(i18n)
     .use(pinia)
     .use(router)
-    .use(GoogleSignInPlugin, {
-      clientId: '334836814599-trhjl192sj725fn9nbjubddejdmh5s8m.apps.googleusercontent.com',
-    })
-      // clientId: '334836814599-trhjl192sj725fn9nbjubddejdmh5s8m.apps.googleusercontent.com'
     .use(VueReCaptcha, {
         siteKey: '6LdDVNEpAAAAANE3aj7JoBD8ZccjvFeIW-kbzmaH',
         loaderOptions: {
