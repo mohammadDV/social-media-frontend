@@ -33,8 +33,9 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker'
 
 
-import { createHead } from "@unhead/vue";
-import { VueRecaptchaPlugin } from "vue-recaptcha";
+// import { createHead } from "@unhead/vue";
+// import { VueRecaptchaPlugin } from "vue-recaptcha";
+import { VueReCaptcha } from "vue-recaptcha-v3";
 
 
 const pinia = createPinia();
@@ -56,9 +57,11 @@ createApp(App)
     .use(i18n)
     .use(pinia)
     .use(router)
-    .use(createHead())
-    .use(VueRecaptchaPlugin, {
-        v2SiteKey: '6LcZTdEpAAAAAPG9eR0YYYTvd6o2GWfCytC9hFtV',
+    .use(VueReCaptcha, {
+        siteKey: '6LdDVNEpAAAAANE3aj7JoBD8ZccjvFeIW-kbzmaH',
+        loaderOptions: {
+          useRecaptchaNet: true
+        }
     })
     .component('DatePicker', Vue3PersianDatetimePicker)
     .component('QuillEditor', QuillEditor)

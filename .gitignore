@@ -1,2 +1,6 @@
 node_modules
+<<<<<<< HEAD
 nginx.conf
+=======
+dist
+>>>>>>> 71279595a5d2055fcca625a3097a64b95ae8111b

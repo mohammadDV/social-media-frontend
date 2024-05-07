@@ -8,13 +8,9 @@
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n"; 
   import {useApi} from '@/utils/api.ts'; 
-  
-  import { useRecaptchaProvider, Checkbox } from "vue-recaptcha";
+  import  {useReCaptcha} from 'vue-recaptcha-v3'
 
-  useRecaptchaProvider();
-
-  const checkboxWidgetID = ref();
-  const checkboxResponse = ref();
+  const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n();  
   const $toast = useToast();
   const authStore = useAuthStore();
@@ -23,15 +19,19 @@
   const password = ref('');  
   const submitLogin = async function() {
 
+
     if (username.value?.length < 3 || password.value?.length < 3) { 
         $toast.error(t('site.Please fill in the necessary fields'));
         return;
     }
 
+    await recaptchaLoaded()
+    const token = await executeRecaptcha('login')
+
     await useApi().post('/api/login/', { 
         email : username.value, 
         password : password.value,
-        'g-recaptcha-response': checkboxResponse.value
+        token: token
      })
         .then((response) => {
         if (response.data?.token?.length > 0) {
@@ -101,10 +101,11 @@
                                 v-model="password"
                                 :placeholder="$t('site.Password')"/>
 
-                                <Checkbox
+                                <button @click="recaptcha">saxsx</button>
+                                <!-- <Checkbox
                                     v-model="checkboxResponse"
                                     v-model:widget-id="checkboxWidgetID"
-                                />
+                                /> -->
                             <VTButton class="mt-4 w-100" color="dark" size="medium" type="submit">
                                 {{ $t('site.Login') }}
                             </VTButton>
