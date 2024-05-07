@@ -11,12 +11,9 @@
   import VTTextArea from '@/elements/VTTextArea'; 
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";    
-  import { useRecaptchaProvider, Checkbox } from "vue-recaptcha";
-  
-  useRecaptchaProvider();
+  import  {useReCaptcha} from 'vue-recaptcha-v3'
 
-  const checkboxWidgetID = ref();
-  const checkboxResponse = ref();
+  const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n(); 
   const advertises = ref([]);
   const posts = ref([]);
@@ -31,6 +28,7 @@
       last_name: '',
       phone: '',
       content: '',
+      token: '',
     };
  
   const canSubmit = ref(true);
@@ -59,11 +57,14 @@
     Object.assign(form, { ...initialFormState });
   };
 
-  const send = () => {
-
+  const send = async () => {
+    
     if (!canSubmit.value) {
         return '';
     }
+
+    await recaptchaLoaded();
+    form.token = await executeRecaptcha('login');
 
     const $toast = useToast();
     useApi().post('/api/advertise-form', form)
@@ -83,8 +84,6 @@
   onMounted(() => {
     getAdvertises();
     getPosts();
-
-
     window.document.title =  t('site.Advertising order') + ` | ` + t('site.Website name');
   });
 
@@ -161,10 +160,10 @@
                                                 :disabled="false"
                                                 request-name="PostRequest"
                                                 :placeholder="$t('site.Description')"/>
-                                                <Checkbox class="pt-2"
+                                                <!-- <Checkbox class="pt-2"
                                                     v-model="checkboxResponse"
                                                     v-model:widget-id="checkboxWidgetID"
-                                                />
+                                                /> -->
                                             <VTButton 
                                                 :submit="true"
                                                 :loading="!canSubmit"
