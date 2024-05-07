@@ -123,16 +123,7 @@
                                 </div>
 
                                 <div class="mt-3 text-center">
-
                                     <GoogleLogin :callback="callback"/>
-                                    <a href="" class="no-underline m-auto w-[200px] rounded p-2 gap-2 bg-blue-500 hover:bg-blue-700 flex justify-center items-between">
-                                        <div class="logo-wrapper">
-                                            <img class="bg-white rounded-full w-[30px]" src="../../assets/site/images/g-logo.png" alt="">
-                                        </div>
-                                        <div class="text-white mt-1">
-                                            ورود با گوگل
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
                         <div>
