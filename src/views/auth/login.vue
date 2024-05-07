@@ -10,6 +10,12 @@
   import {useApi} from '@/utils/api.ts'; 
   import  {useReCaptcha} from 'vue-recaptcha-v3'
 
+  const callback = (response) => {
+    // This callback will be triggered when the user selects or login to
+    // his Google account from the popup
+    console.log("Handle the response", response)
+    }
+
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n();  
   const $toast = useToast();
@@ -117,6 +123,8 @@
                                 </div>
 
                                 <div class="mt-3 text-center">
+
+                                    <GoogleLogin :callback="callback"/>
                                     <a href="" class="no-underline m-auto w-[200px] rounded p-2 gap-2 bg-blue-500 hover:bg-blue-700 flex justify-center items-between">
                                         <div class="logo-wrapper">
                                             <img class="bg-white rounded-full w-[30px]" src="../../assets/site/images/g-logo.png" alt="">
