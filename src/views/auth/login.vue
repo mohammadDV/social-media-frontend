@@ -101,11 +101,6 @@
                                 v-model="password"
                                 :placeholder="$t('site.Password')"/>
 
-                                <button @click="recaptcha">saxsx</button>
-                                <!-- <Checkbox
-                                    v-model="checkboxResponse"
-                                    v-model:widget-id="checkboxWidgetID"
-                                /> -->
                             <VTButton class="mt-4 w-100" color="dark" size="medium" type="submit">
                                 {{ $t('site.Login') }}
                             </VTButton>
