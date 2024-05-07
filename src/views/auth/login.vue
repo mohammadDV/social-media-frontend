@@ -10,6 +10,22 @@
   import {useApi} from '@/utils/api.ts'; 
   import  {useReCaptcha} from 'vue-recaptcha-v3'
 
+  import {
+    GoogleSignInButton,
+    // CredentialResponse,
+  } from "vue3-google-signin";
+
+// handle success event
+const handleLoginSuccess = (response) => {
+  const { credential } = response;
+  console.log("Access Token", credential);
+};
+
+// handle an error event
+const handleLoginError = () => {
+  console.error("Login failed");
+};
+
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n();  
   const $toast = useToast();
@@ -117,14 +133,18 @@
                                 </div>
 
                                 <div class="mt-3 text-center">
-                                    <a href="" class="no-underline m-auto w-[200px] rounded p-2 gap-2 bg-blue-500 hover:bg-blue-700 flex justify-center items-between">
+                                    <GoogleSignInButton
+                                        @success="handleLoginSuccess"
+                                        @error="handleLoginError"
+                                    ></GoogleSignInButton>
+                                    <!-- <a href="" class="no-underline m-auto w-[200px] rounded p-2 gap-2 bg-blue-500 hover:bg-blue-700 flex justify-center items-between">
                                         <div class="logo-wrapper">
                                             <img class="bg-white rounded-full w-[30px]" src="../../assets/site/images/g-logo.png" alt="">
                                         </div>
                                         <div class="text-white mt-1">
                                             ورود با گوگل
                                         </div>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         <div>
