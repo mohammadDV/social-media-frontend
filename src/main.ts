@@ -34,7 +34,7 @@ import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker'
 
 import { VueReCaptcha } from "vue-recaptcha-v3";
 
-import GoogleSignInPlugin from "vue3-google-signin"
+import vue3GoogleLogin from 'vue3-google-login'
 
 
 const pinia = createPinia();
@@ -56,8 +56,8 @@ createApp(App)
     .use(i18n)
     .use(pinia)
     .use(router)
-    .use(GoogleSignInPlugin, {
-      clientId: '334836814599-trhjl192sj725fn9nbjubddejdmh5s8m.apps.googleusercontent.com',
+    .use(vue3GoogleLogin, {
+      clientId: '334836814599-trhjl192sj725fn9nbjubddejdmh5s8m.apps.googleusercontent.com'
     })
       // clientId: '334836814599-trhjl192sj725fn9nbjubddejdmh5s8m.apps.googleusercontent.com'
     .use(VueReCaptcha, {
