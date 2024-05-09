@@ -27,7 +27,7 @@ interface State {
 }
 
 export const useAuthStore = defineStore('auth',{
-    persist: true,
+    persist: false,
     state: () :State => ({
       token: '',
       isAuthenticated: false,
