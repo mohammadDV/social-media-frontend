@@ -10,10 +10,30 @@
   import {useApi} from '@/utils/api.ts'; 
   import  {useReCaptcha} from 'vue-recaptcha-v3'
 
-  const callback = (response) => {
+  const callback = async (response) => {
     // This callback will be triggered when the user selects or login to
     // his Google account from the popup
-    console.log("Handle the response", response)
+    console.log("Handle the response", response.credential)
+
+    await useApi().post('/api/google/verify', { 
+        token: response?.credential
+     })
+        .then((response) => {
+        if (response.data?.token?.length > 0) {
+            $toast.success(t('site.Welcome'));
+            authStore.setToken(response.data.token);
+                router.push({
+                name: 'profile'
+            })
+        }
+        })
+        .catch((error) => {
+            if (error.response.data) {
+                $toast.error(error.response.data.message);
+            } else {
+                $toast.error(t('site.There is no such user with this specification'));
+            }
+        })
     }
 
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
