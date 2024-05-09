@@ -9,6 +9,7 @@ import { useToast } from "vue-toast-notification";
 import { useI18n } from "vue-i18n";   
 import {useApi} from '@/utils/api.ts';     
 import  {useReCaptcha} from 'vue-recaptcha-v3'
+import SocialLoginComponent from '../../components/site/SocialLoginComponent.vue'
 
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const { t } = useI18n();    
@@ -140,16 +141,8 @@ const register = async function() {
                                         class="absolute left-0 top-3 w-full border-b border-gray-300"
                                     ></div>
                                 </div>
-
                                 <div class="mt-3 text-center">
-                                    <a href="" class="no-underline m-auto w-[200px] rounded p-2 gap-2 bg-blue-500 hover:bg-blue-700 flex justify-center items-between">
-                                        <div class="logo-wrapper">
-                                            <img class="bg-white rounded-full w-[30px]" src="../../assets/site/images/g-logo.png" alt="">
-                                        </div>
-                                        <div class="text-white mt-1">
-                                            ورود با گوگل
-                                        </div>
-                                    </a>
+                                    <SocialLoginComponent />
                                 </div>
                             </div>
                         <div>

@@ -9,29 +9,7 @@
   import { useI18n } from "vue-i18n"; 
   import {useApi} from '@/utils/api.ts'; 
   import  {useReCaptcha} from 'vue-recaptcha-v3'
-
-  const callback = async (response) => {
-
-    await useApi().post('/api/google/verify', { 
-        token: response?.credential
-     })
-        .then((response) => {
-            if (response.data?.token?.length > 0) {
-                $toast.success(t('site.Welcome'));
-                authStore.setToken(response.data.token);
-                    router.push({
-                    name: 'profile'
-                })
-            }
-        })
-        .catch((error) => {
-            if (error.response.data) {
-                $toast.error(error.response.data.message);
-            } else {
-                $toast.error(t('site.There is no such user with this specification'));
-            }
-        })
-    }
+  import SocialLoginComponent from '../../components/site/SocialLoginComponent.vue'
 
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n();  
@@ -138,9 +116,8 @@
                                         class="absolute left-0 top-3 w-full border-b border-gray-300"
                                     ></div>
                                 </div>
-
                                 <div class="mt-3 text-center">
-                                    <GoogleLogin :callback="callback"/>
+                                    <SocialLoginComponent />
                                 </div>
                             </div>
                         <div>
