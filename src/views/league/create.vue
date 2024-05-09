@@ -20,6 +20,7 @@ const initialFormState = {
       title: '',
       status: 0,
       priority: 0,
+      table_id: null,
       type: 1,
       sport_id: 1,
       country_id: 1,
@@ -66,6 +67,18 @@ const initialFormState = {
     useApi().get(`/api/country/index`)
     .then((response) => {
         countryList.value = response.data;
+    })
+  }
+
+  const tableList = ref();
+
+  const getTables = () => {
+    useApi().get(`/api/profile/leagues/tables`)
+    .then((response) => {
+        tableList.value = [{
+        id:0,
+        title: t('site.Inactive')
+    }, ...response.data];
     })
   }
 
@@ -146,6 +159,7 @@ const initialFormState = {
 
     getCountries();
     getSports();
+    getTables();
   });
 
 </script>
@@ -240,6 +254,17 @@ const initialFormState = {
                         optionsValueKey="id"
                         optionsDisplayValueKey="title"
                         name="status"/>
+                </div>
+            </div>
+            <div class="flex gap-3 mt-2">
+                <div>
+                    <VTSelect 
+                        :label="$t('site.Table type')"
+                        v-model="form.table_id" 
+                        :options="tableList" 
+                        optionsValueKey="id"
+                        optionsDisplayValueKey="title"
+                        name="table_id"/>
                 </div>
             </div>
 

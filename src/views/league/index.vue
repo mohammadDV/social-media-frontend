@@ -49,6 +49,7 @@
     { text: t("site.Id"), value: "id", sortable: true},
     { text: t('site.Title'), value: "title" },
     // { text: t('site.User'), value: "user_id" },
+    { text: t('site.Table type'), value: "table_id", sortable: true },
     { text: t('site.Image'), value: "image", sortable: true },
     { text: t('site.Status'), value: "status", sortable: true },
     { text: t('site.Country'), value: "country" },
@@ -89,6 +90,28 @@
     loading.value = false;
   };
 
+  const tableList = ref();
+
+  const getTables = () => {
+    useApi().get(`/api/profile/leagues/tables`)
+    .then((response) => {
+            tableList.value = [{
+            id:0,
+            title: t('site.Inactive')
+        }, ...response?.data];
+    })
+  }
+
+  const getTableName = (tabelId: any) => {
+    if (tabelId && tabelId > 0 && tableList.value) {
+        let table =  tableList.value.find((item: Item) => item.id == tabelId);
+        if (table) {
+            return table.title;
+        }
+    }
+    return '-';
+  }
+
   const $toast = useToast();
   const deletItem = (id: Number) => {
     if(confirm('Are you sure you want to remove this item?')) {
@@ -109,7 +132,7 @@
   watch(serverOptions, () => { loadFromServer(); }, { deep: true });
 
   onMounted(() => {
-
+    getTables();
     window.document.title =   `${t('site.League management')} | ${t('site.Website name')}`;
   })
 
@@ -176,6 +199,9 @@
                 <template #item-type="item">
                     <span v-if="item?.type == 1" class="text-danger"  >{{ $t('site.League') }}</span>
                     <span v-else  class="text-success" >{{ $t('site.Tournament') }}</span>
+                </template>
+                <template #item-table_id="item">
+                    <span >{{ getTableName(item?.table_id) }}</span>
                 </template>
                 <template #item-actions="item">
                     <div class="flex">

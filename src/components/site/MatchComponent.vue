@@ -1,11 +1,18 @@
 <script setup>
 
   import { useApi } from '@/utils/api.ts';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, defineProps } from 'vue';
   import VTSelect from "@/elements/VTSelect.vue";
   import TabsComponent from '@/components/plugins/tabs/TabsComponent';
   import TabComponent from '@/components/plugins/tabs/TabComponent';
   import jalaliMoment from 'moment-jalaali';
+
+  const props = defineProps({
+    tableId: {
+        type: Number,
+        default: 0
+    }
+  })
 
   const title = ref('');
   const tabItem = ref('timing');
@@ -19,14 +26,15 @@
   onMounted(() => {
     useApi().get('api/leagues')
         .then((response) => {
-            if (response.data[1] != undefined) {
-                title.value = response.data[1].title;
-                steps.value = response.data[1].steps.steps;
-                stepId.value = response.data[1].steps?.current?.id;
-                leagues.value = response.data[1].leagues;
-                leagueId.value = response.data[1].leagues[0].id;
-                matches.value = response.data[1].matches;
-                clubs.value = response.data[1].clubs;
+            if (response.data && props?.tableId != undefined && response.data[props?.tableId] !== undefined) {
+                let data = response.data[props?.tableId][1];
+                title.value = data.title;
+                steps.value = data.steps.steps;
+                stepId.value = data.steps?.current?.id;
+                leagues.value = data.leagues;
+                leagueId.value = data.leagues[0].id;
+                matches.value = data.matches;
+                clubs.value = data.clubs;
             }
         })
   });
