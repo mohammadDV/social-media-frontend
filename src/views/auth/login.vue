@@ -11,21 +11,18 @@
   import  {useReCaptcha} from 'vue-recaptcha-v3'
 
   const callback = async (response) => {
-    // This callback will be triggered when the user selects or login to
-    // his Google account from the popup
-    console.log("Handle the response", response.credential)
 
     await useApi().post('/api/google/verify', { 
         token: response?.credential
      })
         .then((response) => {
-        if (response.data?.token?.length > 0) {
-            $toast.success(t('site.Welcome'));
-            authStore.setToken(response.data.token);
-                router.push({
-                name: 'profile'
-            })
-        }
+            if (response.data?.token?.length > 0) {
+                $toast.success(t('site.Welcome'));
+                authStore.setToken(response.data.token);
+                    router.push({
+                    name: 'profile'
+                })
+            }
         })
         .catch((error) => {
             if (error.response.data) {
@@ -60,13 +57,13 @@
         token: token
      })
         .then((response) => {
-        if (response.data?.token?.length > 0) {
-            $toast.success(t('site.Welcome'));
-            authStore.setToken(response.data.token);
-                router.push({
-                name: 'profile'
-            })
-        }
+            if (response.data?.token?.length > 0) {
+                $toast.success(t('site.Welcome'));
+                authStore.setToken(response.data.token);
+                    router.push({
+                    name: 'profile'
+                })
+            }
         })
         .catch((error) => {
             if (error.response.data) {
