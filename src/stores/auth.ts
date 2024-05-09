@@ -50,7 +50,7 @@ export const useAuthStore = defineStore('auth',{
           icon: 'article',
           name: 'site.Status management',
           matches: ['status.index'],
-          permission: 'status_show',
+          permission: 'status_index',
         },{
           route: '/profile/account',
           icon: 'article',
