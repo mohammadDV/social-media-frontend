@@ -277,7 +277,7 @@ onMounted(() => {
                                     </router-link>
                                 </li>
                                 <li class="nav-item" v-for="(category,index) in categories" :key="index">
-                                    <router-link :to="`/category/${category.id}/${category.title}`" :title="category.title">
+                                    <router-link :to="`/category/${category.id}/${category.slug}`" :title="category.title">
                                         <button class="btn vt-btn-transparent-invert">
                                             {{ category.title }}
                                         </button>
