@@ -18,6 +18,7 @@
  import ImageUploader from 'quill-image-uploader';
  import BlotFormatter from 'quill-blot-formatter'
  import { useI18n } from "vue-i18n";
+ import Select2 from 'vue3-select2-component';
 
 
 const route = useRoute();
@@ -31,7 +32,7 @@ const initialFormState = {
       type: 0,
       special: 0,
       tags: [],
-      category_id: 1,
+      categories: [],
       video_id: null,
       content: '',
       image: '',
@@ -102,6 +103,7 @@ const initialFormState = {
                 if (response?.data?.tags?.length > 0) {
                     form.tags = response.data.tags.map((item) => item.title);
                 }
+                form.categories = form.categories.map(category => category.id);
             });
     }
   }
@@ -263,13 +265,12 @@ const modules = ref([
                 request-name="PostRequest"
                 :placeholder="$t('site.Pre title')"/>
 
-                <VTSelect 
-                    :label="$t('site.Category')"
-                    v-model="form.category_id" 
+                <Select2 
+                    class="mt-3"
+                    :multiple="true"
+                    v-model="form.categories" 
                     :options="categoryList" 
-                    optionsValueKey="id"
-                    optionsDisplayValueKey="title"
-                    name="category_id"/>
+                    :settings="{ multiple: true }"/>
             
             <VTTextArea
                 name="summary"
