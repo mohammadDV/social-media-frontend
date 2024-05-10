@@ -79,7 +79,7 @@ const initialFormState = {
   const categoryList = ref();
 
   const getCategories = () => {
-    useApi().get(`/api/active-categories`)
+    useApi().get(`/api/profile/categories`)
     .then((response) => {
         categoryList.value = response.data;
     })
@@ -107,7 +107,6 @@ const initialFormState = {
             });
     }
   }
-
 
   watch(() => route.params.id, () => {
     if (route.params.id) {
