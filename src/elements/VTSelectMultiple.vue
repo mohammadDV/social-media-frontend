@@ -252,11 +252,18 @@ export default {
             const selectedOptions = [];
 
             for (let item = 0; item < valueArray.length; item++) {
-                const option = this.options.find(option => (option[this.optionsValueKey]) === valueArray[item]);
-                if (typeof option !== 'undefined') {
-                    selectedOptions.push(this.getOptionLabel(option, false, false));
-                } else {
-                    selectedOptions.push(valueArray[item]);
+                if (this.options) {
+                    const option = this.options.find(option => (option[this.optionsValueKey]) === valueArray[item]);
+                    if (typeof option !== 'undefined') {
+                        selectedOptions.push(this.getOptionLabel(option, false, false));
+                    } else {
+                        if (this.optionsDisplayValueKey) {
+                            selectedOptions.push(this.getOptionLabel(valueArray[item], false, true));
+                        } else {
+                            selectedOptions.push(valueArray[item]);
+
+                        }
+                    }
                 }
             }
 
@@ -266,7 +273,7 @@ export default {
             }
 
             if (selectedOptions.length > 1) {
-                return selectedOptions.slice(0, selectedOptions.length - 1).join(', ') + ' and ' + selectedOptions[selectedOptions.length - 1];
+                return selectedOptions.slice(0, selectedOptions.length - 1).join(', ') + ' , ' + selectedOptions[selectedOptions.length - 1];
             }
             // on default show the placeholder instead of selection
             return selectedOptions.join(', ');
