@@ -154,8 +154,8 @@
                                         <span class="name">
                                             <a target="_blank">{{ club.title }}</a>
                                         </span>
-                                        <span class="match">{{ club.games_count }}</span>
-                                        <span class="point">{{ club.points }}</span>
+                                        <span class="match">{{ club?.pivot?.games_count }}</span>
+                                        <span class="point">{{ club?.pivot?.points }}</span>
                                     </div>
                                 </div>
                             </div>
