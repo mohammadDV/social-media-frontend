@@ -147,7 +147,7 @@
                                 </div>
                                 <div id="club-list-id" class="club-list rows">
                                     <div class="row" v-for="(club, index) in clubs" :key="index">
-                                        <span class="rank">{{ club.id }}</span>
+                                        <span class="rank">{{ index+1 }}</span>
                                         <span class="logo">
                                         <img :alt="club.title" :src="club.image" width="32" height="32"/>
                                         </span>
