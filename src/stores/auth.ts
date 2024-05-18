@@ -104,6 +104,12 @@ export const useAuthStore = defineStore('auth',{
           matches: ['club.index'],
           permission: 'club_show',
         },{
+          route: '/profile/players',
+          icon: 'article',
+          name: 'site.Player management',
+          matches: ['player.index'],
+          permission: 'player_show',
+        },{
           route: '/profile/sports',
           icon: 'article',
           name: 'site.Sport management',
