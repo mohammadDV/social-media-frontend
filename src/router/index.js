@@ -1,6 +1,6 @@
 
 import { createRouter, createWebHistory } from 'vue-router';
-import {helper} from '@/utils/helper.ts';
+import { helper } from '@/utils/helper.ts';
 
 // Import layouts
 
@@ -30,6 +30,8 @@ import VideoList from '@/views/video/index.vue';
 import VideoCreate from '@/views/video/create.vue';
 import PageList from '@/views/page/index.vue';
 import PageCreate from '@/views/page/create.vue';
+import PlayerList from '@/views/player/index.vue';
+import PlayerCreate from '@/views/player/create.vue';
 import ClubList from '@/views/club/index.vue';
 import ClubCreate from '@/views/club/create.vue';
 import ClubInfo from '@/views/club/info.vue';
@@ -75,13 +77,13 @@ import { useAuthStore } from '@/stores/auth.ts';
 const routes = [
   {
     path: '/auth',
-    meta: { 
+    meta: {
       layout: 'auth',
       requiresAuth: false,
-     },
+    },
     component: AuthLayout,
     children: [
-      
+
       {
         name: 'login',
         path: '/login',
@@ -97,15 +99,15 @@ const routes = [
         path: '/logout',
         component: Logout,
       },
-      
+
     ],
   },
   {
     path: '/club',
-    meta: { 
+    meta: {
       layout: 'club',
       requiresAuth: false,
-     },
+    },
     component: ClubLayout,
     children: [
       {
@@ -117,14 +119,14 @@ const routes = [
   },
   {
     path: '/',
-    meta: { 
+    meta: {
       layout: 'main',
       requiresAuth: false,
-     },
+    },
     component: MainLayout,
     children: [
       {
-        name:'home',
+        name: 'home',
         path: '',
         component: Home,
       },
@@ -162,10 +164,10 @@ const routes = [
   },
   {
     path: '/member',
-    meta: { 
+    meta: {
       layout: 'member',
       requiresAuth: false,
-     },
+    },
     component: MemberLayout,
     children: [
       {
@@ -187,7 +189,7 @@ const routes = [
   },
   {
     path: '/profile',
-    meta: { 
+    meta: {
       layout: 'profile',
       requiresAuth: true,
     },
@@ -311,6 +313,24 @@ const routes = [
         permission: 'club_update',
         path: '/profile/clubs/:id',
         component: ClubCreate,
+      },
+      {
+        name: 'player.index',
+        permission: 'player_show',
+        path: '/profile/players',
+        component: PlayerList,
+      },
+      {
+        name: 'player.create',
+        permission: 'player_show',
+        path: '/profile/players/create',
+        component: PlayerCreate,
+      },
+      {
+        name: 'player.edit',
+        permission: 'player_update',
+        path: '/profile/players/:id',
+        component: PlayerCreate,
       },
       {
         name: 'league.index',
@@ -545,7 +565,7 @@ router.beforeEach((to, from, next) => {
     next('/login');
   } else {
     if (authStore.isAuthenticated && ['login', 'register'].includes(to.name)) {
-        next('/profile');
+      next('/profile');
     } else {
       // Otherwise, allow access to the route
       if (!to?.meta?.permission?.length || authStore.permissions.includes(to?.meta?.permission)) {

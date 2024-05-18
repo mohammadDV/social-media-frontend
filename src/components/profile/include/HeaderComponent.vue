@@ -61,7 +61,7 @@
                     <router-link class="navbar-brand-profile" to="/profile" :title="$t('site.Profile')">
                         <img src="/profile/images/vt-logo.png" alt="logo" width="36" height="36"/>
                     </router-link>
-                    <DropDownSearchBox :options="dropdownItems"/>
+                    <DropDownSearchBox/>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
