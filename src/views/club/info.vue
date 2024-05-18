@@ -160,7 +160,7 @@ const getFollowers = () => {
         <div v-for="(match, index) in matches" :key="index" class="rounded-md w-full bg-white">
             <div class="flex flex-col bg-vt-dark rounded-md text-white p-[10px] gap-[10px] ">
                 <div class="flex gap-[10px]">
-                    <img alt="" src="https://match-cdn.varzesh3.com/football-league/2022/03/02/D/u2kqk4qa.png?w=15">
+                    <img class="w-[20px] h-[20px]" :alt="match?.step?.league?.title" :src="match?.step?.league?.image">
                     <span>{{ match?.step?.league?.title }}</span>
                 </div>
             </div>
