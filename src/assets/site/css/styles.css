@@ -7665,7 +7665,7 @@ html[dir=rtl] .news-item .material-icons {
   background-position: center;
 }
 .post--header--overly {
-  background-color: var(--color-basic-900);
+  background-color: #19203866;
   width: 100%;
   height: 100%;
   opacity: 0.65;
