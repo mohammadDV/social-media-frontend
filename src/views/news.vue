@@ -19,6 +19,7 @@
   const posts = ref([]);
   const latest = ref([]);
   const challenged = ref([]);
+  const category = ref([]);
   const popular = ref([]);
   const specialPosts = ref([]);
   const specialVideos = ref([]);
@@ -61,6 +62,7 @@
         useApi().get(`/api/post/${route.params.id}`)
             .then((response) => {
                 post.value = response.data;
+                category.value = post.value.categories[0];
                 formattedDate(response.data);
                 window.document.title =   `${response.data?.title} | ${t('site.Website name')}`;
             });
@@ -141,8 +143,8 @@
                                         <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <router-link :to="`/category/${post?.category?.id}/${post?.category?.title}`" :title="post?.category?.title">
-                                            {{ post?.category?.title }}
+                                        <router-link :to="`/category/${category?.id}/${category?.slug}`" :title="category?.title">
+                                            {{ category?.title }}
                                         </router-link>
                                     </li>
                                     <li class="breadcrumb-item">
