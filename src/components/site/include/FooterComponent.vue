@@ -86,7 +86,7 @@
         <div class="container-xxl py-3">
             <div class="row">
                 <div class="col-12 col-lg-7 footer-sub-copy">
-              <span>تمام حقوق مادی و معنوی این سایت متعلق به ورزش تایمز می باشد.</span>
+              <span>تمام حقوق مادی و معنوی این سایت متعلق به ورزش پاد می باشد.</span>
                 </div>
                 <div class="col-12 col-lg-5">
                     <ul class="nav footer-sub-socailmedia">
