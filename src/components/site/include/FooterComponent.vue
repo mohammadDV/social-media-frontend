@@ -26,7 +26,7 @@
                         alt="site's logo"
                     />
                     <div class="info-list">
-                        <div class="info-list-item">
+                        <!-- <div class="info-list-item">
                             <div class="info-list-item-icon">
                     <span class="material-icons text-primary">
                       location_on
@@ -34,27 +34,26 @@
                             </div>
                             <div class="info-list-item-text">
                     <span
-                    >تهران - بلوار بزرگ - خیابان دوم - میدان اول - نبش خیابان
-                      کناری - کوچه غربی - پلاک 14 - واحد 4</span
+                    >تهران</span
                     >
                             </div>
-                        </div>
+                        </div> -->
                         <div class="info-list-item">
                             <div class="info-list-item-icon">
                                 <span class="material-icons text-primary"> email </span>
                             </div>
                             <div class="info-list-item-text">
-                                <span>info@varzeshtimes.com</span>
+                                <span>info@varzeshpod.com</span>
                             </div>
                         </div>
-                        <div class="info-list-item">
+                        <!-- <div class="info-list-item">
                             <div class="info-list-item-icon">
                                 <span class="material-icons text-primary"> phone </span>
                             </div>
                             <div class="info-list-item-text">
                                 <span>0912-3456789 - 0912-3456789</span>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-12 col-lg-5 tag-col">
