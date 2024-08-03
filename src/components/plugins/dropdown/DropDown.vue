@@ -167,7 +167,7 @@ const gradientColor = computed(() => {
 const hoverBackgroundColor = computed(() => {
     switch (props.color) {
     case 'primary' :
-        return 'hover:bg-[#06b4f9]';
+        return 'hover:bg-[#ff7322]';
     case 'white' :
         return 'hover:bg-black';
     default:
@@ -268,7 +268,7 @@ const dDIcon = computed(() => {
 }
 
 .profile-gradient {
-  background: #06b4f9;
+  background: #ff7322;
   color: white;
 
 }
@@ -284,7 +284,7 @@ const dDIcon = computed(() => {
     border-left: 0.3em solid transparent;
 }
 /* .option:hover{
-  background: #06b4f9;
+  background: #ff7322;
   border-radius: 5px;
 } */
 
