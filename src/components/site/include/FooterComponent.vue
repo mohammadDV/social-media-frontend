@@ -22,7 +22,7 @@
                 <div class="col-12 col-lg-4 info-col">
                     <img
                         class="footer-logo"
-                        src="/assets/site/images/logo.png"
+                        src="/site/images/logo-white.png"
                         alt="site's logo"
                     />
                     <div class="info-list">

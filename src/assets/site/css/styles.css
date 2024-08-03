@@ -35,8 +35,8 @@
   --color-primary-200: #9bf6fe;
   --color-primary-300: #68e7fd;
   --color-primary-400: #43d3fb;
-  --color-primary-500: #06b4f9;
-  --color-primary-600: #048cd6;
+  --color-primary-500: #ff7322;
+  --color-primary-600: #f35900;
   --color-primary-700: #0369b3;
   --color-primary-800: #014a90;
   --color-primary-900: #013577;
@@ -138,9 +138,10 @@
   --box-shadow-inset: inset 0 1px 2px rgba(21, 26, 48, 0.075);
   --text-body: var(--color-basic-1000);
   --text-body-invert: var(--color-basic-100);
-  --text-primary: #06b4f9;
+  /* --text-primary: #06b4f9; */
+  --text-primary: #ff7322;
   --text-primary-tinted: var(--color-primary-600);
-  --text-accent: #ffbf00;
+  --text-accent: #ff7322;
   --text-success: var(--color-success-600);
   --text-info: #667aff;
   --text-warning: #ffbf00;
@@ -320,11 +321,11 @@ sup {
 }
 
 a {
-  color: #06b4f9;
+  color: #ff7322;
   text-decoration: underline;
 }
 a:hover {
-  color: #0590c7;
+  color: #ff7322;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -3020,32 +3021,32 @@ textarea.form-control-lg {
 
 .btn-primary {
   color: #191a20;
-  background-color: #06b4f9;
-  border-color: #06b4f9;
+  background-color: #ff7322;
+  border-color: #ff7322;
 }
 .btn-primary:hover {
   color: #191a20;
-  background-color: #2bbffa;
-  border-color: #1fbcfa;
+  background-color: #ff7325;
+  border-color: #ff7325;
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus {
   color: #191a20;
-  background-color: #2bbffa;
-  border-color: #1fbcfa;
+  background-color: #ff7322;
+  border-color: #ff7322;
   box-shadow: 0 0 0 0.25rem rgba(9, 157, 216, 0.5);
 }
 .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
   color: #191a20;
-  background-color: #38c3fa;
-  border-color: #1fbcfa;
+  background-color: #ff7322;
+  border-color: #ff7322;
 }
 .btn-check:checked + .btn-primary:focus, .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.25rem rgba(9, 157, 216, 0.5);
 }
 .btn-primary:disabled, .btn-primary.disabled {
   color: #191a20;
-  background-color: #06b4f9;
-  border-color: #06b4f9;
+  background-color: #ff7322;
+  border-color: #ff7322;
 }
 
 .btn-secondary {
@@ -6138,8 +6139,8 @@ textarea.form-control-lg {
   --color-primary-200: #9bf6fe;
   --color-primary-300: #68e7fd;
   --color-primary-400: #43d3fb;
-  --color-primary-500: #06b4f9;
-  --color-primary-600: #048cd6;
+  --color-primary-500: #ff7322;
+  --color-primary-600: #f35900;
   --color-primary-700: #0369b3;
   --color-primary-800: #014a90;
   --color-primary-900: #013577;
@@ -6241,9 +6242,9 @@ textarea.form-control-lg {
   --box-shadow-inset: inset 0 1px 2px rgba(21, 26, 48, 0.075);
   --text-body: var(--color-basic-1000);
   --text-body-invert: var(--color-basic-100);
-  --text-primary: #06b4f9;
+  --text-primary: #ff7322;
   --text-primary-tinted: var(--color-primary-600);
-  --text-accent: #ffbf00;
+  --text-accent: #ff7322;
   --text-success: var(--color-success-600);
   --text-info: #667aff;
   --text-warning: #ffbf00;
@@ -9326,7 +9327,7 @@ html[dir=rtl] .news-item .material-icons {
 }
 
 .bg-primary {
-  background-color: #06b4f9;
+  background-color: #ff7322;
 }
 
 .bg-secondary {
