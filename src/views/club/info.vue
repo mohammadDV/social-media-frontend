@@ -239,7 +239,7 @@ const getFollowers = () => {
                                 <div class="flex justify-start gap-1  flex-wrap">
                                     <router-link v-for="(club, index) in follower?.clubs" :key="index" :to="`/club/${club.id}`" class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-vt-dark rounded-md">
                                         <div class="flex">
-                                            <span class="material-symbols-outlined text-[#06b4f9]">#</span>
+                                            <span class="material-symbols-outlined text-[#ff7322]">#</span>
                                             <span class="">{{ club.title }}</span>
                                         </div>
                                     </router-link>
