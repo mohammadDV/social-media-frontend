@@ -210,10 +210,10 @@
                                     <div class="post--lead">
                                         <span>{{ post.title }}</span>
                                     </div>
-                                    <div>
+                                    <div class="mb-5">
                                         {{ post.summary }}
                                     </div>
-                                    <div v-html="post.content"></div>
+                                    <div id="body-content" v-html="post.content"></div>
                                 </div>
                             </div>
                             <div v-if="post?.tags?.length > 0" class="post-tag-list">
@@ -273,6 +273,26 @@
         </main>
     </div>
   </template>
+
+
+<style>
+
+#body-content p {
+    line-height: 1.8;
+}
+blockquote {
+    background: #eeeeeea6;
+    padding: 10px 15px;
+    border-right: 3px Solid red;
+}
+.arrow-btn .material-icons {
+    font-size: 35px !important;
+} 
+.slider .arrow-btn {
+    height: 35px !important;
+}
+
+</style>
 
 
   
