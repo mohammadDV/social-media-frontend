@@ -1,7 +1,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref, watch, computed } from 'vue';
 
   import { useRoute } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
@@ -9,6 +9,7 @@
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import { useI18n } from "vue-i18n";  
+  import { useHead } from '@unhead/vue';
 
   const { t } = useI18n(); 
   const advertises = ref([]);
@@ -43,7 +44,19 @@
             .then((response) => {
                 page.value = response.data;
 
-                window.document.title =   `${response.data.title} | ${t('site.Website name')}`;
+                useHead({
+                    title: `${response.data?.title} | ${t('site.Website name')}`,
+                    meta: [
+                        {
+                            name: `description`,
+                            content: response.data?.title
+                        },
+                        {
+                            property: `og:url`,
+                            content: computed(() => window.location.href)
+                        },
+                    ]
+                })
             });
     }
   }

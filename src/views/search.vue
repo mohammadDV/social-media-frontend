@@ -1,7 +1,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref, watch, computed } from 'vue';
 
   import { useRoute } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
@@ -9,11 +9,12 @@
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import { useI18n } from "vue-i18n";  
+  import { useHead } from '@unhead/vue';
 
   const { t } = useI18n(); 
   const advertises = ref([]);
   const posts = ref([]);
-  const category = ref({});
+//   const category = ref({});
   const latest = ref([]);
   const challenged = ref([]);
   const popular = ref([]);
@@ -50,7 +51,7 @@
                 more.value = false;
             }
             page.value++;
-            category.value = response.data.category;
+            // category.value = response.data.category;
         });
   }
 
@@ -79,7 +80,19 @@
 
     search.value = route.query.q;
 
-    window.document.title =   `${search.value} | ${t('site.Website name')}`;
+    useHead({
+        title: `${search.value} | ${t('site.Website name')}`,
+        meta: [
+            {
+                name: `description`,
+                content: `جستجوی اخبار سایت ورزش پاد بر اساس کلمات کلیدی ${search.value}`
+            },
+            {
+                property: `og:url`,
+                content: computed(() => window.location.href)
+            },
+        ]
+    })
     getAdvertises();
     getPosts();
     handleSearch();
@@ -103,21 +116,21 @@
                                     <li class="breadcrumb-item">
                                         <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
                                     </li>
-                                    <li class="breadcrumb-item">
-                                        <router-link :to="`/category/${category?.id}/${category?.title}`" :title="category?.title">
-                                            {{ category?.title }}
-                                        </router-link>
+                                    <li class="breadcrumb-item active">
+                                        <!-- <router-link :to="`/category/${category?.id}/${category?.title}`" :title="category?.title"> -->
+                                            {{ search }}
+                                        <!-- </router-link> -->
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">
+                                    <!-- <li class="breadcrumb-item active" aria-current="page">
                                         {{ $t('site.You are here') }}
-                                    </li>
+                                    </li> -->
                                 </ol>
                             </nav>
                         </div>
                     </div>
                     <div class="card vt-news-card archive-card">
                         <div class="card-header header-alt">
-                            <p class="h4 text-primary">{{ category?.title }}</p>
+                            <p class="h4 text-primary">{{ search }}</p>
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
