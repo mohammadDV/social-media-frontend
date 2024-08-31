@@ -1,7 +1,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref, watch, computed } from 'vue';
 
   import { useRoute } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
@@ -12,6 +12,7 @@
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import VideoPlayerComponent from '@/components/site/components/video/VideoPlayerComponent';
   import { useI18n } from "vue-i18n";  
+  import { useHead } from '@unhead/vue';
 
   const { t } = useI18n();    
   const advertises = ref([]);
@@ -64,7 +65,19 @@
                 post.value = response.data;
                 category.value = post.value.categories[0];
                 formattedDate(response.data);
-                window.document.title =   `${response.data?.title} | ${t('site.Website name')}`;
+                useHead({
+                    title: `${response.data?.title} | ${t('site.Website name')}`,
+                    meta: [
+                        {
+                            name: `description`,
+                            content: response.data?.summary
+                        },
+                        {
+                            property: `og:url`,
+                            content: computed(() => window.location.href)
+                        },
+                    ]
+                })
             });
     }
   }
