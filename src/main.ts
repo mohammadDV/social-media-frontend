@@ -64,7 +64,7 @@ createApp(App)
     })
       // clientId: '334836814599-trhjl192sj725fn9nbjubddejdmh5s8m.apps.googleusercontent.com'
     .use(VueReCaptcha, {
-        siteKey: '6LdDVNEpAAAAANE3aj7JoBD8ZccjvFeIW-kbzmaH',
+        siteKey: '6LfuXzMqAAAAAKflj9G5h-qFCpXkAARYwihbG0Rc',
         loaderOptions: {
           useRecaptchaNet: true
         }

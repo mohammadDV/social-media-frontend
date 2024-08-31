@@ -1,7 +1,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, computed } from 'vue';
   import SliderComponent from '@/components/plugins/slider/SliderComponent';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
   import LiveComponent from '@/components/site/LiveComponent';
@@ -10,6 +10,8 @@
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import { useI18n } from "vue-i18n";  
+
+  import { useHead } from '@unhead/vue';
 
   const { t } = useI18n();  
   const advertises = ref([]);
@@ -41,7 +43,20 @@
   
   onMounted(() => {
 
-    window.document.title =   `${t('site.Main page')} | ${t('site.Website name')}`;
+    // window.document.title =   `${t('site.Main page')} | ${t('site.Website name')}`;
+    useHead({
+        title: `${t('site.Main page')} | ${t('site.Website name')}`,
+        meta: [
+            {
+                name: `description`,
+                content: 'خبر های ورزشی و شبکه اجتماعی ورزشی، تحلیل مسابقات مختلف ورزشی، ویدیو های مسابقات حساس، کری خوانی های ورزشی، تحلیل های پیش و پس از بازی'
+            },
+            {
+                property: `og:url`,
+                content: computed(() => window.location.href)
+            },
+        ]
+    })
     getAdvertises();
     getPosts();
   });
