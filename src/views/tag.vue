@@ -1,14 +1,14 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, watch } from 'vue';
-
+  import { onMounted, ref, watch, computed } from 'vue';
   import { useRoute } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import { useI18n } from "vue-i18n";  
+  import { useHead } from '@unhead/vue';
 
   const { t } = useI18n(); 
   const advertises = ref([]);
@@ -39,7 +39,21 @@
         posts.value = [];
     }
 
-    window.document.title =   `${route.params.title} | ${t('site.Website name')}`;
+    window.document.title = `${route.params.title} | ${t('site.Website name')}`;
+
+    useHead({
+        title: `${route.params.title} | ${t('site.Website name')}`,
+        meta: [
+            {
+                name: `description`,
+                content: `جستجوی اخبار سایت ورزش پاد بر اساس تگ ${route.params.title}`
+            },
+            {
+                property: `og:url`,
+                content: computed(() => window.location.href)
+            },
+        ]
+    })
 
     useApi().get(`/api/tag/${route.params.id}?page=${page.value}`)
         .then((response) => {
@@ -110,7 +124,7 @@
                     </div>
                     <div class="card vt-news-card archive-card">
                         <div class="card-header header-alt">
-                            <p class="h4 text-primary">{{ category?.title }}</p>
+                            <p class="h4 text-primary">{{ route.params.title }}</p>
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">

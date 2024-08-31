@@ -1,14 +1,17 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, ref, watch } from 'vue';
 
   import { useRoute } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
-  import { useI18n } from "vue-i18n";  
+  import { useI18n } from "vue-i18n"; 
+  import { useHead } from '@unhead/vue';
+
+    
 
   const { t } = useI18n();  
 
@@ -58,7 +61,21 @@
             }
             page.value++;
             category.value = response.data.category;
-            window.document.title =  `${category.value?.title} | ` + t('site.Website name');
+            // window.document.title =  `${category.value?.title} | ` + t('site.Website name');
+
+            useHead({
+                title: `${category.value?.title} | ` + t('site.Website name'),
+                meta: [
+                    {
+                        name: `description`,
+                        content: category.value?.description
+                    },
+                    {
+                        property: `og:url`,
+                        content: computed(() => window.location.href)
+                    },
+                ]
+            })
         });
   }
 

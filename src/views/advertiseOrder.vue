@@ -1,7 +1,7 @@
 <script setup>
 
   import {useApi} from '@/utils/api.ts';
-  import { onMounted, ref, reactive } from 'vue';
+  import { onMounted, ref, reactive, computed } from 'vue';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
@@ -11,7 +11,9 @@
   import VTTextArea from '@/elements/VTTextArea'; 
   import { useToast } from "vue-toast-notification";
   import { useI18n } from "vue-i18n";    
-  import  {useReCaptcha} from 'vue-recaptcha-v3'
+  import  {useReCaptcha} from 'vue-recaptcha-v3';
+  import { useHead } from '@unhead/vue';
+  
 
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n(); 
@@ -84,7 +86,20 @@
   onMounted(() => {
     getAdvertises();
     getPosts();
-    window.document.title =  t('site.Advertising order') + ` | ` + t('site.Website name');
+
+    useHead({
+        title: t('site.Advertising order') + ` | ` + t('site.Website name'),
+        meta: [
+            {
+                name: `description`,
+                content: `ثبت نام برای ایجاد تبلیغات در سایت ورزش پاد`
+            },
+            {
+                property: `og:url`,
+                content: computed(() => window.location.href)
+            },
+        ]
+    })
   });
 
 </script>
