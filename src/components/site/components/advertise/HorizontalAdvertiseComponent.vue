@@ -19,4 +19,6 @@
             </div>
         </div>
     </div>
+    <div v-else class="row mb-5"></div>
+
 </template>
