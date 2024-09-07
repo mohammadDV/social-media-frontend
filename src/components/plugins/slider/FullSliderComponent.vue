@@ -95,7 +95,7 @@ onUnmounted(() => {
   .full-slider .arrow-btn {
     z-index: 1;
     cursor: pointer;
-    height: 25px;
+    height: 35px;
     position: absolute;
     top: 0;
     border-radius: 0.5rem;

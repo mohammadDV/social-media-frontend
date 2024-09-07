@@ -58,14 +58,14 @@
                     <div class="user-stat-title">{{ $t('site.Followers') }}</div>
                     <div class="user-stat-amount">{{ followersCount }}</div>
                 </router-link>
-                <a class="user-stat" href="#">
+                <!-- <a class="user-stat" href="#">
                     <div class="user-stat-title">بازدید از صفحه ی شما</div>
                     <div class="user-stat-amount">19</div>
                 </a>
                 <a class="user-stat" href="#">
                     <div class="user-stat-title">بازدید از پست های شما</div>
                     <div class="user-stat-amount">159</div>
-                </a>
+                </a> -->
             </div>
             <div class="user-links">
                 <router-link v-for="(item, index) in menu" :key="index" class="user-link" :to="item.route">

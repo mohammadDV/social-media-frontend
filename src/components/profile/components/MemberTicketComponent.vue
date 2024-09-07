@@ -31,14 +31,14 @@
                     <div class="user-stat-title">{{ $t('site.Followers') }}</div>
                     <div class="user-stat-amount">{{ followersCount }}</div>
                 </router-link>
-                <a class="user-stat" href="#">
+                <!-- <a class="user-stat" href="#">
                     <div class="user-stat-title">تعداد بازدید</div>
                     <div class="user-stat-amount">19</div>
                 </a>
                 <a class="user-stat" href="#">
                     <div class="user-stat-title">تعداد پست</div>
                     <div class="user-stat-amount">159</div>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>

@@ -261,9 +261,9 @@ onMounted(() => {
                             <DropDownMainSearch :options="dropdownItems" />
                         </div>
                         <div class="logo-wrap">
-                            <a href="" title="{{ $t('site.Main page') }}">
+                            <router-link class="navbar-brand-profile" to="/" :title="$t('site.Main page')">
                                 <img src="/site/images/logo.png" alt="site's logo" />
-                            </a>
+                            </router-link>
                         </div>
                     </section>
                     <nav class="subheader-navbar navbar navbar-expand-lg navbar-dark bg-vt-gradient">

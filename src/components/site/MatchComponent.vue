@@ -96,10 +96,10 @@
                                 @tab-clicked="changeTab('ranking')">
                                 {{ $t('site.Ranking') }}
                 </tab-component>
-                <tab-component class="nav-item cursor-pointer" :is-active="tabItem == 'goals'"
+                <!--<tab-component class="nav-item cursor-pointer" :is-active="tabItem == 'goals'"
                                 @tab-clicked="changeTab('goals')">
                                 گلزنان
-                </tab-component>
+                </tab-component>-->
             </tabs-component>
         </div>
         <div class="card-body" id="table-match-{{ $id }}">
