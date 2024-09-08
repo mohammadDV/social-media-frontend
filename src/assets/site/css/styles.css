@@ -7399,7 +7399,7 @@ html[dir=rtl] .news-item .material-icons {
 }
 
 .footer-logo {
-  width: 50%;
+  width: 80%;
   margin-inline-start: 1em;
   margin-bottom: 1.5em;
 }
@@ -7694,6 +7694,7 @@ html[dir=rtl] .news-item .material-icons {
   margin-inline-end: 1em;
 }
 .post .main-info {
+  background: #00000073;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
