@@ -68,7 +68,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="relative w-full flex h-50 bg-vt-gradient mb-[130px] pb-5">
+    <div class="relative w-full flex h-[80px] bg-vt-gradient mb-[130px]">
         <div class="flex-start">
             <template v-if="authStore.isAuthenticated">
                 <div class="py-[7px] px-3">

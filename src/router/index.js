@@ -166,7 +166,7 @@ const routes = [
     path: '/member',
     meta: {
       layout: 'member',
-      requiresAuth: false,
+      requiresAuth: true,
     },
     component: MemberLayout,
     children: [

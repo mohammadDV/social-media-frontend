@@ -10,6 +10,7 @@
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import { useI18n } from "vue-i18n";  
   import { useHead } from '@unhead/vue';
+  import jalaliMoment from 'moment-jalaali';
 
   const { t } = useI18n(); 
   const advertises = ref([]);
@@ -109,25 +110,25 @@
                     <VerticalAdvertiseComponent v-if="advertises[5]?.length > 0" :advertises="advertises[5]"/>
                 </div>
                 <div class="col-12 col-lg-7 flex-grow-1">
-                    <div class="card vt-news-card breadcrumb-card mb-3">
+                    <!-- <div class="card vt-news-card breadcrumb-card mb-3">
                         <div class="card-body">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
                                         <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
                                     </li>
-                                    <li class="breadcrumb-item active">
+                                    <li class="breadcrumb-item active"> -->
                                         <!-- <router-link :to="`/category/${category?.id}/${category?.title}`" :title="category?.title"> -->
-                                            {{ search }}
+                                            <!-- {{ search }} -->
                                         <!-- </router-link> -->
-                                    </li>
+                                    <!-- </li> -->
                                     <!-- <li class="breadcrumb-item active" aria-current="page">
                                         {{ $t('site.You are here') }}
                                     </li> -->
-                                </ol>
+                                <!-- </ol>
                             </nav>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="card vt-news-card archive-card">
                         <div class="card-header header-alt">
                             <p class="h4 text-primary">{{ search }}</p>
@@ -136,7 +137,33 @@
                         <div class="card-body">
                             <div class="card-body-inner">
                             <div id="main-list" class="row gy-3 news-item-row">
-                                <div v-for="(post, index) in posts" :key="index" class="col-12 col-lg-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
+                                    <div class=" cursor-pointer" v-for="(post, index) in posts" :key="index">
+                                    <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
+                                        <div class="flex-none">
+                                            <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                                        </div>
+                                        <div class="flex-grow p-2">
+                                            <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                <h3 class="h-[20px] text-blue-400 overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
+                                                <p class="text-xs text-gray-700 h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
+                                            </router-link>
+                                            <div id="search-material" class="flex gap-6 justify-between">
+                                                <div class="flex gap-2">
+                                                <div class="view text-gray-400 text-xs">
+                                                    <span class="material-icons text-sm">visibility</span>
+                                                    {{ post.view }}
+                                                </div>
+                                                </div>
+                                                <div class="time text-gray-400 text-xs">
+                                                <span class="material-icons text-sm">schedule</span>
+                                                {{ jalaliMoment(post.created_at).format('dddd jD jMMMM') }}</div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    </div>
+                                </div>
+                                <!-- <div v-for="(post, index) in posts" :key="index" class="col-12 col-lg-6">
                                     <div class="news-row-item">
                                         <div class="row gx-2">
                                             <div class="col-4">
@@ -150,7 +177,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div v-if="more" class="col-12 px-5 mt-2">
                                 <button type="button" @click="addMore" class="w-full btn vt-btn-white">
