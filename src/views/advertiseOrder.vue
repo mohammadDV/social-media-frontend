@@ -113,7 +113,7 @@
                     <vertical-advertise-component v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
                 </div>
                 <div class="col-12 col-lg-7 flex-grow-1">
-                    <div class="card vt-news-card breadcrumb-card mb-3">
+                    <!-- <div class="card vt-news-card breadcrumb-card mb-3">
                         <div class="card-body">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -129,7 +129,7 @@
                                 </ol>
                             </nav>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="card vt-news-card mb-3">
                         <div class="card-body">
                             <div class="post">

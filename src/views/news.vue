@@ -150,7 +150,10 @@
                 <div class="col-12 col-lg-7 flex-grow-1">
                     <div class="card vt-news-card breadcrumb-card mb-3">
                         <div class="card-body">
-                            <nav aria-label="breadcrumb">
+                            <div class="text-blue-400">
+                                {{ post?.title }}
+                            </div>
+                            <!-- <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
                                         <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
@@ -169,7 +172,7 @@
                                         {{ $t('site.You are here') }}
                                     </li>
                                 </ol>
-                            </nav>
+                            </nav> -->
                         </div>
                     </div>
                     <div class="card vt-news-card mb-3">
@@ -185,7 +188,11 @@
                                         </span>
                                     </div>
                                     <div v-if="post?.pre_titl" class="main-info">
-                                        <span class="fs-6 post--subtitle">{{ post.pre_title }}</span>
+                                        <router-link 
+                                                    :to="`/member/${post.user?.id}`"  
+                                                    :title="post.user?.nickname"
+                                                    class="text-decoration-none cursor-pointer text-gray-200 fs-6 post--subtitle"
+                                                >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
                                     </div>
                                 </div>
                                 <div v-else class="post--header">
@@ -201,17 +208,19 @@
                                                 </span>
                                             </div>
                                             <div class="main-info">
-                                                <span class="fs-6 post--subtitle">{{ post.pre_title }}</span>
+                                                <router-link 
+                                                    :to="`/member/${post.user?.id}`"  
+                                                    :title="post.user?.nickname"
+                                                    class="text-decoration-none cursor-pointer text-gray-200 fs-6 post--subtitle"
+                                                >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="post--body">
+                                    <div class="fs-6 post--subtitle mb-4">{{ post.pre_title }}</div>
                                     <div class="post--lead">
-                                        <span>{{ post.title }}</span>
-                                    </div>
-                                    <div class="mb-5">
-                                        {{ post.summary }}
+                                        <span>{{ post.summary }}</span>
                                     </div>
                                     <div id="body-content" v-html="post.content"></div>
                                 </div>
