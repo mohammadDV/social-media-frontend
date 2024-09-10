@@ -43,7 +43,7 @@
         getRpc();
         autoInterval.value = setInterval(function() {
             getRpc();
-        }, 3000);
+        }, 10000);
     });
 
     onUnmounted(() => {
