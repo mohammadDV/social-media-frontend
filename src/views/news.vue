@@ -150,8 +150,8 @@
                 <div class="col-12 col-lg-7 flex-grow-1">
                     <div class="card vt-news-card breadcrumb-card mb-3">
                         <div class="card-body">
-                            <div class="text-blue-400">
-                                {{ post?.title }}
+                            <div class="text-primary">
+                                <h1 class="text-xl">{{ post?.title }}</h1>
                             </div>
                             <!-- <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -286,6 +286,10 @@
 
 <style>
 
+#body-content h1 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
 #body-content p {
     line-height: 1.8;
 }
