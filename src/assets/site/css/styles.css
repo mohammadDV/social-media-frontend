@@ -709,7 +709,7 @@ progress {
 }
 
 #mobileMenuCaller {
-  display: none;
+  display: inline-block;
 }
 
 .container,
