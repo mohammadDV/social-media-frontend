@@ -119,7 +119,7 @@
   --color-basic-200-transparent: #ffffffe0;
   --color-dark-transparent-00: rgba(21, 26, 48, 0);
   --color-dark-transparent-25: rgba(21, 26, 48, 0.25);
-  --color-dark-transparent-50: rgba(21, 26, 48, 0.5);
+  --color-dark-transparent-50: #00000052;
   --color-dark-transparent-75: rgba(21, 26, 48, 0.75);
   --color-dark-transparent-100: rgba(21, 26, 48, 1);
   --color-basic-transparent-100: rgba(143, 155, 179, 0.08);
@@ -6221,7 +6221,7 @@ textarea.form-control-lg {
   --color-basic-200-transparent: #ffffffe0;
   --color-dark-transparent-00: rgba(21, 26, 48, 0);
   --color-dark-transparent-25: rgba(21, 26, 48, 0.25);
-  --color-dark-transparent-50: rgba(21, 26, 48, 0.5);
+  --color-dark-transparent-50: #00000052;
   --color-dark-transparent-75: rgba(21, 26, 48, 0.75);
   --color-dark-transparent-100: rgba(21, 26, 48, 1);
   --color-basic-transparent-100: rgba(143, 155, 179, 0.08);
