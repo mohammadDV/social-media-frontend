@@ -43,6 +43,15 @@
 //   };
 
 const search = ref('');
+const isOpen = ref(false);
+
+const toggleMenu = () => {
+    isOpen.value = !isOpen.value;
+}
+
+const closeMenu = () => {
+    isOpen.value = false;
+}
 
 const getActiveCategory = () => {
     useApi().get('/api/active-categories')
@@ -101,156 +110,45 @@ onMounted(() => {
                     </div>
                 </div>
             </template>
-            <!-- <div class="relative cursor-pointer" v-if="authStore.isAuthenticated" @click="toggleDropdown">
-                <div class="rounded-lg mx-3 mt-[5px] px-3 py-2 flex gap-2 align-items-center cursor-pointer border">
-                    <span class="">
-                        <userImage addclass="w-[35px] h-[35px] rounded-full" :item="authStore?.user" />
-                    </span>
-                    <span class="material-icons text-accent"> person </span>
-                    <span class="text-black text-white">{{ authStore?.user?.nickname }}</span>
-                </div>
-                <div v-if="dropdown" class="rounded shadow-current z-50 absolute w-[150px] p-2 mt-1 mx-[15px] bg-vt">
-                    <router-link class="text-white text-decoration-none" to="/profile">
-                        <div class="p-2 border-bottom cursor-pointer">
-                            <span class="material-icons"> person </span>
-                            <span> {{ $t('site.Profile') }} </span>
-                        </div>
-                    </router-link>
-                    <a @click="logout" class="text-white text-decoration-none">
-                        <div class="p-2 cursor-pointer">
-                            <span class="material-icons"> exit_to_app </span>
-                            <span>{{ $t('site.Logout') }}</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div v-else class="flex button-type">
-                <div class="nav-item">
-                    <router-link to="/login" title="$t('site.Login')">
-                        <button class="btn vt-btn-tit">
-                            <span class="material-icons text-accent"> person </span>
-                            <span>{{ $t('site.Login') }}</span>
-                        </button>
-                    </router-link>
-                </div>
-                <div class="nav-item">
-                    <router-link to="/register">
-                        <button class="btn vt-btn-tit">
-                            <span class="material-icons text-accent"> group_add </span>
-                            <span>{{ $t('site.Register to site') }}</span>
-                        </button>
-                    </router-link>
-                </div>
-            </div> -->
         </div>
         <div class="flex-grow text-left">
-            <div class="flex flex-lg-row-reverse gap-3 p-3">
+            <div class="hidden md:flex flex-lg-row-reverse gap-3 p-3">
                 <div class="" v-for="(page, index) in pages" :key="index">
                     <router-link class="text-white text-decoration-none" :to="`/page/${page.slug}`">{{ page.title }}</router-link>
                 </div>
             </div>
+
+            <button @click="toggleMenu" class="btn focus:outline-none mt-2 ml-3 vt-btn-tit" id="mobileMenuCaller">
+                <span class="material-icons text-accent"> menu </span>
+            </button>
+
+            <div v-if="isOpen" class="fixed top-0 left-0 w-full h-screen bg-gray-800 z-10">
+                <button @click="closeMenu" class="md:hidden float-right p-3 focus:outline-none">
+                    <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 transform rotate-45 translate-y-2"></span>
+                    <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 opacity-0"></span>
+                    <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 transform -rotate-45 -translate-y-2"></span>
+                </button>
+                <ul class="flex flex-col items-center justify-center h-full space-y-6">
+                    <li>
+                        <router-link class="text-white text-xl text-decoration-none" @click="toggleMenu" :title="$t('site.Main page')" to="/">{{ $t('site.Main page') }}</router-link>
+                    </li>
+                    <li v-if="authStore.isAuthenticated">
+                        <router-link class="text-white text-xl text-decoration-none" @click="toggleMenu" :title="$t('site.Profile')" to="/profile">{{ $t('site.Profile') }}</router-link>
+                    </li>
+                    <li v-for="(category,index) in categories" :key="index">
+                        <router-link class="text-white text-xl text-decoration-none" @click="toggleMenu" :to="`/category/${category.id}/${category.slug}`" :title="category.title">
+                            {{ category.title }}
+                        </router-link>
+                    </li>
+                    <li v-for="(page, index) in pages" :key="index">
+                        <router-link class="text-white text-xl text-decoration-none" @click="toggleMenu" :title="page.title" :to="`/page/${page.slug}`">{{ page.title }}</router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <header class="absolute w-full mb-4 top-10 p-3">
-         
-           
-
-                <!-- <nav class="preheader-navbar navbar navbar-expand navbar-dark">
-                    <div class="row preheader-navbar-row">
-                        <div class="col-9 col-lg-6 preheader-navbar-col">
-                            <ul v-if="authStore.isAuthenticated" class="navbar-nav button-type">
-                                <li class="nav-item">
-                                    <div class="dropdown">
-                                        <button class="flex btn vt-btn-tit dropdown-toggle  justify-around items-center" type="button" @click="toggleDropdown">
-                                            <span class="user-avatar">
-                                                <userImage addclass="inline" :item="authStore?.user" />
-                                            </span>
-                                            <span>{{ authStore?.user?.nickname }}</span>
-                                        </button>
-                                        <ul v-show="dropdown" class="absolute w-[180px] rounded-lg bg-white z-50 p-2 d-block">
-                                            <li>
-                                                <router-link class="dropdown-item" to="/profile">
-                                                    <span class="material-icons"> person </span>
-                                                    <span> {{ $t('site.Profile') }} </span>
-                                                </router-link>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    <span class="material-icons"> settings </span>
-                                                    <span>تنظیمات</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="">
-                                                    <span class="material-icons"> post_add </span>
-                                                    <span>{{ $t('site.Create new status') }}</span>
-                                                </a>
-                                            </li>
-                                            <li><hr class="dropdown-divider" /></li>
-                                            <li>
-                                                <a @click="logout"  class="dropdown-item">
-                                                    <span class="material-icons"> exit_to_app </span>
-                                                    <span>{{ $t('site.Logout') }}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul> 
-                            <ul v-else class="navbar-nav button-type">
-                                <li class="nav-item">
-                                    <router-link to="/login" title="$t('site.Login')">
-                                        <button class="btn vt-btn-tit">
-                                            <span class="material-icons text-accent"> person </span>
-                                            <span>{{ $t('site.Login') }}</span>
-                                        </button>
-                                    </router-link>
-                                </li>
-                                <li class="nav-item">
-                                    <router-link to="/register">
-                                        <button class="btn vt-btn-tit">
-                                            <span class="material-icons text-accent"> group_add </span>
-                                            <span>{{ $t('site.Register to site') }}</span>
-                                        </button>
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-3 preheader-navbar-col d-block d-lg-none">
-                            <ul class="navbar-nav button-type justify-content-end">
-                                <li class="nav-item">
-                                    <button class="btn vt-btn-tit" id="mobileMenuCaller">
-                                        <span class="material-icons text-accent"> menu </span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-6 preheader-navbar-col d-none d-lg-block">
-                            <ul class="navbar-nav justify-content-end">
-                                <li class="nav-item">
-                                    <button class="btn vt-btn-transparent-invert">تبلیغات</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="btn vt-btn-transparent-invert">
-                                        اخبار زنده
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="btn vt-btn-transparent-invert">
-                                        ارتباط با ما
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="btn vt-btn-transparent-invert">
-                                        درباره ما
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav> -->
                 <section class="header">
-                   
                     <section class="header-main">
                         <div class="header-main-actions">
                             <router-link to="/advertising-order" :title="$t('site.Advertising order')">
