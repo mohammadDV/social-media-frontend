@@ -141,27 +141,27 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
                                     <div v-for="(post, index) in posts" :key="index">
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
-                                        <div class="flex-none">
-                                            <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
-                                        </div>
-                                        <div class="flex-grow p-2">
-                                            <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
-                                                <h3 class="h-[20px] text-blue-400 overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
-                                                <p class="text-xs text-gray-700 h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
-                                            </router-link>
-                                            <div id="search-material" class="flex gap-6 justify-between">
-                                                <div class="flex gap-2">
-                                                <div class="view text-gray-400 text-xs">
-                                                    <span class="material-icons text-sm">visibility</span>
-                                                    {{ post.view }}
-                                                </div>
-                                                </div>
-                                                <div class="time text-gray-400 text-xs">
-                                                <span class="material-icons text-sm">schedule</span>
-                                                {{ jalaliMoment(post.created_at).format('dddd jD jMMMM') }}</div>
+                                            <div class="flex-none">
+                                                <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
                                             </div>
-                                        </div>
-                                    </div>  
+                                            <div class="flex-grow p-2">
+                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                    <h3 class="h-[20px] text-blue-400 overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
+                                                    <p class="text-xs text-gray-700 h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
+                                                </router-link>
+                                                <div id="search-material" class="flex gap-6 justify-between">
+                                                    <div class="flex gap-2">
+                                                    <div class="view text-gray-400 text-xs">
+                                                        <span class="material-icons text-sm">visibility</span>
+                                                        {{ post.view }}
+                                                    </div>
+                                                    </div>
+                                                    <div class="time text-gray-400 text-xs">
+                                                    <span class="material-icons text-sm">schedule</span>
+                                                    {{ jalaliMoment(post.created_at).format('dddd jD jMMMM') }}</div>
+                                                </div>
+                                            </div>
+                                        </div>  
                                     </div>
                                 </div>
                             </div>

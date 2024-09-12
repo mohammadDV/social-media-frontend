@@ -6682,7 +6682,7 @@ section.header .subheader-navbar .navbar-nav:first-child {
 .card.vt-news-card .card-body .card-body-inner {
   max-height: 38rem;
   overflow-y: auto;
-  padding: 0 0 0 0.5rem;
+  /* padding: 0 0 0 0.5rem; */
   /* width */
   /* Track */
   /* Handle */

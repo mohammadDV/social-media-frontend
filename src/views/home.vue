@@ -11,6 +11,7 @@
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import { useI18n } from "vue-i18n";  
 
+  import jalaliMoment from 'moment-jalaali';
   import { useHead } from '@unhead/vue';
 
   const { t } = useI18n();  
@@ -214,7 +215,7 @@
                         <img
                             src="/site/images/sport-mid.png"
                             alt="sport"
-                            class="img-fluid"
+                            class="img-fluid m-auto"
                         />
                     </div>
                 </div>
@@ -230,20 +231,31 @@
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
-                            <div class="card-body-inner">
+                            <div class="card-body-inner pb-3">
                                 <div v-if="posts[5]?.length > 0" class="row gy-3 news-item-row">
                                     <div class="col-12 col-lg-6" v-for="(post, index) in posts[5]" :key="index">
-                                        <div class="news-row-item">
-                                            <div class="row gx-2">
-                                                <div class="col-4">
-                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(${post['image']})`"></div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <p class="news-row-item-title">{{ post.title }}</p>
-                                                    <router-link class="text-decoration-none"  :to="`news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
+                                        <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
+                                            <div class="flex-none">
+                                                <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                                            </div>
+                                            <div class="flex-grow p-2">
+                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                    <h3 class="h-[20px] overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
+                                                    <p class="text-xs text-gray-700 h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
+                                                </router-link>
+                                                <div id="search-material" class="flex gap-6 justify-between">
+                                                    <div class="flex gap-2">
+                                                    <div class="view text-gray-400 text-xs">
+                                                        <span class="material-icons text-sm">visibility</span>
+                                                        {{ post.view }}
+                                                    </div>
+                                                    </div>
+                                                    <div class="time text-gray-400 text-xs">
+                                                    <span class="material-icons">schedule</span>
+                                                    {{ jalaliMoment(post.created_at).format('dddd jD jMMMM') }}</div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>  
                                     </div>
                                 </div>
                             </div>
@@ -257,20 +269,31 @@
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
-                            <div class="card-body-inner">
+                            <div class="card-body-inner pb-3">
                                 <div v-if="posts[6]?.length > 0" class="row gy-3 news-item-row">
                                     <div class="col-12 col-lg-6" v-for="(post, index) in posts[6]" :key="index">
-                                        <div class="news-row-item">
-                                            <div class="row gx-2">
-                                                <div class="col-4">
-                                                    <div class="news-row-item-thumb ratio ratio-1x1" :style="`background-image: url(${post['image']})`"></div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <p class="news-row-item-title">{{ post.title }}</p>
-                                                    <router-link class="text-decoration-none" :to="`news/${post.id}/${post.slug}`">{{ post.pre_title }}</router-link>
+                                        <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
+                                            <div class="flex-none">
+                                                <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                                            </div>
+                                            <div class="flex-grow p-2">
+                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                    <h3 class="h-[20px] overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
+                                                    <p class="text-xs text-gray-700 h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
+                                                </router-link>
+                                                <div id="search-material" class="flex gap-6 justify-between">
+                                                    <div class="flex gap-2">
+                                                    <div class="view text-gray-400 text-xs">
+                                                        <span class="material-icons text-sm">visibility</span>
+                                                        {{ post.view }}
+                                                    </div>
+                                                    </div>
+                                                    <div class="time text-gray-400 text-xs">
+                                                    <span class="material-icons">schedule</span>
+                                                    {{ jalaliMoment(post.created_at).format('dddd jD jMMMM') }}</div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>  
                                     </div>
                                 </div>
                             </div>
@@ -297,3 +320,10 @@
         </div>
   </template>
   
+
+<style>
+#search-material .material-icons {
+    font-size: 18px !important;
+}
+
+</style>

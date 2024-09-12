@@ -286,13 +286,41 @@
 
 <style>
 
-#body-content h1 {
+#body-content h5 {
+    font-size: 1.10rem;
+    line-height: 1.75rem;
+}
+
+#body-content h4 {
+    font-size: 1.15rem;
+    line-height: 1.75rem;
+}
+
+#body-content h3 {
+    font-size: 1.20rem;
+    line-height: 1.75rem;
+}
+
+#body-content h2 {
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
+
+#body-content h1 {
+    font-size: 1.50rem;
+    line-height: 1.75rem;
+}
+
 #body-content p {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+#body-content p {
+    font-size: 1.08rem;
     line-height: 1.8;
 }
+
 blockquote {
     background: #eeeeeea6;
     padding: 10px 15px;
