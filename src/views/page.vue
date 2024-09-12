@@ -92,21 +92,9 @@
                 <div class="col-12 col-lg-7 flex-grow-1">
                     <div class="card vt-news-card breadcrumb-card mb-3">
                         <div class="card-body">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <router-link :to="`/page/${page?.slug}`" :title="page?.title">
-                                            {{ page?.title }}
-                                        </router-link>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        {{ $t('site.You are here') }}
-                                    </li>
-                                </ol>
-                            </nav>
+                            <h1 class="h4 text-primary">
+                                {{ page?.title }}
+                            </h1>
                         </div>
                     </div>
                     <div class="card vt-news-card mb-3" :key="route.params.slug">
@@ -118,9 +106,6 @@
                                     </div>
                                 </div>
                                 <div class="post--body">
-                                    <div class="post--lead">
-                                        <span>{{ page.title }}</span>
-                                    </div>
                                     <div v-html="page.content"></div>
                                 </div>
                             </div>

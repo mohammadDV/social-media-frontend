@@ -140,7 +140,7 @@
                                 </div> -->
                                 <div class="post--body">
                                     <div class="post--lead">
-                                        <span>{{ $t('site.Advertising order') }}</span>
+                                        <h4>{{ $t('site.Advertising order') }}</h4>
                                     </div>
                                     <div class="bg-gray-100 p-5 border mx-5 my-5 rounded">
                                         <form @submit.prevent="send">
