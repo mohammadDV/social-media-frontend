@@ -132,7 +132,7 @@
                     </div> -->
                     <div class="card vt-news-card archive-card">
                         <div class="card-header header-alt">
-                            <p class="h4 text-primary">{{ category?.title }}</p>
+                            <h1 class="h4 text-primary">{{ category?.title }}</h1>
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
@@ -142,7 +142,9 @@
                                     <div v-for="(post, index) in posts" :key="index">
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
-                                                <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                    <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                                                </router-link>
                                             </div>
                                             <div class="flex-grow p-2">
                                                 <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
@@ -165,7 +167,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="more" class="col-12 px-5 mt-2">
+                            <div v-if="more" class="col-12 px-2 mt-2">
                                 <button type="button" @click="addMore" class="w-full btn vt-btn-white">
                                     {{ $t('site.More post')}}
                                 </button>

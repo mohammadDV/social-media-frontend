@@ -23,6 +23,17 @@
         }        
     ]
     );
+
+
+    const isOpen = ref(false);
+
+    const toggleMenu = () => {
+        isOpen.value = !isOpen.value;
+    }
+
+    const closeMenu = () => {
+        isOpen.value = false;
+    }
   
     const authStore = useAuthStore();
     const notifications = ref([]);
@@ -38,12 +49,17 @@
     }
 
     const autoInterval = ref([]);
+    const menu = ref([]);
 
     onMounted(() => {
         getRpc();
-        autoInterval.value = setInterval(function() {
+            autoInterval.value = setInterval(function() {
             getRpc();
         }, 10000);
+
+        setTimeout(() => {
+            menu.value = authStore.menu.filter(item => !item.permission || authStore.permissions.includes(item.permission));
+        }, 500);
     });
 
     onUnmounted(() => {
@@ -65,7 +81,31 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <button @click="toggleMenu" class="btn focus:outline-none vt-btn-tit mx-2" id="mobileMenuCaller">
+                        <span class="material-icons text-accent"> menu </span>
+                    </button>
+
+                    <div v-if="isOpen" class="fixed top-0 left-0 w-full h-screen bg-gray-800 z-10">
+                        <button @click="closeMenu" class="md:hidden float-right p-3 focus:outline-none">
+                            <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 transform rotate-45 translate-y-2"></span>
+                            <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 opacity-0"></span>
+                            <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 transform -rotate-45 -translate-y-2"></span>
+                        </button>
+                        <ul class="flex flex-col items-center justify-center h-full space-y-6">
+                            <li>
+                                <router-link class="text-white text-xl text-decoration-none" @click="toggleMenu" :title="$t('site.Main page')" to="/">{{ $t('site.Main page') }}</router-link>
+                            </li>
+                            <li v-if="authStore.isAuthenticated">
+                                <router-link class="text-white text-xl text-decoration-none" @click="toggleMenu" :title="$t('site.Profile')" to="/profile">{{ $t('site.Profile') }}</router-link>
+                            </li>
+                            <template v-if="authStore.isAuthenticated">
+                                <li v-for="(item, index) in menu" :key="index">
+                                    <router-link  class="text-white text-xl text-decoration-none" @click="toggleMenu" :title="$t(item.name)" :to="item.route" >{{ $t(item.name) }}</router-link>                            
+                                </li>
+                            </template>                            
+                        </ul>
+                    </div>
+                    <div class="hidden md:flex navbar-collapse justify-content-end" id="navbarSupportedContent">
                         <div>
                             <ul class="navbar-nav items-center">
                                 <li class="relative nav-item dropdown">

@@ -134,7 +134,7 @@ const $toast = useToast();
 </script>
 
 <template>
-    <div class="col-12 col-md-7 col-lg-9 order-1 order-md-2 mb-4 mb-md-0">
+    <div class="col-12 col-md-12 col-lg-9 order-1 order-md-2 mb-4 mb-md-0">
         <div class="card vt-news-card breadcrumb-card mb-3">
             <div class="card-body">
                 <nav aria-label="breadcrumb">
@@ -152,7 +152,7 @@ const $toast = useToast();
             </div>
         </div>
         <div>
-            <div class='grid grid-cols-4 gap-4 my-3'>
+            <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-3'>
                 <div v-for="(myClub, index) in myClubs" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
                     <img class='w-[150px] h-[150px]' :src='myClub.image'/>
@@ -211,7 +211,7 @@ const $toast = useToast();
         </div>
 
         <div>
-            <div class='grid grid-cols-4 gap-4 my-3'>
+            <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-3'>
                 <div v-for="(club, index) in items" :key="index" class='card'>
                     <div class='card-body is-listItem items-center'>
                     <img :class="{

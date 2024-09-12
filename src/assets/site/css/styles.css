@@ -708,6 +708,10 @@ progress {
   color: #343642;
 }
 
+#mobileMenuCaller {
+  display: inline-block;
+}
+
 .container,
 .container-fluid,
 .container-xxl,
@@ -725,6 +729,11 @@ progress {
 @media (min-width: 576px) {
   .container-sm, .container {
     max-width: 540px;
+  }
+}
+@media (max-width: 768px) {
+  #mobileMenuCaller {
+    display: block;
   }
 }
 @media (min-width: 768px) {
@@ -4247,7 +4256,7 @@ textarea.form-control-lg {
   overflow: visible;
 }
 .navbar-expand .navbar-collapse {
-  display: flex !important;
+  /* display: flex !important; */
   flex-basis: auto;
 }
 .navbar-expand .navbar-toggler {
