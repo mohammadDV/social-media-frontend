@@ -31,16 +31,7 @@
   const authStore = useAuthStore();
   const categories = ref([]);
   const pages = ref([]);
-//   const dropdown = ref(false);
-
-
-//   const toggleDropdown = () => {
-//     dropdown.value = !dropdown.value
-//   }
-
-//   const logout = () => {
-//     authStore.logout();
-//   };
+  const isMainPage = ref(true);
 
 const search = ref('');
 const isOpen = ref(false);
@@ -64,6 +55,20 @@ const getActivePages = () => {
         .then((response) => {
             pages.value = response.data;
         })
+}
+
+const isActiveRoute = (id, title) => {
+
+    if (route.params.id === String(id) && route.params.title === title) {
+        isMainPage.value = false;
+        return true;
+    }
+
+    if (!isMainPage.value && !route.params.id && !route.params.title) {
+        isMainPage.value = true;
+    }
+
+    return false;
 }
   
 onMounted(() => {
@@ -169,14 +174,14 @@ onMounted(() => {
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <router-link to="/" title="$t('site.Main page')">
-                                        <button class="btn vt-btn-transparent-invert active" title="$t('site.Main page')">
+                                        <button class="btn vt-btn-transparent-invert" :class="isMainPage ? 'active' : ''" title="$t('site.Main page')">
                                             {{ $t('site.Main page') }}
                                         </button>
                                     </router-link>
                                 </li>
                                 <li class="nav-item" v-for="(category,index) in categories" :key="index">
                                     <router-link :to="`/category/${category.id}/${category.slug}`" :title="category.title">
-                                        <button class="btn vt-btn-transparent-invert">
+                                        <button class="btn vt-btn-transparent-invert" :class="isActiveRoute(category.id, category.slug) ? 'active' : ''">
                                             {{ category.title }}
                                         </button>
                                     </router-link>

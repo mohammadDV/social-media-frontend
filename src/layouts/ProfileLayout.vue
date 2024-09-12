@@ -58,7 +58,7 @@ import RightSideComponent from "@/components/profile/include/RightSideComponent.
       <header-component/>
       <div class="container-xxl py-3">
           <div class="row">
-              <div class="col-4 col-xl-3 d-none d-lg-block">
+              <div class="col-md-5 col-lg-3 d-none d-lg-block">
                 <ProfileTicketComponent 
                   :followersCount="followersCount"
                   :followingsCount="followingsCount"

@@ -116,7 +116,7 @@ const initialFormState = {
 </script>
 
 <template>
-    <div class="col-12 col-md-7 col-lg-9 order-1 order-md-2 mb-4 mb-md-0">
+    <div class="col-12 col-md-12 col-lg-9 order-1 order-md-2 mb-4 mb-md-0">
         <div class="card vt-news-card breadcrumb-card mb-3">
             <div class="card-body">
                 <nav aria-label="breadcrumb">
