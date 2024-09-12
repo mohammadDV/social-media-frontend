@@ -709,7 +709,7 @@ progress {
 }
 
 #mobileMenuCaller {
-  display: inline-block;
+  display: none;
 }
 
 .container,
@@ -733,7 +733,7 @@ progress {
 }
 @media (max-width: 768px) {
   #mobileMenuCaller {
-    display: block;
+    display: inline-block;
   }
 }
 @media (min-width: 768px) {
