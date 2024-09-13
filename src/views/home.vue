@@ -22,6 +22,7 @@
   const popular = ref([]);
   const specialPosts = ref([]);
   const specialVideos = ref([]);
+  const categories = ref([]);
 
   const getAdvertises = () => {
     useApi().get('api/advertise')
@@ -34,6 +35,7 @@
     useApi().get('api/posts')
         .then((response) => {
             posts.value = response?.data?.posts;
+            categories.value = response?.data?.categories;
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;
             popular.value = response?.data?.popular;
@@ -78,13 +80,22 @@
                                 <div class="card vt-news-card height-sm">
                                     <div class="card-header">
                                         <div class="card-header-inner">
-                                            <span class="material-icons text-primary"> movie </span>
-                                            <span class="card-header-title">{{ $t("site.Non-football") }}</span>
+                                            <span class="material-icons text-primary"> category </span>
+                                            <span class="card-header-title">{{ $t("site.Categories") }}</span>
                                         </div>
                                     </div>
-                                    <div v-if="posts[4]?.length > 0" class="card-body">
-                                        <div class="card-body-inner">
-                                            <ul class="news-list">
+                                    <!-- <div v-if="posts[4]?.length > 0" class="card-body"> -->
+                                    <div class="card-body">
+                                        <div class="card-body-inner card-free">
+                                            <div class="grid grid-cols-2 gap-3 p-3">
+                                                <div v-for="(category, index) in categories" :key="index">
+                                                    <router-link :to="`/category/${category.id}/${category.slug}`" class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 bg-vt-dark rounded-md">
+                                                        <span class="material-symbols-outlined bg-[#ff7322] text-white ml-2 rounded-md p-2">*</span>
+                                                        <span class="">{{ category.title }}</span>
+                                                    </router-link>
+                                                </div>
+                                            </div>
+                                            <!-- <ul class="news-list">
                                                 <li v-for="(post, index) in posts[4]" :key="index" class="news-item">
                                                   <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
@@ -93,14 +104,14 @@
                                                         {{ post.title}}
                                                   </router-link>
                                                 </li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card vt-news-card height-sm">
+                                <!-- <div class="card vt-news-card height-sm">
                                     <div class="card-header">
                                         <div class="card-header-inner">
-                                            <span class="material-icons text-primary"> movie </span>
+                                            <span class="material-icons text-primary"> create </span>
                                             <span class="card-header-title">{{ $t('site.Foreign news') }}</span>
                                         </div>
                                     </div>
@@ -118,7 +129,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-12 col-lg-6 item-column">
                                 <div class="card vt-news-card height-sm">
@@ -205,7 +216,7 @@
                             حساس، کری خوانی های ورزشی، تحلیل های پیش و پس از بازی
                         </p>
                         <p class="h1 mb-4">
-                            ثبت و تحلیل رخدادهای ورزشی های ورزشی، شبکه اجتماعی ورزشی
+                            ثبت و تحلیل رخدادهای ورزشی، شبکه اجتماعی ورزشی
                         </p>
                         <router-link to="/profile">
                             <div class="btn vt-btv-primary px-4">{{ $t('site.Please register') }}</div>
@@ -327,5 +338,9 @@
 #search-material .material-icons {
     font-size: 18px !important;
 }
+.card-free {
+    max-height: none !important;
+}
+
 
 </style>

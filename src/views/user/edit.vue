@@ -155,7 +155,7 @@ const router = useRouter();
                 </nav>
                 <div class="place-button">
                     <router-link to="/profile/users" :title="$t('site.User manage')">
-                        <button class="btn btn-primary">{{ $t('site.User management') }}</button>
+                        <!-- <button class="btn btn-primary">{{ $t('site.User management') }}</button> -->
                     </router-link>
                 </div>
             </div>
