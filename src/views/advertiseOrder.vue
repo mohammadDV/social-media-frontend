@@ -18,7 +18,6 @@
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n(); 
   const advertises = ref([]);
-  const posts = ref([]);
   const latest = ref([]);
   const challenged = ref([]);
   const popular = ref([]);
@@ -44,9 +43,8 @@
   }
 
   const getPosts = () => {
-    useApi().get('/api/posts')
+    useApi().get('/api/suggested-posts')
         .then((response) => {
-            posts.value = response?.data?.posts;
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;
             popular.value = response?.data?.popular;

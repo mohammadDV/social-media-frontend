@@ -17,7 +17,6 @@
   const { t } = useI18n();    
   const advertises = ref([]);
   const timestamp = ref('');
-  const posts = ref([]);
   const latest = ref([]);
   const challenged = ref([]);
   const category = ref([]);
@@ -47,7 +46,7 @@
 
   const updateComments = () => {
     page.value = 1;
-    getComments()
+    getComments(1);
   }
 
   const getAdvertises = () => {
@@ -83,9 +82,8 @@
   }
 
   const getPosts = () => {
-    useApi().get('/api/posts')
+    useApi().get('/api/suggested-posts')
         .then((response) => {
-            posts.value = response?.data?.posts;
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;
             popular.value = response?.data?.popular;
@@ -99,7 +97,7 @@
     const more = ref(false);
     const loading = ref(false);
 
-    const getComments = () => {
+    const getComments = (submit = 0) => {
 
         loading.value = true;
          
@@ -107,7 +105,13 @@
             comments.value = [];
         }
 
-         useApi().get(`/api/comment/post/${route?.params?.id}?page=${page.value}`)
+        let url = `/api/comment/post/${route?.params?.id}?page=${page.value}`;
+
+        if (submit == 1) {
+            url = `/api/comment/post/${route?.params?.id}?page=${page.value}&submit=1`;
+        }
+
+         useApi().get(url)
             .then((response) => {
 
                 if (response.data?.data) {
@@ -187,7 +191,7 @@
                                             <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
                                         </span>
                                     </div>
-                                    <div v-if="post?.pre_titl" class="main-info">
+                                    <div class="main-info">
                                         <router-link 
                                                     :to="`/member/${post.user?.id}`"  
                                                     :title="post.user?.nickname"

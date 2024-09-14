@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import router from '@/router';
-
+import { isLoading } from '../stores/loading';
 import { useAuthStore } from "@/stores/auth";
 
 // export interface ApiUrl {
@@ -31,6 +31,24 @@ export function useApi() {
         },
     });
 
+    // Add a request interceptor
+    api.interceptors.request.use((config) => {
+        isLoading.value = true;
+        return config;
+    }, (error) => {
+        isLoading.value = false;
+        return Promise.reject(error);
+    });
+    
+    // Add a response interceptor
+    api.interceptors.response.use((response) => {
+        isLoading.value = false;
+        return response;
+    }, (error) => {
+        isLoading.value = false;
+        return Promise.reject(error);
+    });
+
 
     const errorHandler = (error: any) => {
         let message = null;
@@ -49,62 +67,35 @@ export function useApi() {
             authStore.logout();
         }
         if (error.response?.status === 401) {
-            // if (endpoint.includes("login"))
-            //     message = "شماره همراه و رمز عبور مطابقت ندارند";
-            // else {
-                // message = "لطفا مجددا وارد شوید!";
-                // resetAuth();
-                // setTimeout(() => {
-                //     navigateTo("/admin/auth/login");
-                // }, 100);
-            // }
+            //
         }
 
-
-        // if (error.response?.status === 414) message = null;
-        // if (error.response?.status === 400 && "error" in error.response) {
-        //     message = errorFormat(error.response.error);
-        // }
-        // if (error.response?.status === 500) {
-        //     if (error.response._data.includes("DoesNotExist")) {
-        //         message = "موردی یافت نشد";
-        //     } else {
-        //         message = "مشکلی در برقراری ارتباط رخ داده است";
-        //     }
-        // }
-        // if (
-        //     message &&
-        //     (lastMessage !== message || lastRequestUrl !== error.response?.url)
-        // ) {
-        //     lastMessage = message;
-        //     lastRequestUrl = error.response?.url;
-        //     errorToast(message);
-        // }
         throw error;
 
-        // router.push('/profile');
     }
 
     const get = async (url: any, queryParams = {}) => {
         return await api.get(url, { params: queryParams })
         .catch((err) => {
             errorHandler(err)
-        });
+        })
     }
 
     const post = async (url: any, queryParams = {}) => {
         return await api.post(url, queryParams)
         .catch((err) => {
             errorHandler(err)
-        });
+        })
     }
 
     const deleteRequest = async (url: any, queryParams = {}) => {
-        return await api.delete(url, { params: queryParams });
+        return await api.delete(url, { params: queryParams })
+        
     }
 
     const patch = async (url: any, queryParams = {}) => {
-        return await api.patch(url, queryParams);
+        return await api.patch(url, queryParams)
+        
     }
 
 

@@ -40,8 +40,6 @@
         posts.value = [];
     }
 
-    window.document.title = `${route.params.title} | ${t('site.Website name')}`;
-
     useHead({
         title: `${route.params.title} | ${t('site.Website name')}`,
         meta: [
@@ -68,7 +66,7 @@
   }
 
   const getPosts = () => {
-    useApi().get('/api/posts')
+    useApi().get('/api/suggested-posts')
         .then((response) => {
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;

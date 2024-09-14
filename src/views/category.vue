@@ -62,7 +62,6 @@
             }
             page.value++;
             category.value = response.data.category;
-            // window.document.title =  `${category.value?.title} | ` + t('site.Website name');
 
             useHead({
                 title: `${category.value?.title} | ` + t('site.Website name'),
@@ -81,7 +80,7 @@
   }
 
   const getPosts = () => {
-    useApi().get('/api/posts')
+    useApi().get('/api/suggested-posts')
         .then((response) => {
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;

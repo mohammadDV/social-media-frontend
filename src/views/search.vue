@@ -52,12 +52,11 @@
                 more.value = false;
             }
             page.value++;
-            // category.value = response.data.category;
         });
   }
 
   const getPosts = () => {
-    useApi().get('/api/posts')
+    useApi().get('/api/suggested-posts')
         .then((response) => {
             latest.value = response?.data?.latest;
             challenged.value = response?.data?.challenged;
