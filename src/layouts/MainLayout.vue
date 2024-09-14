@@ -1,6 +1,7 @@
 
 <template>
     <div>
+        <GlobalLoading />
         <header-component/>
         <router-view></router-view>
         <footer-component />
@@ -10,6 +11,7 @@
 <script setup>
 
 import { computed, watch } from 'vue'
+import GlobalLoading from '@/components/plugins/GlobalLoading.vue'
 import HeaderComponent from '@/components/site/include/HeaderComponent'
 import FooterComponent from '@/components/site/include/FooterComponent'
 import { useRoute } from 'vue-router';
@@ -18,10 +20,7 @@ import { useI18n } from "vue-i18n";
 import { useHead } from '@unhead/vue'
 
 const route = useRoute();
-    
-
 const { t } = useI18n(); 
-    // const router = useRouter();
 
 useHead({
     meta: [
