@@ -179,9 +179,9 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-3 flex-grow-1">
-                        <div class="mb-75">
-                            <FullSliderComponent :hasDate="true" :slides="posts[7]"></FullSliderComponent>
-                        </div>
+                        <!-- <div class="mb-75"> -->
+                            <!-- <FullSliderComponent :hasDate="true" :slides="posts[7]"></FullSliderComponent> -->
+                        <!-- </div> -->
 
                         <LatestNewsComponent 
                             :latest="latest"
