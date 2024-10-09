@@ -6689,7 +6689,7 @@ section.header .subheader-navbar .navbar-nav:first-child {
   padding: 0.25rem 0.15rem;
 }
 .card.vt-news-card .card-body .card-body-inner {
-  max-height: 38rem;
+  max-height: 46.5rem;
   overflow-y: auto;
   /* padding: 0 0 0 0.5rem; */
   /* width */
@@ -6739,7 +6739,7 @@ section.header .subheader-navbar .navbar-nav:first-child {
   color: var(--text-primary);
 }
 .card.vt-news-card.height-sm .card-body-inner {
-  max-height: 28rem;
+  max-height: 13.5rem;
 }
 .card.vt-news-card.height-md .card-body-inner {
   max-height: 38rem;
@@ -7063,7 +7063,7 @@ html[dir=rtl] .news-item .material-icons {
 }
 .news-slider-item .news-slider--text-container .news-slider--title {
   margin-bottom: 0.6em;
-  line-height: 1.4em;
+  line-height: 1.3em;
 }
 .news-slider-item .news-slider--text-container .news-slider--subtitle {
   margin-bottom: 0.5em;

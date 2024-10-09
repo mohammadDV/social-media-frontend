@@ -91,7 +91,7 @@
                             <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 opacity-0"></span>
                             <span v-if="isOpen" class="block w-8 h-1 bg-white my-1 transform -rotate-45 -translate-y-2"></span>
                         </button>
-                        <ul class="flex flex-col items-center justify-center h-full space-y-6">
+                        <ul class="flex flex-col items-center justify-center h-full space-y-6 overflow-auto">
                             <li>
                                 <router-link class="text-white text-xl text-decoration-none" @click="toggleMenu" :title="$t('site.Main page')" to="/">{{ $t('site.Main page') }}</router-link>
                             </li>
