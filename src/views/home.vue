@@ -182,10 +182,10 @@
                                             <span class="card-header-title">{{ $t('site.Foreign news') }}</span>
                                         </div>
                                     </div>
-                                    <div v-if="posts[2]?.length > 0" class="card-body">
+                                    <div v-if="posts[3]?.length > 0" class="card-body">
                                         <div class="card-body-inner">
                                             <ul class="news-list">
-                                              <li v-for="(post, index) in posts[2]" :key="index" class="news-item">
+                                              <li v-for="(post, index) in posts[3]" :key="index" class="news-item">
                                                   <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
