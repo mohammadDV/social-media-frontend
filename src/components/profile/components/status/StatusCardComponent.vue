@@ -367,6 +367,20 @@ const resetForm = () => {
     </div>
     <VTModal v-if="isModalVisible" v-model="isModalVisible" :title="$t('site.Please share your post')">
         <div class="w-[300px] sm:w-[600px]">
+            <div class="alert alert-danger">
+                کاربر گرامی،
+                <br>
+                از شما درخواست می‌کنیم که از ارسال هرگونه محتوای نامناسب، ناهنجار یا سیاسی خودداری نمایید. تمام محتواها بررسی می‌شوند و در صورت عدم تطابق با قوانین، ابتدا تذکر داده شده و در صورت ادامه، مطابق با <span class="text-gray-500">
+                    <a
+                        class="text-intellivy-600"
+                        href="/page/privacy-policy"
+                        target="_blank"
+                        >مقررات پلتفرم</a
+                    >
+                </span> اقدام خواهد شد.
+                <br>
+                با تشکر از همکاری شما!
+            </div>
             <div class="mb-3">
                 <VTTextArea
                     name="text"

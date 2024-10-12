@@ -9,7 +9,7 @@ import { useToast } from "vue-toast-notification";
 import { useI18n } from "vue-i18n";   
 import {useApi} from '@/utils/api.ts';     
 import  {useReCaptcha} from 'vue-recaptcha-v3'
-import SocialLoginComponent from '../../components/site/SocialLoginComponent.vue'
+// import SocialLoginComponent from '../../components/site/SocialLoginComponent.vue'
 
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const { t } = useI18n();    
@@ -116,6 +116,12 @@ const register = async function() {
                                 v-model="data.email"
                                 :placeholder="$t('site.Email')"/>
                             <VTInput
+                                requestName="RegisterRequest"
+                                :is-vt="true"
+                                name="mobile"
+                                v-model="data.mobile"
+                                :placeholder="'09...'"/>
+                            <VTInput
                                 inputType="password"
                                 requestName="RegisterRequest"
                                 :is-vt="true"
@@ -127,10 +133,33 @@ const register = async function() {
                                     v-model="checkboxResponse"
                                     v-model:widget-id="checkboxWidgetID"
                                 /> -->
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <input
+                                            id="privacy_policy"
+                                            v-model="data.privacy_policy"
+                                            class="h-4 w-4 rounded border-gray-300 mx-2"
+                                            name="privacy_policy"
+                                            type="checkbox"
+                                        />
+                                        <label class="ml-2 block text-sm text-gray-900" for="privacy_policy">
+                                            من با
+                                            <span class="text-gray-500">
+                                                <a
+                                                    class="text-intellivy-600"
+                                                    href="/page/privacy-policy"
+                                                    target="_blank"
+                                                    >قوانین و مقررات</a
+                                                >
+                                            </span>
+                                            سایت موافقم
+                                        </label>
+                                    </div>
+                                </div>
                             <VTButton class="mt-4 w-100" color="dark" size="medium" type="submit">
                                 {{ $t('site.Register') }}
                             </VTButton>
-                            <div >
+                            <!-- <div >
                                 <div class="h-4 mt-4 relative">
                                     <div class="flex items-center justify-center">
                                         <div class="text-gray-700 bg-white text-md font-bold px-2 z-10">
@@ -140,11 +169,11 @@ const register = async function() {
                                     <div
                                         class="absolute left-0 top-3 w-full border-b border-gray-300"
                                     ></div>
-                                </div>
-                                <div class="mt-3 text-center">
+                                </div> -->
+                                <!-- <div class="mt-3 text-center">
                                     <SocialLoginComponent />
-                                </div>
-                            </div>
+                                </div> -->
+                            <!-- </div> -->
                         <div>
                             <h2 class="mt-2 text-sm text-gray-400">
                                 در صورتیکه قبلا در سایت ثبت نام کرده اید 

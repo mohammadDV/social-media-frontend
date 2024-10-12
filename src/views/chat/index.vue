@@ -76,6 +76,7 @@ const initialFormState = {
  const chat = ref([]);
  const items = ref([]);
  const more = ref(false);
+ const showAlert = ref(false);
  const page = ref(1);
  const chatId = ref(0);
  const searchQuery = ref('');
@@ -108,6 +109,11 @@ const initialFormState = {
                 
                 page.value++;
             }
+        })
+        .finally (() => {
+          if (page.value == 2 && items.value.length < 1) {
+            showAlert.value = true;
+          }
         })
     };
 
@@ -305,8 +311,14 @@ const initialFormState = {
 
         <div class="row">
             <div class="col-12 col-md-7 col-lg-8 order-2 order-md-2">
+              
+              <div v-show="showAlert" class="alert alert-info">
+                کاربر گرامی،
+                <br>
+                شما میتوانید از طریق مراجعه به پروفایل افراد برای آنها پیام شما می‌توانید از طریق مراجعه به پروفایل افراد، برای آن‌ها پیام خصوصی ارسال کنید و برای ادامه‌ی مکالمه به این صفحه بازگردید. (از نوار جستجوی بالا می‌توانید فرد مورد نظر خود را پیدا کنید.)
+            </div>
               <div class="flex gap-3 p-2 mb-3 rounded-t bg-white" v-if="chat?.user_id == authStore.user?.id || chat?.target_id == authStore.user?.id">
-                  <div class="">
+                  <div>
                      
                     <router-link class="text-black text-decoration-none" :to="chat.target_id == authStore?.user?.id ? `/member/${chat?.user?.id}` : `/member/${chat?.target?.id}`">
                       <img class="w-[50px] h-[50px] rounded-full"

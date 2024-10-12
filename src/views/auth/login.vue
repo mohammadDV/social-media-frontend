@@ -9,7 +9,7 @@
   import { useI18n } from "vue-i18n"; 
   import {useApi} from '@/utils/api.ts'; 
   import  {useReCaptcha} from 'vue-recaptcha-v3'
-  import SocialLoginComponent from '../../components/site/SocialLoginComponent.vue'
+//   import SocialLoginComponent from '../../components/site/SocialLoginComponent.vue'
 
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
   const { t } = useI18n();  
@@ -105,7 +105,7 @@
                             <VTButton class="mt-4 w-100" color="dark" size="medium" type="submit">
                                 {{ $t('site.Login') }}
                             </VTButton>
-                            <div >
+                            <!-- <div >
                                 <div class="h-4 mt-4 relative">
                                     <div class="flex items-center justify-center">
                                         <div class="text-gray-700 bg-white text-md font-bold px-2 z-10">
@@ -115,11 +115,11 @@
                                     <div
                                         class="absolute left-0 top-3 w-full border-b border-gray-300"
                                     ></div>
-                                </div>
-                                <div class="mt-3 text-center">
+                                </div> -->
+                                <!-- <div class="mt-3 text-center">
                                     <SocialLoginComponent />
-                                </div>
-                            </div>
+                                </div> -->
+                            <!-- </div> -->
                         <div>
                             <h2 class="mt-2 text-sm text-gray-400">
                                 در ورزش تامیز حساب ندارم!
