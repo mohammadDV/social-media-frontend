@@ -105,7 +105,7 @@ onMounted(() => {
                             </button>
                         </router-link>
                     </div>
-                    <div class="nav-item mx-[10px] my-[6px]">
+                    <div class="nav-item my-[6px]">
                         <router-link to="/register" class="text-white ">
                             <button class="vt-btn-tit main-gradient rounded-[5px] py-[5px] px-[10px] hover:text-[#ff7322] ">
                                 <span class="material-icons text-accent ml-1"> group_add </span>

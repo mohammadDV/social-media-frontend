@@ -12,7 +12,8 @@ import jalaliMoment from 'moment-jalaali';
     const closeBox = ref('');
     const showDropdown = ref(false);
     const posts = ref([]);
-    const tags = ref([])
+    const tags = ref([]);
+    const categories = ref([]);
 
     const handleInput = () => {
       showDropdown.value = searchQuery.value.length >= 2;
@@ -42,6 +43,7 @@ const goToPost = (url) => {
       .then((response) => {
         posts.value = response.data.posts;
         tags.value = response.data.tags;
+        categories.value = response.data.categories;
       });
 }
 
@@ -90,11 +92,22 @@ const goToPost = (url) => {
         </div>
       </div>
       <div class="flex gap-2 my-3">
+        تگ ها :
         <div class="cursor-pointer" v-for="(tag, index) in tags" :key="index">
           <div class="flex justify-start items-center w-full">
             <a @click="goToPost(`/tag/${tag.id}/${tag.title}`)" class="no-underline cursor-pointer text-sm rounded px-2 py-1 text-blue-500 bg-blue-100 border-0 hover:text-white hover:bg-blue-500 hover:border-blue-500">
               <span class="material-icons  "> tag </span>
               <span class="tag-name">{{tag.title}}</span>
+            </a>    
+          </div>
+        </div>    
+      </div>
+      <div class="flex gap-2 my-3">
+        دسته بندی ها :
+        <div class="cursor-pointer" v-for="(category, index) in categories" :key="index">
+          <div class="flex justify-start items-center w-full">
+            <a @click="goToPost(`/category/${category.id}/${category.slug}`)" class="no-underline cursor-pointer text-sm rounded px-2 py-1 text-blue-500 bg-blue-100 border-0 hover:text-white hover:bg-blue-500 hover:border-blue-500">
+              <span class="tag-name">{{category.title}}</span>
             </a>    
           </div>
         </div>    
