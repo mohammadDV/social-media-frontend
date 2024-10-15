@@ -49,7 +49,7 @@ if (authStore.isAuthenticated) {
 const test = () => {
     console.log("asxaxasx");
     // Intercom('startTour', 566396);
-    window?.Intercom?.("startTour", 566396);
+    window?.Intercom?.("startTour", 43125604);
     console.log("asxaxasx123");
 }
 
