@@ -37,21 +37,27 @@
   const pages = ref([]);
   const isMainPage = ref(true);
 
-  if (authStore.isAuthenticated) {
+if (authStore.isAuthenticated) {
     Intercom({
-        app_id: "xluw35fe",
+        app_id: 'xluw35fe',
         user_id: authStore.user.id, // IMPORTANT: Replace "user.id" with the variable you use to capture the user's ID
-        user_hash: authStore.user.intercom, // IMPORTANT: Replace this with the HMAC code you generated on your server
+        name: authStore.user.nickname, // IMPORTANT: Replace "user.name" with the variable you use to capture the user's name
+        email: authStore.user.email, // IMPORTANT: Replace "user.email" with the variable you use to capture the user's email
     });
 }
+
+const test = () => {
+    console.log("asxaxasx");
+    // Intercom('startTour', 566396);
+    window?.Intercom?.("startTour", 566396);
+    console.log("asxaxasx123");
+}
+
 
 const search = ref('');
 const isOpen = ref(false);
 
 const toggleMenu = () => {
-    console.log("asxaxasx");
-    window?.Intercom?.("startTour", 566396);
-    console.log("asxaxasx123");
     isOpen.value = !isOpen.value;
 }
 
@@ -99,6 +105,7 @@ onMounted(() => {
 <template>
     <div class="relative w-full flex h-[80px] bg-vt-gradient mb-[130px]">
         <div class="flex-start">
+            <div @click="test">test</div>
             <template v-if="authStore.isAuthenticated">
                 <div class="py-[7px] px-3">
                     <Dropdown
