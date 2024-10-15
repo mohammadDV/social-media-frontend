@@ -49,6 +49,9 @@ const search = ref('');
 const isOpen = ref(false);
 
 const toggleMenu = () => {
+    console.log("asxaxasx");
+    window?.Intercom?.("startTour", 566396);
+    console.log("asxaxasx123");
     isOpen.value = !isOpen.value;
 }
 
