@@ -12,7 +12,7 @@
 
   import { useI18n } from "vue-i18n";
 
-  import {Intercom, startTour } from '@intercom/messenger-js-sdk';
+  import {Intercom } from '@intercom/messenger-js-sdk';
 
   
 
@@ -49,7 +49,7 @@ if (authStore.isAuthenticated) {
 const test = () => {
     console.log("asxaxasx");
     // Intercom('startTour', 566396);
-    startTour(566396);
+    // startTour(566396);
     // window?.Intercom?.("startTour", 43125604);
     console.log("asxaxasx123");
 }
