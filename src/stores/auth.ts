@@ -6,6 +6,7 @@ interface User {
   id: Number,
   fullname: String,
   nickName: String,
+  intercom: String,
   biography: String,
   profile_photo_path: String,
   bg_photo_path: String,
@@ -167,6 +168,7 @@ export const useAuthStore = defineStore('auth',{
         id: 0,
         fullname: '',
         nickName: '',
+        intercom: '',
         biography: '',
         profile_photo_path: '',
         bg_photo_path: '',
@@ -190,6 +192,7 @@ export const useAuthStore = defineStore('auth',{
           id: 0,
           fullname: '',
           nickName: '',
+          intercom: '',
           biography: '',
           profile_photo_path: '',
           bg_photo_path: '',
@@ -224,6 +227,7 @@ export const useAuthStore = defineStore('auth',{
             this.roles = response.data?.roles;
             this.user.is_admin = response.data?.is_admin;
             this.user.is_private = response.data?.is_private;
+            this.user.intercom = response.data?.intercom;
             this.permissions = response.data?.permissions || [];
           }
 
