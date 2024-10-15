@@ -12,7 +12,7 @@
 
   import { useI18n } from "vue-i18n";
 
-  import {Intercom } from '@intercom/messenger-js-sdk';
+  import Intercom  from '@intercom/messenger-js-sdk';
 
   
 
