@@ -37,12 +37,11 @@
   const pages = ref([]);
   const isMainPage = ref(true);
 
-if (authStore.isAuthenticated) {
+  if (authStore.isAuthenticated) {
     Intercom({
-        app_id: 'xluw35fe',
+        app_id: "xluw35fe",
         user_id: authStore.user.id, // IMPORTANT: Replace "user.id" with the variable you use to capture the user's ID
-        name: authStore.user.nickname, // IMPORTANT: Replace "user.name" with the variable you use to capture the user's name
-        email: authStore.user.email, // IMPORTANT: Replace "user.email" with the variable you use to capture the user's email
+        user_hash: authStore.user.intercom, // IMPORTANT: Replace this with the HMAC code you generated on your server
     });
 }
 
