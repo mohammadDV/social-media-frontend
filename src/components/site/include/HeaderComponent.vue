@@ -105,7 +105,7 @@ onMounted(() => {
 <template>
     <div class="relative w-full flex h-[80px] bg-vt-gradient mb-[130px]">
         <div class="flex-start">
-            <div @click="test123">test</div>
+            <div @click="test123" style="display: none;">test</div>
             <template v-if="authStore.isAuthenticated">
                 <div class="py-[7px] px-3">
                     <Dropdown
