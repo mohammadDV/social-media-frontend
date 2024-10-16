@@ -13,6 +13,7 @@
   import { useI18n } from "vue-i18n";
 
   import Intercom from '@intercom/messenger-js-sdk';
+  import { startTour } from "@intercom/messenger-js-sdk";
 
   
 
@@ -43,6 +44,14 @@ if (authStore.isAuthenticated) {
         user_id: authStore.user.id, // IMPORTANT: Replace "user.id" with the variable you use to capture the user's ID
         user_hash: authStore.user.intercom, // IMPORTANT: Replace this with the HMAC code you generated on your server
     });
+}
+
+const test123 = () => {
+    console.log("asxaxasx");
+    // Intercom('startTour', 566396);
+    startTour(566396);
+    // window?.Intercom?.("startTour", 43125604);
+    console.log("asxaxasx123");
 }
 
 const search = ref('');
@@ -96,6 +105,7 @@ onMounted(() => {
 <template>
     <div class="relative w-full flex h-[80px] bg-vt-gradient mb-[130px]">
         <div class="flex-start">
+            <div @click="test123">test</div>
             <template v-if="authStore.isAuthenticated">
                 <div class="py-[7px] px-3">
                     <Dropdown
