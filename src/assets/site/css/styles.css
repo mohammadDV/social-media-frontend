@@ -6742,10 +6742,10 @@ section.header .subheader-navbar .navbar-nav:first-child {
   max-height: 13.5rem;
 }
 .card.vt-news-card.height-md .card-body-inner {
-  max-height: 38rem;
+  max-height: 44.5rem;
 }
 .card.vt-news-card.height-lg .card-body-inner {
-  max-height: 38rem;
+  max-height: 44.5rem;
 }
 .card.vt-news-card.height-fluid {
   flex-grow: 1;
@@ -6754,7 +6754,7 @@ section.header .subheader-navbar .navbar-nav:first-child {
   flex: 1 0 100%;
 }
 .card.vt-news-card.height-md.with-select .card-body-inner {
-  max-height: calc(38rem - 48px - 00.5em);
+  max-height: calc(37rem - 48px - 00.5em);
 }
 
 html[dir=rtl] .news-item .material-icons {
