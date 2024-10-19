@@ -19,7 +19,7 @@
   const timestamp = ref('');
   const latest = ref([]);
   const challenged = ref([]);
-  const category = ref([]);
+  const categories = ref([]);
   const popular = ref([]);
   const specialPosts = ref([]);
   const specialVideos = ref([]);
@@ -64,7 +64,7 @@
         useApi().get(`/api/post/${route.params.id}`)
             .then((response) => {
                 post.value = response.data;
-                category.value = post.value.categories[0];
+                categories.value = post.value.categories;
                 formattedDate(response.data);
                 useHead({
                     title: `${response.data?.title} | ${t('site.Website name')}`,
@@ -160,24 +160,24 @@
                                 <h1 class="text-xl">{{ post?.title }}</h1>
                             </div>
                             <!-- <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
+                                <ol class="breadcrumb"> -->
+                                    <!-- <li class="breadcrumb-item">
                                         <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
-                                    </li>
-                                    <li class="breadcrumb-item">
+                                    </li> -->
+                                    <!-- <li v-for="(category,index) in categories" class="breadcrumb-item" :key="index">
                                         <router-link :to="`/category/${category?.id}/${category?.slug}`" :title="category?.title">
                                             {{ category?.title }}
                                         </router-link>
-                                    </li>
-                                    <li class="breadcrumb-item">
+                                    </li> -->
+                                    <!-- <li class="breadcrumb-item">
                                         <router-link :to="`/news/${post.id}/${post.slug}`" :title="post?.title">
                                             {{ post?.title }}
                                         </router-link>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         {{ $t('site.You are here') }}
-                                    </li>
-                                </ol>
+                                    </li> -->
+                                <!-- </ol>
                             </nav> -->
                         </div>
                     </div>
@@ -224,7 +224,19 @@
                                     </div>
                                 </div>
                                 <div class="post--body">
-                                    <div class="fs-6 post--subtitle mb-4">{{ post.pre_title }}</div>
+                                    <div class="flex gap-2">
+                                        <span>دسته بندی ها:</span>
+                                        <span v-for="(category,index) in categories" class="" :key="index">
+                                            <router-link class="text-decoration-none" :to="`/category/${category?.id}/${category?.slug}`" :title="category?.title">
+                                                {{ category?.title }}
+                                            </router-link>
+                                            <span v-if="categories.length -1 != index">
+                                                |
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <hr>
+                                    <div class="fs-6 post--subtitle mt-4 mb-4">{{ post.pre_title }}</div>
                                     <div class="post--lead">
                                         <span>{{ post.summary }}</span>
                                     </div>
