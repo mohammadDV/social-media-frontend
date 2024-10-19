@@ -45,8 +45,6 @@
   }
   
   onMounted(() => {
-
-    // window.document.title =   `${t('site.Main page')} | ${t('site.Website name')}`;
     useHead({
         title: `${t('site.Main page')} | ${t('site.Website name')}`,
         meta: [
@@ -299,13 +297,15 @@
                 <div class="col-12 col-lg-6">
                     <div class="card vt-news-card height-md">
                         <div class="card-header header-alt">
-                            <p class="h4 text-primary">{{ $t('site.The latest non-football analysis') }}</p>
+                            <!-- <p class="h4 text-primary">{{ $t('site.The latest non-football analysis') }}</p> -->
+                            <p class="h4 text-primary">{{ $t('site.Latest news') }}</p>
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
                             <div class="card-body-inner pb-3">
-                                <div v-if="posts[6]?.length > 0" class="row gy-3 news-item-row">
-                                    <div class="col-12 col-lg-6" v-for="(post, index) in posts[6]" :key="index">
+                                <div v-if="latest?.length > 0" class="row gy-3 news-item-row">
+                                <!-- <div v-if="posts[6]?.length > 0" class="row gy-3 news-item-row"> -->
+                                    <div class="col-12 col-lg-6" v-for="(post, index) in latest" :key="index">
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
                                                 <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
