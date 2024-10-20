@@ -21,7 +21,7 @@ const posts = ref([]);
 const videos = ref([]);
 const clubs = ref([]);
 const matches = ref([]);
-const tag = ref([]);
+const category = ref([]);
 
 const $toast = useToast();
 
@@ -31,6 +31,7 @@ const active = ref(false);
 const getData = () => {
 useApi().get(`/api/club/${route.params.id}`)
     .then((response) => {
+        category.value = response.data?.category;
         info.value = response.data?.info;
         posts.value = response.data?.posts;
         videos.value = response.data?.videos;
@@ -116,7 +117,7 @@ const getFollowers = () => {
 
 <template>
 
-    <div class="main-gradient mb-10" >
+    <div class="main-gradient-info mb-10 mt-5" >
         <div class="relative container">
             <div class="flex p-3">                
                 <div>
@@ -156,7 +157,7 @@ const getFollowers = () => {
     <div class="text-lg my-[20px]">
       <p>{{ $t("site.Club latest results") }} {{ info?.title }}</p>
     </div>
-    <div class="grid grid-cols-2 gap-2 md:grid-cols-6">
+    <div class="grid grid-cols-2 grid-flow-row-reverse gap-2 md:grid-cols-6">
         <div v-for="(match, index) in matches" :key="index" class="rounded-md w-full bg-white">
             <div class="flex flex-col bg-vt-dark rounded-md text-white p-[10px] gap-[10px] ">
                 <div class="flex gap-[10px]">
@@ -262,10 +263,11 @@ const getFollowers = () => {
             </div>
         </div>
         <div class="search-material md:flex-auto md:w-[70%]">
-            <div class="flex-auto flex-wrap mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2">
+            <div class="flex-auto flex-wrap mt-2 pb-2">
+            <!-- <div class="flex-auto flex-wrap mt-2 border-b-2 border-dotted border-[#afb1b9] pb-2"> -->
                 <div class="flex justify-between bg-white rounded-md mb-2">
                     <h3 class="p-4 m-0 text-lg">{{ $t("site.Club news") }} {{ info?.title }}</h3>
-                    <router-link :to="`/tag/${tag?.id}/${tag?.title}`" 
+                    <router-link :to="`/category/${category?.id}/${category?.slug}`" 
                         class="text-decoration-none p-4 m-0 text-lg text-blue-400 hover:text-blue-600">
                         {{ $t('site.Display all') }}
                     </router-link>
@@ -296,10 +298,10 @@ const getFollowers = () => {
                     </div>
                 </div>
             </div>
-            <div class="flex-auto flex-wrap mb-3 mt-2 border-b-2">
+            <!-- <div class="flex-auto flex-wrap mb-3 mt-2 border-b-2">
                 <div class="flex justify-between bg-white rounded-md mb-2">
                     <h3 class="p-4 m-0 text-lg">{{ $t("site.Club videos") }} {{ info?.title }}</h3>
-                    <router-link :to="`/tag/${tag?.id}/${tag?.title}`" 
+                    <router-link :to="`/category/${category?.id}/${category?.slug}`" 
                         class="text-decoration-none p-4 m-0 text-lg text-blue-400 hover:text-blue-600">
                         {{ $t('site.Display all') }}
                     </router-link>
@@ -326,8 +328,26 @@ const getFollowers = () => {
                         </div>
                     </router-link>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
   </div>
 </template>
+
+
+<style>
+
+.main-gradient-info {    
+    margin-top: 175px;
+  border: 1px solid #182848;
+  background: linear-gradient(#2c3652, #191e2f);
+  color: white;
+}
+
+.main-gradient-info:hover {
+  transition: .3;
+  background: #182848;
+  border: 1px solid #515761;
+}
+
+</style>
