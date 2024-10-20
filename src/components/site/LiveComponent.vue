@@ -45,7 +45,7 @@
                                     <div class="game-teams">{{ item.teams }}</div>
                                     <div class="game-time">
                                         <!-- <span class="match-time">{{ item.hour }}</span> -->
-                                        <span class="match-time">{{ $t('site.Hour') }} : {{ jalaliMoment(live[0]["date"]).format('HH:mm') }}</span>
+                                        <span class="match-time">{{ $t('site.Hour') }} : {{ jalaliMoment(item.date).format('HH:mm') }}</span>
                                         <span>
                                             <a class="game-link" :href="item.link" target="blank">
                                                 <span class="material-icons size-font-p1">
