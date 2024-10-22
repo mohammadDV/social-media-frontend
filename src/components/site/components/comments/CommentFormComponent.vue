@@ -60,7 +60,7 @@
                         @click="sendComment()">
                 {{ $t('site.Submit') }}
             </VTButton>
-        <VTButton v-if="!isAuthenticated" class="mt-3 w-100" color="primary" size="medium"
+        <VTButton v-if="!isAuthenticated" class="mt-3 mb-2 w-100" color="primary" size="medium"
                     @click="goToRoute('login')">
             {{ $t('site.Login') }}
         </VTButton>
