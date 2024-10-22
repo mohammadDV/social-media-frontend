@@ -224,7 +224,7 @@
                                     </div>
                                 </div>
                                 <div class="post--body">
-                                    <div class="flex gap-2">
+                                    <div class="flex gap-2 flex-wrap">
                                         <span>دسته بندی ها:</span>
                                         <span v-for="(category,index) in categories" class="" :key="index">
                                             <router-link class="text-decoration-none" :to="`/category/${category?.id}/${category?.slug}`" :title="category?.title">
