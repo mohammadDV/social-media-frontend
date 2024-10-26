@@ -19,7 +19,6 @@
 
 const emit = defineEmits(['updateData'])
 
-    
 const initialFormState = {
     text: '',
     file: '',
@@ -68,7 +67,8 @@ const statusList = ref([
         }
     })
 };
- const sendReport = () => {
+
+const sendReport = () => {
 
     if (!reportId.value) {
         return '';
@@ -224,6 +224,10 @@ const resetForm = () => {
         if(!dropDown.value.contains(element.target)){
         isDropDownVisible.value = false
         }
+    }
+
+    const onUploadStart = () => {
+        canSubmit.value = false;
     }
 
     const getFileLink = (item) => {
@@ -398,6 +402,7 @@ const resetForm = () => {
                 :label="$t('site.Choose image')"
                 name="image"
                 @getFileLink="getFileLink"
+                @on-upload-start="onUploadStart"
             ></VTFile>
 
             <VTSelect 

@@ -12,6 +12,7 @@
   import { useToast } from "vue-toast-notification";
 
   const authStore = useAuthStore();
+  const canSubmit = ref(true);
 
   const isModalVisible = ref(false);
   const file = ref('');
@@ -29,12 +30,24 @@
     resetForm()
     isModalVisible.value = false;
   };
+
+  const onUploadStart = () => {
+    canSubmit.value = false;
+  }
+
+
   const getFileLink = (item) => {
     file.value = item;
+    canSubmit.value = true;
   };
 
 
   const sendStatus = () => {
+
+    if (!canSubmit.value) {
+        return '';
+    }
+    canSubmit.value = false;
     const $toast = useToast();
     useApi().post(`/api/profile/status/`, {
         text: content.value, 
@@ -53,7 +66,10 @@
         if (error.response.data.status == 0) {
             $toast.error(error.response.data.message);
         }
-    });
+    })
+    .finally(() => {
+      canSubmit.value = true;
+    })
   };
 
 </script>
@@ -97,14 +113,20 @@
                     request-name="StatusRequest"
                     :placeholder="$t('site.Please share your post')"/>
             </div>
+            <div v-if="file?.length > 0">
+                <img class="thumbnail w-[100px] rounded mt-2" :src="file" alt="image">
+            </div>
             <VTFile
                 class="mb-5"
                 label="Upload image"
                 name="image"
                 @getFileLink="getFileLink"
+                @on-upload-start="onUploadStart"
             ></VTFile>
 
             <VTButton 
+                :loading="!canSubmit"
+                :disabled="!canSubmit"
                 class="btn btn-outline-secondary btn-sm" 
                 size="medium"
                 color="primary"  
