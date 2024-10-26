@@ -37,9 +37,9 @@
         comment: comment.value, 
         parent_id: parent.value
     })
-    .then(() => {
+    .then((response) => {
         const $toast = useToast();
-        $toast.success('You did it!');
+        $toast.success(response.data.message);
         comment.value = '';
         emit('updateComments');
     })

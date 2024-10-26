@@ -150,6 +150,8 @@ const initialFormState = {
         return '';
     }
 
+    canSubmit.value = false;
+
     let url = '/api/profile/posts/';
 
     if (route.params.id) {
@@ -173,6 +175,9 @@ const initialFormState = {
         if (error.response.data.status == 0) {
             $toast.error(error.response.data.message);
         }
+    })
+    .finally(() => {
+        canSubmit.value = true;
     })
   };
 
@@ -211,8 +216,6 @@ const modules = ref([
 ])
 
   onMounted(() => {
-
-
     window.document.title =   `${t('site.Create new post')} | ${t('site.Website name')}`;
     if (route.params.id) {
         getPost();

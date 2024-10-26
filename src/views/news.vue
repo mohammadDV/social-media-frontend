@@ -17,6 +17,7 @@
   const { t } = useI18n();    
   const advertises = ref([]);
   const timestamp = ref('');
+  const authorPosts = ref([]);
   const latest = ref([]);
   const challenged = ref([]);
   const categories = ref([]);
@@ -64,6 +65,7 @@
         useApi().get(`/api/post/${route.params.id}`)
             .then((response) => {
                 post.value = response.data;
+                getAuthorPosts(post);
                 categories.value = post.value.categories;
                 formattedDate(response.data);
                 useHead({
@@ -91,6 +93,13 @@
             popular.value = response?.data?.popular;
             specialPosts.value = response?.data?.specialPosts;
             specialVideos.value = response?.data?.specialVideos;
+        });
+  }
+
+  const getAuthorPosts = () => {
+    useApi().get('/api/author-posts/' + post.value?.user?.id)
+        .then((response) => {
+            authorPosts.value = response?.data;
         });
   }
 
@@ -253,6 +262,26 @@
                                 </div>
                             </div>
                             <div class="relative-posts">
+                                <template v-if="authorPosts?.length > 0">
+                                    <div class="relative-posts--header">
+                                        <span class="relative-posts--title">خبرهای پربازدید {{ post.user?.nickname }} </span>
+                                    </div>
+                                    <div class="relative-posts--body">
+                                        <ul class="news-list">
+                                            <template  v-for="(post, index) in authorPosts" :key="index">
+                                                <li v-if="index < 5" class="news-item">
+                                                    <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title" class="news">
+                                                        <span class="material-icons size-font text-primary">
+                                                        double_arrow
+                                                        </span>
+                                                        {{ post.title}}
+                                                    </router-link>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </template>
+                                <hr>
                                 <div class="relative-posts--header">
                                     <span class="relative-posts--title">اخبار مرتبط</span>
                                 </div>

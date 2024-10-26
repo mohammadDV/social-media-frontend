@@ -387,6 +387,12 @@ const routes = [
         component: AdvertiseCreate,
       },
       {
+        name: 'advertise.edit',
+        permission: 'advertise_update',
+        path: '/profile/advertises/:id',
+        component: AdvertiseCreate,
+      },
+      {
         name: 'advertise.form.index',
         permission: 'advertise_show',
         path: '/profile/advertise-forms',
