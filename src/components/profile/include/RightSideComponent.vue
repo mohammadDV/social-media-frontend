@@ -104,7 +104,7 @@
         <div class="card-body">
             <div class="card-itemlist is-horizon">
                 <div v-for="(item, index) in myClubs" :key="index" class="item">
-                    <div class="item-avatar">
+                    <div class="item-avatar club-avatar">
                         <router-link class="user-link" :to="`/club/${item.id}`" :title="item.title">
                             <img
                                 :src="item.image"
@@ -117,3 +117,10 @@
         </div>
     </div>
 </template>
+
+<style>
+
+.club-avatar img {
+    border-radius: 0 !important;
+}
+</style>
