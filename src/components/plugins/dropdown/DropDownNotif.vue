@@ -92,7 +92,7 @@
               <div class="flex justify-content-between bg-[#f0f8ff] rounded-md p-2 gap-3 hover:bg-[#cbe0f2] hover:text-black ">
                 <div>
                   <img v-if="option?.model?.profile_photo_path?.length > 0" :src="option?.model?.profile_photo_path" :alt="option?.model?.nickname" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
-                  <img v-else src="/assets/site/images/user-icon.png" :alt="$t('site.Admin')" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
+                  <img v-else src="https://cdn.varzeshpod.com/static/profile.png" :alt="$t('site.Admin')" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
                 </div> 
                 <div class="w-[80%]">
                   <div class="flex justify-content-between">
