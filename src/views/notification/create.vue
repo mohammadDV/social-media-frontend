@@ -47,6 +47,14 @@ const initialFormState = {
         videoList.value = response.data;
     })
   }
+  const updateUsers = (users) => {
+    console.log(users.value);
+    if (users.value?.length > 0) {
+        form.users = users.value.map(user => user.id);
+    } else {
+        form.users = [];
+    }
+  }
 
   watch(() => form.type, () => {
     if (form.type == 1) {
@@ -126,7 +134,10 @@ const getRoles = () => {
         </div>
         <div class="card p-3">
         
-            <DropDownUserSearchBox :options="dropdownItems"/>
+            <DropDownUserSearchBox 
+                :options="dropdownItems"
+                @updateUsers="updateUsers"
+                />
 
             <VTSelectMultiple
                 class="pt-3"
