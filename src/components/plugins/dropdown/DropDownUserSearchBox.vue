@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch,onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch,onMounted, onBeforeUnmount, defineEmits } from 'vue';
 import {useApi} from '@/utils/api.ts';
 
 const searchQuery = ref('');
@@ -7,11 +7,16 @@ const closeBox = ref('');
 const showDropdown = ref(false);
 const selectedUsers = ref([]);
 
+const emit = defineEmits(['updateUsers']);
+
+
 const handleInput = () => {
     showDropdown.value = searchQuery.value.length >= 2;
 }
 
 const closeDropDown = (element) => {
+
+    emit('updateUsers', selectedUsers);
     if(!closeBox.value.contains(element.target)){
       showDropdown.value = false
     }
