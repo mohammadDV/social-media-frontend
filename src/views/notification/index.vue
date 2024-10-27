@@ -81,7 +81,7 @@
                                     <img class="rounded-full w-[120px] h-[120px]" :src="item.model.profile_photo_path" :alt="item.nickname" />
                                 </router-link>
                                 <a v-else>
-                                    <img class="rounded-full w-[120px] h-[120px]" src="/assets/site/images/user-icon.png" :alt="$t('site.Admin')" />
+                                    <img class="rounded-full w-[120px] h-[120px]" src="https://cdn.varzeshpod.com/static/profile.png" :alt="$t('site.Admin')" />
                                 </a>
                             </div>
                             <div class="tweet-info">
