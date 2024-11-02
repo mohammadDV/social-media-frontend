@@ -281,7 +281,7 @@
                                         </ul>
                                     </div>
                                 </template>
-                                <hr>
+                                <!-- <hr>
                                 <div class="relative-posts--header">
                                     <span class="relative-posts--title">اخبار مرتبط</span>
                                 </div>
@@ -298,7 +298,7 @@
                                             </li>
                                         </template>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
