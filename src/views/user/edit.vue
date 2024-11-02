@@ -97,6 +97,10 @@ const router = useRouter();
         url = `/api/profile/users/${route.params.id}`;
     }
 
+    if (!hasRolePermission.value) {
+      form.role_id = '';
+    }
+
     const $toast = useToast();
     useApi().post(url, form)
     .then((response) => {

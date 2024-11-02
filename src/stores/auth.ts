@@ -5,7 +5,7 @@ import axios from "axios";
 interface User {
   id: Number,
   fullname: String,
-  nickName: String,
+  nickname: String,
   intercom: String,
   biography: String,
   profile_photo_path: String,
@@ -167,7 +167,7 @@ export const useAuthStore = defineStore('auth',{
       user: {
         id: 0,
         fullname: '',
-        nickName: '',
+        nickname: '',
         intercom: '',
         biography: '',
         profile_photo_path: '',
@@ -191,7 +191,7 @@ export const useAuthStore = defineStore('auth',{
         this.user = {
           id: 0,
           fullname: '',
-          nickName: '',
+          nickname: '',
           intercom: '',
           biography: '',
           profile_photo_path: '',
@@ -216,7 +216,7 @@ export const useAuthStore = defineStore('auth',{
           if (response.data) {
             this.user = response.data as User;
             this.user.fullname = response.data?.nickname?.length > 0 ? response.data.nickname : response.data.first_name + (response?.data?.last_name?.length > 0 ? ' ' + response?.data?.last_name : '');
-            this.user.nickName = response.data?.nickname;
+            this.user.nickname = response.data?.nickname;
             this.user.biography = response.data?.biography;
             this.user.profile_photo_path = response.data?.profile_photo_path;
             this.user.bg_photo_path = response.data?.bg_photo_path;
