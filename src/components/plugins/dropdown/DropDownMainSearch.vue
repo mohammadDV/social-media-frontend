@@ -71,7 +71,7 @@ const goToPost = (url) => {
         <div class=" cursor-pointer" v-for="(post, index) in posts" :key="index">
           <div @click="goToPost(`/news/${post.id}/${post.slug}`)" class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-100  hover:bg-gray-200 xs:flex xs:flex-col">
               <div class="flex-none">
-                  <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                  <img class="rounded-md h-[100px]" :src="post.image" alt="img">
               </div>
               <div class="flex-grow p-2">
                   <h3 class="h-[20px] text-primary overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
