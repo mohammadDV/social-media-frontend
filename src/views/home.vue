@@ -267,7 +267,7 @@
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
                                                 <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
-                                                    <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                                                    <img class="rounded-md h-[100px]" :src="post.image" alt="img">
                                                 </router-link>
                                             </div>
                                             <div class="flex-grow p-2">
@@ -308,7 +308,7 @@
                                     <div class="col-12 col-lg-6" v-for="(post, index) in latest" :key="index">
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
-                                                <img class="rounded-md w-full h-[100px]" :src="post.image" alt="img">
+                                                <img class="rounded-md h-[100px]" :src="post.image" alt="img">
                                             </div>
                                             <div class="flex-grow p-2">
                                                 <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
