@@ -735,6 +735,9 @@ progress {
   #mobileMenuCaller {
     display: inline-block;
   }
+  #body-content iframe {
+      width: 100%;
+  }
 }
 @media (min-width: 768px) {
   .container-md, .container-sm, .container {
