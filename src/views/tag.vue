@@ -90,13 +90,21 @@
     getAdvertises();
     getPosts();
   });
+  const isPostRecent = () => {
+    return route.params.id < 1000;
+  }
 
 
 </script>
 <template>
     <div class="container-xxl">
         <main class="mb-4">
-            <HorizontalAdvertiseComponent :advertises="advertises[1]"/>
+            <template v-if="isPostRecent()">
+                <horizontal-advertise-component :advertises="advertises[1]"/>
+            </template>
+            <template v-else>
+                <div class="m-2">&nbsp;</div>
+            </template>
             <div class="row">
                 <div class="col-12 col-lg-2 ads-column item-column">
                     <VerticalAdvertiseComponent v-if="advertises[5]?.length > 0" :advertises="advertises[5]"/>
