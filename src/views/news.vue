@@ -143,6 +143,10 @@
             })
     }
 
+    const isPostRecent = (createdAt) => {
+      return new Date(createdAt) > new Date('2024-11-27');
+    }
+
     watch(() => route.params.id, () => {
         if (route.params.id) {
             getPost();
@@ -157,7 +161,12 @@
 <template>
     <div class="container-xxl">
         <main class="mb-4">
-            <horizontal-advertise-component :key="post.id" :advertises="advertises[1]"/>
+            <template v-if="isPostRecent(post.created_at)">
+                <horizontal-advertise-component :key="post.id" :advertises="advertises[1]"/>
+            </template>
+            <template v-else>
+                <div class="m-2">&nbsp;</div>
+            </template>
             <div class="row">
                 <div class="col-12 col-lg-2 ads-column item-column">
                     <vertical-advertise-component :key="post.id" v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
