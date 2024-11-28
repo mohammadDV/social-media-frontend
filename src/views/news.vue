@@ -144,7 +144,7 @@
     }
 
     const isPostRecent = (createdAt) => {
-      return new Date(createdAt) > new Date('2024-11-27');
+      return new Date(createdAt) < new Date('2024-11-27');
     }
 
     watch(() => route.params.id, () => {
