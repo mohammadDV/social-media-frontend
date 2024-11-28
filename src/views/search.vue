@@ -5,7 +5,7 @@
 
   import { useRoute } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
-  import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
+//   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
   import { useI18n } from "vue-i18n";  
@@ -103,7 +103,9 @@
 <template>
     <div class="container-xxl">
         <main class="mb-4">
-            <HorizontalAdvertiseComponent :advertises="advertises[1]"/>
+
+            <div class="m-2">&nbsp;</div>
+            <!-- <HorizontalAdvertiseComponent :advertises="advertises[1]"/> -->
             <div class="row">
                 <div class="col-12 col-lg-2 ads-column item-column">
                     <VerticalAdvertiseComponent v-if="advertises[5]?.length > 0" :advertises="advertises[5]"/>
