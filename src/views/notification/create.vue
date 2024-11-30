@@ -3,7 +3,7 @@
  import {useApi} from './../../utils/api.ts';
  import {helper} from '@/utils/helper.ts';
   
- import { ref, onMounted, reactive, watch } from 'vue';
+ import { ref, onMounted, reactive } from 'vue';
  import VTTextArea from '@/elements/VTTextArea';
  import VTButton from '@/elements/VTButton'; 
  import VTInput from '@/elements/VTInput'; 
@@ -39,14 +39,6 @@ const initialFormState = {
     }
   ]);
   
-  const videoList = ref();
-
-  const getVideos = () => {
-    useApi().get(`/api/profile/videos/index`)
-    .then((response) => {
-        videoList.value = response.data;
-    })
-  }
   const updateUsers = (users) => {
     console.log(users.value);
     if (users.value?.length > 0) {
@@ -55,12 +47,6 @@ const initialFormState = {
         form.users = [];
     }
   }
-
-  watch(() => form.type, () => {
-    if (form.type == 1) {
-        getVideos();
-    } 
-  });
 
   const reset = ref(false)
 
