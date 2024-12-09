@@ -53,7 +53,27 @@
                 content: 'خبر های ورزشی و شبکه اجتماعی ورزشی، تحلیل مسابقات مختلف ورزشی، ویدیو های مسابقات حساس، کری خوانی های ورزشی، تحلیل های پیش و پس از بازی'
             },
             {
+                name: `og:title`,
+                content: `${t('site.Main page')} | ${t('site.Website name')}`
+            },
+            {
+                name: `og:description`,
+                content: 'خبر های ورزشی و شبکه اجتماعی ورزشی، تحلیل مسابقات مختلف ورزشی، ویدیو های مسابقات حساس، کری خوانی های ورزشی، تحلیل های پیش و پس از بازی'
+            },
+            {
                 property: `og:url`,
+                content: computed(() => window.location.href)
+            },
+            {
+                name: `twitter:title`,
+                content: `${t('site.Main page')} | ${t('site.Website name')}`
+            },
+            {
+                name: `twitter:description`,
+                content: 'خبر های ورزشی و شبکه اجتماعی ورزشی، تحلیل مسابقات مختلف ورزشی، ویدیو های مسابقات حساس، کری خوانی های ورزشی، تحلیل های پیش و پس از بازی'
+            },
+            {
+                property: `twitter:url`,
                 content: computed(() => window.location.href)
             },
         ]

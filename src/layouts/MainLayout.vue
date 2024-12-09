@@ -29,7 +29,39 @@ useHead({
             content: t('site.Website name')
         },
         {
+            property: `og:type`,
+            content: 'website'
+        },
+        {
+            property: `og:locale`,
+            content: 'fa_IR'
+        },
+        {
             property: `og:url`,
+            content: computed(() => window.location.href)
+        },
+        {
+            name: `og:image`,
+            content: 'https://cdn.varzeshpod.com/uploads/images/default/user-1/2024/09/13/1gmbvPupCcYelTwe8blMh3239k56ERG0gAistTF6.jpg'
+        },
+        {
+            property: `twitter:site`,
+            content: t('site.Website name')
+        },
+        {
+            property: `twitter:card`,
+            content: 'summary'
+        },
+        {
+            name: `twitter:image:src`,
+            content: 'https://cdn.varzeshpod.com/uploads/images/default/user-1/2024/09/13/1gmbvPupCcYelTwe8blMh3239k56ERG0gAistTF6.jpg'
+        },
+        {
+            property: `robots`,
+            content: 'max-image-preview:large'
+        },
+        {
+            property: `twitter:url`,
             content: computed(() => window.location.href)
         },
     ]
