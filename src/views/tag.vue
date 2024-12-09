@@ -45,10 +45,30 @@
         meta: [
             {
                 name: `description`,
-                content: `جستجوی اخبار سایت ورزش پاد بر اساس تگ ${route.params.title}`
+                content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${route.params.title}، شامل موضوعات ورزشی و فوتبالی، از جزئیات تا دیدگاه‌های تخصصی.`
+            },
+            {
+                name: `og:title`,
+                content: route.params.title
+            },
+            {
+                name: `og:description`,
+                content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${route.params.title}، شامل موضوعات ورزشی و فوتبالی، از جزئیات تا دیدگاه‌های تخصصی.`
             },
             {
                 property: `og:url`,
+                content: computed(() => window.location.href)
+            },
+            {
+                name: `twitter:title`,
+                content: route.params.title
+            },
+            {
+                name: `twitter:description`,
+                content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${route.params.title}، شامل موضوعات ورزشی و فوتبالی، از جزئیات تا دیدگاه‌های تخصصی.`
+            },
+            {
+                property: `twitter:url`,
                 content: computed(() => window.location.href)
             },
         ]

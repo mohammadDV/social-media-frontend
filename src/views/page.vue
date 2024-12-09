@@ -51,7 +51,26 @@
                             content: response.data?.title
                         },
                         {
+                            name: `og:title`,
+                            content: response.data?.title
+                        },
+                        {
+                            name: `og:description`,
+                            content: `${response.data?.title} | ${t('site.Website name')}`
+                        },
+                        {
                             property: `og:url`,
+                            content: computed(() => window.location.href)
+                        },
+                        {
+                            name: `twitter:title`,
+                            content: response.data?.title
+                        },
+                        {
+                            name: `twitter:description`,
+                            content: `${response.data?.title} | ${t('site.Website name')}`                        },
+                        {
+                            property: `twitter:url`,
                             content: computed(() => window.location.href)
                         },
                     ]

@@ -68,10 +68,30 @@
                 meta: [
                     {
                         name: `description`,
-                        content: category.value?.description
+                        content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${category.value?.title}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.`
+                    },
+                    {
+                        name: `og:title`,
+                        content: category.value?.title
+                    },
+                    {
+                        name: `og:description`,
+                        content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${category.value?.title}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.`
                     },
                     {
                         property: `og:url`,
+                        content: computed(() => window.location.href)
+                    },
+                    {
+                        name: `twitter:title`,
+                        content: category.value?.title
+                    },
+                    {
+                        name: `twitter:description`,
+                        content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${category.value?.title}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.`
+                    },
+                    {
+                        property: `twitter:url`,
                         content: computed(() => window.location.href)
                     },
                 ]

@@ -90,10 +90,30 @@
         meta: [
             {
                 name: `description`,
-                content: `ثبت نام برای ایجاد تبلیغات در سایت ورزش پاد`
+                content: `ارسال درخواست برای تبلیغات در سایت ورزش پاد`
+            },
+            {
+                name: `og:title`,
+                content: 'تبلیغات ورزش پاد'
+            },
+            {
+                name: `og:description`,
+                content: `ارسال درخواست برای تبلیغات در سایت ورزش پاد`
             },
             {
                 property: `og:url`,
+                content: computed(() => window.location.href)
+            },
+            {
+                name: `twitter:title`,
+                content: 'تبلیغات ورزش پاد'
+            },
+            {
+                name: `twitter:description`,
+                content: `ارسال درخواست برای تبلیغات در سایت ورزش پاد`
+            },
+            {
+                property: `twitter:url`,
                 content: computed(() => window.location.href)
             },
         ]
