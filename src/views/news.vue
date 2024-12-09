@@ -14,6 +14,8 @@
   import { useI18n } from "vue-i18n";  
   import { useHead } from '@unhead/vue';
 
+  import jalaliMoment from 'moment-jalaali';
+
   const { t } = useI18n();    
   const advertises = ref([]);
   const timestamp = ref('');
@@ -76,7 +78,35 @@
                             content: response.data?.summary
                         },
                         {
+                            name: `og:title`,
+                            content: response.data?.title
+                        },
+                        {
+                            name: `og:description`,
+                            content: response.data?.summary
+                        },
+                        {
+                            name: `og:image`,
+                            content: response.data?.image
+                        },
+                        {
                             property: `og:url`,
+                            content: computed(() => window.location.href)
+                        },
+                        {
+                            name: `twitter:title`,
+                            content: response.data?.title
+                        },
+                        {
+                            name: `twitter:description`,
+                            content: response.data?.summary
+                        },
+                        {
+                            name: `twitter:image:src`,
+                            content: response.data?.image
+                        },
+                        {
+                            property: `twitter:url`,
                             content: computed(() => window.location.href)
                         },
                     ]
@@ -207,7 +237,7 @@
                                     <div class="extend-info">
                                         <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
                                         <span>
-                                            <span class="post-date">{{ $t('site.Time') }}: {{ timestamp }}</span>
+                                            <span class="post-date">{{ $t('site.Time') }}: {{ jalaliMoment(post.created_at).format('HH:mm jYYYY/jM/jD') }}</span>
                                             <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
                                         </span>
                                     </div>
@@ -227,7 +257,7 @@
                                             <div class="extend-info">
                                                 <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
                                                 <span>
-                                                    <span class="post-date">{{ $t('site.Time') }}: {{ timestamp }}</span>
+                                                    <span class="post-date">{{ $t('site.Time') }}: {{ jalaliMoment(post.created_at).format('HH:mm jYYYY/jM/jD') }}</span>
                                                     <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
                                                 </span>
                                             </div>
