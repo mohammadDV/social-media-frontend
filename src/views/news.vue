@@ -82,6 +82,10 @@
                             content: response.data?.title
                         },
                         {
+                            property: `og:type`,
+                            content: 'article'
+                        },
+                        {
                             name: `og:description`,
                             content: response.data?.summary
                         },
@@ -206,6 +210,7 @@
                         <div class="card-body">
                             <div class="text-primary">
                                 <h1 class="text-xl">{{ post?.title }}</h1>
+                                <h2 class="fs-6 text-sm text-gray-500 post--subtitle mt-2">{{ post.pre_title }}</h2>
                             </div>
                             <!-- <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb"> -->
@@ -232,21 +237,21 @@
                     <div class="card vt-news-card mb-3">
                         <div class="card-body">
                             <div class="post">
-                                <div v-if="post.type == 1">
+                                <div class="post--header" v-if="post.type == 1">
                                     <VideoPlayerComponent :key="post.id" :video="post.video" :advertise="post?.advertise?.file"/>
                                     <div class="extend-info">
+                                        <span>
+                                            <router-link 
+                                                    :to="`/member/${post.user?.id}`"  
+                                                    :title="post.user?.nickname"
+                                                    class="text-decoration-none cursor-pointer text-gray-500 fs-6 post--subtitle"
+                                                >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
+                                        </span>
                                         <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
                                         <span>
                                             <span class="post-date">{{ $t('site.Time') }}: {{ jalaliMoment(post.created_at).format('HH:mm jYYYY/jM/jD') }}</span>
                                             <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
                                         </span>
-                                    </div>
-                                    <div class="main-info">
-                                        <router-link 
-                                                    :to="`/member/${post.user?.id}`"  
-                                                    :title="post.user?.nickname"
-                                                    class="text-decoration-none cursor-pointer text-gray-200 fs-6 post--subtitle"
-                                                >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
                                     </div>
                                 </div>
                                 <div v-else class="post--header">
@@ -284,7 +289,6 @@
                                         </span>
                                     </div>
                                     <hr>
-                                    <div class="fs-6 post--subtitle mt-4 mb-4">{{ post.pre_title }}</div>
                                     <div class="post--lead">
                                         <span>{{ post.summary }}</span>
                                     </div>
