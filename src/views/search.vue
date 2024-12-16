@@ -88,11 +88,11 @@
                 content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${search.value}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.`
             },
             {
-                name: `og:title`,
+                property: `og:title`,
                 content: search.value
             },
             {
-                name: `og:description`,
+                property: `og:description`,
                 content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${search.value}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.`
             },
             {
@@ -108,7 +108,7 @@
                 content: `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${search.value}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.`
             },
             {
-                property: `twitter:url`,
+                name: `twitter:url`,
                 content: computed(() => window.location.href)
             },
         ]

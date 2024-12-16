@@ -51,11 +51,11 @@
                             content: response.data?.title
                         },
                         {
-                            name: `og:title`,
+                            property: `og:title`,
                             content: response.data?.title
                         },
                         {
-                            name: `og:description`,
+                            property: `og:description`,
                             content: `${response.data?.title} | ${t('site.Website name')}`
                         },
                         {
@@ -70,7 +70,7 @@
                             name: `twitter:description`,
                             content: `${response.data?.title} | ${t('site.Website name')}`                        },
                         {
-                            property: `twitter:url`,
+                            name: `twitter:url`,
                             content: computed(() => window.location.href)
                         },
                     ]

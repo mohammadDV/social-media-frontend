@@ -93,11 +93,11 @@
                 content: `ارسال درخواست برای تبلیغات در سایت ورزش پاد`
             },
             {
-                name: `og:title`,
+                property: `og:title`,
                 content: 'تبلیغات ورزش پاد'
             },
             {
-                name: `og:description`,
+                property: `og:description`,
                 content: `ارسال درخواست برای تبلیغات در سایت ورزش پاد`
             },
             {
@@ -113,7 +113,7 @@
                 content: `ارسال درخواست برای تبلیغات در سایت ورزش پاد`
             },
             {
-                property: `twitter:url`,
+                name: `twitter:url`,
                 content: computed(() => window.location.href)
             },
         ]

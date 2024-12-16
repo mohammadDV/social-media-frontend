@@ -78,7 +78,7 @@
                             content: response.data?.summary
                         },
                         {
-                            name: `og:title`,
+                            property: `og:title`,
                             content: response.data?.title
                         },
                         {
@@ -86,11 +86,11 @@
                             content: 'article'
                         },
                         {
-                            name: `og:description`,
+                            property: `og:description`,
                             content: response.data?.summary
                         },
                         {
-                            name: `og:image`,
+                            property: `og:image`,
                             content: response.data?.image
                         },
                         {
@@ -110,7 +110,7 @@
                             content: response.data?.image
                         },
                         {
-                            property: `twitter:url`,
+                            name: `twitter:url`,
                             content: computed(() => window.location.href)
                         },
                     ]
