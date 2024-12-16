@@ -41,15 +41,15 @@ useHead({
             content: computed(() => window.location.href)
         },
         {
-            name: `og:image`,
+            property: `og:image`,
             content: 'https://cdn.varzeshpod.com/uploads/images/default/user-1/2024/09/13/1gmbvPupCcYelTwe8blMh3239k56ERG0gAistTF6.jpg'
         },
         {
-            property: `twitter:site`,
+            name: `twitter:site`,
             content: t('site.Website name')
         },
         {
-            property: `twitter:card`,
+            name: `twitter:card`,
             content: 'summary'
         },
         {
@@ -57,11 +57,11 @@ useHead({
             content: 'https://cdn.varzeshpod.com/uploads/images/default/user-1/2024/09/13/1gmbvPupCcYelTwe8blMh3239k56ERG0gAistTF6.jpg'
         },
         {
-            property: `robots`,
+            name: `robots`,
             content: 'max-image-preview:large'
         },
         {
-            property: `twitter:url`,
+            name: `twitter:url`,
             content: computed(() => window.location.href)
         },
     ]
