@@ -238,7 +238,7 @@
                         <div class="card-body">
                             <div class="post">
                                 <div class="post--header" v-if="post.type == 1">
-                                    <VideoPlayerComponent :key="post.id" :video="post.video" :advertise="post?.advertise?.file"/>
+                                    <VideoPlayerComponent :key="post.id" :video="post.video" :image="post.image" :advertise="post?.advertise?.file"/>
                                     <div class="extend-info">
                                         <span>
                                             <router-link 
