@@ -12,6 +12,10 @@ import { ref, onMounted, defineProps } from 'vue';
         type: String,
         required: true
       },
+      image: {
+        type: String,
+        default: ''
+      },
       advertise: {
         type: String,
         default: ''
@@ -46,10 +50,10 @@ import { ref, onMounted, defineProps } from 'vue';
 
 <template>
     <div class="relative w-full">
-      <video v-if="showAd" class="w-full rounded" ref="advertisePlayer">
+      <video v-if="showAd" class="w-full rounded" ref="advertisePlayer" :poster="image">
         <source  :src="advertise" type="video/mp4" />
       </video>
-      <video v-else class="w-full rounded" ref="videoPlayer"  controls>
+      <video v-else class="w-full rounded" ref="videoPlayer" :poster="image" controls>
         <source  :src="video" type="video/mp4" />
       </video>
       <button v-if="visible && showAd" class="btn absolute right-2 bottom-2 absolute btn-sm right-2 bg-primary text-white p-2" @click="startVideo">Start video</button>
