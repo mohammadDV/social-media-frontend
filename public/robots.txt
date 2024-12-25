@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /profile
+Disallow: /login
+Disallow: /register
+Allow: /
+
+# نقشه سایت
+Sitemap: https://varzeshpod.com/api/sitemap.xml

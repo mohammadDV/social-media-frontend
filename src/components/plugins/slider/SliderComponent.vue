@@ -11,9 +11,9 @@
                             <div class="news-slider--rutitle">
                                 {{ slide.pre_title }}
                             </div>
-                            <h3 class="news-slider--title">
+                            <h2 class="news-slider--title">
                                 {{ slide.title }}
-                            </h3>
+                            </h2>
                             <p class="news-slider--subtitle">
                                 {{ slide.summary }}
                             </p>

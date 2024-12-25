@@ -7067,6 +7067,7 @@ html[dir=rtl] .news-item .material-icons {
 .news-slider-item .news-slider--text-container .news-slider--title {
   margin-bottom: 0.6em;
   line-height: 1.3em;
+  font-size: 24px;
 }
 .news-slider-item .news-slider--text-container .news-slider--subtitle {
   margin-bottom: 0.5em;

@@ -71,6 +71,7 @@ import UserList from '@/views/user/index.vue';
 import Logout from '@/views/auth/logout.vue';
 import Login from '@/views/auth/login.vue';
 import Register from '@/views/auth/register.vue';
+import NotFound from '@/views/notfound.vue';
 import { useAuthStore } from '@/stores/auth.ts';
 
 
@@ -554,6 +555,11 @@ const routes = [
         component: UserList,
       },
     ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 
