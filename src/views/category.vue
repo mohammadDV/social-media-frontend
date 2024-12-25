@@ -38,7 +38,18 @@
     getArchive();
   }
 
-  
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
 
   const getAdvertises = () => {
     useApi().get('/api/advertise')
@@ -63,8 +74,29 @@
             page.value++;
             category.value = response.data.category;
 
-            useHead({
+            const jsonld = {
+                    "@context": "https://schema.org",
+                    "@type": "WebPage",
+                    "name": category.value?.title,
+                    "url": computed(() => window.location.href),
+                    "description": `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${category.value?.title}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.` 
+                };
+
+                useHead({
+                    script: [
+                        {
+                            hid: "dynamic-json-ld",
+                            type: "application/ld+json",
+                            textContent: JSON.stringify(jsonld, removeCircularReferences())
+                        }
+                    ],
                 title: `${category.value?.title} | ` + t('site.Website name'),
+                link: [
+                    {
+                    rel: 'canonical',
+                    href: computed(() => window.location.href)
+                    }
+                ],
                 meta: [
                     {
                         name: `description`,

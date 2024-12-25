@@ -61,6 +61,19 @@
         });
   }
 
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
+
   const getPost = () => {
     
     if (route.params.id != undefined) {
@@ -70,8 +83,46 @@
                 getAuthorPosts(post);
                 categories.value = post.value.categories;
                 formattedDate(response.data);
+
+                const jsonld = {
+                    "@context": "https://schema.org",
+                    "@type": "Article",
+                    "headline": response.data?.title,
+                    "url": computed(() => window.location.href),
+                    "description": response.data?.summary,
+                    "image": response.data?.image,
+                    "datePublished": jalaliMoment(response.data?.created_at).format('YYYY/M/D'),
+                    "dateModified": jalaliMoment(response.data?.updated_at).format('YYYY/M/D'),
+                    "mainEntityOfPage": computed(() => window.location.href),
+                    "author": {
+                        "@type": "Person",
+                        "name": response.data?.user?.nickname
+                    },
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": t('site.Website name'),
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://varzeshpod.com/site/images/logo.png"
+                        }
+                    }
+                }
+                
                 useHead({
+                    script: [
+                        {
+                            hid: "dynamic-json-ld",
+                            type: "application/ld+json",
+                            textContent: JSON.stringify(jsonld, removeCircularReferences())
+                        }
+                    ],
                     title: `${response.data?.title} | ${t('site.Website name')}`,
+                    link: [
+                        {
+                        rel: 'canonical',
+                        href: computed(() => window.location.href)
+                        }
+                    ],
                     meta: [
                         {
                             name: `description`,

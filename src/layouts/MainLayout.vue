@@ -23,6 +23,12 @@ const route = useRoute();
 const { t } = useI18n(); 
 
 useHead({
+    link: [
+        {
+          rel: 'canonical',
+          href: computed(() => window.location.href)
+        }
+    ],
     meta: [
         {
             property: `og:site_name`,

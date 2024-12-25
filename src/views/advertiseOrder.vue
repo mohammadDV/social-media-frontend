@@ -81,12 +81,46 @@
     })
   };
 
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
+
   onMounted(() => {
     getAdvertises();
     getPosts();
 
+    const jsonld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": t('site.Advertising order') + ` | ` + t('site.Website name'),
+        "url": computed(() => window.location.href),
+        "description": `ارسال درخواست برای تبلیغات در سایت ورزش پاد` 
+    };
+
     useHead({
+        script: [
+            {
+                hid: "dynamic-json-ld",
+                type: "application/ld+json",
+                textContent: JSON.stringify(jsonld, removeCircularReferences())
+            }
+        ],
         title: t('site.Advertising order') + ` | ` + t('site.Website name'),
+        link: [
+            {
+            rel: 'canonical',
+            href: computed(() => window.location.href)
+            }
+        ],
         meta: [
             {
                 name: `description`,

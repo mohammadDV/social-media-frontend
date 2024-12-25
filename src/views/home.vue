@@ -43,10 +43,44 @@
             specialVideos.value = response?.data?.specialVideos;
         });
   }
+
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
   
   onMounted(() => {
+    const jsonld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": `${t('site.Main page')} | ${t('site.Website name')}`,
+        "url": computed(() => window.location.href),
+        "description": 'خبر های ورزشی و شبکه اجتماعی ورزشی، تحلیل مسابقات مختلف ورزشی، ویدیو های مسابقات حساس، کری خوانی های ورزشی، تحلیل های پیش و پس از بازی'
+    };
+
     useHead({
+        script: [
+            {
+                hid: "dynamic-json-ld",
+                type: "application/ld+json",
+                textContent: JSON.stringify(jsonld, removeCircularReferences())
+            }
+        ],        
         title: `${t('site.Main page')} | ${t('site.Website name')}`,
+        link: [
+            {
+            rel: 'canonical',
+            href: computed(() => window.location.href)
+            }
+        ],
         meta: [
             {
                 name: `description`,

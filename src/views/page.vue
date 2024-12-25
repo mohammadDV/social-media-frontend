@@ -36,15 +36,48 @@
         });
   }
 
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
+
   const getPage = () => {
     
     if (route.params.slug != undefined) {
         useApi().get(`/api/page/${route.params.slug}`)
             .then((response) => {
                 page.value = response.data;
+                const jsonld = {
+                    "@context": "https://schema.org",
+                    "@type": "WebPage",
+                    "name": response.data?.title,
+                    "url": computed(() => window.location.href),
+                    "description": `${response.data?.title} | ${t('site.Website name')}` 
+                };
 
                 useHead({
+                    script: [
+                        {
+                            hid: "dynamic-json-ld",
+                            type: "application/ld+json",
+                            textContent: JSON.stringify(jsonld, removeCircularReferences())
+                        }
+                    ],
                     title: `${response.data?.title} | ${t('site.Website name')}`,
+                    link: [
+                        {
+                        rel: 'canonical',
+                        href: computed(() => window.location.href)
+                        }
+                    ],
                     meta: [
                         {
                             name: `description`,

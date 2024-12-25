@@ -76,12 +76,46 @@
 
   const search = ref('');
 
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
+
   onMounted(() => {
 
     search.value = route.query.q;
 
+    const jsonld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": search.value,
+        "url": computed(() => window.location.href),
+        "description": `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${search.value}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.` 
+    };
+
     useHead({
+        script: [
+            {
+                hid: "dynamic-json-ld",
+                type: "application/ld+json",
+                textContent: JSON.stringify(jsonld, removeCircularReferences())
+            }
+        ],
         title: `${search.value} | ${t('site.Website name')}`,
+        link: [
+            {
+            rel: 'canonical',
+            href: computed(() => window.location.href)
+            }
+        ],
         meta: [
             {
                 name: `description`,
