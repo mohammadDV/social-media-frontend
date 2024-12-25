@@ -34,14 +34,48 @@
         });
   }
 
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
+
   const getTag = () => {
 
     if (page.value < 2) {
         posts.value = [];
     }
 
+    const jsonld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": route.params.title,
+        "url": computed(() => window.location.href),
+        "description": `جامع‌ترین اخبار و تحلیل‌های مرتبط با ${route.params.title}، شامل موضوعات فوتبالی و ورزشی، از جزئیات تا دیدگاه‌های تخصصی.` 
+    };
+
     useHead({
+        script: [
+            {
+                hid: "dynamic-json-ld",
+                type: "application/ld+json",
+                textContent: JSON.stringify(jsonld, removeCircularReferences())
+            }
+        ],        
         title: `${route.params.title} | ${t('site.Website name')}`,
+        link: [
+            {
+            rel: 'canonical',
+            href: computed(() => window.location.href)
+            }
+        ],
         meta: [
             {
                 name: `description`,

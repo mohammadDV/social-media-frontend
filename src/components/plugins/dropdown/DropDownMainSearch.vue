@@ -91,7 +91,7 @@ const goToPost = (url) => {
           </div>  
         </div>
       </div>
-      <div class="flex gap-2 my-3">
+      <div class="flex flex-wrap gap-2 my-3">
         تگ ها :
         <div class="cursor-pointer" v-for="(tag, index) in tags" :key="index">
           <div class="flex justify-start items-center w-full">
@@ -102,7 +102,7 @@ const goToPost = (url) => {
           </div>
         </div>    
       </div>
-      <div class="flex gap-2 my-3">
+      <div class="flex flex-wrap gap-2 my-3">
         دسته بندی ها :
         <div class="cursor-pointer" v-for="(category, index) in categories" :key="index">
           <div class="flex justify-start items-center w-full">
