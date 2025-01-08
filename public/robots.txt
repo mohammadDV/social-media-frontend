@@ -2,7 +2,7 @@ User-agent: *
 Disallow: /profile
 Disallow: /login
 Disallow: /register
+Disallow: /tag/
 Allow: /
 
-# نقشه سایت
 Sitemap: https://varzeshpod.com/api/sitemap.xml
