@@ -68,7 +68,7 @@
                             <div class="tag-list-item" v-for="(tag, index) in tags" :key="index">
                                 <span class="material-icons text-primary size-font"> tag </span>
                                 <span>{{ tag.title }}</span>
-                                <router-link class="stretched-link" :to="`/tag/${tag.id}/${tag.title}`"></router-link>
+                                <router-link  :title="tag.title" class="stretched-link" :to="`/tag/${tag.id}/${tag.title}`"></router-link>
                             </div>
                         </div>
                     </div>

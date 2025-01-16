@@ -5,7 +5,6 @@
             <slot name="label"/>
         </label>
         <select
-            :id="identifier"
             :name="name"
             :value="modelValue"
             @change="changeEvent($event)"
