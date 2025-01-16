@@ -2,7 +2,6 @@ User-agent: *
 Disallow: /profile
 Disallow: /login
 Disallow: /register
-Disallow: /tag/
 Allow: /
 
 Sitemap: https://varzeshpod.com/api/sitemap.xml

@@ -112,7 +112,7 @@
                                 <div class="row" v-for="(match, index) in matches" :key="index">
                                     <div class="team-home">
                                         <router-link class="flex flex-row-reverse items-center justify-content-center" :to="`/club/${match.home_id}`" :title="match.home">
-                                            <img class="rounded-full w-[32px] h-[32px]" :src="match.home_image" :alt="match.home"/>
+                                            <img class="rounded-full w-[32px] h-[32px]" :src="match.home_image" :alt="'تصویر لوگو تیم ' + match.home"/>
                                             {{ match.home }}
                                         </router-link>
                                     </div>
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="team-away">
                                         <router-link class="flex flex-row items-center justify-content-center" :to="`/club/${match.away_id}`" :title="match.away">
-                                            <img :src="match.away_image" class="rounded-full w-[32px] h-[32px]" :alt="match.away"/>
+                                            <img :src="match.away_image" class="rounded-full w-[32px] h-[32px]" :alt="'تصویر لوگو تیم ' + match.away"/>
                                             {{ match.away }}
                                         </router-link>
                                     </div>
@@ -149,7 +149,7 @@
                                     <div class="row" v-for="(club, index) in clubs" :key="index">
                                         <span class="rank">{{ index+1 }}</span>
                                         <span class="logo">
-                                        <img :alt="club.title" :src="club.image" width="32" height="32"/>
+                                        <img :alt="'تصویر لوگو تیم ' + club.title" :src="club.image" width="32" height="32"/>
                                         </span>
                                         <span class="name">
                                             <a target="_blank">{{ club.title }}</a>
