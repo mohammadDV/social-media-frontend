@@ -120,7 +120,7 @@
 
 <style>
 
-.club-avatar img {
+.club-avatar {
     border-radius: 0 !important;
 }
 </style>

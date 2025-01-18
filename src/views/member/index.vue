@@ -17,7 +17,7 @@
     }
   });
 
-  const tabItem = ref(1);
+  const tabItem = ref(2);
 
   const changeTab = (tab) => {
     tabItem.value = tab
