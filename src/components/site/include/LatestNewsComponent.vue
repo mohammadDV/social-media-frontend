@@ -46,7 +46,7 @@
                 </tab-component>
             </tabs-component>
         </div>
-        <div class="card-body">
+        <div class="card-body max-height-sm">
             <div class="card-body-inner">
                 <div class="tab-content" id="hottiesContent">
                     <div v-if="tabItem == 'latest'" class="tab-pane fade show active"  id="latest"  role="tabpanel"  aria-labelledby="latest-tab">
