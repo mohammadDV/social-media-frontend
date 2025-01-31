@@ -22,7 +22,13 @@
                     <div class="col-12 col-lg-6 image-area">
                         <div class="news-slider--image-container">
                             <div class="news-slider--image-area">
-                                <img
+                                <img v-if="slide['slide'] != undefined && slide['slide'] != '' && slide['slide'] != null"
+                                    width="246"
+                                    height="150"
+                                    :src="slide['slide']"
+                                    :alt="slide.title"
+                                />
+                                <img v-else
                                     width="246"
                                     height="150"
                                     :src="slide['image']"

@@ -31,6 +31,7 @@ const initialFormState = {
       status: 0,
       type: 0,
       special: 0,
+      thumb: 1,
       tags: [],
       categories: [],
       video_id: null,
@@ -310,6 +311,7 @@ const modules = ref([
                 class="mt-3"
                 :label="$t('site.Choose image')"
                 name="image"
+                thumb="1"
                 @getFileLink="getImageLink"
                 @on-upload-start="onUploadStart"
             />
