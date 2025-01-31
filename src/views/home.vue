@@ -311,7 +311,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="card vt-news-card height-md">
                         <div class="card-header header-alt">
-                            <p class="h4 text-primary">{{ $t('site.The latest football analysis') }}</p>
+                            <h2 class="h4 text-primary">{{ $t('site.The latest football analysis') }}</h2>
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
@@ -352,7 +352,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="card vt-news-card height-md">
                         <div class="card-header header-alt">
-                            <p class="h4 text-primary">{{ $t('site.The latest non-football analysis') }}</p>
+                            <h2 class="h4 text-primary">{{ $t('site.The latest non-football') }}</h2>
                             <!-- <p class="h4 text-primary">{{ $t('site.Latest news') }}</p> -->
                             <div class="vt-divider"><span></span></div>
                         </div>
