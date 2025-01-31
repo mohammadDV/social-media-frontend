@@ -738,6 +738,9 @@ progress {
   #body-content iframe {
       width: 100%;
   }
+  .max-height-sm {
+    max-height: 13.5rem;
+  }
 }
 @media (min-width: 768px) {
   .container-md, .container-sm, .container {

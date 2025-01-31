@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                     <!-- <div v-if="posts[4]?.length > 0" class="card-body"> -->
-                                    <div class="card-body">
+                                    <div class="card-body max-height-sm">
                                         <div class="card-body-inner card-free">
                                             <div class="grid grid-cols-2 overflow-auto h-[696px]">
                                                 <router-link id="category-div" v-for="(category, index) in categories" :key="index" :to="`/category/${category.id}/${category.slug}`" class="no-underline text-white text-sm border-1 borde-solid px-2 py-1 text-center rounded-md">
