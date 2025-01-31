@@ -46,7 +46,12 @@ onUnmounted(() => {
 
         <div class="slider-item">
             <div class="slider--media ratio-3-4 mb-0">
-                <img width="200" height="144" :title="slide.title" :alt="slide.title" :src="slide['image']"/>
+              <img v-if="slide['slide'] != undefined && slide['slide'] != '' && slide['slide'] != null"
+                    width="200" height="144"
+                    :src="slide['slide']"
+                    :alt="slide.title"
+                />
+              <img v-else width="200" height="144" :title="slide.title" :alt="slide.title" :src="slide['image']"/>
             </div>
             <div class="flex justify-between slider--caption">
                 <div class="slider--caption-title">{{ slide.title }}</div>
