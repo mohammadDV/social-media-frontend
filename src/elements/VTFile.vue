@@ -84,6 +84,10 @@ export default {
             type: String,
             default: 'Choose file'
         },
+        thumb: {
+            type: Number,
+            default: 0
+        },
         multiple: {
             type: Boolean,
             default: true,
@@ -125,6 +129,7 @@ export default {
 
             let formData = new FormData();
             formData.append(this.name, file);
+            formData.append('thumb', this.thumb);
 
             // upload the file and return the file upload
             return axios.post('/api/upload-' + this.name, formData, {

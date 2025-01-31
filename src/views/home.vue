@@ -321,7 +321,8 @@
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
                                                 <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
-                                                    <img class="rounded-md h-[100px]" :src="post.image" alt="img">
+                                                    <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" :src="post.thumbnail" :alt="post.title">
+                                                    <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">
                                                 </router-link>
                                             </div>
                                             <div class="flex-grow p-2">
@@ -351,18 +352,19 @@
                 <div class="col-12 col-lg-6">
                     <div class="card vt-news-card height-md">
                         <div class="card-header header-alt">
-                            <!-- <p class="h4 text-primary">{{ $t('site.The latest non-football analysis') }}</p> -->
-                            <p class="h4 text-primary">{{ $t('site.Latest news') }}</p>
+                            <p class="h4 text-primary">{{ $t('site.The latest non-football analysis') }}</p>
+                            <!-- <p class="h4 text-primary">{{ $t('site.Latest news') }}</p> -->
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
                             <div class="card-body-inner pb-3">
-                                <div v-if="latest?.length > 0" class="row gy-3 news-item-row">
-                                <!-- <div v-if="posts[6]?.length > 0" class="row gy-3 news-item-row"> -->
-                                    <div class="col-12 col-lg-6" v-for="(post, index) in latest" :key="index">
+                                <!-- <div v-if="latest?.length > 0" class="row gy-3 news-item-row"> -->
+                                <div v-if="posts[4]?.length > 0" class="row gy-3 news-item-row">
+                                    <div class="col-12 col-lg-6" v-for="(post, index) in posts[4]" :key="index">
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
-                                                <img class="rounded-md h-[100px]" :src="post.image" alt="img">
+                                                <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" :src="post.thumbnail" :alt="post.title">
+                                                <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">
                                             </div>
                                             <div class="flex-grow p-2">
                                                 <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
