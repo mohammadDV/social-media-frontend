@@ -69,7 +69,7 @@ const goToPost = (url) => {
     <div v-if="showDropdown" class="absolute z-10 border border-gray-300 min-w-40 top-full opacity-100 transition-transform duration-600 ease-in-out delay-200 shadow-md w-full bg-white p-2 rounded-3  ">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
         <div class=" cursor-pointer" v-for="(post, index) in posts" :key="index">
-          <div @click="goToPost(`/news/${post.id}/${post.slug}`)" class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-100  hover:bg-gray-200 xs:flex xs:flex-col">
+          <div @click="goToPost(post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`)" class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-100  hover:bg-gray-200 xs:flex xs:flex-col">
               <div class="flex-none">
                 <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" :src="post.thumbnail" :alt="post.title">
                 <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">

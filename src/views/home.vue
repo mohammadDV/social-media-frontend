@@ -148,7 +148,7 @@
                                             </div>
                                             <!-- <ul class="news-list">
                                                 <li v-for="(post, index) in posts[4]" :key="index" class="news-item">
-                                                  <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
@@ -170,7 +170,7 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[3]" :key="index" class="news-item">
-                                                  <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
@@ -194,7 +194,7 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[1]" :key="index" class="news-item">
-                                                  <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
@@ -216,7 +216,7 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[2]" :key="index" class="news-item">
-                                                  <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
@@ -238,7 +238,7 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[3]" :key="index" class="news-item">
-                                                  <router-link :to="`news/${post.id}/${post.slug}`" :title="post.title">
+                                                  <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
                                                       <span class="material-icons size-font text-primary">
                                                       double_arrow
                                                       </span>
@@ -320,13 +320,13 @@
                                     <div class="col-12 col-lg-6" v-for="(post, index) in posts[5]" :key="index">
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
-                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`">
                                                     <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" :src="post.thumbnail" :alt="post.title">
                                                     <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">
                                                 </router-link>
                                             </div>
                                             <div class="flex-grow p-2">
-                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`">
                                                     <h3 class="h-[20px] overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
                                                     <p class="text-xs text-gray-700 h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
                                                 </router-link>
@@ -367,7 +367,7 @@
                                                 <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">
                                             </div>
                                             <div class="flex-grow p-2">
-                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="`/news/${post.id}/${post.slug}`">
+                                                <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`">
                                                     <h3 class="h-[20px] overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
                                                     <p class="text-xs text-gray-700 h-[29px] overflow-hidden w-full"> {{ post.summary }} </p>
                                                 </router-link>

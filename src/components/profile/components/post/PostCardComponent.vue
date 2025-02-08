@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="tweet-body mt-2 p-2">
-            <router-link class="text-black text-decoration-none" :title="post?.title" :to="`/news/${post.id}/${post.slug}`">
+            <router-link class="text-black text-decoration-none" :title="post?.title" :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`">
                 {{ post?.title }}
                 <img v-if="post?.image?.length > 0" :src="post.image"/>
             </router-link>

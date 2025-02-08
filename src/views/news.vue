@@ -3,7 +3,7 @@
   import {useApi} from '@/utils/api.ts';
   import { onMounted, ref, watch, computed } from 'vue';
 
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
@@ -15,6 +15,8 @@
   import { useHead } from '@unhead/vue';
 
   import jalaliMoment from 'moment-jalaali';
+
+  const router = useRouter();
 
   const { t } = useI18n();    
   const advertises = ref([]);
@@ -83,6 +85,12 @@
                 getAuthorPosts(post);
                 categories.value = post.value.categories;
                 formattedDate(response.data);
+
+                if (post.value.type == 1) {
+                    router.push({
+                        path: `/video/${post.value.id}/${post.value.slug}`
+                    })
+                }
 
                 const jsonld = {
                     "@context": "https://schema.org",
@@ -274,7 +282,7 @@
                                         </router-link>
                                     </li> -->
                                     <!-- <li class="breadcrumb-item">
-                                        <router-link :to="`/news/${post.id}/${post.slug}`" :title="post?.title">
+                                        <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post?.title">
                                             {{ post?.title }}
                                         </router-link>
                                     </li>
@@ -364,7 +372,7 @@
                                         <ul class="news-list">
                                             <template  v-for="(post, index) in authorPosts" :key="index">
                                                 <li v-if="index < 5" class="news-item">
-                                                    <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title" class="news">
+                                                    <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title" class="news">
                                                         <span class="material-icons size-font text-primary">
                                                         double_arrow
                                                         </span>
@@ -383,7 +391,7 @@
                                     <ul class="news-list" v-if="latest?.length > 0">
                                         <template  v-for="(post, index) in latest" :key="index">
                                             <li v-if="index < 5" class="news-item">
-                                                <router-link :to="`/news/${post.id}/${post.slug}`" :title="post.title" class="news">
+                                                <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title" class="news">
                                                     <span class="material-icons size-font text-primary">
                                                     double_arrow
                                                     </span>

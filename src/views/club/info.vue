@@ -274,7 +274,7 @@ const getFollowers = () => {
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
                     <div class="cursor-pointer" v-for="(post, index) in posts" :key="index">
-                        <router-link :to="`/news/${post.id}/${post.slug}`" class="text-decoration-none flex p-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-white  hover:bg-gray-200 xs:flex xs:flex-col">
+                        <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" class="text-decoration-none flex p-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-white  hover:bg-gray-200 xs:flex xs:flex-col">
                             <div class="flex-none">
                                 <img class="rounded-md h-[100px]" :src="post.image" alt="img">
                             </div>
@@ -307,7 +307,7 @@ const getFollowers = () => {
                     </router-link>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-                    <router-link :to="`/news/${post.id}/${post.slug}`" v-for="(post, index) in videos" :key="index" class="text-decoration-none flex-col p-2 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
+                    <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" v-for="(post, index) in videos" :key="index" class="text-decoration-none flex-col p-2 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
                         <div>
                             <img class="rounded-md w-full h-[150px]" :src="post.image" :alt="post.title">
                         </div>

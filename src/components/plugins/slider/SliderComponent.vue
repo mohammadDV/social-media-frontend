@@ -3,7 +3,7 @@
       <div v-for="(slide, index) in slides" :key="index" class="slide" :class="{ active: index === activeIndex }">
         <div class="splide__slide">
             <div class="news-slider-item">
-                <router-link class="stretched-link" :to="`/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
+                <router-link class="stretched-link" :to="slide?.type == 1 ? `/video/${slide.id}/${slide.slug}` : `/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
                 <div class="row">
                     <!-- Text Area -->
                     <div class="col-12 col-lg-6 text-area">

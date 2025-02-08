@@ -1,0 +1,416 @@
+<script setup>
+
+  import {useApi} from '@/utils/api.ts';
+  import { onMounted, ref, watch, computed } from 'vue';
+
+  import { useRoute, useRouter } from 'vue-router';
+  import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
+  import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
+  import CommentComponent from '@/components/site/components/comments/CommentComponent';
+  import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
+  import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
+  import VideoPlayerComponent from '@/components/site/components/video/VideoPlayerComponent';
+  import { useI18n } from "vue-i18n";  
+  import { useHead } from '@unhead/vue';
+
+  import jalaliMoment from 'moment-jalaali';
+
+
+  const router = useRouter();
+
+  const { t } = useI18n();    
+  const advertises = ref([]);
+  const timestamp = ref('');
+  const authorPosts = ref([]);
+  const latest = ref([]);
+  const challenged = ref([]);
+  const categories = ref([]);
+  const popular = ref([]);
+  const specialPosts = ref([]);
+  const specialVideos = ref([]);
+
+  const post = ref({});
+
+  const route = useRoute();
+
+  const formattedDate = (post) => {
+        const date = new Date(post.created_at);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        timestamp.value = `${hours}:${minutes} ${year}/${month}/${day}`;
+    }
+
+  onMounted(() => {
+    getPost()
+    getAdvertises();
+    getPosts();
+    getComments();
+  });
+
+  const updateComments = () => {
+    page.value = 1;
+    getComments(1);
+  }
+
+  const getAdvertises = () => {
+    useApi().get('/api/advertise')
+        .then((response) => {
+            advertises.value = response.data;
+        });
+  }
+
+  const removeCircularReferences = () => {
+  const seen = new Set();
+  return function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+}
+
+  const getPost = () => {
+    
+    if (route.params.id != undefined) {
+        useApi().get(`/api/post/${route.params.id}`)
+            .then((response) => {
+                post.value = response.data;
+                getAuthorPosts(post);
+                categories.value = post.value.categories;
+                formattedDate(response.data);
+
+                if (post.value.type != 1) {
+                    router.push({
+                        path: `/news/${post.value.id}/${post.value.slug}`
+                    })
+                }
+
+                const jsonld = {
+                    "@context": "https://schema.org",
+                    "@type": "Article",
+                    "headline": `ویدیو: ` + response.data?.title,
+                    "url": computed(() => window.location.href),
+                    "description": `ویدیو: ` + response.data?.summary,
+                    "image": response.data?.image,
+                    "datePublished": jalaliMoment(response.data?.created_at).format('YYYY/M/D'),
+                    "dateModified": jalaliMoment(response.data?.updated_at).format('YYYY/M/D'),
+                    "mainEntityOfPage": computed(() => window.location.href),
+                    "author": {
+                        "@type": "Person",
+                        "name": response.data?.user?.nickname
+                    },
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": t('site.Website name'),
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://varzeshpod.com/site/images/logo.png"
+                        }
+                    }
+                }
+                
+                useHead({
+                    script: [
+                        {
+                            hid: "dynamic-json-ld",
+                            type: "application/ld+json",
+                            textContent: JSON.stringify(jsonld, removeCircularReferences())
+                        }
+                    ],
+                    title: `ویدیو ${response.data?.title} | ${t('site.Website name')}`,
+                    link: [
+                        {
+                        rel: 'canonical',
+                        href: computed(() => window.location.href)
+                        }
+                    ],
+                    meta: [
+                        {
+                            name: `description`,
+                            content: `ویدیو: ` + response.data?.summary
+                        },
+                        {
+                            property: `og:title`,
+                            content: `ویدیو: ` + response.data?.title
+                        },
+                        {
+                            property: `og:type`,
+                            content: 'article'
+                        },
+                        {
+                            property: `og:description`,
+                            content: `ویدیو: ` + response.data?.summary
+                        },
+                        {
+                            property: `og:image`,
+                            content: response.data?.image
+                        },
+                        {
+                            property: `og:url`,
+                            content: computed(() => window.location.href)
+                        },
+                        {
+                            name: `twitter:title`,
+                            content: `ویدیو: ` + response.data?.title
+                        },
+                        {
+                            name: `twitter:description`,
+                            content: `ویدیو: ` + response.data?.summary
+                        },
+                        {
+                            name: `twitter:image:src`,
+                            content: response.data?.image
+                        },
+                        {
+                            name: `twitter:url`,
+                            content: computed(() => window.location.href)
+                        },
+                    ]
+                })
+            });
+    }
+  }
+
+  const getPosts = () => {
+    useApi().get('/api/suggested-posts')
+        .then((response) => {
+            latest.value = response?.data?.latest;
+            challenged.value = response?.data?.challenged;
+            popular.value = response?.data?.popular;
+            specialPosts.value = response?.data?.specialPosts;
+            specialVideos.value = response?.data?.specialVideos;
+        });
+  }
+
+  const getAuthorPosts = () => {
+    useApi().get('/api/author-posts/' + post.value?.user?.id)
+        .then((response) => {
+            authorPosts.value = response?.data;
+        });
+  }
+
+    const comments = ref([]);
+    const page = ref(1);
+    const more = ref(false);
+    const loading = ref(false);
+
+    const getComments = (submit = 0) => {
+
+        loading.value = true;
+         
+        if (page.value == 1) {
+            comments.value = [];
+        }
+
+        let url = `/api/comment/post/${route?.params?.id}?page=${page.value}`;
+
+        if (submit == 1) {
+            url = `/api/comment/post/${route?.params?.id}?page=${page.value}&submit=1`;
+        }
+
+         useApi().get(url)
+            .then((response) => {
+
+                if (response.data?.data) {
+
+                    comments.value.push(...response.data.data);
+    
+                    if (response.data.total > page.value * response.data.per_page) {
+                        more.value = true;
+                    } else {
+                        more.value = false;
+                    }
+    
+                    page.value++;
+                }
+            })
+            .finally(() => {
+                loading.value = false;
+            })
+    }
+
+    watch(() => route.params.id, () => {
+        if (route.params.id) {
+            getPost();
+            page.value = 1;
+            getComments();
+        } 
+    });
+
+
+</script>
+
+<template>
+    <div class="container-xxl">
+        <main class="mb-4 mt-3">
+            <div class="row">
+                <div class="col-12 col-lg-2 ads-column item-column">
+                    <vertical-advertise-component :key="post.id" v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
+                </div>
+                <div class="col-12 col-lg-7 flex-grow-1">
+                    <div class="card vt-news-card breadcrumb-card mb-3">
+                        <div class="card-body">
+                            <div class="post post--header" v-if="post.type == 1">
+                                <VideoPlayerComponent :key="post.id" :video="post.video" :image="post.image" :advertise="post?.advertise?.file"/>
+                                <div class="extend-info">
+                                    <span>
+                                        <router-link 
+                                                :to="`/member/${post.user?.id}`"  
+                                                :title="post.user?.nickname"
+                                                class="text-decoration-none cursor-pointer text-gray-500 fs-6 post--subtitle"
+                                            >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
+                                    </span>
+                                    <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
+                                    <span>
+                                        <span class="post-date">{{ $t('site.Time') }}: {{ jalaliMoment(post.created_at).format('HH:mm jYYYY/jM/jD') }}</span>
+                                        <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card vt-news-card breadcrumb-card mb-3">
+                        <div class="card-body">
+                            <div class="text-primary">
+                                <h1 class="text-xl">{{ post?.title }}</h1>
+                                <h2 class="fs-6 text-sm text-gray-500 post--subtitle mt-2">{{ post.pre_title }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card vt-news-card mb-3">
+                        <div class="card-body">
+                            <div class="post">
+                                <div class="post--body">
+                                    <div class="flex gap-2 flex-wrap">
+                                        <span>دسته بندی ها:</span>
+                                        <span v-for="(category,index) in categories" class="" :key="index">
+                                            <router-link class="text-decoration-none" :to="`/category/${category?.id}/${category?.slug}`" :title="category?.title">
+                                                {{ category?.title }}
+                                            </router-link>
+                                            <span v-if="categories.length -1 != index">
+                                                |
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <hr>
+                                    <div class="post--lead">
+                                        <span>{{ post.summary }}</span>
+                                    </div>
+                                    <div id="body-content" v-html="post.content"></div>
+                                </div>
+                            </div>
+                            <div v-if="post?.tags?.length > 0" class="post-tag-list">
+                                <div v-for="(tag, index) in post.tags" :key="index" class="tag-list-item">
+                                    <span class="material-icons text-primary size-font">
+                                    tag
+                                    </span>
+                                    <span>{{ tag.title }}</span>
+                                    <router-link :to="`/tag/${tag.id}/${tag.title}`" :title="tag.title" class="stretched-link"></router-link>
+                                </div>
+                            </div>
+                            <div class="relative-posts">
+                                <template v-if="authorPosts?.length > 0">
+                                    <div class="relative-posts--header">
+                                        <span class="relative-posts--title">خبرهای پربازدید {{ post.user?.nickname }} </span>
+                                    </div>
+                                    <div class="relative-posts--body">
+                                        <ul class="news-list">
+                                            <template  v-for="(post, index) in authorPosts" :key="index">
+                                                <li v-if="index < 5" class="news-item">
+                                                    <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title" class="news">
+                                                        <span class="material-icons size-font text-primary">
+                                                        double_arrow
+                                                        </span>
+                                                        {{ post.title}}
+                                                    </router-link>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <CommentFormComponent :key="post.id" @updateComments="updateComments"/>
+                    <CommentComponent :key="post.id" :comments="comments" @updateComments="updateComments"/>
+                    <div class="text-center">
+                        <button v-if="more" class="btn btn-light" @click="getComments()">
+                            <span>{{ $t('site.More post') }}</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 flex-grow-1">
+                    <LatestNewsComponent 
+                        :key="post.id"
+                        :latest="latest"
+                        :challenged="challenged"
+                        :popular="popular"/>
+                    <full-slider-component :key="post.id" :slides="specialVideos"></full-slider-component>
+                </div>
+            </div>
+        </main>
+    </div>
+  </template>
+
+
+<style>
+
+#body-content h5 {
+    font-size: 1.10rem;
+    line-height: 1.75rem;
+}
+
+#body-content h4 {
+    font-size: 1.15rem;
+    line-height: 1.75rem;
+}
+
+#body-content h3 {
+    font-size: 1.20rem;
+    line-height: 1.75rem;
+}
+
+#body-content h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+#body-content h1 {
+    font-size: 1.50rem;
+    line-height: 1.75rem;
+}
+
+#body-content p {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+#body-content p {
+    font-size: 1.08rem;
+    line-height: 1.8;
+}
+
+blockquote {
+    background: #eeeeeea6;
+    padding: 10px 15px;
+    border-right: 3px Solid red;
+}
+.arrow-btn .material-icons {
+    font-size: 35px !important;
+} 
+.slider .arrow-btn {
+    height: 35px !important;
+}
+
+</style>
+
+
+  

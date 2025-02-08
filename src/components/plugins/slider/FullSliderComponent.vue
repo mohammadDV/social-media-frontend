@@ -57,7 +57,7 @@ onUnmounted(() => {
                 <div class="slider--caption-title">{{ slide.title }}</div>
                 <div v-if="hasDate" class="slider--caption-date px-1">{{ jalaliMoment(currentDate).format('dddd jD jMMMM') }}</div>
             </div>
-            <router-link class="stretched-link" :to="`/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
+            <router-link class="stretched-link" :to="slide?.type == 1 ? `/video/${slide.id}/${slide.slug}` : `/news/${slide.id}/${slide.slug}`" :title="slide.title"></router-link>
         </div>
       </div>
       <div @click="nextSlide" class="arrow-btn next">
