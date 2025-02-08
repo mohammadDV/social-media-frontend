@@ -5,6 +5,7 @@ import { helper } from '@/utils/helper.ts';
 // Import layouts
 
 import MainLayout from '@/layouts/MainLayout.vue';
+import VideoLayout from '@/layouts/VideoLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import ClubLayout from '@/layouts/ClubLayout.vue';
 import ProfileLayout from '@/layouts/ProfileLayout.vue';
@@ -13,6 +14,7 @@ import MemberLayout from '@/layouts/MemberLayout.vue';
 // Import views
 import Home from '@/views/home.vue';
 import News from '@/views/news.vue';
+import Video from '@/views/video.vue';
 import AdvertiseOrder from '@/views/advertiseOrder.vue';
 import Page from '@/views/page.vue';
 import Member from '@/views/member/index.vue';
@@ -115,6 +117,21 @@ const routes = [
         name: 'club.info',
         path: '/club/:id',
         component: ClubInfo,
+      }
+    ],
+  },
+  {
+    path: '/video',
+    meta: {
+      layout: 'video',
+      requiresAuth: false,
+    },
+    component: VideoLayout,
+    children: [
+      {
+        name: 'video',
+        path: '/video/:id/:slug',
+        component: Video,
       }
     ],
   },
