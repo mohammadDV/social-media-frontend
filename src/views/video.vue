@@ -5,7 +5,6 @@
 
   import { useRoute, useRouter } from 'vue-router';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
-  import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import CommentComponent from '@/components/site/components/comments/CommentComponent';
   import CommentFormComponent from '@/components/site/components/comments/CommentFormComponent';
@@ -15,6 +14,7 @@
   import { useHead } from '@unhead/vue';
 
   import jalaliMoment from 'moment-jalaali';
+
 
   const router = useRouter();
 
@@ -86,18 +86,18 @@
                 categories.value = post.value.categories;
                 formattedDate(response.data);
 
-                if (post.value.type == 1) {
+                if (post.value.type != 1) {
                     router.push({
-                        path: `/video/${post.value.id}/${post.value.slug}`
+                        path: `/news/${post.value.id}/${post.value.slug}`
                     })
                 }
 
                 const jsonld = {
                     "@context": "https://schema.org",
                     "@type": "Article",
-                    "headline": response.data?.title,
+                    "headline": `ویدیو: ` + response.data?.title,
                     "url": computed(() => window.location.href),
-                    "description": response.data?.summary,
+                    "description": `ویدیو: ` + response.data?.summary,
                     "image": response.data?.image,
                     "datePublished": jalaliMoment(response.data?.created_at).format('YYYY/M/D'),
                     "dateModified": jalaliMoment(response.data?.updated_at).format('YYYY/M/D'),
@@ -124,7 +124,7 @@
                             textContent: JSON.stringify(jsonld, removeCircularReferences())
                         }
                     ],
-                    title: `${response.data?.title} | ${t('site.Website name')}`,
+                    title: `ویدیو ${response.data?.title} | ${t('site.Website name')}`,
                     link: [
                         {
                         rel: 'canonical',
@@ -134,11 +134,11 @@
                     meta: [
                         {
                             name: `description`,
-                            content: response.data?.summary
+                            content: `ویدیو: ` + response.data?.summary
                         },
                         {
                             property: `og:title`,
-                            content: response.data?.title
+                            content: `ویدیو: ` + response.data?.title
                         },
                         {
                             property: `og:type`,
@@ -146,7 +146,7 @@
                         },
                         {
                             property: `og:description`,
-                            content: response.data?.summary
+                            content: `ویدیو: ` + response.data?.summary
                         },
                         {
                             property: `og:image`,
@@ -158,11 +158,11 @@
                         },
                         {
                             name: `twitter:title`,
-                            content: response.data?.title
+                            content: `ویدیو: ` + response.data?.title
                         },
                         {
                             name: `twitter:description`,
-                            content: response.data?.summary
+                            content: `ویدیو: ` + response.data?.summary
                         },
                         {
                             name: `twitter:image:src`,
@@ -236,10 +236,6 @@
             })
     }
 
-    const isPostRecent = (createdAt) => {
-      return new Date(createdAt) < new Date('2024-11-27');
-    }
-
     watch(() => route.params.id, () => {
         if (route.params.id) {
             getPost();
@@ -253,13 +249,7 @@
 
 <template>
     <div class="container-xxl">
-        <main class="mb-4">
-            <template v-if="isPostRecent(post.created_at)">
-                <horizontal-advertise-component :key="post.id" :advertises="advertises[1]"/>
-            </template>
-            <template v-else>
-                <div class="m-2">&nbsp;</div>
-            </template>
+        <main class="mb-4 mt-3">
             <div class="row">
                 <div class="col-12 col-lg-2 ads-column item-column">
                     <vertical-advertise-component :key="post.id" v-if="advertises[7]?.length > 0" :advertises="advertises[7]"/>
@@ -267,74 +257,36 @@
                 <div class="col-12 col-lg-7 flex-grow-1">
                     <div class="card vt-news-card breadcrumb-card mb-3">
                         <div class="card-body">
+                            <div class="post post--header" v-if="post.type == 1">
+                                <VideoPlayerComponent :key="post.id" :video="post.video" :image="post.image" :advertise="post?.advertise?.file"/>
+                                <div class="extend-info">
+                                    <span>
+                                        <router-link 
+                                                :to="`/member/${post.user?.id}`"  
+                                                :title="post.user?.nickname"
+                                                class="text-decoration-none cursor-pointer text-gray-500 fs-6 post--subtitle"
+                                            >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
+                                    </span>
+                                    <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
+                                    <span>
+                                        <span class="post-date">{{ $t('site.Time') }}: {{ jalaliMoment(post.created_at).format('HH:mm jYYYY/jM/jD') }}</span>
+                                        <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card vt-news-card breadcrumb-card mb-3">
+                        <div class="card-body">
                             <div class="text-primary">
                                 <h1 class="text-xl">{{ post?.title }}</h1>
                                 <h2 class="fs-6 text-sm text-gray-500 post--subtitle mt-2">{{ post.pre_title }}</h2>
                             </div>
-                            <!-- <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb"> -->
-                                    <!-- <li class="breadcrumb-item">
-                                        <router-link to="/" :title="$t('site.Main page')">{{ $t('site.Main page') }}</router-link>
-                                    </li> -->
-                                    <!-- <li v-for="(category,index) in categories" class="breadcrumb-item" :key="index">
-                                        <router-link :to="`/category/${category?.id}/${category?.slug}`" :title="category?.title">
-                                            {{ category?.title }}
-                                        </router-link>
-                                    </li> -->
-                                    <!-- <li class="breadcrumb-item">
-                                        <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post?.title">
-                                            {{ post?.title }}
-                                        </router-link>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        {{ $t('site.You are here') }}
-                                    </li> -->
-                                <!-- </ol>
-                            </nav> -->
                         </div>
                     </div>
                     <div class="card vt-news-card mb-3">
                         <div class="card-body">
                             <div class="post">
-                                <div class="post--header" v-if="post.type == 1">
-                                    <VideoPlayerComponent :key="post.id" :video="post.video" :image="post.image" :advertise="post?.advertise?.file"/>
-                                    <div class="extend-info">
-                                        <span>
-                                            <router-link 
-                                                    :to="`/member/${post.user?.id}`"  
-                                                    :title="post.user?.nickname"
-                                                    class="text-decoration-none cursor-pointer text-gray-500 fs-6 post--subtitle"
-                                                >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
-                                        </span>
-                                        <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
-                                        <span>
-                                            <span class="post-date">{{ $t('site.Time') }}: {{ jalaliMoment(post.created_at).format('HH:mm jYYYY/jM/jD') }}</span>
-                                            <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div v-else class="post--header">
-                                    <div class="post--cover ratio ratio-16x9"
-                                    :style="`background-image: url('${post?.image}')`">
-                                        <div class="post--header--overly"></div>
-                                        <div class="post--head-info">
-                                            <div class="extend-info">
-                                                <span class="post-id">{{ $t('site.News id') }}: {{ post.id }}</span>
-                                                <span>
-                                                    <span class="post-date">{{ $t('site.Time') }}: {{ jalaliMoment(post.created_at).format('HH:mm jYYYY/jM/jD') }}</span>
-                                                    <span class="post-view">{{ $t('site.Views count') }}: {{ post.view }}</span>
-                                                </span>
-                                            </div>
-                                            <div class="main-info">
-                                                <router-link 
-                                                    :to="`/member/${post.user?.id}`"  
-                                                    :title="post.user?.nickname"
-                                                    class="text-decoration-none cursor-pointer text-gray-200 fs-6 post--subtitle"
-                                                >نویسنده: {{ post.user?.nickname }}  | مشاهده پروفایل</router-link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="post--body">
                                     <div class="flex gap-2 flex-wrap">
                                         <span>دسته بندی ها:</span>
@@ -383,24 +335,6 @@
                                         </ul>
                                     </div>
                                 </template>
-                                <!-- <hr>
-                                <div class="relative-posts--header">
-                                    <span class="relative-posts--title">اخبار مرتبط</span>
-                                </div>
-                                <div class="relative-posts--body">
-                                    <ul class="news-list" v-if="latest?.length > 0">
-                                        <template  v-for="(post, index) in latest" :key="index">
-                                            <li v-if="index < 5" class="news-item">
-                                                <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title" class="news">
-                                                    <span class="material-icons size-font text-primary">
-                                                    double_arrow
-                                                    </span>
-                                                    {{ post.title}}
-                                                </router-link>
-                                            </li>
-                                        </template>
-                                    </ul>
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -414,17 +348,11 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-3 flex-grow-1">
-                    
-                    <div class="mb-75">
-                        <full-slider-component :key="post.id" :slides="specialPosts"></full-slider-component>
-                    </div>
-
-                    <LatestNewsComponent :key="post.id"
-                            :latest="latest"
-                            :challenged="challenged"
-                            :popular="popular"
-                        />
-                    <!-- specialVideos -->
+                    <LatestNewsComponent 
+                        :key="post.id"
+                        :latest="latest"
+                        :challenged="challenged"
+                        :popular="popular"/>
                     <full-slider-component :key="post.id" :slides="specialVideos"></full-slider-component>
                 </div>
             </div>

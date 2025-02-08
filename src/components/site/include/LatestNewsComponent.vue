@@ -52,7 +52,7 @@
                     <div v-if="tabItem == 'latest'" class="tab-pane fade show active"  id="latest"  role="tabpanel"  aria-labelledby="latest-tab">
                         <ul v-if="latest?.length > 0" class="news-list">
                             <li v-for="(post, index) in latest" :key="index" class="news-item">
-                                <router-link :to="`/news/${post.id}/${post.slug}`"  :title="post.title">
+                                <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`"  :title="post.title">
                                     <span class="material-icons size-font text-primary">
                                     double_arrow
                                     </span>
@@ -64,7 +64,7 @@
                     <div v-if="tabItem == 'challenged'" class="tab-pane fade show active"  id="conv"  role="tabpanel"  aria-labelledby="conv-tab">
                         <ul v-if="challenged?.length > 0" class="news-list">
                             <li v-for="(post, index) in challenged" :key="index" class="news-item">
-                                <router-link :to="`/news/${post.id}/${post.slug}`"  :title="post.title">
+                                <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`"  :title="post.title">
                                     <span class="material-icons size-font text-primary">
                                     double_arrow
                                     </span>
@@ -76,7 +76,7 @@
                     <div v-if="tabItem == 'popular'" class="tab-pane fade  show active" id="hot" role="tabpanel" aria-labelledby="hot-tab">
                         <ul v-if="popular?.length > 0" class="news-list">
                             <li v-for="(post, index) in popular" :key="index" class="news-item">
-                                <router-link :to="`/news/${post.id}/${post.slug}`"  :title="post.title">
+                                <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`"  :title="post.title">
                                     <span class="material-icons size-font text-primary">
                                     double_arrow
                                     </span>
