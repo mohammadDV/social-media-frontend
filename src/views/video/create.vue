@@ -166,8 +166,8 @@ const initialFormState = {
             
 
             <video class="mt-3" v-if="form.file" width="100" height="240" controls>
-                <source :src="form.file" type="video/mp4">
-                <source :src="form.file" type="video/ogg">
+                <source v-lazy="form.file" type="video/mp4">
+                <source v-lazy="form.file" type="video/ogg">
             </video>
 
             <div class="w-100 mt-3">

@@ -338,7 +338,7 @@ const resetForm = () => {
         </div>
         <div class="tweet-body mt-2 p-2">
             {{ status?.text }}
-            <img v-if="status?.file?.length > 0" :src="status.file"/>
+            <img v-if="status?.file?.length > 0" v-lazy="status.file"/>
         </div>
         <div class="tweet-exes">
             <button @click="likeStatus(status.id)" :class="{
@@ -395,7 +395,7 @@ const resetForm = () => {
                     :placeholder="$t('site.Please share your post')"/>
             </div>
             <div v-if="form.file?.length > 0">
-                <img class="thumbnail w-[100px] rounded mt-2" :src="form.file" alt="image">
+                <img class="thumbnail w-[100px] rounded mt-2" v-lazy="form.file" alt="image">
             </div>
             <VTFile
                 class="mb-1"

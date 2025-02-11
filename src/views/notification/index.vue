@@ -78,7 +78,7 @@
                         <div class="card-body">
                             <div class="tweet-user-avatar">
                                 <router-link v-if="item?.model?.profile_photo_path?.length > 0 && !item.is_admin" class="text-black text-decoration-none" :to="`/member/${item?.model?.id}`">
-                                    <img class="rounded-full w-[120px] h-[120px]" :src="item.model.profile_photo_path" :alt="item.nickname" />
+                                    <img class="rounded-full w-[120px] h-[120px]" v-lazy="item.model.profile_photo_path" :alt="item.nickname" />
                                 </router-link>
                                 <a v-else>
                                     <img class="rounded-full w-[120px] h-[120px]" src="https://cdn.varzeshpod.com/static/profile.png" :alt="$t('site.Admin')" />
@@ -97,7 +97,7 @@
                                 <div class="tweet-body pt-2">
                                     <router-link v-if="item?.link?.length > 0" class="mt-2 text-black text-decoration-none" :to="item?.link">
                                         {{ item?.message }}
-                                        <img v-if="item?.file?.length > 0" :src="item.file"/>
+                                        <img v-if="item?.file?.length > 0" v-lazy="item.file"/>
                                     </router-link>
                                     <template v-else>
                                         <p>
@@ -108,7 +108,7 @@
                                             <p class="truncate">
                                                 {{  item?.model?.text }}
                                             </p>
-                                            <img v-if="item?.model?.file?.length > 0" :src="item?.model?.file"/>
+                                            <img v-if="item?.model?.file?.length > 0" v-lazy="item?.model?.file"/>
                                         </div>
                                     </template>
                                 </div>

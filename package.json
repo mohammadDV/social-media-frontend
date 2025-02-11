@@ -27,6 +27,7 @@
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-i18n": "^9.4.1",
+    "vue-lazyload": "^3.0.0",
     "vue-recaptcha": "^3.0.0-alpha.6",
     "vue-recaptcha-v3": "^2.0.1",
     "vue-router": "^4.2.5",

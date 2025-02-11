@@ -25,13 +25,13 @@
                                 <img v-if="slide['slide'] != undefined && slide['slide'] != '' && slide['slide'] != null"
                                     width="246"
                                     height="150"
-                                    :src="slide['slide']"
+                                    v-lazy="slide['slide']"
                                     :alt="slide.title"
                                 />
                                 <img v-else
                                     width="246"
                                     height="150"
-                                    :src="slide['image']"
+                                    v-lazy="slide['image']"
                                     :alt="slide.title"
                                 />
                             </div>

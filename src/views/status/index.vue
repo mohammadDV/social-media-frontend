@@ -176,7 +176,7 @@
                     </div>
                 </template>
                 <template #item-file="item">
-                    <img v-if="item?.file?.length > 0" :src="item.file" alt="image" class="w-[50px]">
+                    <img v-if="item?.file?.length > 0" v-lazy="item.file" alt="image" class="w-[50px]">
                     <p v-else>-</p>
                 </template>
                 <template #item-created_at="item">

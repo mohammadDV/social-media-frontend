@@ -107,7 +107,7 @@
                     <div class="item-avatar club-avatar">
                         <router-link class="user-link" :to="`/club/${item.id}`" :title="item.title">
                             <img
-                                :src="item.image"
+                                v-lazy="item.image"
                                 :alt="item.title"
                             />
                         </router-link>

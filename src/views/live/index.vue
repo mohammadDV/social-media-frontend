@@ -180,7 +180,7 @@
                     </div>
                 </template>
                 <template #item-image="item">
-                    <img v-if="item?.image?.length > 0" :src="item.image" alt="image" class="w-[50px]">
+                    <img v-if="item?.image?.length > 0" v-lazy="item.image" alt="image" class="w-[50px]">
                 </template>
                 <template #empty-message>
                     <a >{{ $t('site.nothing here') }}</a>
