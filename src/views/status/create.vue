@@ -327,8 +327,8 @@ const modules = ref([
             </div>
 
             <video class="mt-3" v-if="form.type == 1 && form.video" width="100" height="240" controls>
-                <source v-lazy="form.video" type="video/mp4">
-                <source v-lazy="form.video" type="video/ogg">
+                <source :src="form.video" type="video/mp4">
+                <source :src="form.video" type="video/ogg">
                 Your browser does not support the video tag.
             </video>
 
