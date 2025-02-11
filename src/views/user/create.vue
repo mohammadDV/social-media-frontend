@@ -255,7 +255,7 @@ const router = useRouter();
                       <div class="">
                         <div class="preview-container">
                           <img v-if="form?.profile_photo_path?.length > 0"
-                            :src="form.profile_photo_path"
+                            v-lazy="form.profile_photo_path"
                             id="profileCoverPreview"
                             class="profile-preview fix-hidden"
                             alt="profile cover preview"
@@ -285,7 +285,7 @@ const router = useRouter();
                         <div class="preview-container-cover">
                           <img
                             v-if="form?.bg_photo_path?.length > 0"
-                            :src="form.bg_photo_path"
+                            v-lazy="form.bg_photo_path"
                             id="profileCoverPreview"
                             class="profile-preview fix-hidden"
                             alt="profile cover preview"

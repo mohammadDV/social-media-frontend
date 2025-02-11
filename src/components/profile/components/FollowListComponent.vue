@@ -29,7 +29,7 @@
         <div class="flex gap-6">
             <div>
                 <router-link :to="`/member/${follower.id}`" class="no-underline">
-                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
+                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " v-lazy="follower.profile_photo_path" alt="">
                 </router-link>
             </div>
             <div class="flex-col flex-[50%] gap-9">

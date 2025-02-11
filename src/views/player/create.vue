@@ -265,7 +265,7 @@
             </div>
             
             <div v-if="form.image?.length > 0">
-                <img class="thumbnail w-[100px] rounded mt-2" :src="form.image" alt="image">
+                <img class="thumbnail w-[100px] rounded mt-2" v-lazy="form.image" alt="image">
             </div>
 
             <VTFile

@@ -114,7 +114,7 @@
                     :placeholder="$t('site.Please share your post')"/>
             </div>
             <div v-if="file?.length > 0">
-                <img class="thumbnail w-[100px] rounded mt-2" :src="file" alt="image">
+                <img class="thumbnail w-[100px] rounded mt-2" v-lazy="file" alt="image">
             </div>
             <VTFile
                 class="mb-5"

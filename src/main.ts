@@ -32,6 +32,8 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // persian date picker
 import Vue3PersianDatetimePicker from 'vue3-persian-datetime-picker'
 
+import VueLazyload from 'vue-lazyload';
+
 import { VueReCaptcha } from "vue-recaptcha-v3";
 
 import vue3GoogleLogin from 'vue3-google-login';
@@ -54,6 +56,7 @@ const globalOptions = {
 
 createApp(App)
     // .use(store)
+    .use(VueLazyload)
     .use(VueToast)
     .use(i18n)
     .use(pinia)

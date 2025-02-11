@@ -155,7 +155,7 @@
                     </div>
                 </template>
                 <template #item-image="item">
-                        <img :src="item.image" alt="image" class="w-[50px]">
+                        <img v-lazy="item.image" alt="image" class="w-[50px]">
                 </template>
                 <template #item-created_at="item">
                     {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}

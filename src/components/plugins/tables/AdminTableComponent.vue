@@ -44,7 +44,7 @@
       </div>
     </template>
     <template #item-image="item">
-        <img :src="item.image" alt="image" class="w-[50px]">
+        <img v-lazy="item.image" alt="image" class="w-[50px]">
     </template>
 
     <template #empty-message>

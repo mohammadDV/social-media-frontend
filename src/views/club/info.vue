@@ -148,7 +148,7 @@ const getFollowers = () => {
                 </div>
             </div>
             <div class="absolute left-0 bottom-0 top-0 m-[20px] flex gap-4 flex-col items-center">
-                <img class="w-[150px] h-[150px]" :src="info.image" alt="">
+                <img class="w-[150px] h-[150px]" v-lazy="info.image" alt="">
             </div>
         </div>
     </div>
@@ -161,21 +161,21 @@ const getFollowers = () => {
         <div v-for="(match, index) in matches" :key="index" class="rounded-md w-full bg-white">
             <div class="flex flex-col bg-vt-dark rounded-md text-white p-[10px] gap-[10px] ">
                 <div class="flex gap-[10px]">
-                    <img class="w-[20px] h-[20px]" :alt="match?.step?.league?.title" :src="match?.step?.league?.image">
+                    <img class="w-[20px] h-[20px]" :alt="match?.step?.league?.title" v-lazy="match?.step?.league?.image">
                     <span>{{ match?.step?.league?.title }}</span>
                 </div>
             </div>
             <div class="flex flex-col gap-[10px] p-[10px]">
                 <div class="flex justify-between">
                     <router-link class="text-gray-500 text-decoration-none flex gap-2 items-center justify-content-center" :to="`/club/${match?.team_home?.id}`" :title="match?.team_home?.title">
-                        <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_home?.title"  :src="match?.team_home?.image">
+                        <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_home?.title"  v-lazy="match?.team_home?.image">
                         <span>{{ match?.team_home?.title }}</span>
                     </router-link>
                     <div class="">{{ match?.hsc }}</div>
                 </div>
                 <div class="flex justify-between">
                     <router-link class="text-gray-500 text-decoration-none flex gap-2 items-center justify-content-center" :to="`/club/${match?.team_away?.id}`" :title="match?.team_away?.title">
-                        <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_away?.title" :src="match?.team_away?.image">
+                        <img class="rounded-full w-[25px] h-[25px]" :alt="match?.team_away?.title" v-lazy="match?.team_away?.image">
                         <span>{{ match?.team_away?.title }}</span>
                     </router-link>
                     <div class="">{{ match?.asc }}</div>
@@ -206,7 +206,7 @@ const getFollowers = () => {
                                 :class="{'bg-[#d1d5db]' : club.id === info.id}">
                                 <td class="px-2 py-2 text-sm ">{{ index + 1 }}</td>
                                 <td class="py-2 flex">
-                                    <img class="rounded-full w-[25px] h-[25px] mx-1" :alt="club.title" width="30" :src="club.image">
+                                    <img class="rounded-full w-[25px] h-[25px] mx-1" :alt="club.title" width="30" v-lazy="club.image">
                                     <router-link :title="club.title" :to="`/club/${club.id}`" class="no-underline text-base text-black">
                                         {{ club.title }}
                                     </router-link>
@@ -225,10 +225,10 @@ const getFollowers = () => {
                         <div class="flex gap-6">
                             <div>
                                 <router-link v-if="authStore?.user?.id > 0" :to="`/member/${follower.id}`" :title="follower.nickname" class="no-underline">
-                                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
+                                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " v-lazy="follower.profile_photo_path" alt="">
                                 </router-link>
                                 <a v-else @click="loginWarning" class="cursor-pointer no-underline">
-                                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " :src="follower.profile_photo_path" alt="">
+                                    <img class="shadow-follow-box rounded-full w-[70px] h-[70px] " v-lazy="follower.profile_photo_path" alt="">
                                 </a>
                             </div>
                             <div class="flex-col flex-[50%] gap-9">
@@ -276,7 +276,7 @@ const getFollowers = () => {
                     <div class="cursor-pointer" v-for="(post, index) in posts" :key="index">
                         <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" class="text-decoration-none flex p-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-white  hover:bg-gray-200 xs:flex xs:flex-col">
                             <div class="flex-none">
-                                <img class="rounded-md h-[100px]" :src="post.image" alt="img">
+                                <img class="rounded-md h-[100px]" v-lazy="post.image" alt="img">
                             </div>
                             <div class="flex-grow p-2">
                                 <h3 class="h-[20px] text-dark overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>
@@ -309,7 +309,7 @@ const getFollowers = () => {
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
                     <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" v-for="(post, index) in videos" :key="index" class="text-decoration-none flex-col p-2 p-[10px] items-center rounded-md bg-white  hover:bg-gray-100">
                         <div>
-                            <img class="rounded-md w-full h-[150px]" :src="post.image" :alt="post.title">
+                            <img class="rounded-md w-full h-[150px]" v-lazy="post.image" :alt="post.title">
                         </div>
                         <div class="flex-grow p-2">
                             <h3 class="text-dark h-[20px] overflow-hidden no-underline text-base"  href="">{{ post.title }}</h3>

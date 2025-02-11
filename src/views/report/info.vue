@@ -137,7 +137,7 @@ const { t } = useI18n();
                         </div>
                         <div v-else class="flex gap-4 mb-3">
                           <div class="last-chater text-gray-500">
-                              <img class="w-[200px]" v-if="report?.model?.file?.length > 0" :src="report?.model?.file" :alt="report?.model?.text">
+                              <img class="w-[200px]" v-if="report?.model?.file?.length > 0" v-lazy="report?.model?.file" :alt="report?.model?.text">
                           </div>
                           <div class="user-name">{{ report?.model?.text }}</div>
                         </div>

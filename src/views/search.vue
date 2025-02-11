@@ -197,8 +197,8 @@
                                     <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                         <div class="flex-none">
                                             <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`">
-                                                <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" :src="post.thumbnail" :alt="post.title">
-                                                <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">
+                                                <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" v-lazy="post.thumbnail" :alt="post.title">
+                                                <img v-else class="rounded-md h-[100px]" v-lazy="post.image" :alt="post.title">
                                             </router-link>
                                         </div>
                                         <div class="flex-grow p-2">
