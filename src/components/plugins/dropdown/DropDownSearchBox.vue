@@ -56,7 +56,7 @@ const closeDropDown = (element) => {
           <li class="p-2 hover:bg-slate-200 hover:rounded-3 cursor-pointer" v-for="(user, index) in users" :key="index">
             <router-link :to="`/member/${user.id}`" class="text-decoration-none text-gray-700">
                 <div class="flex gap-2 items-center ">
-                  <img :src="user.profile_photo_path" alt="" class="shadow-follow-box rounded-full w-[30px] h-[30px]">
+                  <img v-lazy="user.profile_photo_path" alt="" class="shadow-follow-box rounded-full w-[30px] h-[30px]">
                   <div>{{ user.nickname }}</div>
                 </div>
               </router-link>

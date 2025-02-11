@@ -91,7 +91,7 @@
             <div class="py-1 border-b-1 shadow-[1px_2px_0px_-1px_rgba(238,238,221,255)] text-black last-of-type:shadow-none last-of-type:border-b-none ">
               <div class="flex justify-content-between bg-[#f0f8ff] rounded-md p-2 gap-3 hover:bg-[#cbe0f2] hover:text-black ">
                 <div>
-                  <img v-if="option?.model?.profile_photo_path?.length > 0" :src="option?.model?.profile_photo_path" :alt="option?.model?.nickname" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
+                  <img v-if="option?.model?.profile_photo_path?.length > 0" v-lazy="option?.model?.profile_photo_path" :alt="option?.model?.nickname" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
                   <img v-else src="https://cdn.varzeshpod.com/static/profile.png" :alt="$t('site.Admin')" class="shadow-follow-box rounded-full w-[70px] h-[70px]">
                 </div> 
                 <div class="w-[80%]">

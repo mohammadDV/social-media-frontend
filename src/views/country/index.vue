@@ -172,7 +172,7 @@
                     </div>
                 </template>
                 <template #item-image="item">
-                    <img v-if="item?.image?.length > 0" :src="item.image" alt="image" class="w-[50px]">
+                    <img v-if="item?.image?.length > 0" v-lazy="item.image" alt="image" class="w-[50px]">
                 </template>
                 <template #item-created_at="item">
                     {{ jalaliMoment(item.created_at).format('jYYYY-jMM-jDD') }}

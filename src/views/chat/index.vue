@@ -322,7 +322,7 @@ const initialFormState = {
                      
                     <router-link class="text-black text-decoration-none" :to="chat.target_id == authStore?.user?.id ? `/member/${chat?.user?.id}` : `/member/${chat?.target?.id}`">
                       <img class="w-[50px] h-[50px] rounded-full"
-                            :src="chat.target_id == authStore?.user?.id ? chat?.user.profile_photo_path : chat?.target.profile_photo_path"
+                            v-lazy="chat.target_id == authStore?.user?.id ? chat?.user.profile_photo_path : chat?.target.profile_photo_path"
                             :alt="authStore?.user?.nickname"
                           />
                     </router-link>
@@ -458,7 +458,7 @@ const initialFormState = {
                       <div class="z-0 relative item-avatar">
                         <!-- <router-link :to="`/member/${ chat.target_id == authStore?.user?.id ? chat?.user.id : chat?.target.id}`"> -->
                           <img
-                            :src="chat.target_id == authStore?.user?.id ? chat?.user.profile_photo_path : chat?.target.profile_photo_path"
+                            v-lazy="chat.target_id == authStore?.user?.id ? chat?.user.profile_photo_path : chat?.target.profile_photo_path"
                             :alt="authStore?.user?.nickname"
                           />
                         <!-- </router-link> -->

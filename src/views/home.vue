@@ -321,8 +321,8 @@
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
                                                 <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`">
-                                                    <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" :src="post.thumbnail" :alt="post.title">
-                                                    <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">
+                                                    <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" v-lazy="post.thumbnail" :alt="post.title">
+                                                    <img v-else class="rounded-md h-[100px]" v-lazy="post.image" :alt="post.title">
                                                 </router-link>
                                             </div>
                                             <div class="flex-grow p-2">
@@ -363,8 +363,8 @@
                                     <div class="col-12 col-lg-6" v-for="(post, index) in posts[4]" :key="index">
                                         <div class="flex gap-2 flex-nowrap flex-wrap items-center justify-center rounded-md bg-gray-50  hover:bg-gray-100 xs:flex xs:flex-col">
                                             <div class="flex-none">
-                                                <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" :src="post.thumbnail" :alt="post.title">
-                                                <img v-else class="rounded-md h-[100px]" :src="post.image" :alt="post.title">
+                                                <img v-if="post?.thumbnail?.length > 0" class="rounded-md h-[100px]" v-lazy="post.thumbnail" :alt="post.title">
+                                                <img v-else class="rounded-md h-[100px]" v-lazy="post.image" :alt="post.title">
                                             </div>
                                             <div class="flex-grow p-2">
                                                 <router-link class="text-decoration-none cursor-pointer" :title="post.title" :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`">
@@ -393,7 +393,7 @@
                 <div class="col-12" v-for="(advertise, index) in advertises[3]" :key="index">
                     <div class="row-ads mb-2">
                       <router-link :to="advertise.link" :title="advertises.title">
-                        <img :src="advertise.image" :alt="advertise.title" class="img-fluid row-ad"/>
+                        <img v-lazy="advertise.image" :alt="advertise.title" class="img-fluid row-ad"/>
                       </router-link>
                     </div>
                 </div>
