@@ -187,6 +187,7 @@
                             <div class="vt-divider"><span></span></div>
                         </div>
                         <div class="card-body">
+                            <div v-if="category?.description?.length > 0" class="p-3" id="body-content" v-html="category?.description"></div>
                             <div class="card-body-inner">
                             <div id="main-list" class="row gy-3 news-item-row" :key="category?.id">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full sm:grid sm:grid-cols-1 xs:grid xs:grid-cols-1">
