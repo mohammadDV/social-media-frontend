@@ -372,10 +372,10 @@
                                         <ul class="news-list">
                                             <template  v-for="(post, index) in authorPosts" :key="index">
                                                 <li v-if="index < 5" class="news-item">
+                                                    <span class="material-icons size-font text-primary">
+                                                    double_arrow
+                                                    </span>
                                                     <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title" class="news">
-                                                        <span class="material-icons size-font text-primary">
-                                                        double_arrow
-                                                        </span>
                                                         {{ post.title}}
                                                     </router-link>
                                                 </li>
@@ -391,10 +391,10 @@
                                     <ul class="news-list" v-if="latest?.length > 0">
                                         <template  v-for="(post, index) in latest" :key="index">
                                             <li v-if="index < 5" class="news-item">
+                                                <span class="material-icons size-font text-primary">
+                                                double_arrow
+                                                </span>
                                                 <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title" class="news">
-                                                    <span class="material-icons size-font text-primary">
-                                                    double_arrow
-                                                    </span>
                                                     {{ post.title}}
                                                 </router-link>
                                             </li>
