@@ -148,10 +148,10 @@
                                             </div>
                                             <!-- <ul class="news-list">
                                                 <li v-for="(post, index) in posts[4]" :key="index" class="news-item">
+                                                    <span class="material-icons size-font text-primary">
+                                                    double_arrow
+                                                    </span>
                                                   <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
-                                                        <span class="material-icons size-font text-primary">
-                                                        double_arrow
-                                                        </span>
                                                         {{ post.title}}
                                                   </router-link>
                                                 </li>
@@ -170,10 +170,10 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[3]" :key="index" class="news-item">
+                                                  <span class="material-icons size-font text-primary">
+                                                  double_arrow
+                                                  </span>
                                                   <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
-                                                      <span class="material-icons size-font text-primary">
-                                                      double_arrow
-                                                      </span>
                                                       {{ post.title}}
                                                   </router-link>
                                               </li>
@@ -194,10 +194,10 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[1]" :key="index" class="news-item">
+                                                  <span class="material-icons size-font text-primary">
+                                                  double_arrow
+                                                  </span>
                                                   <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
-                                                        <span class="material-icons size-font text-primary">
-                                                        double_arrow
-                                                        </span>
                                                         {{ post.title }}
                                                   </router-link>
                                                 </li>
@@ -216,10 +216,10 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[2]" :key="index" class="news-item">
+                                                  <span class="material-icons size-font text-primary">
+                                                  double_arrow
+                                                  </span>
                                                   <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
-                                                        <span class="material-icons size-font text-primary">
-                                                        double_arrow
-                                                        </span>
                                                         {{ post.title}}
                                                     </router-link>
                                                 </li>
@@ -238,10 +238,10 @@
                                         <div class="card-body-inner">
                                             <ul class="news-list">
                                               <li v-for="(post, index) in posts[3]" :key="index" class="news-item">
+                                                  <span class="material-icons size-font text-primary">
+                                                  double_arrow
+                                                  </span>
                                                   <router-link :to="post?.type == 1 ? `/video/${post.id}/${post.slug}` : `/news/${post.id}/${post.slug}`" :title="post.title">
-                                                      <span class="material-icons size-font text-primary">
-                                                      double_arrow
-                                                      </span>
                                                       {{ post.title}}
                                                   </router-link>
                                               </li>
