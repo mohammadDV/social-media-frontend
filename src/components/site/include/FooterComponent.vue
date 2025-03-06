@@ -25,7 +25,7 @@
                     <img
                         class="footer-logo"
                         src="/site/images/logo-white.png"
-                        alt="site's logo"
+                        alt="ورزش پاد"
                     />
                     <div class="info-list">
                         <!-- <div class="info-list-item">

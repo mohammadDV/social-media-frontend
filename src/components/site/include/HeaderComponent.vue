@@ -183,7 +183,7 @@ onMounted(() => {
                         </div>
                         <div class="logo-wrap">
                             <router-link class="navbar-brand-profile" to="/" :title="$t('site.Main page')">
-                                <img src="/site/images/logo.png" alt="site's logo" />
+                                <img src="/site/images/logo.png" alt="ورزش پاد" />
                             </router-link>
                         </div>
                     </section>
