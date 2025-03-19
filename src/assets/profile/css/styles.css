@@ -12273,4 +12273,13 @@ a {
   color: var(--color-danger-500);
 }
 
+.ql-size-small {
+  font-size: 11px !important;
+}
+.ql-size-large {
+  font-size: 20px !important;
+}
+.ql-size-huge {
+  font-size: 28px !important;
+}
 /*# sourceMappingURL=styles.css.map */
