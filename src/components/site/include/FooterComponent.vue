@@ -91,8 +91,8 @@
                 </div>
                 <div class="col-12 col-lg-5">
                     <ul class="nav footer-sub-socailmedia">
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="https://www.instagram.com/varzeshpod" :title="t('site.Website name')">
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="https://www.instagram.com/varzeshpod" title="اینستاگرام ورزش پاد">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -108,7 +108,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="https://t.me/varzeshpod" :title="t('site.Website name')">
+                            <a class="nav-link" target="_blank" href="https://t.me/varzeshpod" title="کانال تلگرام ورزش پاد">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -124,7 +124,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="https://x.com/varzeshpod" :title="t('site.Website name')">
+                            <a class="nav-link" target="_blank" href="https://x.com/varzeshpod" title="شبکه ایکس ورزش پاد">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -140,7 +140,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="https://www.youtube.com/@varzeshpod" :title="t('site.Website name')">
+                            <a class="nav-link" target="_blank" href="https://www.youtube.com/@varzeshpod" title="کانال یوتیوب ورزش پاد">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -152,7 +152,7 @@
                                     <path d="M8.051 1.999h-.002c-.328 0-3.293-.003-4.669.163-.759.09-1.44.364-2.014.938-.574.574-.849 1.255-.938 2.014C.49 6.49.487 8.823.487 9.615v.001c0 .794.003 3.126.163 4.671.09.758.364 1.439.938 2.013.574.574 1.255.849 2.014.938 1.376.16 4.34.162 4.668.162s3.293-.002 4.669-.162c.759-.09 1.44-.364 2.014-.938.574-.574.849-1.255.938-2.014.16-1.546.163-3.877.163-4.67v-.002c0-.792-.003-3.125-.163-4.669-.09-.759-.364-1.44-.938-2.014-.574-.574-1.255-.849-2.014-.938-1.376-.16-4.34-.162-4.668-.162zm0 .912s3.18-.003 4.585.158c.533.062.919.238 1.214.533.295.295.471.681.533 1.214.155 1.396.158 4.585.158 4.585s-.003 3.19-.158 4.586c-.062.533-.238.919-.533 1.214-.295.295-.681.471-1.214.533-1.405.155-4.585.158-4.585.158s-3.18-.003-4.585-.158c-.533-.062-.919-.238-1.214-.533-.295-.295-.471-.681-.533-1.214-.155-1.396-.158-4.586-.158-4.586s.003-3.189.158-4.585c.062-.533.238-.919.533-1.214.295-.295.681-.471 1.214-.533C4.87 2.91 8.051 2.908 8.051 2.908zm-1.593 4.07v3.907l3.213-1.954-3.213-1.953z"/>
                                 </svg>
                             </a>
-                        </li> -->
+                        </li>
                     </ul>
                 </div>
             </div>
