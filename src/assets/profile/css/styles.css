@@ -12282,4 +12282,7 @@ a {
 .ql-size-huge {
   font-size: 28px !important;
 }
+.ql-align-center {
+  text-align: center;
+}
 /*# sourceMappingURL=styles.css.map */
