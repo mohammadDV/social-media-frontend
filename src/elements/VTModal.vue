@@ -17,7 +17,6 @@ const closeModal = () => {
 };
 </script>
 <template>
-<div @click="test">xsasxsa</div>
 <teleport to="body">
   <div class="fixed inset-0 flex items-center justify-center z-50">
     <!-- Background overlay -->
