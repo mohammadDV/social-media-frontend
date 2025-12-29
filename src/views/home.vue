@@ -397,7 +397,7 @@
                       </router-link>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4">
+                <!-- <div class="col-12 col-lg-4">
                     <live-component />
                 </div>
                 <div class="col-12 col-lg-4">
@@ -405,7 +405,7 @@
                 </div>
                 <div class="col-12 col-lg-4">
                     <MatchComponent table-id="2"/>
-                </div>
+                </div> -->
             </div>
         </div>
   </template>
