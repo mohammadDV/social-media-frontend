@@ -130,8 +130,10 @@ const initialFormState = {
   const sendPost = () => {
 
     if (!canSubmit.value) {
-        return '';
+        return;
     }
+
+    canSubmit.value = false;
 
     let url = '/api/profile/posts/';
 
@@ -149,11 +151,14 @@ const initialFormState = {
             router.push({
                 name: 'post.index'
             })
+            return;
         }
       }
+      canSubmit.value = true;
     })
     .catch(error => {
-        if (error.response.data.status == 0) {
+        canSubmit.value = true;
+        if (error.response?.data?.status == 0) {
             $toast.error(error.response.data.message);
         }
     })

@@ -1,5 +1,6 @@
 <template>
    <button :type="submit ? 'submit' : 'button'"
+            :disabled="disabled"
             :class="`flex relative justify-center items-center border text-sm font-normal rounded-md hover:bg-sky-600 ${sizeCss} ${borderColor} ${textColor} ${backgroundColor} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`">
         <span v-show="currentIcon"
               class="mr-2 contents items-center text-xs">
