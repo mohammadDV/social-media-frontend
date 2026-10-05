@@ -4,8 +4,8 @@
   import { onMounted, ref, computed } from 'vue';
   import SliderComponent from '@/components/plugins/slider/SliderComponent';
   import FullSliderComponent from '@/components/plugins/slider/FullSliderComponent';
-  import LiveComponent from '@/components/site/LiveComponent';
-  import MatchComponent from '@/components/site/MatchComponent';
+//   import LiveComponent from '@/components/site/LiveComponent';
+//   import MatchComponent from '@/components/site/MatchComponent';
   import HorizontalAdvertiseComponent from '@/components/site/components/advertise/HorizontalAdvertiseComponent';
   import VerticalAdvertiseComponent from '@/components/site/components/advertise/VerticalAdvertiseComponent';
   import LatestNewsComponent from '@/components/site/include/LatestNewsComponent';
