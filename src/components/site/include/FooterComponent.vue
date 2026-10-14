@@ -88,6 +88,10 @@
             <div class="row">
                 <div class="col-12 col-lg-7 footer-sub-copy">
               <span>تمام حقوق مادی و معنوی این سایت متعلق به ورزش پاد می باشد.</span>
+              <span class="d-block mt-1">
+                طراحی و پیاده‌سازی:
+                <a href="https://mohammaddv.com" target="_blank" rel="noopener noreferrer">mohammaddv.com</a>
+              </span>
                 </div>
                 <div class="col-12 col-lg-5">
                     <ul class="nav footer-sub-socailmedia">
